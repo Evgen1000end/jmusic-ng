@@ -72,7 +72,7 @@ public interface JMC extends RhythmValues, Pitches, Frequencies, Tunings,
   /**
    * Constant for program changes
    */
-  public static final int PROG_EVT = 748394;//Integer.MIN_VALUE + 1;
+  public static final int PROG_EVT = 748394; //Integer.MIN_VALUE + 1;
   /**
    * Constant for tempo changes
    */

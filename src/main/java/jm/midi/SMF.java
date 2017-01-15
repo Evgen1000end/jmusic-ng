@@ -44,6 +44,11 @@ import jm.midi.event.VoiceEvt;
  * @version 1.0, Sun Feb 25 18:43
  */
 public final class SMF implements JMC {
+
+  public static final int MTHD = 0x4D546864;
+  public static final int STANDART_HEADER_LENGTH = 6;
+  public static final int MIDI_FILE_TYPE = 1;
+
   //--------------------------------------
   //attributes
   //--------------------------------------
@@ -220,6 +225,28 @@ public final class SMF implements JMC {
   }
 
   /**
+   * Write to a standard MIDI file
+   * @throws IOException did the write go ok
+   */
+  public OutputStream toStream() throws IOException {
+    DataOutputStream stream = new DataOutputStream(new ByteArrayOutputStream());
+    numOfTracks = (short) trackList.size();
+    stream.writeInt(MTHD);    //MThd
+    stream.writeInt(STANDART_HEADER_LENGTH);        //Length
+    stream.writeShort(MIDI_FILE_TYPE);        //Midi File Type
+    stream.writeShort(numOfTracks);    //Number of tracks
+    stream.writeShort(ppqn);        //Pulses Per Quarter Note
+    Enumeration aEnum = trackList.elements();
+    while (aEnum.hasMoreElements()) {
+      Track smfTrack = (Track) aEnum.nextElement();
+      writeTrackChunk(stream, smfTrack);
+    }
+    stream.flush();
+    stream.close();
+    return stream;
+  }
+
+  /**
    * Print all MIDI tracks and MIDI events
    */
   public void print() {
@@ -328,10 +355,10 @@ public final class SMF implements JMC {
   /**
    * Write the Track Chunk
    *
-   * @param DataOutputStream dos
-   * @param Track track - track to write
+   * @param odos
+   * @param track - track to write
    */
-  private void writeTrackChunk(DataOutputStream odos, Track track)
+  private void writeTrackChunk(final DataOutputStream odos, final Track track)
       throws IOException {
     if (VERBOSE) {
       System.out.println("Writing MIDI Track");

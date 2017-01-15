@@ -77,8 +77,6 @@ class XMLParser {
           buffer.append(xmlStyle.getDoubleQuoteInString());
         } else if (character == '#') {
           buffer.append(xmlStyle.getHash());
-        } else if (character == '/') {
-          buffer.append(xmlStyle.getSlash());
         } else if (character == '?') {
           buffer.append(xmlStyle.getQuestionMark());
         } else if (character == ';') {

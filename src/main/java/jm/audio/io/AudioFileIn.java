@@ -48,7 +48,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioFileIn {
 
-  // the name of the file to read from.
+  /**
+   * the name of the file to read from.
+   */
   private String fileName;
   // the file object to read from
   private File file;
@@ -248,7 +250,7 @@ public class AudioFileIn {
     if (audioFileSpecified) {
       return fileFormat.toString();
     } else {
-      return new String("Non-audio");
+      return "Non-audio";
     }
   }
 

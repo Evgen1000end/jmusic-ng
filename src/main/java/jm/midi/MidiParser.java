@@ -199,10 +199,12 @@ public final class MidiParser implements JMC {
 
   /**
    * Converts jmusic score data into SMF  data
+   * @param score - Basic Jmusic storage
+   * @param smf - Standart Midi File object
    */
-  public static void scoreToSMF(Score score, SMF smf) {
+  public static void scoreToSMF(final Score score, final SMF smf) {
     if (VERBOSE) {
-      System.out.println("Converting to SMF data structure...");
+      System.out.println("Converting to SMF data structure.");
     }
 
     double scoreTempo = score.getTempo();
@@ -225,8 +227,8 @@ public final class MidiParser implements JMC {
     while (aEnum.hasMoreElements()) {
       Track smfTrack = new Track();
       Part inst = (Part) aEnum.nextElement();
-      System.out.print("    Part " + partCount + " '" + inst.getTitle() +
-          "' to SMF Track on Ch. " + inst.getChannel() + ": ");
+      System.out.print("Part " + partCount + " '" + inst.getTitle() +
+          "' to SMF Track on Channel. " + inst.getChannel() + ": ");
       partCount++;
 
       // set up tempo difference between score and track - if any
@@ -307,9 +309,7 @@ public final class MidiParser implements JMC {
           phraseTempoMultiplier = partTempoMultiplier;
         }
 
-        ////////////////////////////////////////////////
         int noteCounter = 0;
-        //System.out.println();
         System.out.print(" Phrase " + phraseCounter++ + ":");
         // set a silly starting value to force and initial pan cc event
         double pan = -1.0;

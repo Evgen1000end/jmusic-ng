@@ -47,5 +47,4 @@ public interface Alignments {
       CENTER_ON_START = Alignment.CENTRE_ON_START,
       CENTRE_ON_END = Alignment.CENTRE_ON_END,
       CENTER_ON_END = Alignment.CENTRE_ON_END;
-
 }

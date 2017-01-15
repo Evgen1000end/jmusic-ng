@@ -26,7 +26,7 @@ import java.util.Vector;
 import jm.midi.event.Event;
 
 /**
- * The Track class is designed to hold a MIDI file Tracks SMF events
+ * The Track class is designed to hold a MIDI file Tracks SMF events.
  */
 public class Track {
   //----------------------------------------------
@@ -51,7 +51,7 @@ public class Track {
   /**
    * Add a SMF event to the Track
    *
-   * @param Event event - the SMF event to add
+   * @param event - the SMF event to add
    */
   public void addEvent(Event event) {
     this.eventList.addElement(event);
@@ -77,6 +77,5 @@ public class Track {
       Event event = (Event) enum1.nextElement();
       //event.print();
     }
-    //System.out.println();
   }
 }

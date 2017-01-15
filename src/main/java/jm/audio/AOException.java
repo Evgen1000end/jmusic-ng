@@ -55,7 +55,7 @@ public final class AOException extends Exception {
    * array using the int as an index.
    *
    * @param name the name of the AudioObject throwing this exception
-   * @param int message is the index to use to retrieve the stored message
+   * @param message is the index to use to retrieve the stored message
    */
   public AOException(String name, int message) {
     super(name + MESSAGES[message]);

@@ -37,5 +37,4 @@ public interface Articulations {
       LEGATO = 0.95,
       TENUTO = 1.0,
       SOSTENUTO = 1.2;
-
 }

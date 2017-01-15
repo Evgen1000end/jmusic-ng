@@ -14,8 +14,10 @@ buildscript {
 apply plugin: 'net.researchgate.release'
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
+
 
 repositories {
     mavenCentral()

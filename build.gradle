@@ -1,4 +1,4 @@
-group 'com.explodingart'
+group = 'com.github.Evgen1000end'
 
 buildscript {
     repositories {

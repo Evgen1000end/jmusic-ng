@@ -32,126 +32,127 @@ import jm.music.data.Score;
  * @version 1.0, Sun Feb 25 18:44
  */
 class ReadListenerLinkedList {
-    /**
-     * ReadListener stored at this node of the list
-     */
-    private ReadListener listener;
 
-    /**
-     * Reference to the next ReadListenerLinkedList in the list
-     */
-    private ReadListenerLinkedList next;
+  /**
+   * ReadListener stored at this node of the list
+   */
+  private ReadListener listener;
 
-    /**
-     * Consturcts a new list with one node
-     *
-     * @param listener the first ReadListener in the list
-     */
-    public ReadListenerLinkedList(ReadListener listener) {
-        this.listener = listener;
-        next = null;
+  /**
+   * Reference to the next ReadListenerLinkedList in the list
+   */
+  private ReadListenerLinkedList next;
+
+  /**
+   * Consturcts a new list with one node
+   *
+   * @param listener the first ReadListener in the list
+   */
+  public ReadListenerLinkedList(ReadListener listener) {
+    this.listener = listener;
+    next = null;
+  }
+
+  /**
+   * Returns the next ReadListenerLinkedList in the list.
+   *
+   * @return next ReadListenerLinkedList in the list
+   */
+  public ReadListenerLinkedList getNext() {
+    return next;
+  }
+
+  /**
+   * Returns the ReadListener associated with this entry in the list
+   *
+   * @return ReadListener at this node in the list
+   */
+  public ReadListener getListener() {
+    return listener;
+  }
+
+  /**
+   * Appends <CODE>l</CODE> to the end of the list.  If <CODE>l</CODE> is null
+   * this method does nothing.
+   *
+   * @param l ReadListener to add to the list.
+   */
+  public void add(ReadListener l) {
+    if (l == null) {
+      return;
     }
-
-    /**
-     * Returns the next ReadListenerLinkedList in the list.
-     *
-     * @return next ReadListenerLinkedList in the list
-     */
-    public ReadListenerLinkedList getNext() {
-        return next;
+    if (next == null) {
+      next = new ReadListenerLinkedList(l);
     }
+    next.add(l);
+  }
 
-    /**
-     * Returns the ReadListener associated with this entry in the list
-     *
-     * @return ReadListener at this node in the list
-     */
-    public ReadListener getListener() {
-        return listener;
+  /**
+   * Removes <CODE>l</CODE> from the list if found.
+   *
+   * @param l ReadListener to remove from the list.
+   */
+  public void remove(ReadListener l) {
+    if (next == null) {
+      return;
     }
+    if (l == next.getListener()) {
+      next = next.getNext();
+    }
+  }
 
-    /**
-     * Appends <CODE>l</CODE> to the end of the list.  If <CODE>l</CODE> is null
-     * this method does nothing.
-     *
-     * @param l ReadListener to add to the list.
-     */
-    public void add(ReadListener l) {
-        if (l == null) {
-            return;
-        }
-        if (next == null) {
-            next = new ReadListenerLinkedList(l);
-        }
-        next.add(l);
+  /**
+   * Triggers the score read notification of all listeners in the list
+   * <p/>
+   * <P>The listeners are notified according to LILO (Last In Last Out)
+   * ordering.  Thus, the first in the list updates the score, then passes its
+   * updated version to the next in the list, and it gets updated and passed
+   * on until the last listener to be added gets the score.
+   *
+   * @param score Score being imported
+   * @return Score updated by listeners
+   */
+  public Score scoreRead(Score score) {
+    if (listener == null) {
+      return score;
     }
+    if (next == null) {
+      return listener.scoreRead(score);
+    }
+    return next.scoreRead(listener.scoreRead(score));
+  }
 
-    /**
-     * Removes <CODE>l</CODE> from the list if found.
-     *
-     * @param l ReadListener to remove from the list.
-     */
-    public void remove(ReadListener l) {
-        if (next == null) {
-            return;
-        }
-        if (l == next.getListener()) {
-            next = next.getNext();
-        }
+  public void startedReading() {
+    if (listener == null) {
+      return;
     }
+    if (next == null) {
+      listener.startedReading();
+      return;
+    }
+    listener.startedReading();
+    next.startedReading();
+  }
 
-    /**
-     * Triggers the score read notification of all listeners in the list
-     * <p/>
-     * <P>The listeners are notified according to LILO (Last In Last Out)
-     * ordering.  Thus, the first in the list updates the score, then passes its
-     * updated version to the next in the list, and it gets updated and passed
-     * on until the last listener to be added gets the score.
-     *
-     * @param score Score being imported
-     * @return Score updated by listeners
-     */
-    public Score scoreRead(Score score) {
-        if (listener == null) {
-            return score;
-        }
-        if (next == null) {
-            return listener.scoreRead(score);
-        }
-        return next.scoreRead(listener.scoreRead(score));
+  /**
+   * Triggers the finished reading notification of all listeners in the list
+   * <p/>
+   * <P>The listeners are notified according to LILO (Last In Last Out)
+   * ordering.  That is, the first listener to added will execute, then the
+   * second, and so forth until the all have.
+   *
+   * @param scores Score array being imported
+   * @return Score array updated by listeners
+   */
+  public void finishedReading() {
+    if (listener == null) {
+      return;
     }
-
-    public void startedReading() {
-        if (listener == null) {
-            return;
-        }
-        if (next == null) {
-            listener.startedReading();
-            return;
-        }
-        listener.startedReading();
-        next.startedReading();
+    if (next == null) {
+      listener.finishedReading();
+      return;
     }
-
-    /**
-     * Triggers the finished reading notification of all listeners in the list
-     * <p/>
-     * <P>The listeners are notified according to LILO (Last In Last Out)
-     * ordering.  That is, the first listener to added will execute, then the
-     * second, and so forth until the all have.
-     *
-     * @param scores Score array being imported
-     * @return Score array updated by listeners
-     */
-    public void finishedReading() {
-        if (listener == null) {
-            return;
-        }
-        if (next == null) {
-            listener.finishedReading();
-            return;
-        }
-        listener.finishedReading();
-        next.finishedReading();
-    }
+    listener.finishedReading();
+    next.finishedReading();
+  }
 }

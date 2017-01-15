@@ -22,8 +22,16 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.sketch;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 /**
  * A jMusic tool which disketchScorelays a score as a simple
@@ -44,94 +52,101 @@ import java.awt.event.*;
 //Ruler class!!
 //--------------
 public class SketchRuler extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
-    //attributes
-    private int startX;
-    private int height = 15;
-    private int barNumbCount = 2;
-    private SketchScore sketchScore;
-    private Font font = new Font("Helvetica", Font.PLAIN, 10);
 
-    public SketchRuler(SketchScore sketchScore) {
-        super();
-        this.sketchScore = sketchScore;
-        this.setSize((int) (sketchScore.score.getEndTime() * sketchScore.beatWidth), height);
-        this.setBackground(Color.lightGray);
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
-        this.addKeyListener(this);
-        this.setCursor(new Cursor(13));
-    }
+  //attributes
+  private int startX;
+  private int height = 15;
+  private int barNumbCount = 2;
+  private SketchScore sketchScore;
+  private Font font = new Font("Helvetica", Font.PLAIN, 10);
 
-    /**
-     * Report on the set height of this panel
-     */
-    public int getHeight() {
-        return height;
-    }
+  public SketchRuler(SketchScore sketchScore) {
+    super();
+    this.sketchScore = sketchScore;
+    this.setSize((int) (sketchScore.score.getEndTime() * sketchScore.beatWidth), height);
+    this.setBackground(Color.lightGray);
+    this.addMouseListener(this);
+    this.addMouseMotionListener(this);
+    this.addKeyListener(this);
+    this.setCursor(new Cursor(13));
+  }
+
+  /**
+   * Report on the set height of this panel
+   */
+  public int getHeight() {
+    return height;
+  }
 
 
-    public void paint(Graphics g) {
-        double beatWidth = sketchScore.beatWidth;
-        g.setFont(font);
-        for (int i = 0; i < (sketchScore.getSketchScoreArea().getNewWidth()); i++) {
-            int xLoc = (int) Math.round(i * beatWidth);
-            if (i % barNumbCount == 0) {
-                g.drawLine(xLoc, 0, xLoc, height);
-                if (beatWidth > 15) g.drawString("" + i, xLoc + 2, height - 2);
-            } else {
-                g.drawLine(xLoc, height / 2, xLoc, height);
-            }
+  public void paint(Graphics g) {
+    double beatWidth = sketchScore.beatWidth;
+    g.setFont(font);
+    for (int i = 0; i < (sketchScore.getSketchScoreArea().getNewWidth()); i++) {
+      int xLoc = (int) Math.round(i * beatWidth);
+      if (i % barNumbCount == 0) {
+        g.drawLine(xLoc, 0, xLoc, height);
+        if (beatWidth > 15) {
+          g.drawString("" + i, xLoc + 2, height - 2);
         }
+      } else {
+        g.drawLine(xLoc, height / 2, xLoc, height);
+      }
     }
+  }
 
-    // get the position of inital mouse click
-    public void mousePressed(MouseEvent e) {
-        //System.out.println("Pressed");
-        this.setCursor(new Cursor(10));
-        startX = e.getX();
-    }
+  // get the position of inital mouse click
+  public void mousePressed(MouseEvent e) {
+    //System.out.println("Pressed");
+    this.setCursor(new Cursor(10));
+    startX = e.getX();
+  }
 
-    //Mouse Listener stubs
-    public void mouseClicked(MouseEvent e) {
-    }
+  //Mouse Listener stubs
+  public void mouseClicked(MouseEvent e) {
+  }
 
-    public void mouseEntered(MouseEvent e) {
-    }
+  public void mouseEntered(MouseEvent e) {
+  }
 
-    public void mouseExited(MouseEvent e) {
-    }
+  public void mouseExited(MouseEvent e) {
+  }
 
-    public void mouseReleased(MouseEvent e) {
-        this.setCursor(new Cursor(13));
-        repaint();
-    }
+  public void mouseReleased(MouseEvent e) {
+    this.setCursor(new Cursor(13));
+    repaint();
+  }
 
-    //mouseMotionListener stubs
-    public void mouseMoved(MouseEvent e) {
-    }
+  //mouseMotionListener stubs
+  public void mouseMoved(MouseEvent e) {
+  }
 
-    public void mouseDragged(MouseEvent e) {
-        //System.out.println("Dragged");
-        double beatWidth = sketchScore.beatWidth;
-        beatWidth += (double) ((double) e.getX() - (double) startX) / 5.0;
-        if (beatWidth < 1.0) beatWidth = 1.0;
-        if (beatWidth > 256.0) beatWidth = 256.0;
-        //System.out.println("beatWidth = "+beatWidth);
-        sketchScore.beatWidth = beatWidth;
-        startX = e.getX();
-        sketchScore.update();
+  public void mouseDragged(MouseEvent e) {
+    //System.out.println("Dragged");
+    double beatWidth = sketchScore.beatWidth;
+    beatWidth += (double) ((double) e.getX() - (double) startX) / 5.0;
+    if (beatWidth < 1.0) {
+      beatWidth = 1.0;
     }
+    if (beatWidth > 256.0) {
+      beatWidth = 256.0;
+    }
+    //System.out.println("beatWidth = "+beatWidth);
+    sketchScore.beatWidth = beatWidth;
+    startX = e.getX();
+    sketchScore.update();
+  }
 
-    // key listener stubs
-    public void keyPressed(KeyEvent e) {
-    }
+  // key listener stubs
+  public void keyPressed(KeyEvent e) {
+  }
 
-    public void keyReleased(KeyEvent e) {
-    }
+  public void keyReleased(KeyEvent e) {
+  }
 
-    public void keyTyped(KeyEvent e) {
-        if (e.getKeyChar() == '\b') {
-            repaint();
-        }
+  public void keyTyped(KeyEvent e) {
+    if (e.getKeyChar() == '\b') {
+      repaint();
     }
+  }
 } 

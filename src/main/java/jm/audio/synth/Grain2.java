@@ -33,77 +33,84 @@ import jm.audio.AudioObject;
  */
 
 public final class Grain2 extends AudioObject {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
 
-    private int grainSampSize = 1000; // Size of grains in samples
-    private int spaceSamp = 1000; // space between grains in samples
-    private int grainCount = 0;
-    private int spaceCount = 0;
-    private int offset = 0;
-    private boolean grainOn = true; //To cheack whether a grain is on or not
+  private int grainSampSize = 1000; // Size of grains in samples
+  private int spaceSamp = 1000; // space between grains in samples
+  private int grainCount = 0;
+  private int spaceCount = 0;
+  private int offset = 0;
+  private boolean grainOn = true; //To cheack whether a grain is on or not
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
-    public Grain2(AudioObject ao, int grainSampSize, int spaceSamp, boolean grainOn, int chan, int offset) {
-        super(ao, "[Grain]");
-        this.grainSampSize = grainSampSize * chan;
-        this.spaceSamp = spaceSamp * chan;
-        this.grainOn = grainOn;
-        this.offset = offset;
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
+  public Grain2(AudioObject ao, int grainSampSize, int spaceSamp, boolean grainOn, int chan,
+      int offset) {
+    super(ao, "[Grain]");
+    this.grainSampSize = grainSampSize * chan;
+    this.spaceSamp = spaceSamp * chan;
+    this.grainOn = grainOn;
+    this.offset = offset;
+  }
+
+
+  /**
+   * @param buffer The sample buffer.
+   * @return The number of samples processed
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = this.previous[0].nextWork(buffer);
+    int tempoffset = offset;
+    if (offset > 0) {
+      for (int counter = 0; counter < offset; counter++) {
+        buffer[counter] = 0;
+      }
+      offset = 0;
     }
 
+    for (int counter = tempoffset; counter < returned; counter++) {
+      if (grainOn) {
+        buffer[counter] = buffer[counter] *
+            (float) (Math.sin(Math.PI * grainCount / grainSampSize));
+      }
+      if (grainOn && grainCount < grainSampSize) {
+        grainCount++;
+      } else if (grainOn) {
+        grainOn = false;
+        grainCount = 0;
+      }
 
-    /**
-     * @param buffer The sample buffer.
-     * @return The number of samples processed
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = this.previous[0].nextWork(buffer);
-        int tempoffset = offset;
-        if (offset > 0) {
-            for (int counter = 0; counter < offset; counter++) {
-                buffer[counter] = 0;
-            }
-            offset = 0;
-        }
-
-        for (int counter = tempoffset; counter < returned; counter++) {
-            if (grainOn) buffer[counter] = buffer[counter] *
-                    (float) (Math.sin(Math.PI * grainCount / grainSampSize));
-            if (grainOn && grainCount < grainSampSize) grainCount++;
-            else if (grainOn) {
-                grainOn = false;
-                grainCount = 0;
-            }
-
-            if (!grainOn) buffer[counter] = 0;
-            if (!grainOn && spaceCount < spaceSamp) spaceCount++;
-            else if (!grainOn) {
-                grainOn = true;
-                spaceCount = 0;
-            }
-            //System.out.println(buffer[counter]);
-        }
-
-        return returned;
+      if (!grainOn) {
+        buffer[counter] = 0;
+      }
+      if (!grainOn && spaceCount < spaceSamp) {
+        spaceCount++;
+      } else if (!grainOn) {
+        grainOn = true;
+        spaceCount = 0;
+      }
+      //System.out.println(buffer[counter]);
     }
 
-    //Real-time calls
+    return returned;
+  }
 
-    // Set the Grain Duration
-    public void setGrainDur(int gdur) {
-        grainSampSize = gdur;
-        System.out.println("Space4: " + grainSampSize);
-    }
+  //Real-time calls
 
-    // Set the Space Duration
-    public void setSpaceDur(int sdur) {
-        spaceSamp = sdur;
-        System.out.println("Space4: " + spaceSamp);
-    }
+  // Set the Grain Duration
+  public void setGrainDur(int gdur) {
+    grainSampSize = gdur;
+    System.out.println("Space4: " + grainSampSize);
+  }
+
+  // Set the Space Duration
+  public void setSpaceDur(int sdur) {
+    spaceSamp = sdur;
+    System.out.println("Space4: " + spaceSamp);
+  }
 }
 
 

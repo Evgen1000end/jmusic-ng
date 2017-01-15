@@ -38,133 +38,136 @@ import java.io.IOException;
  */
 
 public final class NoteOn implements VoiceEvt, Cloneable {
-    private final short id = 005;
-    private short pitch;
-    private short velocity;
-    private short midiChannel;
-    private int time;
 
-    /**
-     * Public constructor for creating a default (Empty) note on event
-     */
-    public NoteOn() {
-        this.pitch = 0;
-        this.velocity = 0;
-        this.midiChannel = 0;
-        this.time = 0;
-    }
+  private final short id = 005;
+  private short pitch;
+  private short velocity;
+  private short midiChannel;
+  private int time;
 
-    /**
-     * Public constructor for creating a note on event containing
-     * pitch, velocity, midi channel and time
-     */
-    public NoteOn(short pitch, short velocity, short midiChannel, int time) {
-        this.pitch = pitch;
-        this.velocity = velocity;
-        this.midiChannel = midiChannel;
-        this.time = time;
-    }
-    //------------------------------------------
-    //Pitch
-    //-------------------------------------------
+  /**
+   * Public constructor for creating a default (Empty) note on event
+   */
+  public NoteOn() {
+    this.pitch = 0;
+    this.velocity = 0;
+    this.midiChannel = 0;
+    this.time = 0;
+  }
 
-    /**
-     * Returns a note on events pitch value
-     */
-    public short getPitch() {
-        return pitch;
-    }
+  /**
+   * Public constructor for creating a note on event containing
+   * pitch, velocity, midi channel and time
+   */
+  public NoteOn(short pitch, short velocity, short midiChannel, int time) {
+    this.pitch = pitch;
+    this.velocity = velocity;
+    this.midiChannel = midiChannel;
+    this.time = time;
+  }
+  //------------------------------------------
+  //Pitch
+  //-------------------------------------------
 
-    /**
-     * Sets a note on events pitch value
-     */
-    public void setPitch(short pitch) {
-        this.pitch = pitch;
-    }
-    //--------------------------------------------
-    //Velocity
-    //---------------------------------------------
+  /**
+   * Returns a note on events pitch value
+   */
+  public short getPitch() {
+    return pitch;
+  }
 
-    /**
-     * Returns a note on events velocity value
-     */
-    public short getVelocity() {
-        return velocity;
-    }
+  /**
+   * Sets a note on events pitch value
+   */
+  public void setPitch(short pitch) {
+    this.pitch = pitch;
+  }
+  //--------------------------------------------
+  //Velocity
+  //---------------------------------------------
 
-    /**
-     * Sets a note on events velocity value
-     */
-    public void setVelocity(short velocity) {
-        this.velocity = velocity;
-    }
+  /**
+   * Returns a note on events velocity value
+   */
+  public short getVelocity() {
+    return velocity;
+  }
 
-    //---------------------------------------------
-    //MIDI Channel
-    //--------------------------------------------
-    public short getMidiChannel() {
-        return midiChannel;
-    }
+  /**
+   * Sets a note on events velocity value
+   */
+  public void setVelocity(short velocity) {
+    this.velocity = velocity;
+  }
 
-    public void setMidiChannel(short midiChannel) {
-        this.midiChannel = midiChannel;
-    }
+  //---------------------------------------------
+  //MIDI Channel
+  //--------------------------------------------
+  public short getMidiChannel() {
+    return midiChannel;
+  }
 
-    //----------------------------------------------
-    //Time
-    //-----------------------------------------------
-    public int getTime() {
-        return time;
-    }
+  public void setMidiChannel(short midiChannel) {
+    this.midiChannel = midiChannel;
+  }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
+  //----------------------------------------------
+  //Time
+  //-----------------------------------------------
+  public int getTime() {
+    return time;
+  }
 
-    //----------------------------------------------
-    //Return ID
-    //----------------------------------------------
-    public short getID() {
-        return id;
-    }
+  public void setTime(int time) {
+    this.time = time;
+  }
 
-    //-------------------------------------------------
-    //Copy Object
-    //------------------------------------------------
-    public Event copy() throws CloneNotSupportedException {
-        NoteOn event;
-        try {
-            event = (NoteOn) this.clone();
-        } catch (CloneNotSupportedException e) {
-            System.out.println(e);
-            event = new NoteOn();
-        }
-        return event;
-    }
+  //----------------------------------------------
+  //Return ID
+  //----------------------------------------------
+  public short getID() {
+    return id;
+  }
 
-    //----------------------------------------------
-    // Write the contents of this object out to disk
-    //----------------------------------------------
-    public int write(DataOutputStream dos) throws IOException {
-        int bytes_out = jm.midi.MidiUtil.writeVarLength(this.time, dos);
-        dos.writeByte((byte) (0x90 + midiChannel));
-        dos.writeByte((byte) pitch);
-        dos.writeByte((byte) velocity);
-        return bytes_out + 3;
+  //-------------------------------------------------
+  //Copy Object
+  //------------------------------------------------
+  public Event copy() throws CloneNotSupportedException {
+    NoteOn event;
+    try {
+      event = (NoteOn) this.clone();
+    } catch (CloneNotSupportedException e) {
+      System.out.println(e);
+      event = new NoteOn();
     }
+    return event;
+  }
 
-    //----------------------------------------------
-    //  Read the contects of this object in from disk
-    public int read(DataInputStream dis) throws IOException {
-        this.pitch = (short) dis.readUnsignedByte();
-        this.velocity = (short) dis.readUnsignedByte();
-        return 2;
-    }
+  //----------------------------------------------
+  // Write the contents of this object out to disk
+  //----------------------------------------------
+  public int write(DataOutputStream dos) throws IOException {
+    int bytes_out = jm.midi.MidiUtil.writeVarLength(this.time, dos);
+    dos.writeByte((byte) (0x90 + midiChannel));
+    dos.writeByte((byte) pitch);
+    dos.writeByte((byte) velocity);
+    return bytes_out + 3;
+  }
 
-    //-----------------------------------------------
-    //Print
-    //----------------------------------------------
-    public void print() {
-        System.out.println("Note On(005): [time = " + time + "][midiChannel = " + midiChannel + "][pitch = " + pitch + "][velocity = " + velocity + "]");
-    }
+  //----------------------------------------------
+  //  Read the contects of this object in from disk
+  public int read(DataInputStream dis) throws IOException {
+    this.pitch = (short) dis.readUnsignedByte();
+    this.velocity = (short) dis.readUnsignedByte();
+    return 2;
+  }
+
+  //-----------------------------------------------
+  //Print
+  //----------------------------------------------
+  public void print() {
+    System.out.println(
+        "Note On(005): [time = " + time + "][midiChannel = " + midiChannel + "][pitch = " + pitch
+            + "][velocity = " + velocity + "]");
+  }
 }

@@ -22,16 +22,27 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.sketch;
 
+import java.awt.BorderLayout;
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.MenuShortcut;
+import java.awt.Panel;
+import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.Enumeration;
 import jm.midi.MidiSynth;
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
 import jm.util.Write;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Enumeration;
 
 /**
  * A jMusic tool which displays a score as a simple
@@ -50,279 +61,303 @@ import java.util.Enumeration;
  */
 
 public class SketchScore extends Frame implements WindowListener, ActionListener {
-    protected static Score score;
-    //attributes
-    private static int maxWidth;
-    private static int maxParts;
-    protected double beatWidth = 10.0;
-    private Panel pan;
-    private SketchScoreArea sketchScoreArea;
-    private SketchRuler ruler;
-    private MenuItem play, speedUp, slowDown, clear, saveMIDI, quit, openMIDI, openXML, saveXML;
 
-    //--------------
-    //constructors
-    //--------------
-    public SketchScore(Score score) {
-        this(score, 0, 0);
-    }
+  protected static Score score;
+  //attributes
+  private static int maxWidth;
+  private static int maxParts;
+  protected double beatWidth = 10.0;
+  private Panel pan;
+  private SketchScoreArea sketchScoreArea;
+  private SketchRuler ruler;
+  private MenuItem play, speedUp, slowDown, clear, saveMIDI, quit, openMIDI, openXML, saveXML;
 
-    public SketchScore(Score score, int xPos, int yPos) {
-        super("jMusic Sketch: '" + score.getTitle() + "'");
-        this.score = score;
-        this.getWidthAndParts();
+  //--------------
+  //constructors
+  //--------------
+  public SketchScore(Score score) {
+    this(score, 0, 0);
+  }
 
-        //register the closebox event
-        this.addWindowListener(this);
+  public SketchScore(Score score, int xPos, int yPos) {
+    super("jMusic Sketch: '" + score.getTitle() + "'");
+    this.score = score;
+    this.getWidthAndParts();
 
-        pan = new Panel();
-        pan.setLayout(new BorderLayout());
-        sketchScoreArea = new SketchScoreArea(score, maxWidth, beatWidth);
-        sketchScoreArea.setSketchScore(this);
-        pan.add("Center", sketchScoreArea);
+    //register the closebox event
+    this.addWindowListener(this);
 
-        //add a ruler
-        ruler = new SketchRuler(this);
-        pan.add("South", ruler);
+    pan = new Panel();
+    pan.setLayout(new BorderLayout());
+    sketchScoreArea = new SketchScoreArea(score, maxWidth, beatWidth);
+    sketchScoreArea.setSketchScore(this);
+    pan.add("Center", sketchScoreArea);
 
-        //add a scroll pane
-        ScrollPane sp = new ScrollPane(ScrollPane.SCROLLBARS_ALWAYS);
-        sp.getHAdjustable().setUnitIncrement(20); //set scroll speed
-        sp.add(pan);
-        this.add(sp);
+    //add a ruler
+    ruler = new SketchRuler(this);
+    pan.add("South", ruler);
 
-        // menus
-        MenuBar menus = new MenuBar();
-        Menu fileMenu = new Menu("Sketch", true);
+    //add a scroll pane
+    ScrollPane sp = new ScrollPane(ScrollPane.SCROLLBARS_ALWAYS);
+    sp.getHAdjustable().setUnitIncrement(20); //set scroll speed
+    sp.add(pan);
+    this.add(sp);
 
-        play = new MenuItem("Play @ " + score.getTempo() + " bpm", new MenuShortcut(KeyEvent.VK_P));
-        play.addActionListener(this);
-        fileMenu.add(play);
+    // menus
+    MenuBar menus = new MenuBar();
+    Menu fileMenu = new Menu("Sketch", true);
 
-        speedUp = new MenuItem("Speed Up");
-        speedUp.addActionListener(this);
-        fileMenu.add(speedUp);
+    play = new MenuItem("Play @ " + score.getTempo() + " bpm", new MenuShortcut(KeyEvent.VK_P));
+    play.addActionListener(this);
+    fileMenu.add(play);
 
-        slowDown = new MenuItem("Slow Down");
-        slowDown.addActionListener(this);
-        fileMenu.add(slowDown);
+    speedUp = new MenuItem("Speed Up");
+    speedUp.addActionListener(this);
+    fileMenu.add(speedUp);
 
-        clear = new MenuItem("Clear notes");
-        clear.addActionListener(this);
-        fileMenu.add(clear);
+    slowDown = new MenuItem("Slow Down");
+    slowDown.addActionListener(this);
+    fileMenu.add(slowDown);
 
-        MenuItem dash = new MenuItem("-");
-        fileMenu.add(dash);
+    clear = new MenuItem("Clear notes");
+    clear.addActionListener(this);
+    fileMenu.add(clear);
 
-        openMIDI = new MenuItem("Open a MIDI file...", new MenuShortcut(KeyEvent.VK_O));
-        openMIDI.addActionListener(this);
-        fileMenu.add(openMIDI);
+    MenuItem dash = new MenuItem("-");
+    fileMenu.add(dash);
 
-        openXML = new MenuItem("Open a jMusic XML file...");
-        openXML.addActionListener(this);
-        fileMenu.add(openXML);
+    openMIDI = new MenuItem("Open a MIDI file...", new MenuShortcut(KeyEvent.VK_O));
+    openMIDI.addActionListener(this);
+    fileMenu.add(openMIDI);
 
-        saveMIDI = new MenuItem("Save as MIDI file", new MenuShortcut(KeyEvent.VK_S));
-        saveMIDI.addActionListener(this);
-        fileMenu.add(saveMIDI);
+    openXML = new MenuItem("Open a jMusic XML file...");
+    openXML.addActionListener(this);
+    fileMenu.add(openXML);
 
-        saveXML = new MenuItem("Save as a jMusic XML file");
-        saveXML.addActionListener(this);
-        fileMenu.add(saveXML);
+    saveMIDI = new MenuItem("Save as MIDI file", new MenuShortcut(KeyEvent.VK_S));
+    saveMIDI.addActionListener(this);
+    fileMenu.add(saveMIDI);
 
-        quit = new MenuItem("Quit", new MenuShortcut(KeyEvent.VK_Q));
-        quit.addActionListener(this);
-        fileMenu.add(quit);
+    saveXML = new MenuItem("Save as a jMusic XML file");
+    saveXML.addActionListener(this);
+    fileMenu.add(saveXML);
 
-        menus.add(fileMenu);
-        this.setMenuBar(menus);
+    quit = new MenuItem("Quit", new MenuShortcut(KeyEvent.VK_Q));
+    quit.addActionListener(this);
+    fileMenu.add(quit);
 
-        //construct and display
-        //this.pack();
-        this.setSize(650, sketchScoreArea.getHeight() + ruler.getHeight());
-        this.setLocation(xPos, yPos);
-        this.show();
-    }
+    menus.add(fileMenu);
+    this.setMenuBar(menus);
 
-    //--------------
-    // Class Methods
-    //--------------
+    //construct and display
+    //this.pack();
+    this.setSize(650, sketchScoreArea.getHeight() + ruler.getHeight());
+    this.setLocation(xPos, yPos);
+    this.show();
+  }
+
+  //--------------
+  // Class Methods
+  //--------------
 
 
-    public SketchScoreArea getSketchScoreArea() {
-        return sketchScoreArea;
-    }
+  public SketchScoreArea getSketchScoreArea() {
+    return sketchScoreArea;
+  }
 
-    // Deal with the window closebox
-    public void windowClosing(WindowEvent we) {
-        this.dispose(); //System.exit(0);
-    }
+  // Deal with the window closebox
+  public void windowClosing(WindowEvent we) {
+    this.dispose(); //System.exit(0);
+  }
 
-    //other WindowListener interface methods
-    //They do nothing but are required to be present
-    public void windowActivated(WindowEvent we) {
-    }
+  //other WindowListener interface methods
+  //They do nothing but are required to be present
+  public void windowActivated(WindowEvent we) {
+  }
 
-    ;
+  ;
 
-    public void windowClosed(WindowEvent we) {
-    }
+  public void windowClosed(WindowEvent we) {
+  }
 
-    ;
+  ;
 
-    public void windowDeactivated(WindowEvent we) {
-    }
+  public void windowDeactivated(WindowEvent we) {
+  }
 
-    ;
+  ;
 
-    public void windowIconified(WindowEvent we) {
-    }
+  public void windowIconified(WindowEvent we) {
+  }
 
-    ;
+  ;
 
-    public void windowDeiconified(WindowEvent we) {
-    }
+  public void windowDeiconified(WindowEvent we) {
+  }
 
-    ;
+  ;
 
-    public void windowOpened(WindowEvent we) {
-    }
+  public void windowOpened(WindowEvent we) {
+  }
 
-    ;
+  ;
 
-    /**
-     * recalulate and draw the sketch
-     */
-    public void update() {
-        sketchScoreArea.setScore(score);
-        pan.repaint();
-        sketchScoreArea.setSize((int) Math.round(score.getEndTime() * beatWidth), sketchScoreArea.getHeight());
-        sketchScoreArea.setBeatWidth(beatWidth);
-        sketchScoreArea.repaint();
-        ruler.repaint();
-        //this.repaint();
-        this.setSize(this.getSize().width, sketchScoreArea.getHeight() + ruler.getHeight());
-        this.pack();
-    }
+  /**
+   * recalulate and draw the sketch
+   */
+  public void update() {
+    sketchScoreArea.setScore(score);
+    pan.repaint();
+    sketchScoreArea
+        .setSize((int) Math.round(score.getEndTime() * beatWidth), sketchScoreArea.getHeight());
+    sketchScoreArea.setBeatWidth(beatWidth);
+    sketchScoreArea.repaint();
+    ruler.repaint();
+    //this.repaint();
+    this.setSize(this.getSize().width, sketchScoreArea.getHeight() + ruler.getHeight());
+    this.pack();
+  }
 
-    private void getWidthAndParts() {
-        Enumeration enum1 = score.getPartList().elements();
-        while (enum1.hasMoreElements()) {
-            Part part = (Part) enum1.nextElement();
-            maxParts++;
-            Enumeration enum2 = part.getPhraseList().elements();
-            while (enum2.hasMoreElements()) {
-                Phrase phrase = (Phrase) enum2.nextElement();
-                Enumeration enum3 = phrase.getNoteList().elements();
-                maxWidth = (int) (phrase.getStartTime() * beatWidth);
-                while (enum3.hasMoreElements()) {
-                    Note aNote = (Note) enum3.nextElement();
-                    maxWidth = maxWidth + (int) (aNote.getRhythmValue() * beatWidth);
-                }
-            }
+  private void getWidthAndParts() {
+    Enumeration enum1 = score.getPartList().elements();
+    while (enum1.hasMoreElements()) {
+      Part part = (Part) enum1.nextElement();
+      maxParts++;
+      Enumeration enum2 = part.getPhraseList().elements();
+      while (enum2.hasMoreElements()) {
+        Phrase phrase = (Phrase) enum2.nextElement();
+        Enumeration enum3 = phrase.getNoteList().elements();
+        maxWidth = (int) (phrase.getStartTime() * beatWidth);
+        while (enum3.hasMoreElements()) {
+          Note aNote = (Note) enum3.nextElement();
+          maxWidth = maxWidth + (int) (aNote.getRhythmValue() * beatWidth);
         }
+      }
     }
+  }
 
-    // handle menu items
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == play) playScore();
-        if (e.getSource() == speedUp) speedItUp();
-        if (e.getSource() == slowDown) slowItDown();
-        if (e.getSource() == clear) clearNotes();
-        if (e.getSource() == quit) System.exit(0);
-        if (e.getSource() == saveMIDI) saveMidi();
-        if (e.getSource() == openMIDI) openMidi();
-        if (e.getSource() == saveXML) saveXMLFile();
-        if (e.getSource() == openXML) openXMLFile();
+  // handle menu items
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == play) {
+      playScore();
     }
+    if (e.getSource() == speedUp) {
+      speedItUp();
+    }
+    if (e.getSource() == slowDown) {
+      slowItDown();
+    }
+    if (e.getSource() == clear) {
+      clearNotes();
+    }
+    if (e.getSource() == quit) {
+      System.exit(0);
+    }
+    if (e.getSource() == saveMIDI) {
+      saveMidi();
+    }
+    if (e.getSource() == openMIDI) {
+      openMidi();
+    }
+    if (e.getSource() == saveXML) {
+      saveXMLFile();
+    }
+    if (e.getSource() == openXML) {
+      openXMLFile();
+    }
+  }
 
-    private void playScore() {
-        MidiSynth ms = new MidiSynth();
-        try {
-            ms.play(score);
-        } catch (Exception e) {
-            System.err.println("MIDI Playback Error:" + e);
-            return;
-        }
+  private void playScore() {
+    MidiSynth ms = new MidiSynth();
+    try {
+      ms.play(score);
+    } catch (Exception e) {
+      System.err.println("MIDI Playback Error:" + e);
+      return;
     }
+  }
 
-    private void speedItUp() {
-        double tempTempo = score.getTempo() + 10.0;
-        if (tempTempo > 250.0) tempTempo = 250.0;
-        score.setTempo(tempTempo);
-        play.setLabel("Play @ " + tempTempo + " bpm");
+  private void speedItUp() {
+    double tempTempo = score.getTempo() + 10.0;
+    if (tempTempo > 250.0) {
+      tempTempo = 250.0;
     }
+    score.setTempo(tempTempo);
+    play.setLabel("Play @ " + tempTempo + " bpm");
+  }
 
-    private void slowItDown() {
-        double tempTempo = score.getTempo() - 10.0;
-        if (tempTempo < 20.0) tempTempo = 20.0;
-        score.setTempo(tempTempo);
-        play.setLabel("Play @ " + tempTempo + " bpm");
+  private void slowItDown() {
+    double tempTempo = score.getTempo() - 10.0;
+    if (tempTempo < 20.0) {
+      tempTempo = 20.0;
     }
+    score.setTempo(tempTempo);
+    play.setLabel("Play @ " + tempTempo + " bpm");
+  }
 
-    private void clearNotes() {
-        score.removeAllParts();
-        sketchScoreArea.repaint();
-    }
+  private void clearNotes() {
+    score.removeAllParts();
+    sketchScoreArea.repaint();
+  }
 
-    /**
-     * Dialog to save score as a MIDI file.
-     */
-    public void saveMidi() {
-        FileDialog fd = new FileDialog(this, "Save score as a MIDI file ...", FileDialog.SAVE);
-        fd.setFile("FileName.mid");
-        fd.show();
-        //write a MIDI file to disk
-        if (fd.getFile() != null) {
-            Write.midi(score, fd.getDirectory() + fd.getFile());
-        }
+  /**
+   * Dialog to save score as a MIDI file.
+   */
+  public void saveMidi() {
+    FileDialog fd = new FileDialog(this, "Save score as a MIDI file ...", FileDialog.SAVE);
+    fd.setFile("FileName.mid");
+    fd.show();
+    //write a MIDI file to disk
+    if (fd.getFile() != null) {
+      Write.midi(score, fd.getDirectory() + fd.getFile());
     }
+  }
 
-    /**
-     * Save score as a jMusic XML file.
-     */
-    public void saveXMLFile() {
-        FileDialog fd = new FileDialog(new Frame(),
-                "Save as a jMusic XML file...",
-                FileDialog.SAVE);
-        fd.setFile("FileName.xml");
-        fd.show();
-        if (fd.getFile() != null) {
-            jm.util.Write.xml(score, fd.getDirectory() + fd.getFile());
-        }
+  /**
+   * Save score as a jMusic XML file.
+   */
+  public void saveXMLFile() {
+    FileDialog fd = new FileDialog(new Frame(),
+        "Save as a jMusic XML file...",
+        FileDialog.SAVE);
+    fd.setFile("FileName.xml");
+    fd.show();
+    if (fd.getFile() != null) {
+      jm.util.Write.xml(score, fd.getDirectory() + fd.getFile());
     }
+  }
 
-    /**
-     * Read a MIDI file and display its data.
-     */
-    public void openMidi() {
-        FileDialog fd = new FileDialog(new Frame(),
-                "Select a MIDI file to display.",
-                FileDialog.LOAD);
-        fd.show();
-        String fileName = fd.getFile();
-        if (fileName != null) {
-            Score score = new Score();
-            jm.util.Read.midi(score, fd.getDirectory() + fileName);
-            this.score = score;
-            update();
-        }
+  /**
+   * Read a MIDI file and display its data.
+   */
+  public void openMidi() {
+    FileDialog fd = new FileDialog(new Frame(),
+        "Select a MIDI file to display.",
+        FileDialog.LOAD);
+    fd.show();
+    String fileName = fd.getFile();
+    if (fileName != null) {
+      Score score = new Score();
+      jm.util.Read.midi(score, fd.getDirectory() + fileName);
+      this.score = score;
+      update();
     }
+  }
 
-    /**
-     * Read a jMusic XML file and display its data.
-     */
-    public void openXMLFile() {
-        FileDialog fd = new FileDialog(new Frame(),
-                "Select a jMusic XML file to display.",
-                FileDialog.LOAD);
-        fd.show();
-        String fileName = fd.getFile();
-        if (fileName != null) {
-            Score score = new Score();
-            jm.util.Read.xml(score, fd.getDirectory() + fileName);
-            this.score = score;
-            update();
-        }
+  /**
+   * Read a jMusic XML file and display its data.
+   */
+  public void openXMLFile() {
+    FileDialog fd = new FileDialog(new Frame(),
+        "Select a jMusic XML file to display.",
+        FileDialog.LOAD);
+    fd.show();
+    String fileName = fd.getFile();
+    if (fileName != null) {
+      Score score = new Score();
+      jm.util.Read.xml(score, fd.getDirectory() + fileName);
+      this.score = score;
+      update();
     }
+  }
 }

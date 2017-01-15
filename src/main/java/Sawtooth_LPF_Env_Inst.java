@@ -1,6 +1,10 @@
 import jm.audio.Instrument;
 import jm.audio.io.SampleOut;
-import jm.audio.synth.*;
+import jm.audio.synth.Envelope;
+import jm.audio.synth.Filter;
+import jm.audio.synth.Oscillator;
+import jm.audio.synth.StereoPan;
+import jm.audio.synth.Volume;
 
 /**
  * A monophonic sawtooth waveform instrument implementation
@@ -10,85 +14,84 @@ import jm.audio.synth.*;
  */
 
 public final class Sawtooth_LPF_Env_Inst extends Instrument {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
-    private int sampleRate;
-    private int filterCutoff;
-    private int channels;
-    private double[] envValues;
 
-    //----------------------------------------------
-    // Constructor
-    //----------------------------------------------
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
+  private int sampleRate;
+  private int filterCutoff;
+  private int channels;
+  private double[] envValues;
 
-    /**
-     * Basic default constructor to set an initial
-     * sampling rate and use a default cutoff.
-     *
-     * @param sampleRate
-     */
-    public Sawtooth_LPF_Env_Inst(int sampleRate) {
-        this(sampleRate, 1000);
-    }
+  //----------------------------------------------
+  // Constructor
+  //----------------------------------------------
 
-    /**
-     * Constructor that sets sample rate and the filter cutoff frequency.
-     *
-     * @param sampleRate   The number of samples per second (quality)
-     * @param filterCutoff The frequency above which overtones are cut
-     */
-    public Sawtooth_LPF_Env_Inst(int sampleRate, int filterCutoff) {
-        this.sampleRate = sampleRate;
-        this.filterCutoff = filterCutoff;
-        this.channels = 1;
-        this.envValues = new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0};
-    }
+  /**
+   * Basic default constructor to set an initial
+   * sampling rate and use a default cutoff.
+   */
+  public Sawtooth_LPF_Env_Inst(int sampleRate) {
+    this(sampleRate, 1000);
+  }
 
-    /**
-     * Constructor that sets sample rate and the filter cutoff frequency.
-     *
-     * @param sampleRate   The number of samples per second (quality)
-     * @param filterCutoff The frequency above which overtones are cut
-     * @param chan         The number of channels.
-     */
-    public Sawtooth_LPF_Env_Inst(int sampleRate, int filterCutoff, int chan) {
-        this.sampleRate = sampleRate;
-        this.filterCutoff = filterCutoff;
-        this.channels = chan;
-        this.envValues = new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0};
-    }
+  /**
+   * Constructor that sets sample rate and the filter cutoff frequency.
+   *
+   * @param sampleRate The number of samples per second (quality)
+   * @param filterCutoff The frequency above which overtones are cut
+   */
+  public Sawtooth_LPF_Env_Inst(int sampleRate, int filterCutoff) {
+    this.sampleRate = sampleRate;
+    this.filterCutoff = filterCutoff;
+    this.channels = 1;
+    this.envValues = new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0};
+  }
 
-    /**
-     * Constructor that sets sample rate and the filter cutoff frequency.
-     *
-     * @param sampleRate   The number of samples per second (quality).
-     * @param filterCutoff The frequency above which overtones are cut.
-     * @param chan         The number of channels.
-     * @param env          An array of envelope break point values.
-     */
-    public Sawtooth_LPF_Env_Inst(int sampleRate, int filterCutoff, int chan, double[] env) {
-        this.sampleRate = sampleRate;
-        this.filterCutoff = filterCutoff;
-        this.channels = chan;
-        this.envValues = env;
-    }
+  /**
+   * Constructor that sets sample rate and the filter cutoff frequency.
+   *
+   * @param sampleRate The number of samples per second (quality)
+   * @param filterCutoff The frequency above which overtones are cut
+   * @param chan The number of channels.
+   */
+  public Sawtooth_LPF_Env_Inst(int sampleRate, int filterCutoff, int chan) {
+    this.sampleRate = sampleRate;
+    this.filterCutoff = filterCutoff;
+    this.channels = chan;
+    this.envValues = new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0};
+  }
 
-    //----------------------------------------------
-    // Methods
-    //----------------------------------------------
+  /**
+   * Constructor that sets sample rate and the filter cutoff frequency.
+   *
+   * @param sampleRate The number of samples per second (quality).
+   * @param filterCutoff The frequency above which overtones are cut.
+   * @param chan The number of channels.
+   * @param env An array of envelope break point values.
+   */
+  public Sawtooth_LPF_Env_Inst(int sampleRate, int filterCutoff, int chan, double[] env) {
+    this.sampleRate = sampleRate;
+    this.filterCutoff = filterCutoff;
+    this.channels = chan;
+    this.envValues = env;
+  }
 
-    /**
-     * Initialisation method used to build the objects that
-     * this instrument will use and specify thier interconnections.
-     */
-    public void createChain() {
-        Oscillator wt = new Oscillator(this, Oscillator.SAWTOOTH_WAVE, this.sampleRate, this.channels);
-        Filter filt = new Filter(wt, this.filterCutoff, Filter.LOW_PASS);
-        Envelope env = new Envelope(filt, envValues);
-        Volume vol = new Volume(env);
-        StereoPan pan = new StereoPan(vol);
-        SampleOut sout = new SampleOut(pan);
-    }
+  //----------------------------------------------
+  // Methods
+  //----------------------------------------------
+
+  /**
+   * Initialisation method used to build the objects that
+   * this instrument will use and specify thier interconnections.
+   */
+  public void createChain() {
+    Oscillator wt = new Oscillator(this, Oscillator.SAWTOOTH_WAVE, this.sampleRate, this.channels);
+    Filter filt = new Filter(wt, this.filterCutoff, Filter.LOW_PASS);
+    Envelope env = new Envelope(filt, envValues);
+    Volume vol = new Volume(env);
+    StereoPan pan = new StereoPan(vol);
+    SampleOut sout = new SampleOut(pan);
+  }
 }
 

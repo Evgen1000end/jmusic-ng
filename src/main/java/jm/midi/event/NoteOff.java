@@ -36,127 +36,129 @@ import java.io.IOException;
  * VoiceEvt.
  * (see class VoiceEvt for more information)
  *
- * @author Andrew Sorensen
- *         **********************************************************
+ * @author Andrew Sorensen **********************************************************
  */
 
 public final class NoteOff implements VoiceEvt, Cloneable {
-    private final short id = 004;
-    private short pitch;
-    private short velocity;
-    private short midiChannel;
-    private int time;
 
-    /**
-     * A public constractor used to create default (empty) note off
-     * events.
-     */
-    public NoteOff() {
-        this.pitch = 0;
-        this.velocity = 0;
-        this.midiChannel = 0;
-        this.time = 0;
-    }
+  private final short id = 004;
+  private short pitch;
+  private short velocity;
+  private short midiChannel;
+  private int time;
 
-    /**
-     * A public constructor used to create note off events containing
-     * pitch, velocity, MIDI channel and time information.
-     */
-    public NoteOff(short pitch, short velocity, short midiChannel, int time) {
-        this.pitch = pitch;
-        this.velocity = velocity;
-        this.midiChannel = midiChannel;
-        this.time = time;
-    }
-    //-------------------------------------
-    //Pitch
+  /**
+   * A public constractor used to create default (empty) note off
+   * events.
+   */
+  public NoteOff() {
+    this.pitch = 0;
+    this.velocity = 0;
+    this.midiChannel = 0;
+    this.time = 0;
+  }
 
-    /**
-     * Returns a note off events pitch value
-     */
-    public short getPitch() {
-        return pitch;
-    }
+  /**
+   * A public constructor used to create note off events containing
+   * pitch, velocity, MIDI channel and time information.
+   */
+  public NoteOff(short pitch, short velocity, short midiChannel, int time) {
+    this.pitch = pitch;
+    this.velocity = velocity;
+    this.midiChannel = midiChannel;
+    this.time = time;
+  }
+  //-------------------------------------
+  //Pitch
 
-    /**
-     * Sets a note off events pitch value
-     */
-    public void setPitch(short pitch) {
-        this.pitch = pitch;
-    }
-    //--------------------------------------
-    //Velocity
+  /**
+   * Returns a note off events pitch value
+   */
+  public short getPitch() {
+    return pitch;
+  }
 
-    /**
-     * Returns a note off events velocity value
-     */
-    public short getVelocity() {
-        return velocity;
-    }
+  /**
+   * Sets a note off events pitch value
+   */
+  public void setPitch(short pitch) {
+    this.pitch = pitch;
+  }
+  //--------------------------------------
+  //Velocity
 
-    /**
-     * Sets a note off events velocity value
-     */
-    public void setVelocity(short velocity) {
-        this.velocity = velocity;
-    }
+  /**
+   * Returns a note off events velocity value
+   */
+  public short getVelocity() {
+    return velocity;
+  }
 
-    //---------------------------------------
-    //MIDI Channel
-    public short getMidiChannel() {
-        return midiChannel;
-    }
+  /**
+   * Sets a note off events velocity value
+   */
+  public void setVelocity(short velocity) {
+    this.velocity = velocity;
+  }
 
-    public void setMidiChannel(short midiChannel) {
-        this.midiChannel = midiChannel;
-    }
+  //---------------------------------------
+  //MIDI Channel
+  public short getMidiChannel() {
+    return midiChannel;
+  }
 
-    //---------------------------------------
-    //Time
-    public int getTime() {
-        return time;
-    }
+  public void setMidiChannel(short midiChannel) {
+    this.midiChannel = midiChannel;
+  }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
+  //---------------------------------------
+  //Time
+  public int getTime() {
+    return time;
+  }
 
-    //----------------------------------------
-    //Return ID
-    public short getID() {
-        return id;
-    }
+  public void setTime(int time) {
+    this.time = time;
+  }
 
-    //-----------------------------------------
-    //Copy Object
-    public Event copy() throws CloneNotSupportedException {
-        NoteOff event;
-        try {
-            event = (NoteOff) this.clone();
-        } catch (CloneNotSupportedException e) {
-            System.out.println(e);
-            event = new NoteOff();
-        }
-        return event;
-    }
+  //----------------------------------------
+  //Return ID
+  public short getID() {
+    return id;
+  }
 
-    //------------------------------------------
-    // Write data out to disk
-    public int write(DataOutputStream dos) throws IOException {
-        return 0;
+  //-----------------------------------------
+  //Copy Object
+  public Event copy() throws CloneNotSupportedException {
+    NoteOff event;
+    try {
+      event = (NoteOff) this.clone();
+    } catch (CloneNotSupportedException e) {
+      System.out.println(e);
+      event = new NoteOff();
     }
+    return event;
+  }
 
-    //------------------------------------------
-    // Read data in from disk
-    public int read(DataInputStream dis) throws IOException {
-        this.pitch = (short) dis.readUnsignedByte();
-        this.velocity = (short) dis.readUnsignedByte();
-        return 2;
-    }
+  //------------------------------------------
+  // Write data out to disk
+  public int write(DataOutputStream dos) throws IOException {
+    return 0;
+  }
 
-    //------------------------------------------
-    //Print
-    public void print() {
-        System.out.println("Note Off(004): [time = " + time + "][midiChannel = " + midiChannel + "][pitch = " + pitch + "][velocity = " + velocity + "]");
-    }
+  //------------------------------------------
+  // Read data in from disk
+  public int read(DataInputStream dis) throws IOException {
+    this.pitch = (short) dis.readUnsignedByte();
+    this.velocity = (short) dis.readUnsignedByte();
+    return 2;
+  }
+
+  //------------------------------------------
+  //Print
+  public void print() {
+    System.out.println(
+        "Note Off(004): [time = " + time + "][midiChannel = " + midiChannel + "][pitch = " + pitch
+            + "][velocity = " + velocity + "]");
+  }
 }

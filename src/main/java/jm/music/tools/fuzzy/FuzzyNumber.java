@@ -32,92 +32,110 @@ package jm.music.tools.fuzzy;
  * @author Andrew Brown, October 2003
  */
 public class FuzzyNumber {
-    private double peak, min, max, diff, membership;
 
-    /**
-     * Create a new fuzzy number.
-     *
-     * @param peak - The center value for the triangular membership function.
-     * @param min  - The leftmost or minimum value for the triangular membership function.
-     * @param max  - The rightmost or maximum value for the triangular membership function.
-     */
-    public FuzzyNumber(double peak, double min, double max) {
-        this.peak = peak;
-        this.min = min;
-        this.max = max;
-    }
+  private double peak, min, max, diff, membership;
 
-    /**
-     * Calculate the degree of membership of a value within this fuzzy number.
-     *
-     * @param value - The number to be tested for its membership.
-     * @return The degree of membership within this fuzzy number.
-     */
-    public double getMembership(double value) {
-        if (value < min || value > max) return 0.0;
-        diff = peak - value;
-        if (diff >= 0.0) membership = 1.0 - (diff / (peak - min));
-        else membership = 1.0 + (diff / (max - peak));
-        return membership;
-    }
+  /**
+   * Create a new fuzzy number.
+   *
+   * @param peak - The center value for the triangular membership function.
+   * @param min - The leftmost or minimum value for the triangular membership function.
+   * @param max - The rightmost or maximum value for the triangular membership function.
+   */
+  public FuzzyNumber(double peak, double min, double max) {
+    this.peak = peak;
+    this.min = min;
+    this.max = max;
+  }
 
-    /**
-     * Return the current value for the centre of the triangular membership function.
-     *
-     * @return peak - The number currently set as the triangle's peak.
-     */
-    public double getPeak() {
-        return this.peak;
+  /**
+   * Calculate the degree of membership of a value within this fuzzy number.
+   *
+   * @param value - The number to be tested for its membership.
+   * @return The degree of membership within this fuzzy number.
+   */
+  public double getMembership(double value) {
+    if (value < min || value > max) {
+      return 0.0;
     }
+    diff = peak - value;
+    if (diff >= 0.0) {
+      membership = 1.0 - (diff / (peak - min));
+    } else {
+      membership = 1.0 + (diff / (max - peak));
+    }
+    return membership;
+  }
 
-    /**
-     * Specify a value for the centre of the triangular membership function.
-     *
-     * @param newValue - The number to set the peak to.
-     */
-    public void setPeak(double newValue) {
-        this.peak = newValue;
-        if (min > newValue) min = newValue;
-        if (max < newValue) max = newValue;
-    }
+  /**
+   * Return the current value for the centre of the triangular membership function.
+   *
+   * @return peak - The number currently set as the triangle's peak.
+   */
+  public double getPeak() {
+    return this.peak;
+  }
 
-    /**
-     * Return the current value for the left corner of the triangular membership function.
-     *
-     * @return min - The number currently set as the triangle's left corner.
-     */
-    public double getMin() {
-        return this.min;
+  /**
+   * Specify a value for the centre of the triangular membership function.
+   *
+   * @param newValue - The number to set the peak to.
+   */
+  public void setPeak(double newValue) {
+    this.peak = newValue;
+    if (min > newValue) {
+      min = newValue;
     }
+    if (max < newValue) {
+      max = newValue;
+    }
+  }
 
-    /**
-     * Specify a value for the left corner of the triangular membership function.
-     *
-     * @param newValue - The number to set the minimum to.
-     */
-    public void setMin(double newValue) {
-        this.min = newValue;
-        if (peak < newValue) peak = newValue;
-        if (max < newValue) max = newValue;
-    }
+  /**
+   * Return the current value for the left corner of the triangular membership function.
+   *
+   * @return min - The number currently set as the triangle's left corner.
+   */
+  public double getMin() {
+    return this.min;
+  }
 
-    /**
-     * Return the current value for the right corner of the triangular membership function.
-     *
-     * @return max - The number currently set as the triangle's right corner.
-     */
-    public double getMax() {
-        return this.max;
+  /**
+   * Specify a value for the left corner of the triangular membership function.
+   *
+   * @param newValue - The number to set the minimum to.
+   */
+  public void setMin(double newValue) {
+    this.min = newValue;
+    if (peak < newValue) {
+      peak = newValue;
     }
+    if (max < newValue) {
+      max = newValue;
+    }
+  }
 
-    /**
-     * Specify a value for the right corner of the triangular membership function.
-     *
-     * @param newValue - The number to set the peak to.
-     */
-    public void setMax(double newValue) {
-        this.max = newValue;
-        if (min > newValue) min = newValue;
-        if (peak > newValue) peak = newValue;
+  /**
+   * Return the current value for the right corner of the triangular membership function.
+   *
+   * @return max - The number currently set as the triangle's right corner.
+   */
+  public double getMax() {
+    return this.max;
+  }
+
+  /**
+   * Specify a value for the right corner of the triangular membership function.
+   *
+   * @param newValue - The number to set the peak to.
+   */
+  public void setMax(double newValue) {
+    this.max = newValue;
+    if (min > newValue) {
+      min = newValue;
     }
+    if (peak > newValue) {
+      peak = newValue;
+    }
+  }
 }

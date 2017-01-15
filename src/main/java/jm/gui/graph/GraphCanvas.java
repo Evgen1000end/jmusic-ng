@@ -23,69 +23,73 @@
 
 package jm.gui.graph;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 
 /**
  * @author Adam Kirby
  * @version 1.0, Sun Feb 25 18:43
  */
 public abstract class GraphCanvas extends Canvas {
-    protected StatisticsList statsList;
 
-    protected Image image;
+  protected StatisticsList statsList;
 
-    protected Graphics graphics;
+  protected Image image;
 
-    protected Dimension preferredSize = new Dimension(1, 1);
+  protected Graphics graphics;
 
-    protected Dimension minimumSize = new Dimension(1, 1);
+  protected Dimension preferredSize = new Dimension(1, 1);
 
-    public GraphCanvas() {
-        this(new Statistics());
+  protected Dimension minimumSize = new Dimension(1, 1);
+
+  public GraphCanvas() {
+    this(new Statistics());
+  }
+
+  public GraphCanvas(Statistics stats) {
+    statsList = new StatisticsList();
+    statsList.add(stats);
+  }
+
+  public GraphCanvas(Statistics[] statsArray) {
+    statsList = new StatisticsList(statsArray.length * 110 / 100);
+    for (int i = 0; i < statsArray.length; i++) {
+      statsList.add(statsArray[i]);
+    }
+  }
+
+  public GraphCanvas(StatisticsList statsList) {
+    this.statsList = statsList;
+  }
+
+  public Dimension getMinimumSize() {
+    return this.minimumSize;
+  }
+
+  public Dimension getPreferredSize() {
+    return this.preferredSize;
+  }
+
+  public void addStatistics(Statistics stats) {
+    statsList.add(stats);
+  }
+
+  protected abstract void paintBuffer();
+
+  public void update(Graphics g) {
+    paint(g);
+  }
+
+  public void paint(Graphics g) {
+    if (image == null) {
+      image = createImage(1, 1);
+      graphics = image.getGraphics();
     }
 
-    public GraphCanvas(Statistics stats) {
-        statsList = new StatisticsList();
-        statsList.add(stats);
-    }
+    paintBuffer();
 
-    public GraphCanvas(Statistics[] statsArray) {
-        statsList = new StatisticsList(statsArray.length * 110 / 100);
-        for (int i = 0; i < statsArray.length; i++) {
-            statsList.add(statsArray[i]);
-        }
-    }
-
-    public GraphCanvas(StatisticsList statsList) {
-        this.statsList = statsList;
-    }
-
-    public Dimension getMinimumSize() {
-        return this.minimumSize;
-    }
-
-    public Dimension getPreferredSize() {
-        return this.preferredSize;
-    }
-
-    public void addStatistics(Statistics stats) {
-        statsList.add(stats);
-    }
-
-    protected abstract void paintBuffer();
-
-    public void update(Graphics g) {
-        paint(g);
-    }
-
-    public void paint(Graphics g) {
-        if (image == null) {
-            image = createImage(1, 1);
-            graphics = image.getGraphics();
-        }
-
-        paintBuffer();
-
-        g.drawImage(image, 0, 0, this);
-    }
+    g.drawImage(image, 0, 0, this);
+  }
 }

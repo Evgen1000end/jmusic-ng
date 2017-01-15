@@ -30,95 +30,100 @@ package jm.audio.math;
 
 public abstract class RealFloatFFT {
 
-    int n;
+  int n;
 
-    /**
-     * Create an FFT for transforming n points of real, single precision data.
-     */
-    public RealFloatFFT(int n) {
-        if (n <= 0)
-            throw new IllegalArgumentException("The transform length must be >=0 : " + n);
-        this.n = n;
+  /**
+   * Create an FFT for transforming n points of real, single precision data.
+   */
+  public RealFloatFFT(int n) {
+    if (n <= 0) {
+      throw new IllegalArgumentException("The transform length must be >=0 : " + n);
     }
+    this.n = n;
+  }
 
-    protected void checkData(float data[], int i0, int stride) {
-        if (i0 < 0)
-            throw new IllegalArgumentException("The offset must be >=0 : " + i0);
-        if (stride < 1)
-            throw new IllegalArgumentException("The stride must be >=1 : " + stride);
-        if (i0 + stride * (n - 1) + 1 > data.length)
-            throw new IllegalArgumentException("The data array is too small for " + n + ":" +
-                    "i0=" + i0 + " stride=" + stride +
-                    " data.length=" + data.length);
+  protected void checkData(float data[], int i0, int stride) {
+    if (i0 < 0) {
+      throw new IllegalArgumentException("The offset must be >=0 : " + i0);
     }
-
-    /**
-     * Compute the Fast Fourier Transform of data leaving the result in data.
-     */
-    public void transform(float data[]) {
-        transform(data, 0, 1);
+    if (stride < 1) {
+      throw new IllegalArgumentException("The stride must be >=1 : " + stride);
     }
-
-    /**
-     * Compute the Fast Fourier Transform of data leaving the result in data.
-     */
-    public abstract void transform(float data[], int i0, int stride);
-
-    /**
-     * Return data in wraparound order.
-     *
-     * @see <a href="package-summary.html#wraparound">wraparound format</A>
-     */
-    public float[] toWraparoundOrder(float data[]) {
-        return toWraparoundOrder(data, 0, 1);
+    if (i0 + stride * (n - 1) + 1 > data.length) {
+      throw new IllegalArgumentException("The data array is too small for " + n + ":" +
+          "i0=" + i0 + " stride=" + stride +
+          " data.length=" + data.length);
     }
+  }
 
-    /**
-     * Return data in wraparound order.
-     * i0 and stride are used to traverse data; the new array is in
-     * packed (i0=0, stride=1) format.
-     *
-     * @see <a href="package-summary.html#wraparound">wraparound format</A>
-     */
-    public abstract float[] toWraparoundOrder(float data[], int i0, int stride);
+  /**
+   * Compute the Fast Fourier Transform of data leaving the result in data.
+   */
+  public void transform(float data[]) {
+    transform(data, 0, 1);
+  }
 
-    /**
-     * Compute the (unnomalized) inverse FFT of data, leaving it in place.
-     */
-    public void backtransform(float data[]) {
-        backtransform(data, 0, 1);
-    }
+  /**
+   * Compute the Fast Fourier Transform of data leaving the result in data.
+   */
+  public abstract void transform(float data[], int i0, int stride);
 
-    /**
-     * Compute the (unnomalized) inverse FFT of data, leaving it in place.
-     */
-    public abstract void backtransform(float data[], int i0, int stride);
+  /**
+   * Return data in wraparound order.
+   *
+   * @see <a href="package-summary.html#wraparound">wraparound format</A>
+   */
+  public float[] toWraparoundOrder(float data[]) {
+    return toWraparoundOrder(data, 0, 1);
+  }
 
-    /**
-     * Return the normalization factor.
-     * Multiply the elements of the backtransform'ed data to get the normalized inverse.
-     */
-    public float normalization() {
-        return 1.0f / ((float) n);
-    }
+  /**
+   * Return data in wraparound order.
+   * i0 and stride are used to traverse data; the new array is in
+   * packed (i0=0, stride=1) format.
+   *
+   * @see <a href="package-summary.html#wraparound">wraparound format</A>
+   */
+  public abstract float[] toWraparoundOrder(float data[], int i0, int stride);
 
-    /**
-     * Compute the (nomalized) inverse FFT of data, leaving it in place.
-     */
-    public void inverse(float data[]) {
-        inverse(data, 0, 1);
-    }
+  /**
+   * Compute the (unnomalized) inverse FFT of data, leaving it in place.
+   */
+  public void backtransform(float data[]) {
+    backtransform(data, 0, 1);
+  }
 
-    /**
-     * Compute the (nomalized) inverse FFT of data, leaving it in place.
-     */
-    public void inverse(float data[], int i0, int stride) {
-        backtransform(data, i0, stride);
+  /**
+   * Compute the (unnomalized) inverse FFT of data, leaving it in place.
+   */
+  public abstract void backtransform(float data[], int i0, int stride);
+
+  /**
+   * Return the normalization factor.
+   * Multiply the elements of the backtransform'ed data to get the normalized inverse.
+   */
+  public float normalization() {
+    return 1.0f / ((float) n);
+  }
+
+  /**
+   * Compute the (nomalized) inverse FFT of data, leaving it in place.
+   */
+  public void inverse(float data[]) {
+    inverse(data, 0, 1);
+  }
+
+  /**
+   * Compute the (nomalized) inverse FFT of data, leaving it in place.
+   */
+  public void inverse(float data[], int i0, int stride) {
+    backtransform(data, i0, stride);
 
   /* normalize inverse fft with 1/n */
-        float norm = normalization();
-        for (int i = 0; i < n; i++)
-            data[i0 + stride * i] *= norm;
+    float norm = normalization();
+    for (int i = 0; i < n; i++) {
+      data[i0 + stride * i] *= norm;
     }
+  }
 
 }

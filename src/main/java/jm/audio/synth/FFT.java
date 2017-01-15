@@ -34,29 +34,29 @@ import jm.audio.math.RealFloatFFT_Radix2;
  */
 
 public final class FFT extends AudioObject {
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
 
-    /**
-     *
-     */
-    public FFT(AudioObject ao) {
-        super(ao, "[FFT]");
-    }
+  /**
+   *
+   */
+  public FFT(AudioObject ao) {
+    super(ao, "[FFT]");
+  }
 
-    //----------------------------------------------
-    // Methods
-    //----------------------------------------------
+  //----------------------------------------------
+  // Methods
+  //----------------------------------------------
 
-    /**
-     * Process each buffer of samples in turn.
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = this.previous[0].nextWork(buffer);
-        RealFloatFFT_Radix2 fft = null;
-        fft = new RealFloatFFT_Radix2(inst.getBufSize());
-        fft.transform(buffer);
-        return returned;
-    }
+  /**
+   * Process each buffer of samples in turn.
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = this.previous[0].nextWork(buffer);
+    RealFloatFFT_Radix2 fft = null;
+    fft = new RealFloatFFT_Radix2(inst.getBufSize());
+    fft.transform(buffer);
+    return returned;
+  }
 }

@@ -33,48 +33,48 @@ import jm.audio.AudioObject;
  */
 
 public final class Add extends AudioObject {
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
 
-    /**
-     * This constructor takes any number of AudioObjects
-     * as input expecting each of them to be passing
-     * in sample data to be summed before output.
-     *
-     * @param ao any number of Audio Objects.
-     */
-    public Add(AudioObject[] ao) {
-        super(ao, "[Add]");
+  /**
+   * This constructor takes any number of AudioObjects
+   * as input expecting each of them to be passing
+   * in sample data to be summed before output.
+   *
+   * @param ao any number of Audio Objects.
+   */
+  public Add(AudioObject[] ao) {
+    super(ao, "[Add]");
+  }
+
+  //----------------------------------------------
+  // Methods
+  //----------------------------------------------
+
+  /**
+   * This nextWork method adds all inputs together
+   * and passes on a normalised result of the
+   * sum.
+   *
+   * @param input any number of incoming samples
+   */
+  public int work(float[] buffer) throws AOException {
+    float[][] buf = new float[this.inputs][];
+    buf[0] = new float[buffer.length];
+    int returned = this.previous[0].nextWork(buf[0]);
+    for (int i = 1; i < inputs; i++) {
+      buf[i] = new float[returned];
+      if (returned != this.previous[i].nextWork(buf[i])) {
+        throw new AOException(this.name, 0);
+      }
     }
-
-    //----------------------------------------------
-    // Methods
-    //----------------------------------------------
-
-    /**
-     * This nextWork method adds all inputs together
-     * and passes on a normalised result of the
-     * sum.
-     *
-     * @param input any number of incoming samples
-     */
-    public int work(float[] buffer) throws AOException {
-        float[][] buf = new float[this.inputs][];
-        buf[0] = new float[buffer.length];
-        int returned = this.previous[0].nextWork(buf[0]);
-        for (int i = 1; i < inputs; i++) {
-            buf[i] = new float[returned];
-            if (returned != this.previous[i].nextWork(buf[i])) {
-                throw new AOException(this.name, 0);
-            }
-        }
-        int ret = 0;
-        for (; ret < returned; ret++) {
-            for (int j = 0; j < inputs; j++) {
-                buffer[ret] += buf[j][ret];
-            }
-        }
-        return ret;
+    int ret = 0;
+    for (; ret < returned; ret++) {
+      for (int j = 0; j < inputs; j++) {
+        buffer[ret] += buf[j][ret];
+      }
     }
+    return ret;
+  }
 }

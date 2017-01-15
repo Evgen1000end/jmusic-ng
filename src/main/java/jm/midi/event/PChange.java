@@ -36,127 +36,129 @@ import java.io.IOException;
  * VoiceEvt.
  * (see class VoiceEvt for more information)
  *
- * @author Andrew Sorensen
- *         **********************************************************
+ * @author Andrew Sorensen **********************************************************
  */
 
 public final class PChange implements VoiceEvt, Cloneable {
-    private final short id = 007;
-    private short value;
-    private short midiChannel;
-    private int time;
 
-    /**
-     * Create a program change event with no initial values
-     */
-    public PChange() {
-        this.value = 0;
-        this.midiChannel = 0;
-        this.time = 0;
-    }
+  private final short id = 007;
+  private short value;
+  private short midiChannel;
+  private int time;
 
-    /**
-     * Create a program change event with a program change value, midiChannel and time.
-     */
-    public PChange(short value, short midiChannel, int time) {
-        this.value = value;
-        this.midiChannel = midiChannel;
-        this.time = time;
-    }
-    //---------------------------------
-    //value
+  /**
+   * Create a program change event with no initial values
+   */
+  public PChange() {
+    this.value = 0;
+    this.midiChannel = 0;
+    this.time = 0;
+  }
 
-    /**
-     * Returns a program change events program change value
-     */
-    public short getValue() {
-        return value;
-    }
+  /**
+   * Create a program change event with a program change value, midiChannel and time.
+   */
+  public PChange(short value, short midiChannel, int time) {
+    this.value = value;
+    this.midiChannel = midiChannel;
+    this.time = time;
+  }
+  //---------------------------------
+  //value
 
-    /**
-     * Sets a program change events program change value
-     */
-    public void setValue(short value) {
-        this.value = value;
-    }
-    //--------------------------------
-    //MIDI Channel
+  /**
+   * Returns a program change events program change value
+   */
+  public short getValue() {
+    return value;
+  }
 
-    /**
-     * Returns a program change events MIDI channel
-     */
-    public short getMidiChannel() {
-        return midiChannel;
-    }
+  /**
+   * Sets a program change events program change value
+   */
+  public void setValue(short value) {
+    this.value = value;
+  }
+  //--------------------------------
+  //MIDI Channel
 
-    /**
-     * Sets a program change events MIDI channel
-     */
-    public void setMidiChannel(short midiChannel) {
-        this.midiChannel = midiChannel;
-    }
-    //--------------------------------
-    //Time
+  /**
+   * Returns a program change events MIDI channel
+   */
+  public short getMidiChannel() {
+    return midiChannel;
+  }
 
-    /**
-     * Returns a program change events time
-     */
-    public int getTime() {
-        return time;
-    }
+  /**
+   * Sets a program change events MIDI channel
+   */
+  public void setMidiChannel(short midiChannel) {
+    this.midiChannel = midiChannel;
+  }
+  //--------------------------------
+  //Time
 
-    /**
-     * Sets a program change events time
-     */
-    public void setTime(int time) {
-        this.time = time;
-    }
+  /**
+   * Returns a program change events time
+   */
+  public int getTime() {
+    return time;
+  }
 
-    //--------------------------------
-    //Return ID
-    public short getID() {
-        return id;
-    }
+  /**
+   * Sets a program change events time
+   */
+  public void setTime(int time) {
+    this.time = time;
+  }
 
-    //----------------------------------------------
-    // Write the contents of this object out to disk
-    //----------------------------------------------
-    public int write(DataOutputStream dos) throws IOException {
-        //System.out.println("Writing program change");
-        int bytes_out = jm.midi.MidiUtil.writeVarLength(this.time, dos);
-        dos.writeByte((byte) (0xC0 + midiChannel));
-        dos.writeByte((byte) value);
-        return bytes_out + 2;
-    }
+  //--------------------------------
+  //Return ID
+  public short getID() {
+    return id;
+  }
 
-    //----------------------------------------------
-    // Read the contends of this objec in from disk
-    public int read(DataInputStream dis) throws IOException {
-        this.value = (short) dis.readUnsignedByte();
-        return 1;
-    }
+  //----------------------------------------------
+  // Write the contents of this object out to disk
+  //----------------------------------------------
+  public int write(DataOutputStream dos) throws IOException {
+    //System.out.println("Writing program change");
+    int bytes_out = jm.midi.MidiUtil.writeVarLength(this.time, dos);
+    dos.writeByte((byte) (0xC0 + midiChannel));
+    dos.writeByte((byte) value);
+    return bytes_out + 2;
+  }
 
-    //--------------------------------
-    //Copy Object
-    public Event copy() throws CloneNotSupportedException {
-        PChange event;
-        try {
-            event = (PChange) this.clone();
-        } catch (CloneNotSupportedException e) {
-            System.out.println(e);
-            event = new PChange();
-        }
-        return event;
-    }
+  //----------------------------------------------
+  // Read the contends of this objec in from disk
+  public int read(DataInputStream dis) throws IOException {
+    this.value = (short) dis.readUnsignedByte();
+    return 1;
+  }
 
-    //--------------------------------
-    //Print
-    public void print() {
-        System.out.println(toString());
+  //--------------------------------
+  //Copy Object
+  public Event copy() throws CloneNotSupportedException {
+    PChange event;
+    try {
+      event = (PChange) this.clone();
+    } catch (CloneNotSupportedException e) {
+      System.out.println(e);
+      event = new PChange();
     }
+    return event;
+  }
 
-    public String toString() {
-        return new String("Program Change(007): [time = " + time + "][midiChannel = " + midiChannel + "][value = " + value + "]");
-    }
+  //--------------------------------
+  //Print
+  public void print() {
+    System.out.println(toString());
+  }
+
+  public String toString() {
+    return new String(
+        "Program Change(007): [time = " + time + "][midiChannel = " + midiChannel + "][value = "
+            + value + "]");
+  }
 }
 

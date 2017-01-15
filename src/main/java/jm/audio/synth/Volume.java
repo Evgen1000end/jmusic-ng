@@ -39,126 +39,128 @@ import jm.audio.AudioObject;
  */
 
 public final class Volume extends AudioObject {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
-    /**
-     * The percent to alter volume by e.g. 1.0 makes
-     * no alteration to the voluem 0.5 reduces it by
-     * half. 2.0 doubles it etc....
-     */
-    float mainVolume = (float) 1.0; //default is to make no alteration
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
+  /**
+   * The percent to alter volume by e.g. 1.0 makes
+   * no alteration to the voluem 0.5 reduces it by
+   * half. 2.0 doubles it etc....
+   */
+  float mainVolume = (float) 1.0; //default is to make no alteration
 
-    float volume = (float) 1.0;
-    double linearVolumeValue = 1.0;
+  float volume = (float) 1.0;
+  double linearVolumeValue = 1.0;
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
-    /**
-     * The nextWork method for <bl>Volume<bl> will multiply
-     * the sample and default volume. Otherwise the inputs
-     * are as follows. <br>
-     * <br>
-     * input 2 is the incoming volume <br>
-     * input 1 is the incoming sample <br>
-     */
-    private int returned, index;
-    private float[] tmp;
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
+  /**
+   * The nextWork method for <bl>Volume<bl> will multiply
+   * the sample and default volume. Otherwise the inputs
+   * are as follows. <br>
+   * <br>
+   * input 2 is the incoming volume <br>
+   * input 1 is the incoming sample <br>
+   */
+  private int returned, index;
+  private float[] tmp;
 
-    /**
-     * The standard Volume constructor takes a Single
-     * Audio Object as input and sets a default volume
-     * which will adjust all samples passing through
-     * this object.
-     *
-     * @param ao The single AudioObject taken as input.
-     */
-    public Volume(AudioObject ao) {
-        this(ao, 1.0f);
-    }
+  /**
+   * The standard Volume constructor takes a Single
+   * Audio Object as input and sets a default volume
+   * which will adjust all samples passing through
+   * this object.
+   *
+   * @param ao The single AudioObject taken as input.
+   */
+  public Volume(AudioObject ao) {
+    this(ao, 1.0f);
+  }
 
+  //----------------------------------------------
+  // Public Methods
+  //----------------------------------------------
 
-    //----------------------------------------------
-    // Public Methods
-    //----------------------------------------------
+  /**
+   * The standard Volume constructor takes a Single
+   * Audio Object as input and sets a default volume
+   * which will adjust all samples passing through
+   * this object.
+   *
+   * @param ao The single AudioObject taken as input.
+   * @param volume The default volume for all samples.
+   */
+  public Volume(AudioObject ao, double volume) {
+    this(ao, (float) volume);
+  }
 
-    /**
-     * The standard Volume constructor takes a Single
-     * Audio Object as input and sets a default volume
-     * which will adjust all samples passing through
-     * this object.
-     *
-     * @param ao     The single AudioObject taken as input.
-     * @param volume The default volume for all samples.
-     */
-    public Volume(AudioObject ao, double volume) {
-        this(ao, (float) volume);
-    }
+  //----------------------------------------------
+  // Protected Methods
+  //----------------------------------------------
 
-    //----------------------------------------------
-    // Protected Methods
-    //----------------------------------------------
-    /**
-     * The standard Volume constructor takes a Single
-     * Audio Object as input and sets a default volume
-     * which will adjust all samples passing through
-     * this object.
-     *
-     * @param ao     the single AudioObject taken as input.
-     * @param volume the default volume for all samples.
-     */
-    public Volume(AudioObject ao, float volume) {
-        super(ao, "[Volume]");
-        this.mainVolume = volume;
-    }
+  /**
+   * The standard Volume constructor takes a Single
+   * Audio Object as input and sets a default volume
+   * which will adjust all samples passing through
+   * this object.
+   *
+   * @param ao the single AudioObject taken as input.
+   * @param volume the default volume for all samples.
+   */
+  public Volume(AudioObject ao, float volume) {
+    super(ao, "[Volume]");
+    this.mainVolume = volume;
+  }
 
-    /**
-     */
-    public void build() {
-        this.linearVolumeValue = (double) currentNote.getDynamic() / 127.0;
-        this.volume = (float) ((1.0 - (Math.log(128.0 -
-                (double) currentNote.getDynamic())) * 0.2)) * mainVolume;
-    }
+  /**
+   */
+  public void build() {
+    this.linearVolumeValue = (double) currentNote.getDynamic() / 127.0;
+    this.volume = (float) ((1.0 - (Math.log(128.0 -
+        (double) currentNote.getDynamic())) * 0.2)) * mainVolume;
+  }
 
-    public int work(float[] buffer) throws AOException {
-        returned = this.previous[0].nextWork(buffer);
-        if (this.inputs == 2) {
-            if (tmp == null || tmp.length != buffer.length) {
-                tmp = new float[buffer.length];
-            } else for (index = 0; index < tmp.length; index++) {
-                tmp[index] = 0.0f;
-            }
-            if (returned != this.previous[1].nextWork(tmp)) {
-                throw new AOException(this.name, 0);
-            }
-            for (index = 0; index < returned; index++) {
-                buffer[index] = buffer[index] * tmp[index];
-            }
-        } else {
-            for (index = 0; index < returned; index++) {
-                buffer[index] = buffer[index] * this.volume;
-            }
+  public int work(float[] buffer) throws AOException {
+    returned = this.previous[0].nextWork(buffer);
+    if (this.inputs == 2) {
+      if (tmp == null || tmp.length != buffer.length) {
+        tmp = new float[buffer.length];
+      } else {
+        for (index = 0; index < tmp.length; index++) {
+          tmp[index] = 0.0f;
         }
-        return returned;
+      }
+      if (returned != this.previous[1].nextWork(tmp)) {
+        throw new AOException(this.name, 0);
+      }
+      for (index = 0; index < returned; index++) {
+        buffer[index] = buffer[index] * tmp[index];
+      }
+    } else {
+      for (index = 0; index < returned; index++) {
+        buffer[index] = buffer[index] * this.volume;
+      }
     }
+    return returned;
+  }
 
-    /**
-     * Return the current lienar volumelevel (0.0 - 1.0 normally).
-     *
-     * @return volume The current linear volume volue.
-     */
-    public double getVolume() {
-        return this.linearVolumeValue;
-    }
+  /**
+   * Return the current lienar volumelevel (0.0 - 1.0 normally).
+   *
+   * @return volume The current linear volume volue.
+   */
+  public double getVolume() {
+    return this.linearVolumeValue;
+  }
 
-    /**
-     * Specify a new volume level (0.0 - 1.0 normally).
-     *
-     * @param vol The new volume volue.
-     */
-    public void setVolume(double volValue) {
-        this.linearVolumeValue = volValue;
-        this.volume = (float) Math.min(1.0, (Math.abs(Math.log(1.0 - volValue) * 0.2)));
-    }
+  /**
+   * Specify a new volume level (0.0 - 1.0 normally).
+   *
+   * @param vol The new volume volue.
+   */
+  public void setVolume(double volValue) {
+    this.linearVolumeValue = volValue;
+    this.volume = (float) Math.min(1.0, (Math.abs(Math.log(1.0 - volValue) * 0.2)));
+  }
 }

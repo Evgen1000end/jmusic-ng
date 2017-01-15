@@ -28,60 +28,63 @@ package jm.audio.synth;
 */
 
 public class MassObject {
-    /* weight of the mass */
-    private double massSize = 1.0;
-    /* reduce the amplitude over time */
-    private double friction = 0.000003;
-    /**
-     * remember the previous force
-     */
-    private double inertia = 0.0;
-    /* the number of time intervals since the last calulation */
-    private double deltaTime = 1.0;
-    /* the virtical pixel position of this mass */
-    private double yPosition;
 
-    //////////////////
-    // constructors
-    /////////////////
-    public MassObject() {
-        this(1.0);
+  /* weight of the mass */
+  private double massSize = 1.0;
+  /* reduce the amplitude over time */
+  private double friction = 0.000003;
+  /**
+   * remember the previous force
+   */
+  private double inertia = 0.0;
+  /* the number of time intervals since the last calulation */
+  private double deltaTime = 1.0;
+  /* the virtical pixel position of this mass */
+  private double yPosition;
+
+  //////////////////
+  // constructors
+  /////////////////
+  public MassObject() {
+    this(1.0);
+  }
+
+  public MassObject(double friction) {
+    this(friction, 1.0);
+  }
+
+  public MassObject(double friction, double size) {
+    this.massSize = size;
+    this.friction = friction;
+  }
+
+  /**
+   * return the virtical pixel location of the top of this mass
+   */
+  public double getYPosition() {
+    return this.yPosition;
+  }
+
+  /**
+   * specify the virtical pixel location for the top of this mass
+   */
+  public void setYPosition(double newPos) {
+    this.yPosition = newPos;
+  }
+
+  public double getDisplacement(double force) {
+    force += inertia; // add feedback loop to maintain momentum
+    if ((inertia < 0.0 && friction > 0.0) || (inertia > 0.0 && friction < 0.0)) {
+      friction = friction * -1;
     }
-
-    public MassObject(double friction) {
-        this(friction, 1.0);
+    if (Math.abs(friction) > Math.abs(force)) {
+      inertia = 0.0;
+    } else {
+      inertia = force - friction; // original math
     }
+    double accel = force / massSize;
+    double displacement = accel / (deltaTime * deltaTime);
 
-    public MassObject(double friction, double size) {
-        this.massSize = size;
-        this.friction = friction;
-    }
-
-    /**
-     * return the virtical pixel location of the top of this mass
-     */
-    public double getYPosition() {
-        return this.yPosition;
-    }
-
-    /**
-     * specify the virtical pixel location for the top of this mass
-     */
-    public void setYPosition(double newPos) {
-        this.yPosition = newPos;
-    }
-
-    public double getDisplacement(double force) {
-        force += inertia; // add feedback loop to maintain momentum
-        if ((inertia < 0.0 && friction > 0.0) || (inertia > 0.0 && friction < 0.0)) {
-            friction = friction * -1;
-        }
-        if (Math.abs(friction) > Math.abs(force)) {
-            inertia = 0.0;
-        } else inertia = force - friction; // original math
-        double accel = force / massSize;
-        double displacement = accel / (deltaTime * deltaTime);
-
-        return displacement;
-    }
+    return displacement;
+  }
 }

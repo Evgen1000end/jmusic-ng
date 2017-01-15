@@ -21,63 +21,62 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.midi;
 
-import jm.midi.event.Event;
-
 import java.util.Enumeration;
 import java.util.Vector;
+import jm.midi.event.Event;
 
 /**
  * The Track class is designed to hold a MIDI file Tracks SMF events
  */
 public class Track {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
-    /**
-     * A Vector to hold SMF events
-     */
-    private Vector eventList;
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
+  /**
+   * A Vector to hold SMF events
+   */
+  private Vector eventList;
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
-    public Track() {
-        this.eventList = new Vector();
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
+  public Track() {
+    this.eventList = new Vector();
+  }
+
+  //----------------------------------------------
+  // Methods
+  //----------------------------------------------
+
+  /**
+   * Add a SMF event to the Track
+   *
+   * @param Event event - the SMF event to add
+   */
+  public void addEvent(Event event) {
+    this.eventList.addElement(event);
+  }
+
+  /**
+   * Return the Tracks event Vector
+   *
+   * @return Vector - the event list
+   */
+  public Vector getEvtList() {
+    return this.eventList;
+  }
+
+  /**
+   * Print this Tracks event data to stdout
+   */
+  public void print() {
+    System.out.println("------------------");
+    System.out.println("Track");
+    Enumeration enum1 = eventList.elements();
+    while (enum1.hasMoreElements()) {
+      Event event = (Event) enum1.nextElement();
+      //event.print();
     }
-
-    //----------------------------------------------
-    // Methods
-    //----------------------------------------------
-
-    /**
-     * Add a SMF event to the Track
-     *
-     * @param Event event - the SMF event to add
-     */
-    public void addEvent(Event event) {
-        this.eventList.addElement(event);
-    }
-
-    /**
-     * Return the Tracks event Vector
-     *
-     * @return Vector - the event list
-     */
-    public Vector getEvtList() {
-        return this.eventList;
-    }
-
-    /**
-     * Print this Tracks event data to stdout
-     */
-    public void print() {
-        System.out.println("------------------");
-        System.out.println("Track");
-        Enumeration enum1 = eventList.elements();
-        while (enum1.hasMoreElements()) {
-            Event event = (Event) enum1.nextElement();
-            //event.print();
-        }
-        //System.out.println();
-    }
+    //System.out.println();
+  }
 }

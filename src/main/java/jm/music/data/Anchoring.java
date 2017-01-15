@@ -26,30 +26,31 @@ package jm.music.data;
  */
 
 public class Anchoring {
-    final Phrase anchor;
 
-    final Alignment alignment;
+  final Phrase anchor;
 
-    final double offset;
+  final Alignment alignment;
 
-    Anchoring(final Phrase anchor, final Alignment alignment,
-              final double offset) {
-        this.anchor = anchor;
-        this.alignment = alignment;
-        this.offset = offset;
-    }
+  final double offset;
 
-    public final Phrase getAnchor() {
-        return anchor;
-    }
+  Anchoring(final Phrase anchor, final Alignment alignment,
+      final double offset) {
+    this.anchor = anchor;
+    this.alignment = alignment;
+    this.offset = offset;
+  }
 
-    public final Alignment getAlignment() {
-        return alignment;
-    }
+  public final Phrase getAnchor() {
+    return anchor;
+  }
 
-    public final double getOffset() {
-        return offset;
-    }
+  public final Alignment getAlignment() {
+    return alignment;
+  }
+
+  public final double getOffset() {
+    return offset;
+  }
 
 
 }

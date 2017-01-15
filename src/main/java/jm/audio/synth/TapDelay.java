@@ -33,88 +33,95 @@ import jm.audio.AudioObject;
  */
 
 public final class TapDelay extends AudioObject {
-    //The gain of this comb filter
-    private float decay;
 
-    //The delay (in samples) to use with this comb filter
-    private int delay;
+  //The gain of this comb filter
+  private float decay;
 
-    //Number of samples to delay by
-    private float[] delayLine;
+  //The delay (in samples) to use with this comb filter
+  private int delay;
 
-    //Delay line current index
-    private int delayIndex;
+  //Number of samples to delay by
+  private float[] delayLine;
 
-    //number of taps in this delay line
-    private int taps;
+  //Delay line current index
+  private int delayIndex;
 
-    //number of samples which delay is equal to
-    private int sampleDelay;
+  //number of taps in this delay line
+  private int taps;
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  //number of samples which delay is equal to
+  private int sampleDelay;
 
-    /**
-     * @param delay delay in milliseconds
-     */
-    public TapDelay(AudioObject ao, int delay, int taps) {
-        this(ao, delay, taps, 0.5);
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
+
+  /**
+   * @param delay delay in milliseconds
+   */
+  public TapDelay(AudioObject ao, int delay, int taps) {
+    this(ao, delay, taps, 0.5);
+  }
+
+  /**
+   * @param delay delay in milliseconds
+   * @param gain as a percent
+   */
+  public TapDelay(AudioObject ao, int delay, int taps, double decay) {
+    super(ao, "[Tap Delay]");
+    this.finished = false;
+    this.decay = (float) decay;
+    this.delay = delay;
+    this.taps = taps;
+  }
+
+  //----------------------------------------------
+  // Methods
+  //----------------------------------------------
+
+  /**
+   * @param buffer any number of incoming samples
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = buffer.length;
+    if (!this.inst.finishedNewData && this.inst.getFinished()) {
+      returned = this.previous[0].nextWork(buffer);
     }
-
-    /**
-     * @param delay delay in milliseconds
-     * @param gain  as a percent
-     */
-    public TapDelay(AudioObject ao, int delay, int taps, double decay) {
-        super(ao, "[Tap Delay]");
-        this.finished = false;
-        this.decay = (float) decay;
-        this.delay = delay;
-        this.taps = taps;
-    }
-
-    //----------------------------------------------
-    // Methods
-    //----------------------------------------------
-
-    /**
-     * @param buffer any number of incoming samples
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = buffer.length;
-        if (!this.inst.finishedNewData && this.inst.getFinished()) returned = this.previous[0].nextWork(buffer);
-        int i = 0;
-        float max = 0.0f;
-        for (; i < returned; i++) {
-            for (int k = 1; k <= taps; k++) {
-                int tapIndex = delayIndex + (sampleDelay * this.channels * k);
-                if (tapIndex >= delayLine.length) tapIndex -= delayLine.length;
-                delayLine[tapIndex] += buffer[i] * (decay / k);
-            }
-            buffer[i] += delayLine[delayIndex];
-            delayLine[delayIndex] = 0.0f;
-            delayIndex++;
-            if (delayIndex >= delayLine.length) {
-                delayIndex = 0;
-            }
-            if (max < buffer[i]) max = buffer[i];
+    int i = 0;
+    float max = 0.0f;
+    for (; i < returned; i++) {
+      for (int k = 1; k <= taps; k++) {
+        int tapIndex = delayIndex + (sampleDelay * this.channels * k);
+        if (tapIndex >= delayLine.length) {
+          tapIndex -= delayLine.length;
         }
-        if (this.inst.iterations <= (0 - delayLine.length)) {
-            this.finished = true;
-        }
-        return i;
+        delayLine[tapIndex] += buffer[i] * (decay / k);
+      }
+      buffer[i] += delayLine[delayIndex];
+      delayLine[delayIndex] = 0.0f;
+      delayIndex++;
+      if (delayIndex >= delayLine.length) {
+        delayIndex = 0;
+      }
+      if (max < buffer[i]) {
+        max = buffer[i];
+      }
     }
+    if (this.inst.iterations <= (0 - delayLine.length)) {
+      this.finished = true;
+    }
+    return i;
+  }
 
-    /**
-     *
-     */
-    public void build() {
-        if (delayLine == null) {
-            this.sampleDelay = (int) (((float) this.delay / 1000.0f) * (float) this.sampleRate);
-            this.delayLine = new float[sampleDelay * this.channels * taps];
-            this.delayIndex = 0;
-        }
-        this.finished = false;
+  /**
+   *
+   */
+  public void build() {
+    if (delayLine == null) {
+      this.sampleDelay = (int) (((float) this.delay / 1000.0f) * (float) this.sampleRate);
+      this.delayLine = new float[sampleDelay * this.channels * taps];
+      this.delayIndex = 0;
     }
+    this.finished = false;
+  }
 }

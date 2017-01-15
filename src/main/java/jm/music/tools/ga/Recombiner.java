@@ -30,6 +30,7 @@ import jm.music.data.Phrase;
  * @version 0.1.1, 11th December 2000
  */
 public abstract class Recombiner extends GAComponent {
-    public abstract Phrase[] recombine(Phrase[] population, double[] fitness,
-                                       double initialLength, int initialSize, int beatsPerBar);
+
+  public abstract Phrase[] recombine(Phrase[] population, double[] fitness,
+      double initialLength, int initialSize, int beatsPerBar);
 }

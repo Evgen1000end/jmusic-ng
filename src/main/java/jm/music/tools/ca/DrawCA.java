@@ -7,13 +7,13 @@
 package jm.music.tools.ca;
 
 public class DrawCA {
-    /**
-     * Note from CWeiss - so this class doesn't compile in the original source distribution due to the missing
-     * AutomataMusic class - I'm commenting it out here as its kinda a corner case (or appears to be!) but happy
-     * to fix it if someone gets me the AutomataMusic class!
-     * 2-1-2014
-     *
-     */
+  /**
+   * Note from CWeiss - so this class doesn't compile in the original source distribution due to the missing
+   * AutomataMusic class - I'm commenting it out here as its kinda a corner case (or appears to be!) but happy
+   * to fix it if someone gets me the AutomataMusic class!
+   * 2-1-2014
+   *
+   */
 }
 
 /*

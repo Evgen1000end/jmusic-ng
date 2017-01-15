@@ -35,32 +35,32 @@ import jm.audio.AudioObject;
  */
 
 public final class Invert extends AudioObject {
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
 
-    /**
-     * The standard Invert constructor takes a Single
-     * Audio Object as input. The audio object
-     * passed to it is the prior one in the chain.
-     */
-    public Invert(AudioObject ao) {
-        super(ao, "[Invert]");
+  /**
+   * The standard Invert constructor takes a Single
+   * Audio Object as input. The audio object
+   * passed to it is the prior one in the chain.
+   */
+  public Invert(AudioObject ao) {
+    super(ao, "[Invert]");
+  }
+
+  //----------------------------------------------
+  // Protected Methods
+  //----------------------------------------------
+
+  /**
+   * The work method for <bl>Invert<bl> will change
+   * the phase of each sample in the buffer.
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = this.previous[0].nextWork(buffer);
+    for (int i = 0; i < returned; i++) {
+      buffer[i] = buffer[i] * -1.0f;
     }
-
-    //----------------------------------------------
-    // Protected Methods
-    //----------------------------------------------
-
-    /**
-     * The work method for <bl>Invert<bl> will change
-     * the phase of each sample in the buffer.
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = this.previous[0].nextWork(buffer);
-        for (int i = 0; i < returned; i++) {
-            buffer[i] = buffer[i] * -1.0f;
-        }
-        return returned;
-    }
+    return returned;
+  }
 }

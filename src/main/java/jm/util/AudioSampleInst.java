@@ -29,14 +29,16 @@ import jm.audio.io.SampleIn;
  * @author Andrew Brown
  */
 public final class AudioSampleInst extends jm.audio.Instrument {
-    private String fileName;
 
-    public AudioSampleInst(String fileName) {
-        this.fileName = fileName;
-    }
+  private String fileName;
 
-    public void createChain() {
-        SampleIn sin = new SampleIn(this, fileName, true, true); //, 4, 44100, 88200); // cahce and wholefile booleans
-        // Envelope env = new Envelope(sin, new double[] {0.0, 0.0, 0.001, 1.0, 0.999, 1.0, 1.0, 0.0});
-    }
+  public AudioSampleInst(String fileName) {
+    this.fileName = fileName;
+  }
+
+  public void createChain() {
+    SampleIn sin = new SampleIn(this, fileName, true,
+        true); //, 4, 44100, 88200); // cahce and wholefile booleans
+    // Envelope env = new Envelope(sin, new double[] {0.0, 0.0, 0.001, 1.0, 0.999, 1.0, 1.0, 0.0});
+  }
 }

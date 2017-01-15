@@ -30,12 +30,12 @@ package jm.constants;
  */
 public interface Articulations {
 
-    public static final double
-            STACCATISSIMO = 0.25,
-            STACCATO = 0.4,
-            MEZZO_STACCATO = 0.75,
-            LEGATO = 0.95,
-            TENUTO = 1.0,
-            SOSTENUTO = 1.2;
+  public static final double
+      STACCATISSIMO = 0.25,
+      STACCATO = 0.4,
+      MEZZO_STACCATO = 0.75,
+      LEGATO = 0.95,
+      TENUTO = 1.0,
+      SOSTENUTO = 1.2;
 
 }

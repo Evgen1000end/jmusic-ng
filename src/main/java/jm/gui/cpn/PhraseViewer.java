@@ -24,152 +24,157 @@
 // leading provider of unvarnished software.
 package jm.gui.cpn;
 
-import jm.music.data.Note;
-import jm.music.data.Phrase;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.ScrollPane;
+import java.awt.TextArea;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.DecimalFormat;
+import jm.music.data.Note;
+import jm.music.data.Phrase;
 
 public class PhraseViewer extends Dialog
-        implements WindowListener {
+    implements WindowListener {
 
-    private ScrollPane scrollPane = new ScrollPane();
-    private TextArea textArea = new TextArea(20, 120);
-    private Phrase phrase;
-    private Stave stave;
+  private ScrollPane scrollPane = new ScrollPane();
+  private TextArea textArea = new TextArea(20, 120);
+  private Phrase phrase;
+  private Stave stave;
 
-    private DecimalFormat decimalFormat
-            = new DecimalFormat("#####.######");
+  private DecimalFormat decimalFormat
+      = new DecimalFormat("#####.######");
 
-    public PhraseViewer(
-            Frame parentFrame) {
-        super(
-                parentFrame,
-                "Phrase Detail Display",
-                true);
-        setSize(500, 400);
-        placeControls();
-        addWindowListener(this);
-        setVisible(false);
-        pack();
+  public PhraseViewer(
+      Frame parentFrame) {
+    super(
+        parentFrame,
+        "Phrase Detail Display",
+        true);
+    setSize(500, 400);
+    placeControls();
+    addWindowListener(this);
+    setVisible(false);
+    pack();
+  }
+
+
+  private void placeControls() {
+    scrollPane.add(textArea);
+    setLayout(new BorderLayout());
+    add("Center", scrollPane);
+  }
+
+  public void showPhrase(
+      Stave theStave,
+      Phrase thePhrase,
+      int locX,
+      int locY) {
+    stave = theStave;
+    phrase = thePhrase;
+    getPhraseText();
+    setLocation(locX, locY);
+    show();
+  }
+
+  private void getPhraseText() {
+    getStaveText();
+    textArea.append(
+        "Phrase has " + phrase.size() + " notes.\n");
+
+    textArea.append(
+        "Tempo "
+            + decimalFormat.format(phrase.getTempo())
+    );
+    textArea.append(
+        "    Numerator " + phrase.getNumerator());
+    textArea.append(
+        "    Denominator " + phrase.getDenominator());
+    textArea.append("\n");
+
+    for (int i = 0; i < phrase.size(); ++i) {
+      getNoteText(phrase.getNote(i));
     }
+  }
 
+  private void getStaveText() {
+    textArea.append(
+        "Stave " + stave.getTitle() +
+            "   Metre " +
+            decimalFormat.format(stave.getMetre())
+            + "\n"
+    );
+  }
 
-    private void placeControls() {
-        scrollPane.add(textArea);
-        setLayout(new BorderLayout());
-        add("Center", scrollPane);
+  private void getNoteText(Note n) {
+    textArea.append(
+        "Pitch " + n.getPitch());
+    textArea.append(
+        "   Start " +
+            decimalFormat.format(n.getSampleStartTime())
+    );
+    textArea.append(
+        "   Rhythm " +
+            decimalFormat.format(n.getRhythmValue())
+    );
+    textArea.append(
+        "   Dur " +
+            decimalFormat.format(n.getDuration())
+    );
+    textArea.append(
+        "   Offset " +
+            decimalFormat.format(n.getOffset())
+    );
+    textArea.append(
+        "   Vol " + n.getDynamic());
+    textArea.append("\n");
+  }
+
+  public void windowOpened(WindowEvent e) {
+  }
+
+  /**
+   * Invoked when a window is in the process of being closed.
+   * The close operation can be overridden at this point.
+   */
+  public void windowClosing(WindowEvent e) {
+    if (e.getSource() == this) {
+      dispose();
     }
-
-    public void showPhrase(
-            Stave theStave,
-            Phrase thePhrase,
-            int locX,
-            int locY) {
-        stave = theStave;
-        phrase = thePhrase;
-        getPhraseText();
-        setLocation(locX, locY);
-        show();
-    }
-
-    private void getPhraseText() {
-        getStaveText();
-        textArea.append(
-                "Phrase has " + phrase.size() + " notes.\n");
-
-        textArea.append(
-                "Tempo "
-                        + decimalFormat.format(phrase.getTempo())
-        );
-        textArea.append(
-                "    Numerator " + phrase.getNumerator());
-        textArea.append(
-                "    Denominator " + phrase.getDenominator());
-        textArea.append("\n");
-
-        for (int i = 0; i < phrase.size(); ++i) {
-            getNoteText(phrase.getNote(i));
-        }
-    }
-
-    private void getStaveText() {
-        textArea.append(
-                "Stave " + stave.getTitle() +
-                        "   Metre " +
-                        decimalFormat.format(stave.getMetre())
-                        + "\n"
-        );
-    }
-
-    private void getNoteText(Note n) {
-        textArea.append(
-                "Pitch " + n.getPitch());
-        textArea.append(
-                "   Start " +
-                        decimalFormat.format(n.getSampleStartTime())
-        );
-        textArea.append(
-                "   Rhythm " +
-                        decimalFormat.format(n.getRhythmValue())
-        );
-        textArea.append(
-                "   Dur " +
-                        decimalFormat.format(n.getDuration())
-        );
-        textArea.append(
-                "   Offset " +
-                        decimalFormat.format(n.getOffset())
-        );
-        textArea.append(
-                "   Vol " + n.getDynamic());
-        textArea.append("\n");
-    }
-
-    public void windowOpened(WindowEvent e) {
-    }
-
-    /**
-     * Invoked when a window is in the process of being closed.
-     * The close operation can be overridden at this point.
-     */
-    public void windowClosing(WindowEvent e) {
-        if (e.getSource() == this) dispose();
-        //System.exit(0);
-    }
+    //System.exit(0);
+  }
 
 
-    /**
-     * Invoked when a window has been closed.
-     */
-    public void windowClosed(WindowEvent e) {
-    }
+  /**
+   * Invoked when a window has been closed.
+   */
+  public void windowClosed(WindowEvent e) {
+  }
 
-    /**
-     * Invoked when a window is iconified.
-     */
-    public void windowIconified(WindowEvent e) {
-    }
+  /**
+   * Invoked when a window is iconified.
+   */
+  public void windowIconified(WindowEvent e) {
+  }
 
-    /**
-     * Invoked when a window is de-iconified.
-     */
-    public void windowDeiconified(WindowEvent e) {
-    }
+  /**
+   * Invoked when a window is de-iconified.
+   */
+  public void windowDeiconified(WindowEvent e) {
+  }
 
-    /**
-     * Invoked when a window is activated.
-     */
-    public void windowActivated(WindowEvent e) {
-    }
+  /**
+   * Invoked when a window is activated.
+   */
+  public void windowActivated(WindowEvent e) {
+  }
 
-    /**
-     * Invoked when a window is de-activated.
-     */
-    public void windowDeactivated(WindowEvent e) {
-    }
+  /**
+   * Invoked when a window is de-activated.
+   */
+  public void windowDeactivated(WindowEvent e) {
+  }
 
 }
 

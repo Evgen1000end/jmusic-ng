@@ -28,114 +28,115 @@ import java.io.Serializable;
  */
 
 public abstract class Alignment implements Serializable {
-    public static final Alignment START_TOGETHER =
-            new Alignment() {
-                public double determineStartTime(
-                        final double length,
-                        final double anchorST,
-                        final double anchorET) {
-                    return anchorST;
-                }
-            };
 
-    public static final Alignment END_TOGETHER =
-            new Alignment() {
-                public double determineStartTime(
-                        final double length,
-                        final double anchorST,
-                        final double anchorET) {
-                    return anchorET - length;
-                }
-            };
+  public static final Alignment START_TOGETHER =
+      new Alignment() {
+        public double determineStartTime(
+            final double length,
+            final double anchorST,
+            final double anchorET) {
+          return anchorST;
+        }
+      };
 
-    public static final Alignment AFTER =
-            new Alignment() {
-                public double determineStartTime(
-                        final double length,
-                        final double anchorST,
-                        final double anchorET) {
-                    return anchorET;
-                }
-            };
+  public static final Alignment END_TOGETHER =
+      new Alignment() {
+        public double determineStartTime(
+            final double length,
+            final double anchorST,
+            final double anchorET) {
+          return anchorET - length;
+        }
+      };
 
-    public static final Alignment BEFORE =
-            new Alignment() {
-                public double determineStartTime(
-                        final double length,
-                        final double anchorST,
-                        final double anchorET) {
-                    return anchorST - length;
-                }
-            };
+  public static final Alignment AFTER =
+      new Alignment() {
+        public double determineStartTime(
+            final double length,
+            final double anchorST,
+            final double anchorET) {
+          return anchorET;
+        }
+      };
 
-    public static final Alignment CENTRE_ALIGN =
-            new Alignment() {
-                public double determineStartTime(
-                        final double length,
-                        final double anchorST,
-                        final double anchorET) {
-                    return (anchorET + anchorST
-                            - length) / 2;
-                }
-            };
+  public static final Alignment BEFORE =
+      new Alignment() {
+        public double determineStartTime(
+            final double length,
+            final double anchorST,
+            final double anchorET) {
+          return anchorST - length;
+        }
+      };
 
-    public static final Alignment CENTER_ALIGN = CENTRE_ALIGN;
+  public static final Alignment CENTRE_ALIGN =
+      new Alignment() {
+        public double determineStartTime(
+            final double length,
+            final double anchorST,
+            final double anchorET) {
+          return (anchorET + anchorST
+              - length) / 2;
+        }
+      };
 
-    public static final Alignment START_ON_CENTRE =
-            new Alignment() {
-                public double determineStartTime(
-                        final double length,
-                        final double anchorST,
-                        final double anchorET) {
-                    return (anchorST + anchorET)
-                            / 2;
-                }
-            };
+  public static final Alignment CENTER_ALIGN = CENTRE_ALIGN;
 
-    public static final Alignment START_ON_CENTER = START_ON_CENTRE;
+  public static final Alignment START_ON_CENTRE =
+      new Alignment() {
+        public double determineStartTime(
+            final double length,
+            final double anchorST,
+            final double anchorET) {
+          return (anchorST + anchorET)
+              / 2;
+        }
+      };
 
-    public static final Alignment END_ON_CENTRE =
-            new Alignment() {
-                public double determineStartTime(
-                        final double length,
-                        final double anchorST,
-                        final double anchorET) {
-                    return (anchorST + anchorET) / 2
-                            - length;
-                }
-            };
+  public static final Alignment START_ON_CENTER = START_ON_CENTRE;
 
-    public static final Alignment END_ON_CENTER = END_ON_CENTRE;
+  public static final Alignment END_ON_CENTRE =
+      new Alignment() {
+        public double determineStartTime(
+            final double length,
+            final double anchorST,
+            final double anchorET) {
+          return (anchorST + anchorET) / 2
+              - length;
+        }
+      };
 
-    public static final Alignment CENTRE_ON_START =
-            new Alignment() {
-                public double determineStartTime(
-                        final double length,
-                        final double anchorST,
-                        final double anchorET) {
-                    return anchorST - (length / 2);
-                }
-            };
+  public static final Alignment END_ON_CENTER = END_ON_CENTRE;
 
-    public static final Alignment CENTER_ON_START = CENTRE_ON_START;
+  public static final Alignment CENTRE_ON_START =
+      new Alignment() {
+        public double determineStartTime(
+            final double length,
+            final double anchorST,
+            final double anchorET) {
+          return anchorST - (length / 2);
+        }
+      };
 
-    public static final Alignment CENTRE_ON_END =
-            new Alignment() {
-                public double determineStartTime(
-                        final double length,
-                        final double anchorST,
-                        final double anchorET) {
-                    return anchorET - (length / 2);
-                }
-            };
+  public static final Alignment CENTER_ON_START = CENTRE_ON_START;
 
-    public static final Alignment CENTER_ON_END = CENTRE_ON_END;
+  public static final Alignment CENTRE_ON_END =
+      new Alignment() {
+        public double determineStartTime(
+            final double length,
+            final double anchorST,
+            final double anchorET) {
+          return anchorET - (length / 2);
+        }
+      };
 
-    protected Alignment() {
-    }
+  public static final Alignment CENTER_ON_END = CENTRE_ON_END;
 
-    abstract double determineStartTime(final double length,
-                                       final double anchorStartTime,
-                                       final double anchorEndTime);
+  protected Alignment() {
+  }
+
+  abstract double determineStartTime(final double length,
+      final double anchorStartTime,
+      final double anchorEndTime);
 }
 

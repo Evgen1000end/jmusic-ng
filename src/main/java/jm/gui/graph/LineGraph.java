@@ -23,38 +23,39 @@
 
 package jm.gui.graph;
 
-import java.awt.*;
+import java.awt.ScrollPane;
 
 /**
  * @author Adam Kirby
  * @version 1.0, Sun Feb 25 18:43
  */
 public class LineGraph extends ScrollPane {
-    protected GraphCanvas graphCanvas;
 
-    public LineGraph() {
-        this(new Statistics());
-    }
+  protected GraphCanvas graphCanvas;
 
-    public LineGraph(Statistics stats) {
-        super();
-        graphCanvas = new LineGraphCanvas(stats);
-        add(graphCanvas);
-    }
+  public LineGraph() {
+    this(new Statistics());
+  }
 
-    public LineGraph(Statistics[] statsArray) {
-        super();
-        graphCanvas = new LineGraphCanvas(statsArray);
-        add(graphCanvas);
-    }
+  public LineGraph(Statistics stats) {
+    super();
+    graphCanvas = new LineGraphCanvas(stats);
+    add(graphCanvas);
+  }
 
-    public LineGraph(StatisticsList statsList) {
-        super();
-        graphCanvas = new LineGraphCanvas(statsList);
-        add(graphCanvas);
-    }
+  public LineGraph(Statistics[] statsArray) {
+    super();
+    graphCanvas = new LineGraphCanvas(statsArray);
+    add(graphCanvas);
+  }
 
-    public void addStatistics(Statistics statistics) {
-        graphCanvas.addStatistics(statistics);
-    }
+  public LineGraph(StatisticsList statsList) {
+    super();
+    graphCanvas = new LineGraphCanvas(statsList);
+    add(graphCanvas);
+  }
+
+  public void addStatistics(Statistics statistics) {
+    graphCanvas.addStatistics(statistics);
+  }
 }

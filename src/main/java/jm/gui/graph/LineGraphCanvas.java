@@ -23,68 +23,70 @@
 
 package jm.gui.graph;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
 
 /**
  * @author Adam Kirby
  * @version 1.0, Sun Feb 25 18:43
  */
 public class LineGraphCanvas extends GraphCanvas {
-    protected boolean hasMusicChanged = true;
 
-    protected Dimension preferredSize = new Dimension(800, 800);
+  protected boolean hasMusicChanged = true;
 
-    public LineGraphCanvas() {
-        super();
+  protected Dimension preferredSize = new Dimension(800, 800);
+
+  public LineGraphCanvas() {
+    super();
+  }
+
+  public LineGraphCanvas(Statistics stats) {
+    super(stats);
+  }
+
+  public LineGraphCanvas(Statistics[] statsArray) {
+    super(statsArray);
+  }
+
+  public LineGraphCanvas(StatisticsList statsList) {
+    super(statsList);
+  }
+
+  public Dimension getPreferredSize() {
+    return preferredSize;
+  }
+
+  public void paintBuffer() {
+    int size = 1000;
+    double largestValue = 1000;
+    for (int i = 0; i < statsList.size(); i++) {
+      if (statsList.get(i).size() > size) {
+        size = statsList.get(i).size();
+      }
+      if (statsList.get(i).largestValue() != Double.POSITIVE_INFINITY
+          && statsList.get(i).largestValue() > largestValue) {
+        largestValue = statsList.get(i).largestValue();
+      }
     }
+    image = createImage(size, (int) largestValue);
+    graphics = image.getGraphics();
 
-    public LineGraphCanvas(Statistics stats) {
-        super(stats);
-    }
-
-    public LineGraphCanvas(Statistics[] statsArray) {
-        super(statsArray);
-    }
-
-    public LineGraphCanvas(StatisticsList statsList) {
-        super(statsList);
-    }
-
-    public Dimension getPreferredSize() {
-        return preferredSize;
-    }
-
-    public void paintBuffer() {
-        int size = 1000;
-        double largestValue = 1000;
-        for (int i = 0; i < statsList.size(); i++) {
-            if (statsList.get(i).size() > size) {
-                size = statsList.get(i).size();
-            }
-            if (statsList.get(i).largestValue() != Double.POSITIVE_INFINITY
-                    && statsList.get(i).largestValue() > largestValue) {
-                largestValue = statsList.get(i).largestValue();
-            }
+    for (int i = 0; i < statsList.size(); i++) {
+      graphics.setColor(new Color((float) Math.random(),
+          (float) Math.random(),
+          (float) Math.random()));
+      for (int j = 1; j < statsList.get(i).size(); j++) {
+        if (statsList.get(i).largestValue()
+            != Double.POSITIVE_INFINITY) {
+          if (i == 2) {
+            graphics.drawLine((int) ((j - 1) * .5), (int) (statsList.get(i).get(j - 1) * 10000),
+                (int) (j * .5), (int) (statsList.get(i).get(j) * 10000));
+          } else {
+            graphics.drawLine((int) ((j - 1) * .5), (int) (statsList.get(i).get(j - 1) * 300),
+                (int) (j * .5), (int) (statsList.get(i).get(j) * 300));
+          }
         }
-        image = createImage(size, (int) largestValue);
-        graphics = image.getGraphics();
-
-        for (int i = 0; i < statsList.size(); i++) {
-            graphics.setColor(new Color((float) Math.random(),
-                    (float) Math.random(),
-                    (float) Math.random()));
-            for (int j = 1; j < statsList.get(i).size(); j++) {
-                if (statsList.get(i).largestValue()
-                        != Double.POSITIVE_INFINITY) {
-                    if (i == 2) {
-                        graphics.drawLine((int) ((j - 1) * .5), (int) (statsList.get(i).get(j - 1) * 10000),
-                                (int) (j * .5), (int) (statsList.get(i).get(j) * 10000));
-                    } else {
-                        graphics.drawLine((int) ((j - 1) * .5), (int) (statsList.get(i).get(j - 1) * 300),
-                                (int) (j * .5), (int) (statsList.get(i).get(j) * 300));
-                    }
-                }
-            }
-        }
+      }
     }
+  }
 }

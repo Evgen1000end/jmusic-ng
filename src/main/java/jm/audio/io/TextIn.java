@@ -22,13 +22,12 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.audio.io;
 
-import jm.audio.AOException;
-import jm.audio.AudioObject;
-import jm.audio.Instrument;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StreamTokenizer;
+import jm.audio.AOException;
+import jm.audio.AudioObject;
+import jm.audio.Instrument;
 
 /**
  * Reads in Audio data from an ascii text file and casts that data
@@ -39,79 +38,80 @@ import java.io.StreamTokenizer;
  * @version 1.0, Sun Feb 25 18:42:41  2001
  */
 public final class TextIn extends AudioObject implements jm.JMC {
-    //----------------------------------------------
-    // ATTRIBUTES
-    //----------------------------------------------
-    /**
-     * have we reached the end of the audio file
-     */
-    public boolean fin = false;
-    /**
-     * Debug constant specific to AUIn file
-     */
-    private boolean DEBUG_AUIn = DEBUG && true;
-    /**
-     * The file associated with this class
-     */
-    private String fileName;
-    /**
-     * The input stream to read the file from
-     */
-    private FileInputStream fis;
-    /**
-     * Parser
-     */
-    private StreamTokenizer st;
+  //----------------------------------------------
+  // ATTRIBUTES
+  //----------------------------------------------
+  /**
+   * have we reached the end of the audio file
+   */
+  public boolean fin = false;
+  /**
+   * Debug constant specific to AUIn file
+   */
+  private boolean DEBUG_AUIn = DEBUG && true;
+  /**
+   * The file associated with this class
+   */
+  private String fileName;
+  /**
+   * The input stream to read the file from
+   */
+  private FileInputStream fis;
+  /**
+   * Parser
+   */
+  private StreamTokenizer st;
 
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
-
-    /**
-     * A Constructor whose single argument is the name
-     * of the file to read data from.
-     *
-     * @param fileName the name of the file to read.
-     */
-    public TextIn(Instrument inst, String fileName, int sampleRate, int channels) {
-        super(inst, sampleRate, "[TextIn]");
-        this.fileName = fileName;
-        try {
-            this.fis = new FileInputStream(this.fileName);
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-        }
-        //Reader r = new BufferedReader(new InputStreamReader(fis));
-        //this.st = new StreamTokenizer(r);
-        this.channels = channels;
+  /**
+   * A Constructor whose single argument is the name
+   * of the file to read data from.
+   *
+   * @param fileName the name of the file to read.
+   */
+  public TextIn(Instrument inst, String fileName, int sampleRate, int channels) {
+    super(inst, sampleRate, "[TextIn]");
+    this.fileName = fileName;
+    try {
+      this.fis = new FileInputStream(this.fileName);
+    } catch (IOException ioe) {
+      System.out.println(ioe);
     }
+    //Reader r = new BufferedReader(new InputStreamReader(fis));
+    //this.st = new StreamTokenizer(r);
+    this.channels = channels;
+  }
 
-    //----------------------------------------------
-    // Public methods
-    //----------------------------------------------
+  //----------------------------------------------
+  // Public methods
+  //----------------------------------------------
 
-    /**
-     * Read in a sample from the file and pass it down
-     * the audio chain. We need to have the switch statement
-     * so that we can read in multple bit sizes. The input to
-     * this method is bogus as it is always the first in the
-     * audio chain and therefore receives no input.
-     *
-     * @param input bogus input here to fit in.
-     */
-    public int work(float[] buffer) throws AOException {
-        int count = 0;
-        boolean loop = true;
-        float tmp = (float) 0.0;
-        while (loop) {
-            try {
-                buffer[count++] = (float) fis.read();
-                if (count >= buffer.length) loop = false;
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-                System.exit(1);
-            }
+  /**
+   * Read in a sample from the file and pass it down
+   * the audio chain. We need to have the switch statement
+   * so that we can read in multple bit sizes. The input to
+   * this method is bogus as it is always the first in the
+   * audio chain and therefore receives no input.
+   *
+   * @param input bogus input here to fit in.
+   */
+  public int work(float[] buffer) throws AOException {
+    int count = 0;
+    boolean loop = true;
+    float tmp = (float) 0.0;
+    while (loop) {
+      try {
+        buffer[count++] = (float) fis.read();
+        if (count >= buffer.length) {
+          loop = false;
+        }
+      } catch (IOException ioe) {
+        ioe.printStackTrace();
+        System.exit(1);
+      }
                 /*
                 // this can read text more intellignetly but ...
                 try{
@@ -152,18 +152,18 @@ public final class TextIn extends AudioObject implements jm.JMC {
                         System.exit(1);
                 }
                  */
-        }
-
-        return count;
     }
 
-    public void finalize() {
-        if (fis != null) {
-            try {
-                fis.close();
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            }
-        }
+    return count;
+  }
+
+  public void finalize() {
+    if (fis != null) {
+      try {
+        fis.close();
+      } catch (IOException ioe) {
+        ioe.printStackTrace();
+      }
     }
+  }
 }

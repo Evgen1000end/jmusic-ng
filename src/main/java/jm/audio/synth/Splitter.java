@@ -34,59 +34,61 @@ import jm.audio.AudioObject;
  */
 
 public final class Splitter extends AudioObject {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
-    /**
-     * Stored buffer of samples
-     */
-    float[] buf = null;
-    /**
-     * The number of outputs that have currently requested buffers
-     */
-    int count = 0;
-    /**
-     * The number of outputs to service
-     */
-    int outputs = 0;
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
+  /**
+   * Stored buffer of samples
+   */
+  float[] buf = null;
+  /**
+   * The number of outputs that have currently requested buffers
+   */
+  int count = 0;
+  /**
+   * The number of outputs to service
+   */
+  int outputs = 0;
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
 
-    /**
-     * @param ao      the single AudioObject taken as input.
-     * @param outputs the number of outputs to support.
-     */
-    public Splitter(AudioObject ao) {
-        super(ao, "[Volume]");
+  /**
+   * @param ao the single AudioObject taken as input.
+   * @param outputs the number of outputs to support.
+   */
+  public Splitter(AudioObject ao) {
+    super(ao, "[Volume]");
+  }
+
+  //----------------------------------------------
+  // Public Methods
+  //----------------------------------------------
+
+  /**
+   */
+  public void build() {
+    this.outputs = this.next.length;
+  }
+
+  //----------------------------------------------
+  // Protected Methods
+  //----------------------------------------------
+
+  /**
+   */
+  public int work(float[] buffer) throws AOException {
+    if (count == 0) {
+      this.buf = new float[buffer.length];
+      this.previous[0].nextWork(buf);
     }
-
-    //----------------------------------------------
-    // Public Methods
-    //----------------------------------------------
-
-    /**
-     */
-    public void build() {
-        this.outputs = this.next.length;
+    if (++count == outputs) {
+      count = 0;
     }
-
-    //----------------------------------------------
-    // Protected Methods
-    //----------------------------------------------
-
-    /**
-     */
-    public int work(float[] buffer) throws AOException {
-        if (count == 0) {
-            this.buf = new float[buffer.length];
-            this.previous[0].nextWork(buf);
-        }
-        if (++count == outputs) count = 0;
-        for (int i = 0; i < this.buf.length; i++) {
-            buffer[i] = this.buf[i];
-        }
-        return this.buf.length;
+    for (int i = 0; i < this.buf.length; i++) {
+      buffer[i] = this.buf[i];
     }
+    return this.buf.length;
+  }
 }

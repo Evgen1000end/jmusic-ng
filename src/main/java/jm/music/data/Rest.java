@@ -23,19 +23,20 @@ package jm.music.data;
  * @author Andrew Brown, September 2003.
  */
 public class Rest extends Note {
-    /**
-     * Simple constructor that creates a rest of one beat length.
-     */
-    public Rest() {
-        this(1.0);
-    }
 
-    /**
-     * A constructor that creates a new Rest with the specified rhythm value.
-     *
-     * @param rhythmValue The number of beats long this rest is.
-     */
-    public Rest(double rhythmValue) {
-        super(REST, rhythmValue);
-    }
+  /**
+   * Simple constructor that creates a rest of one beat length.
+   */
+  public Rest() {
+    this(1.0);
+  }
+
+  /**
+   * A constructor that creates a new Rest with the specified rhythm value.
+   *
+   * @param rhythmValue The number of beats long this rest is.
+   */
+  public Rest(double rhythmValue) {
+    super(REST, rhythmValue);
+  }
 }

@@ -35,44 +35,45 @@ import jm.audio.AudioObject;
  */
 
 public final class Smooth extends AudioObject {
-    private float[] prevSampleValues;
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  private float[] prevSampleValues;
 
-    /**
-     * The standard Smooth constructor takes a Single
-     * Audio Object as input.
-     *
-     * @param ao The single AudioObject taken as input.
-     */
-    public Smooth(AudioObject ao) {
-        super(ao, "[Smooth]");
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
+
+  /**
+   * The standard Smooth constructor takes a Single
+   * Audio Object as input.
+   *
+   * @param ao The single AudioObject taken as input.
+   */
+  public Smooth(AudioObject ao) {
+    super(ao, "[Smooth]");
+  }
+
+  public void build() {
+    prevSampleValues = new float[channels];
+    for (int i = 0; i < prevSampleValues.length; i++) {
+      prevSampleValues[i] = 0.0f;
     }
+  }
 
-    public void build() {
-        prevSampleValues = new float[channels];
-        for (int i = 0; i < prevSampleValues.length; i++) {
-            prevSampleValues[i] = 0.0f;
-        }
+  //----------------------------------------------
+  // Protected Methods
+  //----------------------------------------------
+
+  /**
+   * The nextWork method for <bl>Smooth<bl> will average amplitude values.
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = this.previous[0].nextWork(buffer);
+    for (int i = 0; i < returned; i += channels) {
+      for (int j = 0; j < channels; j++) {
+        buffer[i + j] = buffer[i + j] * 0.5f + prevSampleValues[j] * 0.5f;
+        prevSampleValues[j] = buffer[i + j];
+      }
     }
-
-    //----------------------------------------------
-    // Protected Methods
-    //----------------------------------------------
-
-    /**
-     * The nextWork method for <bl>Smooth<bl> will average amplitude values.
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = this.previous[0].nextWork(buffer);
-        for (int i = 0; i < returned; i += channels) {
-            for (int j = 0; j < channels; j++) {
-                buffer[i + j] = buffer[i + j] * 0.5f + prevSampleValues[j] * 0.5f;
-                prevSampleValues[j] = buffer[i + j];
-            }
-        }
-        return returned;
-    }
+    return returned;
+  }
 }

@@ -17,87 +17,83 @@ import jm.audio.synth.Volume;
 
 public final class SawHPFInst extends Instrument {
 
-    //----------------------------------------------
+  //----------------------------------------------
 
-    // Attributes
+  // Attributes
 
-    //----------------------------------------------
+  //----------------------------------------------
 
-    private int sampleRate;
+  private int sampleRate;
 
-    private int filterCutoff;
+  private int filterCutoff;
 
-    private int channels;
+  private int channels;
 
+  //----------------------------------------------
 
-    //----------------------------------------------
+  // Constructor
 
-    // Constructor
+  //----------------------------------------------
 
-    //----------------------------------------------
+  /**
+   * Basic default constructor to set an initial
+   * <p/>
+   * sampling rate and use a default cutoff.
+   */
 
-    /**
-     * Basic default constructor to set an initial
-     * <p/>
-     * sampling rate and use a default cutoff.
-     *
-     * @param sampleRate
-     */
+  public SawHPFInst(int sampleRate) {
 
-    public SawHPFInst(int sampleRate) {
+    this(sampleRate, 2000);
 
-        this(sampleRate, 2000);
-
-    }
+  }
 
 
-    /**
-     * Constructor that sets sample rate and the filter cutoff frequency.
-     *
-     * @param sampleRate   The number of samples per second (quality)
-     * @param filterCutoff The frequency above which overtones are cut
-     */
+  /**
+   * Constructor that sets sample rate and the filter cutoff frequency.
+   *
+   * @param sampleRate The number of samples per second (quality)
+   * @param filterCutoff The frequency above which overtones are cut
+   */
 
-    public SawHPFInst(int sampleRate, int filterCutoff) {
+  public SawHPFInst(int sampleRate, int filterCutoff) {
 
-        this.sampleRate = sampleRate;
+    this.sampleRate = sampleRate;
 
-        this.filterCutoff = filterCutoff;
+    this.filterCutoff = filterCutoff;
 
-        this.channels = 1;
+    this.channels = 1;
 
-    }
+  }
 
+  //----------------------------------------------
 
-    //----------------------------------------------
+  // Methods
 
-    // Methods
+  //----------------------------------------------
 
-    //----------------------------------------------
+  /**
+   * Initialisation method used to build the objects that
+   * <p/>
+   * this instrument will use and specify their interconnections.
+   */
 
-    /**
-     * Initialisation method used to build the objects that
-     * <p/>
-     * this instrument will use and specify their interconnections.
-     */
+  public void createChain() {
 
-    public void createChain() {
+    Oscillator wt = new Oscillator(this, Oscillator.SAWTOOTH_WAVE,
+        this.sampleRate, this.channels);
 
-        Oscillator wt = new Oscillator(this, Oscillator.SAWTOOTH_WAVE,
-                this.sampleRate, this.channels);
+    Filter filt = new Filter(wt, this.filterCutoff, Filter.HIGH_PASS);
 
-        Filter filt = new Filter(wt, this.filterCutoff, Filter.HIGH_PASS);
+    Envelope env = new Envelope(filt,
+        new double[]{0.0, 0.0, 0.05, 1.0, 0.2,
+            0.4, 0.8, 0.3, 1.0, 0.0}
+    );
 
-        Envelope env = new Envelope(filt,
-                new double[]{0.0, 0.0, 0.05, 1.0, 0.2,
-                        0.4, 0.8, 0.3, 1.0, 0.0}
-        );
+    Volume vol = new Volume(env);
 
-        Volume vol = new Volume(env);
+    SampleOut sout = new SampleOut(vol);
 
-        SampleOut sout = new SampleOut(vol);
-
-    }
+  }
 
 }
 

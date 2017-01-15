@@ -1,14 +1,14 @@
 group = 'com.github.Evgen1000end'
 
 buildscript {
-    repositories {
-        maven {
-            url 'https://plugins.gradle.org/m2/'
-        }
+  repositories {
+    maven {
+      url 'https://plugins.gradle.org/m2/'
     }
-    dependencies {
-        classpath 'net.researchgate:gradle-release:2.4.0'
-    }
+  }
+  dependencies {
+    classpath 'net.researchgate:gradle-release:2.4.0'
+  }
 }
 
 apply plugin: 'net.researchgate.release'
@@ -20,10 +20,10 @@ sourceCompatibility = 1.8
 
 
 repositories {
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
+  mavenCentral()
+  maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+  testCompile group: 'junit', name: 'junit', version: '4.11'
 }

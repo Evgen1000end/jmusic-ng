@@ -33,10 +33,11 @@ package jm.audio;
  * @version 1.0, Sun Feb 25 18:42:43  2001
  */
 public interface AudioChainListener {
-    /**
-     * Control change is called whenever an instrument fills its sample
-     * buffer.  This effectively becomes the rate at which changes to an
-     * instrument can be made (including starting new notes).
-     */
-    public abstract void controlChange(float[] buffer, int returned, boolean finished);
+
+  /**
+   * Control change is called whenever an instrument fills its sample
+   * buffer.  This effectively becomes the rate at which changes to an
+   * instrument can be made (including starting new notes).
+   */
+  public abstract void controlChange(float[] buffer, int returned, boolean finished);
 }

@@ -30,11 +30,11 @@ package jm.constants;
  */
 public interface Frequencies {
 
-    // Math options
-    // A=440; FOR x = 0 to 127; MIDI(x) = (A / 32) * (2 ^ ((x - 9) / 12))
-    // Hertz (number of vibrations a second) = 6.875 x 2 ^ ( ( 3 + MIDI_Pitch ) / 12 )
+  // Math options
+  // A=440; FOR x = 0 to 127; MIDI(x) = (A / 32) * (2 ^ ((x - 9) / 12))
+  // Hertz (number of vibrations a second) = 6.875 x 2 ^ ( ( 3 + MIDI_Pitch ) / 12 )
 
-    public static final double[] FRQ = {
+  public static final double[] FRQ = {
                 /* (0) CN1 */   8.1757989156,
                 /* (1) CSN1*/   8.6619572180,
                 /* (2) DN1*/    9.1770239974,
@@ -163,5 +163,5 @@ public interface Frequencies {
                 /* (125) F9 */  11175.3034058561,
                 /* (126) FS9 */ 11839.8215267723,
                 /* (127) G9 */  12543.8539514160
-    };
+  };
 }

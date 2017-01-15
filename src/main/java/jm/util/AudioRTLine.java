@@ -26,19 +26,22 @@ import jm.music.data.Note;
 import jm.music.rt.RTLine;
 
 public class AudioRTLine extends RTLine {
-    private boolean firstTime = true;
 
-    public AudioRTLine(String fileName) {
-        super(new Instrument[]{new AudioSampleInst(fileName)});
-    }
+  private boolean firstTime = true;
 
-    public synchronized Note getNextNote() {
-        // duration and pitch are disregarded by the instrument
-        Note n;
-        if (firstTime) {
-            n = new Note(67, 1.0);
-            firstTime = false;
-        } else n = new Note(jm.JMC.REST, 1.0);
-        return n;
+  public AudioRTLine(String fileName) {
+    super(new Instrument[]{new AudioSampleInst(fileName)});
+  }
+
+  public synchronized Note getNextNote() {
+    // duration and pitch are disregarded by the instrument
+    Note n;
+    if (firstTime) {
+      n = new Note(67, 1.0);
+      firstTime = false;
+    } else {
+      n = new Note(jm.JMC.REST, 1.0);
     }
+    return n;
+  }
 }

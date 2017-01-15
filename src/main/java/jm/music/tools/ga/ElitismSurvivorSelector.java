@@ -30,56 +30,57 @@ import jm.music.data.Phrase;
  * @version 0.1.1, 11th December 2000
  */
 public class ElitismSurvivorSelector extends SurvivorSelector {
-    // How many of the best population to keep
-    private static final int ELITISM_CONSTANT = 2;
 
-    public ElitismSurvivorSelector() {
+  // How many of the best population to keep
+  private static final int ELITISM_CONSTANT = 2;
+
+  public ElitismSurvivorSelector() {
+  }
+
+  public Phrase[] selectSurvivors(Phrase[] population,
+      double[] fitness, Phrase children[], double[] childrensFitness) {
+    Phrase[] returnPopulation = new Phrase[population.length];
+
+    int[] eliteIndices = new int[ELITISM_CONSTANT];
+    // which phrase in the population is the best
+    int currentBestIndex = -1;
+    boolean flag;
+    boolean[] isUsed = new boolean[fitness.length];
+    for (int i = 0; i < eliteIndices.length; i++) {
+      currentBestIndex = fitness.length - 1;
+      for (int j = fitness.length - 1; j >= 0; j--) {
+        if (!isUsed[j]) {
+          currentBestIndex = j;
+        }
+      }
+      for (int j = 0; j < fitness.length - 1; j++) {
+        flag = true;
+        if (fitness[j] > fitness[currentBestIndex]) {
+          for (int k = 0; k < i; k++) {
+            if (j == eliteIndices[k]) {
+              flag = false;
+            }
+          }
+          if (flag == true) {
+            currentBestIndex = j;
+          }
+        }
+        eliteIndices[i] = currentBestIndex;
+        isUsed[currentBestIndex] = true;
+      }
     }
 
-    public Phrase[] selectSurvivors(Phrase[] population,
-                                    double[] fitness, Phrase children[], double[] childrensFitness) {
-        Phrase[] returnPopulation = new Phrase[population.length];
-
-        int[] eliteIndices = new int[ELITISM_CONSTANT];
-        // which phrase in the population is the best
-        int currentBestIndex = -1;
-        boolean flag;
-        boolean[] isUsed = new boolean[fitness.length];
-        for (int i = 0; i < eliteIndices.length; i++) {
-            currentBestIndex = fitness.length - 1;
-            for (int j = fitness.length - 1; j >= 0; j--) {
-                if (!isUsed[j]) {
-                    currentBestIndex = j;
-                }
-            }
-            for (int j = 0; j < fitness.length - 1; j++) {
-                flag = true;
-                if (fitness[j] > fitness[currentBestIndex]) {
-                    for (int k = 0; k < i; k++) {
-                        if (j == eliteIndices[k]) {
-                            flag = false;
-                        }
-                    }
-                    if (flag == true) {
-                        currentBestIndex = j;
-                    }
-                }
-                eliteIndices[i] = currentBestIndex;
-                isUsed[currentBestIndex] = true;
-            }
-        }
-
-        // sort phrases into return population based on fitness
-        for (int i = 0; i < eliteIndices.length; i++) {
-            returnPopulation[i] = population[eliteIndices[i]];
-        }
-
-        // replace all but the best with thier children
-        for (int i = 0; i < returnPopulation.length - ELITISM_CONSTANT; i++) {
-            returnPopulation[i + ELITISM_CONSTANT] = children[i];
-        }
-        //display top score
-        //System.out.println("Elitism  best Index = " + currentBestIndex + " score = " + fitness[currentBestIndex]);
-        return returnPopulation;
+    // sort phrases into return population based on fitness
+    for (int i = 0; i < eliteIndices.length; i++) {
+      returnPopulation[i] = population[eliteIndices[i]];
     }
+
+    // replace all but the best with thier children
+    for (int i = 0; i < returnPopulation.length - ELITISM_CONSTANT; i++) {
+      returnPopulation[i + ELITISM_CONSTANT] = children[i];
+    }
+    //display top score
+    //System.out.println("Elitism  best Index = " + currentBestIndex + " score = " + fitness[currentBestIndex]);
+    return returnPopulation;
+  }
 }

@@ -33,111 +33,112 @@ import java.io.IOException;
  */
 
 public final class KeySig implements Event {
-    private static final short ID = 022;
-    private int time;
-    private int keySig;
-    private int keyQual;
 
-    //------------------------------------------
-    //Constructors
+  private static final short ID = 022;
+  private int time;
+  private int keySig;
+  private int keyQual;
 
-    /**
-     * Default Constructor
-     */
-    public KeySig() {
-        this.time = 0;
-        this.keySig = 0;
-        this.keyQual = 0;
+  //------------------------------------------
+  //Constructors
+
+  /**
+   * Default Constructor
+   */
+  public KeySig() {
+    this.time = 0;
+    this.keySig = 0;
+    this.keyQual = 0;
+  }
+
+  public KeySig(int keySig, int keyQual) {
+    this.time = 0;
+    this.keySig = keySig;
+    this.keyQual = keyQual;
+  }
+
+  public KeySig(int time, int keySig, int keyQual) {
+    this.time = time;
+    this.keySig = keySig;
+    this.keyQual = keyQual;
+  }
+
+  //--------------------------------------------
+  public int getKeyQuality() {
+    return this.keyQual;
+  }
+
+  public void setKeyQuality(int keyQuality) {
+    this.keyQual = keyQuality;
+  }
+
+  public int getKeySig() {
+    return this.keySig;
+  }
+
+  public void setKeySig(int keySig) {
+    this.keySig = keySig;
+  }
+
+  //-----------------------------------------------
+  //time
+  public int getTime() {
+    return time;
+  }
+
+  public void setTime(int time) {
+    this.time = time;
+  }
+
+  //----------------------------------------------
+  //Return Id
+  public short getID() {
+    return ID;
+  }
+
+  //----------------------------------------------
+  // Write the contents of this object out to disk
+  //----------------------------------------------
+  public int write(DataOutputStream dos) throws IOException {
+    int bytes_out = jm.midi.MidiUtil.writeVarLength(this.time, dos);
+    dos.writeByte(0xFF);
+    dos.writeByte(0x59);
+    bytes_out += jm.midi.MidiUtil.writeVarLength(2, dos);
+    dos.writeByte((byte) this.keySig);
+    dos.writeByte((byte) this.keyQual);
+    return bytes_out + 4;
+  }
+
+  /**
+   * Read the contends of this objec in from disk.<br />
+   * Implemented by Sean T. Hayes
+   *
+   * @param dis stream containing midi events
+   * @return the number of bytes read from <code>dis</code>
+   */
+  public int read(DataInputStream dis) throws IOException {
+    keySig = dis.readByte();
+    keyQual = dis.readUnsignedByte();
+    return 2;
+  }
+
+  //------------------------------------------------
+  //Copy Object
+  public Event copy() throws CloneNotSupportedException {
+    KeySig event;
+    try {
+      event = (KeySig) this.clone();
+    } catch (CloneNotSupportedException e) {
+      System.out.println(e);
+      event = new KeySig();
     }
+    return event;
+  }
 
-    public KeySig(int keySig, int keyQual) {
-        this.time = 0;
-        this.keySig = keySig;
-        this.keyQual = keyQual;
-    }
-
-    public KeySig(int time, int keySig, int keyQual) {
-        this.time = time;
-        this.keySig = keySig;
-        this.keyQual = keyQual;
-    }
-
-    //--------------------------------------------
-    public int getKeyQuality() {
-        return this.keyQual;
-    }
-
-    public void setKeyQuality(int keyQuality) {
-        this.keyQual = keyQuality;
-    }
-
-    public int getKeySig() {
-        return this.keySig;
-    }
-
-    public void setKeySig(int keySig) {
-        this.keySig = keySig;
-    }
-
-    //-----------------------------------------------
-    //time
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    //----------------------------------------------
-    //Return Id
-    public short getID() {
-        return ID;
-    }
-
-    //----------------------------------------------
-    // Write the contents of this object out to disk
-    //----------------------------------------------
-    public int write(DataOutputStream dos) throws IOException {
-        int bytes_out = jm.midi.MidiUtil.writeVarLength(this.time, dos);
-        dos.writeByte(0xFF);
-        dos.writeByte(0x59);
-        bytes_out += jm.midi.MidiUtil.writeVarLength(2, dos);
-        dos.writeByte((byte) this.keySig);
-        dos.writeByte((byte) this.keyQual);
-        return bytes_out + 4;
-    }
-
-    /**
-     * Read the contends of this objec in from disk.<br />
-     * Implemented by Sean T. Hayes
-     *
-     * @param dis stream containing midi events
-     * @return the number of bytes read from <code>dis</code>
-     * @throws IOException
-     */
-    public int read(DataInputStream dis) throws IOException {
-        keySig = dis.readByte();
-        keyQual = dis.readUnsignedByte();
-        return 2;
-    }
-
-    //------------------------------------------------
-    //Copy Object
-    public Event copy() throws CloneNotSupportedException {
-        KeySig event;
-        try {
-            event = (KeySig) this.clone();
-        } catch (CloneNotSupportedException e) {
-            System.out.println(e);
-            event = new KeySig();
-        }
-        return event;
-    }
-
-    //---------------------------------------------------
-    //Print
-    public void print() {
-        System.out.println("KeySig(022):             [time = " + this.time + "][keySig = " + this.keySig + "][keyQual = " + this.keyQual + "]");
-    }
+  //---------------------------------------------------
+  //Print
+  public void print() {
+    System.out.println("KeySig(022):             [time = " + this.time + "][keySig = " + this.keySig
+        + "][keyQual = " + this.keyQual + "]");
+  }
 }

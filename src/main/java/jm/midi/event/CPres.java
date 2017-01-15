@@ -35,107 +35,108 @@ import java.io.IOException;
  * classes will usually be added to a linked list as type
  * VoiceEvt.(see class VoiceEvt for more information)
  *
- * @author Andrew Sorensen
- *         **********************************************************
+ * @author Andrew Sorensen **********************************************************
  */
 public final class CPres implements VoiceEvt, Cloneable {
-    private final short id = 002;
-    private short pressure;
-    private short midiChannel;
-    private int time;
 
-    /**
-     * A public constructor for creating default (empty) channel pressure
-     * events.
-     */
-    public CPres() {
-        this.pressure = 0;
-        this.midiChannel = 0;
-        this.time = 0;
-    }
+  private final short id = 002;
+  private short pressure;
+  private short midiChannel;
+  private int time;
 
-    /**
-     * A public constructor for creating channel pressure events
-     * which contain pressure, MIDI channel and time information.
-     */
-    public CPres(short pressure, short midiChannel, int time) {
-        this.pressure = pressure;
-        this.midiChannel = midiChannel;
-        this.time = time;
-    }
-    //-------------------------------------
-    //pressure
+  /**
+   * A public constructor for creating default (empty) channel pressure
+   * events.
+   */
+  public CPres() {
+    this.pressure = 0;
+    this.midiChannel = 0;
+    this.time = 0;
+  }
 
-    /**
-     * Returns a channel pressure events pressure value
-     */
-    public short getPressure() {
-        return pressure;
-    }
+  /**
+   * A public constructor for creating channel pressure events
+   * which contain pressure, MIDI channel and time information.
+   */
+  public CPres(short pressure, short midiChannel, int time) {
+    this.pressure = pressure;
+    this.midiChannel = midiChannel;
+    this.time = time;
+  }
+  //-------------------------------------
+  //pressure
 
-    /**
-     * Sets a channel pressure events pressure value
-     */
-    public void setPressure(short pressure) {
-        this.pressure = pressure;
-    }
+  /**
+   * Returns a channel pressure events pressure value
+   */
+  public short getPressure() {
+    return pressure;
+  }
 
-    //---------------------------------
-    //MIDI Channel
-    public short getMidiChannel() {
-        return midiChannel;
-    }
+  /**
+   * Sets a channel pressure events pressure value
+   */
+  public void setPressure(short pressure) {
+    this.pressure = pressure;
+  }
 
-    public void setMidiChannel(short midiChannel) {
-        this.midiChannel = midiChannel;
-    }
+  //---------------------------------
+  //MIDI Channel
+  public short getMidiChannel() {
+    return midiChannel;
+  }
 
-    //---------------------------------
-    //Time
-    public int getTime() {
-        return time;
-    }
+  public void setMidiChannel(short midiChannel) {
+    this.midiChannel = midiChannel;
+  }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
+  //---------------------------------
+  //Time
+  public int getTime() {
+    return time;
+  }
 
-    //-----------------------------------
-    //Return ID
-    public short getID() {
-        return id;
-    }
+  public void setTime(int time) {
+    this.time = time;
+  }
 
-    //----------------------------------------------
-    // Write the contents of this object out to disk
-    //----------------------------------------------
-    public int write(DataOutputStream dos) throws IOException {
-        return 0;
-    }
+  //-----------------------------------
+  //Return ID
+  public short getID() {
+    return id;
+  }
 
-    //----------------------------------------------
-    // Read the contends of this objec in from disk
-    public int read(DataInputStream dis) throws IOException {
-        this.pressure = (short) dis.readUnsignedByte();
-        return 1;
-    }
+  //----------------------------------------------
+  // Write the contents of this object out to disk
+  //----------------------------------------------
+  public int write(DataOutputStream dos) throws IOException {
+    return 0;
+  }
 
-    //--------------------------------
-    //Copy Object
-    public Event copy() throws CloneNotSupportedException {
-        CPres event;
-        try {
-            event = (CPres) this.clone();
-        } catch (CloneNotSupportedException e) {
-            System.out.println(e);
-            event = new CPres();
-        }
-        return event;
-    }
+  //----------------------------------------------
+  // Read the contends of this objec in from disk
+  public int read(DataInputStream dis) throws IOException {
+    this.pressure = (short) dis.readUnsignedByte();
+    return 1;
+  }
 
-    //--------------------------------
-    //Print
-    public void print() {
-        System.out.println("Channel Pressure(002):	[time = " + time + "][midiChannel = " + midiChannel + "][pressure = " + pressure + "]");
+  //--------------------------------
+  //Copy Object
+  public Event copy() throws CloneNotSupportedException {
+    CPres event;
+    try {
+      event = (CPres) this.clone();
+    } catch (CloneNotSupportedException e) {
+      System.out.println(e);
+      event = new CPres();
     }
+    return event;
+  }
+
+  //--------------------------------
+  //Print
+  public void print() {
+    System.out.println("Channel Pressure(002):	[time = " + time + "][midiChannel = " + midiChannel
+        + "][pressure = " + pressure + "]");
+  }
 }

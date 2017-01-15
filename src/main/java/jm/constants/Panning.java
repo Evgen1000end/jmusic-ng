@@ -30,10 +30,10 @@ package jm.constants;
  */
 public interface Panning {
 
-    public static final double
-            PAN_CENTER = 0.5,
-            PAN_CENTRE = 0.5,
-            PAN_LEFT = 0.0,
-            PAN_RIGHT = 1.0;
+  public static final double
+      PAN_CENTER = 0.5,
+      PAN_CENTRE = 0.5,
+      PAN_LEFT = 0.0,
+      PAN_RIGHT = 1.0;
 
 }

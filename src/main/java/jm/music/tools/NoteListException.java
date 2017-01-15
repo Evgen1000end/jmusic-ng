@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
  *
@@ -40,21 +40,22 @@ package jm.music.tools;
  * @since jMusic November 2000 Release
  */
 public class NoteListException extends Exception {
-    /**
-     * Constructs a <code>NoteListException</code> with no
-     * detail message.
-     */
-    public NoteListException() {
-        super();
-    }
 
-    /**
-     * Constructs a <code>NoteListException</code> class
-     * with the specified detail message.
-     *
-     * @param s the detail message.
-     */
-    public NoteListException(String s) {
-        super(s);
-    }
+  /**
+   * Constructs a <code>NoteListException</code> with no
+   * detail message.
+   */
+  public NoteListException() {
+    super();
+  }
+
+  /**
+   * Constructs a <code>NoteListException</code> class
+   * with the specified detail message.
+   *
+   * @param s the detail message.
+   */
+  public NoteListException(String s) {
+    super(s);
+  }
 }

@@ -30,6 +30,7 @@ import jm.music.data.Phrase;
  * @version 0.1.1, 11th December 2000
  */
 public abstract class ParentSelector extends GAComponent {
-    public abstract Phrase[] selectParents(Phrase[] population,
-                                           double[] fitness);
+
+  public abstract Phrase[] selectParents(Phrase[] population,
+      double[] fitness);
 }

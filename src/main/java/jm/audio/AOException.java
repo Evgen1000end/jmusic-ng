@@ -31,33 +31,34 @@ package jm.audio;
  */
 
 public final class AOException extends Exception {
-    private static String[] MESSAGES = new String[2];
 
-    static {
-        MESSAGES[0] = "Unbalanced number of returned samples from " +
-                "multiple inputs.";
-        MESSAGES[1] = "Wrong number of inputs for this AudioObject.";
-    }
+  private static String[] MESSAGES = new String[2];
 
-    /**
-     * Simple Constructor which excepts a custom message
-     *
-     * @param name    the name of the AudioObject throwing this exception
-     * @param message message to assign this Exception.
-     */
-    public AOException(String name, String message) {
-        super(name + message);
-    }
+  static {
+    MESSAGES[0] = "Unbalanced number of returned samples from " +
+        "multiple inputs.";
+    MESSAGES[1] = "Wrong number of inputs for this AudioObject.";
+  }
 
-    /**
-     * This Constructor writes a standard message from the MESSAGES
-     * array using the int as an index.
-     *
-     * @param name the name of the AudioObject throwing this exception
-     * @param int  message is the index to use to retrieve the stored message
-     */
-    public AOException(String name, int message) {
-        super(name + MESSAGES[message]);
-    }
+  /**
+   * Simple Constructor which excepts a custom message
+   *
+   * @param name the name of the AudioObject throwing this exception
+   * @param message message to assign this Exception.
+   */
+  public AOException(String name, String message) {
+    super(name + message);
+  }
+
+  /**
+   * This Constructor writes a standard message from the MESSAGES
+   * array using the int as an index.
+   *
+   * @param name the name of the AudioObject throwing this exception
+   * @param int message is the index to use to retrieve the stored message
+   */
+  public AOException(String name, int message) {
+    super(name + MESSAGES[message]);
+  }
 }
 

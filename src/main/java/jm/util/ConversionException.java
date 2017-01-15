@@ -32,12 +32,12 @@ package jm.util;
  */
 public class ConversionException extends Exception {
 
-    public ConversionException() {
-        super();
-    }
+  public ConversionException() {
+    super();
+  }
 
-    public ConversionException(String string) {
-        super(string);
-    }
+  public ConversionException(String string) {
+    super(string);
+  }
 }
 

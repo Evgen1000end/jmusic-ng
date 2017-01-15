@@ -31,43 +31,43 @@ import java.io.IOException;
  * The Event interface is the public interface for ALL MIDI event
  * classes.
  *
- * @author Andrew Sorensen
- *         *************************************************************
+ * @author Andrew Sorensen *************************************************************
  */
 
 public interface Event {
-    /**
-     * Retrieve an events time
-     */
-    public int getTime();
 
-    /**
-     * Set an events time
-     */
-    public void setTime(int time);
+  /**
+   * Retrieve an events time
+   */
+  public int getTime();
 
-    /**
-     * Retrieve an events id
-     */
-    public short getID();
+  /**
+   * Set an events time
+   */
+  public void setTime(int time);
 
-    /**
-     * Makes a copy of an event
-     */
-    public Event copy() throws CloneNotSupportedException;
+  /**
+   * Retrieve an events id
+   */
+  public short getID();
 
-    /**
-     * Print this events data in a System.out.println format
-     */
-    public void print();
+  /**
+   * Makes a copy of an event
+   */
+  public Event copy() throws CloneNotSupportedException;
 
-    /**
-     * write out event data to disk
-     */
-    public int write(DataOutputStream dos) throws IOException;
+  /**
+   * Print this events data in a System.out.println format
+   */
+  public void print();
 
-    /**
-     * read in event data from disk
-     */
-    public int read(DataInputStream dis) throws IOException;
+  /**
+   * write out event data to disk
+   */
+  public int write(DataOutputStream dos) throws IOException;
+
+  /**
+   * read in event data from disk
+   */
+  public int read(DataInputStream dis) throws IOException;
 }

@@ -27,34 +27,35 @@ package jm.audio.synth;
 */
 
 public class SpringObject {
-    /**
-     * where is the normal resting place?
-     */
-    private int restingLength;
-    /**
-     * strength of the spring
-     */
-    private double k = 0.002;
 
-    /**
-     * start pixel location of spring
-     */
+  /**
+   * where is the normal resting place?
+   */
+  private int restingLength;
+  /**
+   * strength of the spring
+   */
+  private double k = 0.002;
 
-    public SpringObject() {
-    }
+  /**
+   * start pixel location of spring
+   */
 
-    public SpringObject(double constant) {
-        this.k = constant;
-    }
+  public SpringObject() {
+  }
 
-    public double getCurrentForce(double currStartPosition, double currEndPosition) {
-        double currExtension = -1 * ((currEndPosition - currStartPosition) - restingLength);
-        double force = k * currExtension;
+  public SpringObject(double constant) {
+    this.k = constant;
+  }
 
-        return force;
-    }
+  public double getCurrentForce(double currStartPosition, double currEndPosition) {
+    double currExtension = -1 * ((currEndPosition - currStartPosition) - restingLength);
+    double force = k * currExtension;
 
-    public void setRestingLength(int length) {
-        this.restingLength = length;
-    }
+    return force;
+  }
+
+  public void setRestingLength(int length) {
+    this.restingLength = length;
+  }
 }

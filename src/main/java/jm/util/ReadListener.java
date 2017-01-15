@@ -33,25 +33,26 @@ import jm.music.data.Score;
  * @version 1.0, Sun Feb 25 18:44
  */
 public interface ReadListener {
-    /**
-     * Implementations of this method have the opportunity to alter the score
-     * after each has been imported.  Additionally non-score related tasks can
-     * be performed.
-     *
-     * @param score Score imported by the object initiating this event
-     * @return updated score to send back to the initiating object
-     */
-    public Score scoreRead(final Score score);
 
-    public void startedReading();
+  /**
+   * Implementations of this method have the opportunity to alter the score
+   * after each has been imported.  Additionally non-score related tasks can
+   * be performed.
+   *
+   * @param score Score imported by the object initiating this event
+   * @return updated score to send back to the initiating object
+   */
+  public Score scoreRead(final Score score);
 
-    /**
-     * Implementations of this method can alter all the scores imported by the
-     * initiating object.  Additionally non-score related tasks can be
-     * performed.
-     *
-     * @param scores all Scores imported by the object initiating this event
-     * @return updated scores to send back to the initiating object
-     */
-    public void finishedReading();
+  public void startedReading();
+
+  /**
+   * Implementations of this method can alter all the scores imported by the
+   * initiating object.  Additionally non-score related tasks can be
+   * performed.
+   *
+   * @param scores all Scores imported by the object initiating this event
+   * @return updated scores to send back to the initiating object
+   */
+  public void finishedReading();
 }

@@ -34,43 +34,44 @@ import jm.audio.AudioObject;
  */
 
 public final class NoteBuffer extends AudioObject {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
-    private float[] noteBuffer;
-    private boolean flag = true;
-    private int noteBufferPosition;
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
-    public NoteBuffer(AudioObject ao) {
-        super(ao, "[Volume]");
-    }
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
+  private float[] noteBuffer;
+  private boolean flag = true;
+  private int noteBufferPosition;
 
-    //----------------------------------------------
-    // Public Methods
-    //----------------------------------------------
-    public void build() {
-        noteBuffer = new float[numOfSamples];
-        noteBufferPosition = 0;
-        this.flag = true;
-    }
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
+  public NoteBuffer(AudioObject ao) {
+    super(ao, "[Volume]");
+  }
 
-    //----------------------------------------------
-    // Protected Methods
-    //----------------------------------------------
-    public int work(float[] buffer) throws AOException {
-        if (flag) {
-            int returned = this.previous[0].nextWork(noteBuffer);
-            flag = false;
-        }
-        int i = 0;
-        int numof = ((noteBufferPosition + buffer.length) < numOfSamples)
-                ? (numOfSamples - noteBufferPosition) : buffer.length;
-        for (; i < numof; i++) {
-            buffer[i] = noteBuffer[noteBufferPosition++];
-        }
-        return i;
+  //----------------------------------------------
+  // Public Methods
+  //----------------------------------------------
+  public void build() {
+    noteBuffer = new float[numOfSamples];
+    noteBufferPosition = 0;
+    this.flag = true;
+  }
+
+  //----------------------------------------------
+  // Protected Methods
+  //----------------------------------------------
+  public int work(float[] buffer) throws AOException {
+    if (flag) {
+      int returned = this.previous[0].nextWork(noteBuffer);
+      flag = false;
     }
+    int i = 0;
+    int numof = ((noteBufferPosition + buffer.length) < numOfSamples)
+        ? (numOfSamples - noteBufferPosition) : buffer.length;
+    for (; i < numof; i++) {
+      buffer[i] = noteBuffer[noteBufferPosition++];
+    }
+    return i;
+  }
 }

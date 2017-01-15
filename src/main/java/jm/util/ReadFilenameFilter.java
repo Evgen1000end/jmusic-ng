@@ -37,19 +37,18 @@ import java.io.FilenameFilter;
  */
 class ReadFilenameFilter implements FilenameFilter {
 
-    /**
-     * Tests whether the specified file has a jm or MIDI file extension
-     *
-     * @param dir  File describing the directory where the file is stored
-     * @param name String of the filename
-     * @return true if specified file ends with ".mid", ".midi" or ".jm"
-     * and does not begin with "."
-     */
-    public boolean accept(final File dir, final String name) {
-        return (!name.startsWith(".") && (name.endsWith(".mid")
-                || name.endsWith(".midi")
-                || name.endsWith(".jm")))
-                ? true
-                : false;
-    }
+  /**
+   * Tests whether the specified file has a jm or MIDI file extension
+   *
+   * @param dir File describing the directory where the file is stored
+   * @param name String of the filename
+   * @return true if specified file ends with ".mid", ".midi" or ".jm" and does not begin with "."
+   */
+  public boolean accept(final File dir, final String name) {
+    return (!name.startsWith(".") && (name.endsWith(".mid")
+        || name.endsWith(".midi")
+        || name.endsWith(".jm")))
+        ? true
+        : false;
+  }
 }

@@ -30,5 +30,6 @@ import jm.music.data.Phrase;
  * @version 0.1.1, 11th December 2000
  */
 public abstract class FitnessEvaluater extends GAComponent {
-    public abstract double[] evaluate(Phrase[] population);
+
+  public abstract double[] evaluate(Phrase[] population);
 }

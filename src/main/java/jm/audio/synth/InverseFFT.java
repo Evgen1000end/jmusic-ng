@@ -34,28 +34,28 @@ import jm.audio.math.RealFloatFFT_Radix2;
  */
 
 public final class InverseFFT extends AudioObject {
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
 
-    /**
-     *
-     */
-    public InverseFFT(AudioObject ao) {
-        super(ao, "[InverseFFT]");
-    }
+  /**
+   *
+   */
+  public InverseFFT(AudioObject ao) {
+    super(ao, "[InverseFFT]");
+  }
 
-    //----------------------------------------------
-    // Methods
-    //----------------------------------------------
+  //----------------------------------------------
+  // Methods
+  //----------------------------------------------
 
-    /**
-     *
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = this.previous[0].nextWork(buffer);
-        RealFloatFFT_Radix2 fft = new RealFloatFFT_Radix2(returned);
-        fft.inverse(buffer);
-        return returned;
-    }
+  /**
+   *
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = this.previous[0].nextWork(buffer);
+    RealFloatFFT_Radix2 fft = new RealFloatFFT_Radix2(returned);
+    fft.inverse(buffer);
+    return returned;
+  }
 }

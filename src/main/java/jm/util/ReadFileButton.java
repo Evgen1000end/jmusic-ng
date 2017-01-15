@@ -23,11 +23,12 @@
 
 package jm.util;
 
-import jm.music.data.Score;
-
-import java.awt.*;
+import java.awt.Button;
+import java.awt.FileDialog;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import jm.music.data.Score;
 
 /**
  * A button which allows user to select a MIDI or jMusic file to import.
@@ -42,74 +43,74 @@ import java.awt.event.ActionListener;
  * @version 1.0, Sun Feb 25 18:43:58  2001
  */
 public class ReadFileButton extends Button {
-    /**
-     * List of ReadListener's associated with this button
-     */
-    private ReadListenerLinkedList readListenerList;
 
-    /**
-     * Constructs a button for reading in a music file.
-     *
-     * @param owner {@link Frame} which is the owner of this button.  Access to
-     *              this <CODE>Frame</CODE> will be suspended when the user is
-     *              selecting a music file and when error messages are
-     *              displayed.
-     */
-    public ReadFileButton(final Frame owner) {
-        super("Read File");
-        final FileDialog load = new FileDialog(owner,
-                "Select a Midi or jMusic file to import",
-                FileDialog.LOAD);
-        load.setFilenameFilter(new ReadFilenameFilter());
+  /**
+   * List of ReadListener's associated with this button
+   */
+  private ReadListenerLinkedList readListenerList;
 
-        addActionListener(new ActionListener() {
-                              public void actionPerformed(ActionEvent evt) {
-                                  load.show();
+  /**
+   * Constructs a button for reading in a music file.
+   *
+   * @param owner {@link Frame} which is the owner of this button.  Access to this
+   * <CODE>Frame</CODE> will be suspended when the user is selecting a music file and when error
+   * messages are displayed.
+   */
+  public ReadFileButton(final Frame owner) {
+    super("Read File");
+    final FileDialog load = new FileDialog(owner,
+        "Select a Midi or jMusic file to import",
+        FileDialog.LOAD);
+    load.setFilenameFilter(new ReadFilenameFilter());
 
-                                  Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
-                                          load.getFile(),
-                                          owner);
-                                  if (score == null) {
-                                      return;
-                                  }
-                                  if (readListenerList != null) {
-                                      score = readListenerList.scoreRead(score);
-                                      readListenerList.finishedReading();
-                                  }
-                              }
+    addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent evt) {
+                          load.show();
+
+                          Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
+                              load.getFile(),
+                              owner);
+                          if (score == null) {
+                            return;
                           }
-        );
-    }
+                          if (readListenerList != null) {
+                            score = readListenerList.scoreRead(score);
+                            readListenerList.finishedReading();
+                          }
+                        }
+                      }
+    );
+  }
 
-    /**
-     * Registers a ReadListener to recieve successful read notifications
-     *
-     * @param l ReadListener to add
-     * @see #removeReadListener
-     */
-    public void addReadListener(ReadListener l) {
-        if (l == null) {
-            return;
-        }
-        if (readListenerList == null) {
-            readListenerList = new ReadListenerLinkedList(l);
-        } else {
-            readListenerList.add(l);
-        }
+  /**
+   * Registers a ReadListener to recieve successful read notifications
+   *
+   * @param l ReadListener to add
+   * @see #removeReadListener
+   */
+  public void addReadListener(ReadListener l) {
+    if (l == null) {
+      return;
     }
+    if (readListenerList == null) {
+      readListenerList = new ReadListenerLinkedList(l);
+    } else {
+      readListenerList.add(l);
+    }
+  }
 
-    /**
-     * Unregisters a ReadListener from recieving read notifications
-     *
-     * @param l ReadListner to remove
-     * @see #addReadListener
-     */
-    public void removeReadListener(ReadListener l) {
-        if (readListenerList == null) {
-            return;
-        }
-        if (readListenerList.getListener() == l) {
-            readListenerList = readListenerList.getNext();
-        }
+  /**
+   * Unregisters a ReadListener from recieving read notifications
+   *
+   * @param l ReadListner to remove
+   * @see #addReadListener
+   */
+  public void removeReadListener(ReadListener l) {
+    if (readListenerList == null) {
+      return;
     }
+    if (readListenerList.getListener() == l) {
+      readListenerList = readListenerList.getNext();
+    }
+  }
 }

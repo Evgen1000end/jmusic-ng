@@ -22,40 +22,45 @@
 
 package jm.util;
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.SourceDataLine;
 
 // inspired by http://www.developer.com/java/other/article.php/2173111
 
 class AudioFilePlayThread extends Thread {
-    byte tempBuffer[] = new byte[1024];
-    private AudioInputStream audioInputStream;
 
-    public AudioFilePlayThread(AudioInputStream audioInputStream) {
-        this.audioInputStream = audioInputStream;
-    }
+  byte tempBuffer[] = new byte[1024];
+  private AudioInputStream audioInputStream;
 
-    public void run() {
-        try {
-            AudioFormat audioFormat = audioInputStream.getFormat();
-            DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
-            SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
-            sourceDataLine.open(audioFormat);
-            sourceDataLine.start();
+  public AudioFilePlayThread(AudioInputStream audioInputStream) {
+    this.audioInputStream = audioInputStream;
+  }
 
-            int cnt;
-            while ((cnt = audioInputStream.read(tempBuffer, 0, tempBuffer.length)) != -1) {
-                if (cnt > 0) {
-                    sourceDataLine.write(tempBuffer, 0, cnt);
-                }
-            }
-            sourceDataLine.drain();
-            sourceDataLine.stop();
-            sourceDataLine.close();
-            sourceDataLine.close();
-            audioInputStream.close();
-        } catch (Exception e) {
-            System.out.println("jMusic AudioFilePlayThread error");
-            e.printStackTrace();
+  public void run() {
+    try {
+      AudioFormat audioFormat = audioInputStream.getFormat();
+      DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
+      SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
+      sourceDataLine.open(audioFormat);
+      sourceDataLine.start();
+
+      int cnt;
+      while ((cnt = audioInputStream.read(tempBuffer, 0, tempBuffer.length)) != -1) {
+        if (cnt > 0) {
+          sourceDataLine.write(tempBuffer, 0, cnt);
         }
+      }
+      sourceDataLine.drain();
+      sourceDataLine.stop();
+      sourceDataLine.close();
+      sourceDataLine.close();
+      audioInputStream.close();
+    } catch (Exception e) {
+      System.out.println("jMusic AudioFilePlayThread error");
+      e.printStackTrace();
     }
+  }
 }

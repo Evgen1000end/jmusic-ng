@@ -29,8 +29,9 @@ package jm.gui.cpn;
  * @version 1.0, Sun Feb 25 18:35:33  2001
  */
 public interface KeyChangeListener {
-    /**
-     * Respond to key change.
-     */
-    public void keyChanged();
+
+  /**
+   * Respond to key change.
+   */
+  public void keyChanged();
 }

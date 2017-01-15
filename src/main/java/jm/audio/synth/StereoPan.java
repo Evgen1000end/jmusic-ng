@@ -35,124 +35,126 @@ import jm.audio.AudioObject;
  */
 
 public final class StereoPan extends AudioObject {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
-    /**
-     * Indicator that pan is in a set position
-     */
-    boolean panSet = false;
-    /**
-     * The variable pan can sit anywhere between 0.0(full left)
-     * and 1.0 (full right)
-     */
-    private float pan;
-    /**
-     * a marker for channels
-     */
-    private int channel = 1;
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
+  /**
+   * Indicator that pan is in a set position
+   */
+  boolean panSet = false;
+  /**
+   * The variable pan can sit anywhere between 0.0(full left)
+   * and 1.0 (full right)
+   */
+  private float pan;
+  /**
+   * a marker for channels
+   */
+  private int channel = 1;
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
 
-    /**
-     * Takes only a single AudioObject as input and
-     * defines a default pan of 0.5 which is to say
-     * dead centre.
-     *
-     * @param ao a single AudioObject input.
-     */
-    public StereoPan(AudioObject ao) {
-        super(ao, "[StereoPan]");
-        this.pan = (float) 0.5;
+  /**
+   * Takes only a single AudioObject as input and
+   * defines a default pan of 0.5 which is to say
+   * dead centre.
+   *
+   * @param ao a single AudioObject input.
+   */
+  public StereoPan(AudioObject ao) {
+    super(ao, "[StereoPan]");
+    this.pan = (float) 0.5;
 
+  }
+
+  /**
+   * Sets pan to a fixed point and ignores the pan
+   * position in the Note object.
+   *
+   * @param pan where to place the stereo image
+   * @param ao a single AudioObject input.
+   */
+  public StereoPan(AudioObject ao, double pan) {
+    super(ao, "[StereoPan]");
+    this.panSet = true;
+    if (pan < (float) 0.0) {
+      this.pan = (float) 0.0;
+    } else if (pan > (float) 1.0) {
+      this.pan = (float) 1.0;
+    } else {
+      this.pan = (float) pan;
     }
+  }
 
-    /**
-     * Sets pan to a fixed point and ignores the pan
-     * position in the Note object.
-     *
-     * @param pan where to place the stereo image
-     * @param ao  a single AudioObject input.
-     */
-    public StereoPan(AudioObject ao, double pan) {
-        super(ao, "[StereoPan]");
-        this.panSet = true;
-        if (pan < (float) 0.0) {
-            this.pan = (float) 0.0;
-        } else if (pan > (float) 1.0) {
-            this.pan = (float) 1.0;
-        } else {
-            this.pan = (float) pan;
+  //----------------------------------------------
+  // Public Methods
+  //----------------------------------------------
+
+  /**
+   * A simple method to set the pan of this object.
+   * Some simple checking is put in place to ensure
+   * that the pan is never outside the range of
+   * 0.0 and 1.0
+   */
+  public void build() {
+    float tmpPan = (float) currentNote.getPan();
+    if (!this.panSet) {
+      if (tmpPan < (float) 0.0) {
+        this.pan = (float) 0.0;
+      } else if (tmpPan > (float) 1.0) {
+        this.pan = (float) 1.0;
+      } else {
+        this.pan = tmpPan;
+      }
+    }
+    channel = 1;
+  }
+
+  //----------------------------------------------
+  // Methods
+  //----------------------------------------------
+
+  /**
+   * The work method takes an input and changes its
+   * amplitude based on which channel it is from
+   * and where the pan is set.
+   *
+   * @param input the incoming data.
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = this.previous[0].work(buffer);
+    // don't do anything for mono data
+    if (channels == 1) {
+      return returned;
+    }
+    // change volume for stereo files
+    for (int i = 0; i < returned; i++) {
+      if (channel == 1) {
+        if (this.pan > 0.5) {
+          buffer[i] = buffer[i] * (1.0f - (this.pan - 0.5f) * 2.0f);
         }
-    }
-
-    //----------------------------------------------
-    // Public Methods
-    //----------------------------------------------
-
-    /**
-     * A simple method to set the pan of this object.
-     * Some simple checking is put in place to ensure
-     * that the pan is never outside the range of
-     * 0.0 and 1.0
-     */
-    public void build() {
-        float tmpPan = (float) currentNote.getPan();
-        if (!this.panSet) {
-            if (tmpPan < (float) 0.0) {
-                this.pan = (float) 0.0;
-            } else if (tmpPan > (float) 1.0) {
-                this.pan = (float) 1.0;
-            } else {
-                this.pan = tmpPan;
-            }
+        channel = 2;
+      } else {
+        if (this.pan < 0.5) {
+          buffer[i] = buffer[i] * this.pan * 2.0f;
         }
         channel = 1;
+      }
+
     }
+    return returned;
+  }
 
-    //----------------------------------------------
-    // Methods
-    //----------------------------------------------
-
-    /**
-     * The work method takes an input and changes its
-     * amplitude based on which channel it is from
-     * and where the pan is set.
-     *
-     * @param input the incoming data.
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = this.previous[0].work(buffer);
-        // don't do anything for mono data
-        if (channels == 1) return returned;
-        // change volume for stereo files
-        for (int i = 0; i < returned; i++) {
-            if (channel == 1) {
-                if (this.pan > 0.5) {
-                    buffer[i] = buffer[i] * (1.0f - (this.pan - 0.5f) * 2.0f);
-                }
-                channel = 2;
-            } else {
-                if (this.pan < 0.5) {
-                    buffer[i] = buffer[i] * this.pan * 2.0f;
-                }
-                channel = 1;
-            }
-
-        }
-        return returned;
+  /*
+   * Set a new pan position.
+   * @param pan The new pan position (0.0 - 1.0)
+   */
+  public void setPan(double pan) {
+    if (pan >= 0.0 && pan <= 1.0) {
+      this.pan = (float) pan;
     }
-
-    /*
-     * Set a new pan position.
-     * @param pan The new pan position (0.0 - 1.0)
-     */
-    public void setPan(double pan) {
-        if (pan >= 0.0 && pan <= 1.0) {
-            this.pan = (float) pan;
-        }
-    }
+  }
 }
 

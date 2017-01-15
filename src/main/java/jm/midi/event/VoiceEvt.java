@@ -60,18 +60,18 @@ package jm.midi.event;
  * <spacer type=horizontal size=20>	}<BR>
  * }<BR>
  *
- * @author Andrew Sorensen
- *         **********************************************************
+ * @author Andrew Sorensen **********************************************************
  */
 
 public interface VoiceEvt extends Event {
-    /**
-     * Get a voice events MIDI channel
-     */
-    public abstract short getMidiChannel();
 
-    /**
-     * Set a voice events MIDI channel
-     */
-    public abstract void setMidiChannel(short midiChannel);
+  /**
+   * Get a voice events MIDI channel
+   */
+  public abstract short getMidiChannel();
+
+  /**
+   * Set a voice events MIDI channel
+   */
+  public abstract void setMidiChannel(short midiChannel);
 }

@@ -32,86 +32,86 @@ import java.util.Vector;
  * Exclusive events.  The system exclusive message is saved in a
  * ByteList called message.
  *
- * @author Andrew Sorensen
- *         *************************************************************
+ * @author Andrew Sorensen *************************************************************
  */
 
 public final class SysEx implements SysComEvt {
-    private final short id = 010;
-    private Vector message;
-    private int time;
-    //-------------------------------------
-    //Constructors
 
-    /**
-     * Default Constructor
-     */
-    public SysEx() {
-        message = new Vector();
-        //message = new String("SysEx message List");
-    }
-    //--------------------------------------
-    //Message List
+  private final short id = 010;
+  private Vector message;
+  private int time;
+  //-------------------------------------
+  //Constructors
 
-    /**
-     * Add elements to the messge List
-     */
-    public void addToList(byte thisByte) {
-        //message.addElement(thisByte);
-    }
+  /**
+   * Default Constructor
+   */
+  public SysEx() {
+    message = new Vector();
+    //message = new String("SysEx message List");
+  }
+  //--------------------------------------
+  //Message List
 
-    /**
-     * Returns the SysEx message List
-     */
-    public Vector getList() {
-        return message;
-    }
+  /**
+   * Add elements to the messge List
+   */
+  public void addToList(byte thisByte) {
+    //message.addElement(thisByte);
+  }
 
-    //--------------------------------------
-    //time
-    public int getTime() {
-        return time;
-    }
+  /**
+   * Returns the SysEx message List
+   */
+  public Vector getList() {
+    return message;
+  }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
+  //--------------------------------------
+  //time
+  public int getTime() {
+    return time;
+  }
 
-    //-------------------------------------
-    //Return Id
-    public short getID() {
-        return id;
-    }
+  public void setTime(int time) {
+    this.time = time;
+  }
 
-    //----------------------------------------------
-    // Write the contents of this object out to disk
-    //----------------------------------------------
-    public int write(DataOutputStream dos) throws IOException {
-        return 0;
-    }
+  //-------------------------------------
+  //Return Id
+  public short getID() {
+    return id;
+  }
 
-    //----------------------------------------------
-    // Read the contends of this objec in from disk
-    public int read(DataInputStream dis) throws IOException {
-        return 0;
-    }
+  //----------------------------------------------
+  // Write the contents of this object out to disk
+  //----------------------------------------------
+  public int write(DataOutputStream dos) throws IOException {
+    return 0;
+  }
 
-    //---------------------------------------
-    //Copy Object
-    public Event copy() throws CloneNotSupportedException {
-        SysEx event = null;
-        try {
-            event = (SysEx) this.clone();
-        } catch (CloneNotSupportedException e) {
-            System.out.println(e);
-            event = new SysEx();
-        }
-        return event;
-    }
+  //----------------------------------------------
+  // Read the contends of this objec in from disk
+  public int read(DataInputStream dis) throws IOException {
+    return 0;
+  }
 
-    //-------------------------------------
-    //Print
-    public void print() {
-        System.out.println("System Exclusive(010): [time =" + this.time + "]");
+  //---------------------------------------
+  //Copy Object
+  public Event copy() throws CloneNotSupportedException {
+    SysEx event = null;
+    try {
+      event = (SysEx) this.clone();
+    } catch (CloneNotSupportedException e) {
+      System.out.println(e);
+      event = new SysEx();
     }
+    return event;
+  }
+
+  //-------------------------------------
+  //Print
+  public void print() {
+    System.out.println("System Exclusive(010): [time =" + this.time + "]");
+  }
 }

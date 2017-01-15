@@ -22,10 +22,9 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.audio.synth;
 
+import java.util.Vector;
 import jm.audio.AOException;
 import jm.audio.AudioObject;
-
-import java.util.Vector;
 
 /**
  * The <bl>Delay</bl> Audio Object is a simple delay line.
@@ -39,77 +38,74 @@ import java.util.Vector;
  */
 
 public final class Delay extends AudioObject {
-    //----------------------------------------------
-    // Attributes 
-    //----------------------------------------------
-    /**
-     * A place to keep the previous sample values
-     */
-    Vector storedSamples = new Vector();
-    // Vector <Float> storedSamples = new Vector<Float>(); // solves java generics warnings but breaks 1.3 compatability
-    /**
-     * The number of samples long the delay line is
-     */
-    int sampleDelay = 0;
-    /**
-     * The number of samples processed so far
-     */
-    int sampleCounter = 0;
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
+  /**
+   * A place to keep the previous sample values
+   */
+  Vector storedSamples = new Vector();
+  // Vector <Float> storedSamples = new Vector<Float>(); // solves java generics warnings but breaks 1.3 compatability
+  /**
+   * The number of samples long the delay line is
+   */
+  int sampleDelay = 0;
+  /**
+   * The number of samples processed so far
+   */
+  int sampleCounter = 0;
 
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
 
-    //----------------------------------------------
-    // Constructors 
-    //----------------------------------------------
+  /**
+   * The Delay constructor takes the object previous
+   * to it in the chain, and the delay length in samples.
+   *
+   * @param sampleDelay the lenght of the delay in samples
+   * @param ao the single AudioObject taken as input.
+   */
+  public Delay(AudioObject ao, int sampleDelay) {
+    super(ao, "[Delay]");
+    this.sampleDelay = sampleDelay;
+  }
 
-    /**
-     * The Delay constructor takes the object previous
-     * to it in the chain, and the delay length in samples.
-     *
-     * @param sampleDelay the lenght of the delay in samples
-     * @param ao          the single AudioObject taken as input.
-     */
-    public Delay(AudioObject ao, int sampleDelay) {
-        super(ao, "[Delay]");
-        this.sampleDelay = sampleDelay;
+  //----------------------------------------------
+  // Public Methods
+  //----------------------------------------------
+
+  //----------------------------------------------
+  // Protected Methods
+  //----------------------------------------------
+
+  /**
+   * The nextWork method for <bl>Delay<bl> will store
+   * the sample and send out the delayed one instead.
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = this.previous[0].nextWork(buffer);
+    if (sampleCounter >= sampleDelay) {
+      for (int i = 0; i < returned; i++) {
+        // keep the current sample from the chain
+        storedSamples.addElement(new Float(buffer[i]));
+        // replace it with a stored sample
+        Float tempFloat = (Float) storedSamples.elementAt(storedSamples.size() - 1);
+        buffer[i] = tempFloat.floatValue();
+        // remove the used stored sample
+        storedSamples.removeElementAt(storedSamples.size() - 1);
+      }
+
+    } else { // early on pad with silence
+      for (int i = 0; i < returned; i++) {
+        // keep the current sample from the chain
+        storedSamples.addElement(new Float(buffer[i]));
+        // send out a zero value
+        buffer[i] = (float) 0.0;
+      }
     }
 
-
-    //----------------------------------------------
-    // Public Methods
-    //----------------------------------------------
-
-
-    //----------------------------------------------
-    // Protected Methods
-    //----------------------------------------------
-
-    /**
-     * The nextWork method for <bl>Delay<bl> will store
-     * the sample and send out the delayed one instead.
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = this.previous[0].nextWork(buffer);
-        if (sampleCounter >= sampleDelay) {
-            for (int i = 0; i < returned; i++) {
-                // keep the current sample from the chain
-                storedSamples.addElement(new Float(buffer[i]));
-                // replace it with a stored sample
-                Float tempFloat = (Float) storedSamples.elementAt(storedSamples.size() - 1);
-                buffer[i] = tempFloat.floatValue();
-                // remove the used stored sample
-                storedSamples.removeElementAt(storedSamples.size() - 1);
-            }
-
-        } else { // early on pad with silence
-            for (int i = 0; i < returned; i++) {
-                // keep the current sample from the chain
-                storedSamples.addElement(new Float(buffer[i]));
-                // send out a zero value
-                buffer[i] = (float) 0.0;
-            }
-        }
-
-        sampleCounter++;
-        return returned;
-    }
+    sampleCounter++;
+    return returned;
+  }
 }

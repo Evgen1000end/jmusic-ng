@@ -29,8 +29,7 @@ package jm.midi.event;
  * will be classed as Event Types.  SysComEvt extends the
  * Event interface.
  *
- * @author Andrew Sorensen
- *         *************************************************************
+ * @author Andrew Sorensen *************************************************************
  */
 
 public interface SysComEvt extends Event {

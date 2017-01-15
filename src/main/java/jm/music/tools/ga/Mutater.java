@@ -30,6 +30,7 @@ import jm.music.data.Phrase;
  * @version 0.1.1, 11th December 2000
  */
 public abstract class Mutater extends GAComponent {
-    public abstract Phrase[] mutate(Phrase[] population, double initialLength,
-                                    int initialSize, int beatsPerBar);
+
+  public abstract Phrase[] mutate(Phrase[] population, double initialLength,
+      int initialSize, int beatsPerBar);
 }

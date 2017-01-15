@@ -30,24 +30,25 @@ package jm.audio.synth;
  */
 
 public final class EnvPoint {
-    /**
-     * y coordinate
-     */
-    public float y;
-    /**
-     * x coordinate
-     */
-    public float x = (float) -1.0;
 
-    public int X = -1;
+  /**
+   * y coordinate
+   */
+  public float y;
+  /**
+   * x coordinate
+   */
+  public float x = (float) -1.0;
 
-    public EnvPoint(float x, float y) {
-        this.y = y;
-        this.x = x;
-    }
+  public int X = -1;
 
-    public EnvPoint(int X, float y) {
-        this.y = y;
-        this.X = X;
-    }
+  public EnvPoint(float x, float y) {
+    this.y = y;
+    this.x = x;
+  }
+
+  public EnvPoint(int X, float y) {
+    this.y = y;
+    this.X = X;
+  }
 }

@@ -30,5 +30,6 @@ import jm.music.data.Phrase;
  * @version 0.1.1, 11th December 2000
  */
 public abstract class TerminationCriteria extends GAComponent {
-    public abstract boolean isFinished(Phrase[] population);
+
+  public abstract boolean isFinished(Phrase[] population);
 }

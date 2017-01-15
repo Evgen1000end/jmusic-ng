@@ -30,9 +30,10 @@ import jm.midi.event.Event;
  */
 
 public interface MidiInputListener {
-    /**
-     * This method will be called to receive a jm.midi.event.Event whenver a new
-     * MIDI event is received.
-     */
-    public abstract void newEvent(Event event);
+
+  /**
+   * This method will be called to receive a jm.midi.event.Event whenver a new
+   * MIDI event is received.
+   */
+  public abstract void newEvent(Event event);
 }

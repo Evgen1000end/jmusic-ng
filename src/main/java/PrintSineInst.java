@@ -11,73 +11,69 @@ import jm.audio.synth.Oscillator;
 
 public final class PrintSineInst extends jm.audio.Instrument {
 
-    //----------------------------------------------
+  //----------------------------------------------
 
-    // Attributes
+  // Attributes
 
-    //----------------------------------------------
+  //----------------------------------------------
 
-    /**
-     * the sample rate passed to the instrument
-     */
+  /**
+   * the sample rate passed to the instrument
+   */
 
-    private int sampleRate;
+  private int sampleRate;
 
-    /**
-     * the sample rate passed to the instrument
-     */
+  /**
+   * the sample rate passed to the instrument
+   */
 
-    private int channels;
+  private int channels;
 
+  //----------------------------------------------
 
-    //----------------------------------------------
+  // Constructor
 
-    // Constructor
+  //----------------------------------------------
 
-    //----------------------------------------------
+  /**
+   * Basic default constructor to set an initial
+   * <p/>
+   * sampling rate.
+   */
 
-    /**
-     * Basic default constructor to set an initial
-     * <p/>
-     * sampling rate.
-     *
-     * @param sampleRate
-     */
+  public PrintSineInst(int sampleRate) {
 
-    public PrintSineInst(int sampleRate) {
+    this.sampleRate = sampleRate;
 
-        this.sampleRate = sampleRate;
+    this.channels = 1;
 
-        this.channels = 1;
+  }
 
-    }
+  //----------------------------------------------
 
+  // Methods
 
-    //----------------------------------------------
-
-    // Methods
-
-    //----------------------------------------------
+  //----------------------------------------------
 
 
-    /**
-     * Initialisation method used to build the objects that
-     * <p/>
-     * this instrument will use.
-     * <p/>
-     * Declares the primary audio object array and the
-     * <p/>
-     * audio object(s) in that array. (One array element per channel)
-     */
+  /**
+   * Initialisation method used to build the objects that
+   * <p/>
+   * this instrument will use.
+   * <p/>
+   * Declares the primary audio object array and the
+   * <p/>
+   * audio object(s) in that array. (One array element per channel)
+   */
 
-    public void createChain() {
+  public void createChain() {
 
-        Oscillator wt = new Oscillator(this, Oscillator.SINE_WAVE,
-                this.sampleRate, 1);
+    Oscillator wt = new Oscillator(this, Oscillator.SINE_WAVE,
+        this.sampleRate, 1);
 
-        PrintOut pout = new PrintOut(wt);
+    PrintOut pout = new PrintOut(wt);
 
-    }
+  }
 
 }
 

@@ -32,51 +32,52 @@ import java.util.Vector;
  * @author Andrew Brown, October 2003
  */
 public class FuzzySet {
-    private Vector numberList;
-    private double productSum, memberSum;
 
-    /**
-     * Constructs an empty fuzzy set.
-     */
-    public FuzzySet() {
-        numberList = new Vector();
-    }
+  private Vector numberList;
+  private double productSum, memberSum;
 
-    /**
-     * Add a fuzzy number object to the set.
-     *
-     * @fNumb - The fuzzy number to be added to this set.
-     */
-    public void add(FuzzyNumber fNumb) {
-        numberList.addElement(fNumb);
-    }
+  /**
+   * Constructs an empty fuzzy set.
+   */
+  public FuzzySet() {
+    numberList = new Vector();
+  }
 
-    /**
-     * Remove a fuzzy number object from the set.
-     *
-     * @fNumb - The fuzzy number to be removed from this set.
-     */
-    public void remove(FuzzyNumber fNumb) {
-        numberList.removeElement(fNumb);
-    }
+  /**
+   * Add a fuzzy number object to the set.
+   *
+   * @fNumb - The fuzzy number to be added to this set.
+   */
+  public void add(FuzzyNumber fNumb) {
+    numberList.addElement(fNumb);
+  }
 
-    /**
-     * Computes the real-valued fuzzy centroid (centre of gravity) as a
-     * non-normalised average of the degree of membership in each fuzzy number.
-     *
-     * @param input - The number for which the fuzzy rules are to be applied.
-     */
-    public double getOutput(double input) {
-        productSum = 0.0;
-        memberSum = 0.0;
-        //sum the product of the fuzzy number peak and membership
-        for (Enumeration e = numberList.elements(); e.hasMoreElements(); ) {
-            FuzzyNumber fn = (FuzzyNumber) e.nextElement();
-            productSum += fn.getPeak() * fn.getMembership(input);
-            memberSum += fn.getMembership(input);
-        }
-        // divide by the sum of the memberships
-        return productSum / memberSum;
+  /**
+   * Remove a fuzzy number object from the set.
+   *
+   * @fNumb - The fuzzy number to be removed from this set.
+   */
+  public void remove(FuzzyNumber fNumb) {
+    numberList.removeElement(fNumb);
+  }
+
+  /**
+   * Computes the real-valued fuzzy centroid (centre of gravity) as a
+   * non-normalised average of the degree of membership in each fuzzy number.
+   *
+   * @param input - The number for which the fuzzy rules are to be applied.
+   */
+  public double getOutput(double input) {
+    productSum = 0.0;
+    memberSum = 0.0;
+    //sum the product of the fuzzy number peak and membership
+    for (Enumeration e = numberList.elements(); e.hasMoreElements(); ) {
+      FuzzyNumber fn = (FuzzyNumber) e.nextElement();
+      productSum += fn.getPeak() * fn.getMembership(input);
+      memberSum += fn.getMembership(input);
     }
+    // divide by the sum of the memberships
+    return productSum / memberSum;
+  }
 }
     

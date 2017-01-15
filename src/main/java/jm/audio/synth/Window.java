@@ -31,53 +31,53 @@ import jm.audio.AudioObject;
  */
 
 public final class Window extends AudioObject {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
-    /**
-     * algorithm to use for the window
-     */
-    private int type;
-    /**
-     * is this window the input or output
-     */
-    private boolean direction;
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
+  /**
+   * algorithm to use for the window
+   */
+  private int type;
+  /**
+   * is this window the input or output
+   */
+  private boolean direction;
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
 
-    /**
-     * @param outputs the number of outputs to support.
-     * @param ao      the single AudioObject taken as input.
-     */
-    public Window(AudioObject ao, int type, boolean direction) {
-        super(ao, "[Window]");
-        this.type = type;
-        this.direction = direction;
+  /**
+   * @param outputs the number of outputs to support.
+   * @param ao the single AudioObject taken as input.
+   */
+  public Window(AudioObject ao, int type, boolean direction) {
+    super(ao, "[Window]");
+    this.type = type;
+    this.direction = direction;
+  }
+
+  //----------------------------------------------
+  // Public Methods
+  //----------------------------------------------
+
+  //----------------------------------------------
+  // Protected Methods
+  //----------------------------------------------
+
+  /**
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = this.previous[0].nextWork(buffer);
+    if (direction) {
+      for (int i = 0; i < returned; i++) {
+        buffer[i] = buffer[i] * (float) (Math.sin(Math.PI * i / returned));
+      }
+    } else {
+      for (int i = 0; i < returned; i++) {
+        buffer[i] = buffer[i] / (float) (Math.sin(Math.PI * i / returned));
+      }
     }
-
-    //----------------------------------------------
-    // Public Methods
-    //----------------------------------------------
-
-    //----------------------------------------------
-    // Protected Methods
-    //----------------------------------------------
-
-    /**
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = this.previous[0].nextWork(buffer);
-        if (direction) {
-            for (int i = 0; i < returned; i++) {
-                buffer[i] = buffer[i] * (float) (Math.sin(Math.PI * i / returned));
-            }
-        } else {
-            for (int i = 0; i < returned; i++) {
-                buffer[i] = buffer[i] / (float) (Math.sin(Math.PI * i / returned));
-            }
-        }
-        return returned;
-    }
+    return returned;
+  }
 }

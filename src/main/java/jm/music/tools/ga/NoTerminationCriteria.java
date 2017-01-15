@@ -30,7 +30,8 @@ import jm.music.data.Phrase;
  * @version 0.1.1, 11th December 2000
  */
 public class NoTerminationCriteria extends TerminationCriteria {
-    public boolean isFinished(Phrase[] population) {
-        return false;
-    }
+
+  public boolean isFinished(Phrase[] population) {
+    return false;
+  }
 }

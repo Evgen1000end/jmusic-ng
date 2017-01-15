@@ -8,7 +8,11 @@
 
 import jm.audio.Instrument;
 import jm.audio.io.SampleOut;
-import jm.audio.synth.*;
+import jm.audio.synth.EnvPoint;
+import jm.audio.synth.Envelope;
+import jm.audio.synth.Noise;
+import jm.audio.synth.StereoPan;
+import jm.audio.synth.Volume;
 
 /**
  * A basic white noise synthesis implementation
@@ -18,64 +22,61 @@ import jm.audio.synth.*;
  */
 
 public final class ChiffInst extends Instrument {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
 
-    /**
-     * The points to use in the construction of Envelopes
-     */
-    private EnvPoint[] pointArray = new EnvPoint[10];
-    private int channels;
-    private int sampleRate;
+  /**
+   * The points to use in the construction of Envelopes
+   */
+  private EnvPoint[] pointArray = new EnvPoint[10];
+  private int channels;
+  private int sampleRate;
 
-    //----------------------------------------------
-    // Constructor
-    //----------------------------------------------
+  //----------------------------------------------
+  // Constructor
+  //----------------------------------------------
 
-    /**
-     * Basic default constructor to set an initial
-     * sampling rate.
-     *
-     * @param sampleRate
-     */
-    public ChiffInst(int sampleRate) {
-        this(sampleRate, 2);
-    }
+  /**
+   * Basic default constructor to set an initial
+   * sampling rate.
+   */
+  public ChiffInst(int sampleRate) {
+    this(sampleRate, 2);
+  }
 
-    /**
-     * A second constructor to set an initial
-     * sampling rate and number of channels.
-     *
-     * @param sampleRate
-     * @param channels   (i.e., 1 = mono, 2 = stereo)
-     */
-    public ChiffInst(int sampleRate, int channels) {
-        this.sampleRate = sampleRate;
-        this.channels = channels;
-        EnvPoint[] tempArray = {
-                new EnvPoint((float) 0.0, (float) 0.0),
-                new EnvPoint((float) 0.03, (float) 0.6),
-                new EnvPoint((float) 0.1, (float) 0.01),
-                new EnvPoint((float) 1.0, (float) 0.0)
-        };
-        pointArray = tempArray;
-    }
+  /**
+   * A second constructor to set an initial
+   * sampling rate and number of channels.
+   *
+   * @param channels (i.e., 1 = mono, 2 = stereo)
+   */
+  public ChiffInst(int sampleRate, int channels) {
+    this.sampleRate = sampleRate;
+    this.channels = channels;
+    EnvPoint[] tempArray = {
+        new EnvPoint((float) 0.0, (float) 0.0),
+        new EnvPoint((float) 0.03, (float) 0.6),
+        new EnvPoint((float) 0.1, (float) 0.01),
+        new EnvPoint((float) 1.0, (float) 0.0)
+    };
+    pointArray = tempArray;
+  }
 
-    //----------------------------------------------
-    // Methods
-    //----------------------------------------------
+  //----------------------------------------------
+  // Methods
+  //----------------------------------------------
 
-    /**
-     * Initialisation method used to build a chain of the objects that
-     * this instrument will use.
-     */
-    public void createChain() {
-        Noise noise = new Noise(this, Noise.WHITE_NOISE, this.sampleRate, this.channels);
-        Envelope env = new Envelope(noise, pointArray);
-        Volume vol = new Volume(env, (float) 1.0);
-        StereoPan span = new StereoPan(vol);
-        SampleOut sout = new SampleOut(span);
-    }
+  /**
+   * Initialisation method used to build a chain of the objects that
+   * this instrument will use.
+   */
+  public void createChain() {
+    Noise noise = new Noise(this, Noise.WHITE_NOISE, this.sampleRate, this.channels);
+    Envelope env = new Envelope(noise, pointArray);
+    Volume vol = new Volume(env, (float) 1.0);
+    StereoPan span = new StereoPan(vol);
+    SampleOut sout = new SampleOut(span);
+  }
 }
 

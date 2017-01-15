@@ -36,121 +36,123 @@ import java.io.IOException;
  * VoiceEvt.
  * (see class VoiceEvt for more information)
  *
- * @author Andrew Sorensen
- *         **********************************************************
+ * @author Andrew Sorensen **********************************************************
  */
 public final class PWheel implements VoiceEvt, Cloneable {
-    private final short id = 006;
-    private int value;
-    private short midiChannel;
-    private int time;
 
-    /**
-     * Public constructor for creating a default (empty) pitch wheel event
-     */
-    public PWheel() {
-        this.value = 0;
-        this.midiChannel = 0;
-        this.time = 0;
-    }
+  private final short id = 006;
+  private int value;
+  private short midiChannel;
+  private int time;
 
-    /**
-     * Public constructor for creating a pitch wheel event with pitch wheel value
-     * midi channel and time
-     */
-    public PWheel(int value, short midiChannel, int time) {
-        this.value = value;
-        this.midiChannel = midiChannel;
-        this.time = time;
-    }
-    //------------------------------------
-    //value
+  /**
+   * Public constructor for creating a default (empty) pitch wheel event
+   */
+  public PWheel() {
+    this.value = 0;
+    this.midiChannel = 0;
+    this.time = 0;
+  }
 
-    /**
-     * Return pitch wheel events pitch wheel value
-     */
-    public int getValue() {
-        return value;
-    }
+  /**
+   * Public constructor for creating a pitch wheel event with pitch wheel value
+   * midi channel and time
+   */
+  public PWheel(int value, short midiChannel, int time) {
+    this.value = value;
+    this.midiChannel = midiChannel;
+    this.time = time;
+  }
+  //------------------------------------
+  //value
 
-    /**
-     * Set pitch wheel events pitch wheel value
-     */
-    public void setValue(int value) {
-        this.value = value;
-    }
-    //-------------------------------------
-    //MIDI Channel
+  /**
+   * Return pitch wheel events pitch wheel value
+   */
+  public int getValue() {
+    return value;
+  }
 
-    /**
-     * Return pitch wheel events MIDI channel
-     */
-    public short getMidiChannel() {
-        return midiChannel;
-    }
+  /**
+   * Set pitch wheel events pitch wheel value
+   */
+  public void setValue(int value) {
+    this.value = value;
+  }
+  //-------------------------------------
+  //MIDI Channel
 
-    /**
-     * Set pitch wheel events MIDI channel
-     */
-    public void setMidiChannel(short midiChannel) {
-        this.midiChannel = midiChannel;
-    }
-    //-------------------------------------
-    //Time
+  /**
+   * Return pitch wheel events MIDI channel
+   */
+  public short getMidiChannel() {
+    return midiChannel;
+  }
 
-    /**
-     * Return pitch wheel events time
-     */
-    public int getTime() {
-        return time;
-    }
+  /**
+   * Set pitch wheel events MIDI channel
+   */
+  public void setMidiChannel(short midiChannel) {
+    this.midiChannel = midiChannel;
+  }
+  //-------------------------------------
+  //Time
 
-    /**
-     * Set pitch wheel events time
-     */
-    public void setTime(int time) {
-        this.time = time;
-    }
+  /**
+   * Return pitch wheel events time
+   */
+  public int getTime() {
+    return time;
+  }
 
-    //-------------------------------------
-    //Return ID
-    public short getID() {
-        return id;
-    }
+  /**
+   * Set pitch wheel events time
+   */
+  public void setTime(int time) {
+    this.time = time;
+  }
 
-    //----------------------------------------------
-    // Write the contents of this object out to disk
-    //----------------------------------------------
-    public int write(DataOutputStream dos) throws IOException {
-        return 0;
-    }
+  //-------------------------------------
+  //Return ID
+  public short getID() {
+    return id;
+  }
 
-    //----------------------------------------------
-    // Read the contends of this objec in from disk
-    public int read(DataInputStream dis) throws IOException {
-        // Pitch wheel change is a 14 bit value stored in two bytes,
-        // least significant first
-        this.value = (int) dis.readUnsignedByte();
-        this.value += ((int) dis.readUnsignedByte()) * 128;
-        return 1;
-    }
+  //----------------------------------------------
+  // Write the contents of this object out to disk
+  //----------------------------------------------
+  public int write(DataOutputStream dos) throws IOException {
+    return 0;
+  }
 
-    //--------------------------------------
-    //Copy Object
-    public Event copy() throws CloneNotSupportedException {
-        PWheel event;
-        try {
-            event = (PWheel) this.clone();
-        } catch (CloneNotSupportedException e) {
-            System.out.println(e);
-            event = new PWheel();
-        }
-        return event;
-    }
+  //----------------------------------------------
+  // Read the contends of this objec in from disk
+  public int read(DataInputStream dis) throws IOException {
+    // Pitch wheel change is a 14 bit value stored in two bytes,
+    // least significant first
+    this.value = (int) dis.readUnsignedByte();
+    this.value += ((int) dis.readUnsignedByte()) * 128;
+    return 1;
+  }
 
-    //---------------------------------------
-    //Print
-    public void print() {
-        System.out.println("Pitch Wheel(006):				  [time = " + time + "][midiChannel = " + midiChannel + "][value = " + value + "]");
+  //--------------------------------------
+  //Copy Object
+  public Event copy() throws CloneNotSupportedException {
+    PWheel event;
+    try {
+      event = (PWheel) this.clone();
+    } catch (CloneNotSupportedException e) {
+      System.out.println(e);
+      event = new PWheel();
     }
+    return event;
+  }
+
+  //---------------------------------------
+  //Print
+  public void print() {
+    System.out.println(
+        "Pitch Wheel(006):				  [time = " + time + "][midiChannel = " + midiChannel
+            + "][value = " + value + "]");
+  }
 }

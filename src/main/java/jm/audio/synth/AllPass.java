@@ -33,68 +33,69 @@ import jm.audio.AudioObject;
  */
 
 public final class AllPass extends AudioObject {
-    //The gain of this comb filter
-    private float decay;
 
-    //The delay (in samples) to use with this comb filter
-    private int delay;
+  //The gain of this comb filter
+  private float decay;
 
-    //Number of samples to delay by
-    private float[] delayLine;
+  //The delay (in samples) to use with this comb filter
+  private int delay;
 
-    //Delay line current index
-    private int delayIndex;
+  //Number of samples to delay by
+  private float[] delayLine;
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
+  //Delay line current index
+  private int delayIndex;
 
-    /**
-     * @param delay delay in milliseconds
-     */
-    public AllPass(AudioObject ao, int delay) {
-        this(ao, delay, 0.5);
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
+
+  /**
+   * @param delay delay in milliseconds
+   */
+  public AllPass(AudioObject ao, int delay) {
+    this(ao, delay, 0.5);
+  }
+
+  /**
+   * @param delay delay in milliseconds
+   * @param gain as a percent
+   */
+  public AllPass(AudioObject ao, int delay, double decay) {
+    super(ao, "[AllPass]");
+    this.decay = (float) decay;
+    this.delay = delay;
+  }
+
+  //----------------------------------------------
+  // Methods
+  //----------------------------------------------
+
+  /**
+   * @param buffer any number of incoming samples
+   */
+  public int work(float[] buffer) throws AOException {
+    int returned = this.previous[0].nextWork(buffer);
+    int i = 0;
+    for (; i < returned; i++) {
+      buffer[i] += delayLine[delayIndex] * decay;
+      float a = buffer[i] * -decay;
+      float b = delayLine[delayIndex];
+      delayLine[delayIndex] = buffer[i];
+      buffer[i] = a + b;
+      if (delayIndex >= delayLine.length) {
+        delayIndex = 0;
+      }
     }
+    return i;
+  }
 
-    /**
-     * @param delay delay in milliseconds
-     * @param gain  as a percent
-     */
-    public AllPass(AudioObject ao, int delay, double decay) {
-        super(ao, "[AllPass]");
-        this.decay = (float) decay;
-        this.delay = delay;
-    }
-
-    //----------------------------------------------
-    // Methods
-    //----------------------------------------------
-
-    /**
-     * @param buffer any number of incoming samples
-     */
-    public int work(float[] buffer) throws AOException {
-        int returned = this.previous[0].nextWork(buffer);
-        int i = 0;
-        for (; i < returned; i++) {
-            buffer[i] += delayLine[delayIndex] * decay;
-            float a = buffer[i] * -decay;
-            float b = delayLine[delayIndex];
-            delayLine[delayIndex] = buffer[i];
-            buffer[i] = a + b;
-            if (delayIndex >= delayLine.length) {
-                delayIndex = 0;
-            }
-        }
-        return i;
-    }
-
-    /**
-     *
-     */
-    public void build() {
-        int sampleDelay = (int) ((float) ((float) this.delay / (float) 1000) * this.sampleRate);
-        this.delayLine = new float[sampleDelay * this.channels];
-        this.delayIndex = 0;
-    }
+  /**
+   *
+   */
+  public void build() {
+    int sampleDelay = (int) ((float) ((float) this.delay / (float) 1000) * this.sampleRate);
+    this.delayLine = new float[sampleDelay * this.channels];
+    this.delayIndex = 0;
+  }
 }

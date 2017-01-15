@@ -29,33 +29,32 @@ import jm.audio.AudioObject;
  * The Wavelet Transform
  *
  * @author Timothy Opie
- * @version 1.0, Thursday October 23, 2003
- *          Last changed:
+ * @version 1.0, Thursday October 23, 2003 Last changed:
  */
 
 public final class Wavelet extends AudioObject {
-    //----------------------------------------------
-    // Attributes
-    //----------------------------------------------
+  //----------------------------------------------
+  // Attributes
+  //----------------------------------------------
 
 
-    //----------------------------------------------
-    // Constructors
-    //----------------------------------------------
-    public Wavelet(AudioObject ao) {
-        super(ao, "[FGT]");
+  //----------------------------------------------
+  // Constructors
+  //----------------------------------------------
+  public Wavelet(AudioObject ao) {
+    super(ao, "[FGT]");
 
-    }
+  }
 
 
-    /**
-     * --------------------------------------------
-     * Beginning
-     * --------------------------------------------
-     */
-    public int work(float[] buffer) throws AOException {
+  /**
+   * --------------------------------------------
+   * Beginning
+   * --------------------------------------------
+   */
+  public int work(float[] buffer) throws AOException {
 
-        return buffer.length;
-    }
+    return buffer.length;
+  }
 
 }

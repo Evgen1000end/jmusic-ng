@@ -526,18 +526,24 @@ public class MidiSynth implements JMC, MetaEventListener {
         MidiEvent event = track.get(i);
         System.out.println("    [EVENT] ticks: "+event.getTick());
         System.out.println("    [EVENT-MESSAGE] length: "+event.getMessage().getLength());
-
-        try {
-          System.out.println("     |||Butes: "+new String(event.getMessage().getMessage(),"UTF-8" ));
-        } catch (UnsupportedEncodingException e) {
-          e.printStackTrace();
-        }
-
-
+        System.out.println("     |||Butes: "+bytesToHex(event.getMessage().getMessage()));
       }
     }
 
     return sequence;
+  }
+
+
+  public String bytesToHex(byte[] bytes) {
+
+    char[] hexArray = "0123456789ABCDEF".toCharArray();
+    char[] hexChars = new char[bytes.length * 2];
+    for ( int j = 0; j < bytes.length; j++ ) {
+      int v = bytes[j] & 0xFF;
+      hexChars[j * 2] = hexArray[v >>> 4];
+      hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+    }
+    return new String(hexChars);
   }
 
   private boolean initSynthesizer() {

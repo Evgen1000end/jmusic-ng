@@ -21,6 +21,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.midi;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Stack;
 import javax.sound.midi.InvalidMidiDataException;
@@ -50,7 +51,7 @@ import jm.music.data.Score;
 
 public class MidiSynth implements JMC, MetaEventListener {
 
-  private final static int StopType = 47; // End of track
+  private final static int STOP_TYPE = 47; // End of track
   /**
    * Pulses per quarter note value
    */
@@ -319,7 +320,7 @@ public class MidiSynth implements JMC, MetaEventListener {
    */
   public void meta(MetaMessage metaEvent) {
     //System.out.println("JavaSound sequencer sent meta event");
-    if (metaEvent.getType() == StopType) {
+    if (metaEvent.getType() == STOP_TYPE) {
       if (msCycle) {
         rePlay();
       } else {
@@ -350,6 +351,9 @@ public class MidiSynth implements JMC, MetaEventListener {
       throws InvalidMidiDataException {
 
     //Create the Sequence
+
+    System.out.println("M pp qn = "+m_ppqn);
+
     Sequence sequence = new Sequence(Sequence.PPQ, m_ppqn);
     if (null == sequence) {
       return null;
@@ -357,15 +361,20 @@ public class MidiSynth implements JMC, MetaEventListener {
 
     m_masterTempo = m_currentTempo =
         new Float(score.getTempo()).floatValue();
-    //System.out.println("jMusic MidiSynth notification: Score TempoEvent (BPM) = " + score.getTempo());
+
+    System.out.println("Начальный темп: master "+m_masterTempo+ " текущий "+ m_currentTempo);
 
     Track longestTrack = null;
     double longestTime = 0.0;
     double longestRatio = 1.0;
 
     Enumeration parts = score.getPartList().elements();
+    System.out.println("Начинаю обработку частей: ");
     while (parts.hasMoreElements()) {
       Part inst = (Part) parts.nextElement();
+
+
+
 
       int currChannel = inst.getChannel();
       if (currChannel > 16) {
@@ -378,7 +387,10 @@ public class MidiSynth implements JMC, MetaEventListener {
       m_tempoHistory.push(new Float(m_currentTempo));
 
       float tempo = new Float(inst.getTempo()).floatValue();
-      //System.out.println("jMusic MidiSynth notification: Part TempoEvent (BPM) = " + tempo);
+
+
+      System.out.println("Part "+inst.getChannel()+" tempo "+tempo);
+
       if (tempo != Part.DEFAULT_TEMPO) {
         m_currentTempo = tempo;
       } else if (tempo < Part.DEFAULT_TEMPO) {
@@ -386,6 +398,8 @@ public class MidiSynth implements JMC, MetaEventListener {
       }
 
       trackTempoRatio = m_masterTempo / m_currentTempo;
+
+      System.out.println("TrackTempoRatio "+trackTempoRatio);
 
       int instrument = inst.getInstrument();
       if (instrument == NO_INSTRUMENT) {
@@ -396,10 +410,8 @@ public class MidiSynth implements JMC, MetaEventListener {
       double max = 0;
       double currentTime = 0.0;
 
-      //
-      // One track per Part
-      /////////////
       Track currTrack = sequence.createTrack();
+      System.out.println("Начинаю обработку фраз ... ");
       while (phrases.hasMoreElements()) {
         /////////////////////////////////////////////////
         // Each phrase represents a new Track element
@@ -425,7 +437,6 @@ public class MidiSynth implements JMC, MetaEventListener {
         tempo = new Float(phrase.getTempo()).floatValue();
         if (tempo != Phrase.DEFAULT_TEMPO) {
           m_currentTempo = tempo;
-          //System.out.println("jMusic MidiSynth notification: Phrase TempoEvent (BPM) = " + tempo);
         }
 
         elementTempoRatio = m_masterTempo / m_currentTempo;
@@ -498,10 +509,32 @@ public class MidiSynth implements JMC, MetaEventListener {
     if (longestTime > 0.0 && longestTrack != null) {
       MetaMessage msg = new MetaMessage();
       byte[] data = new byte[0];
-      msg.setMessage(StopType, data, 0);
+      msg.setMessage(STOP_TYPE, data, 0);
       MidiEvent evt = new MidiEvent(msg,
           (long) longestTime); //+ 100 if you want leave some space for reverb tail
       longestTrack.add(evt);
+    }
+
+    //sequence.
+
+    System.out.println("[SEQUENCE] Length: "+sequence.getMicrosecondLength()+" tick length "+sequence.getTickLength());
+
+    for (Track track: sequence.getTracks()) {
+      System.out.println("  [TRACK] ticks: "+track.ticks());
+
+      for (int i = 0; i < track.size(); i++) {
+        MidiEvent event = track.get(i);
+        System.out.println("    [EVENT] ticks: "+event.getTick());
+        System.out.println("    [EVENT-MESSAGE] length: "+event.getMessage().getLength());
+
+        try {
+          System.out.println("     |||Butes: "+new String(event.getMessage().getMessage(),"UTF-8" ));
+        } catch (UnsupportedEncodingException e) {
+          e.printStackTrace();
+        }
+
+
+      }
     }
 
     return sequence;

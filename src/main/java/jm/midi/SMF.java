@@ -85,7 +85,7 @@ public final class SMF implements JMC {
    * about a MIDI file which has just been read or written.
    */
   public SMF() {
-    this((short) 1, (short) 480);
+    this((short)1, (short) 480);
   }
 
   /**
@@ -192,8 +192,7 @@ public final class SMF implements JMC {
   /**
    * Write to a standard MIDI file
    *
-   * @param OutputStream the datasource to write to
-   * @param Score score the Score to get data from
+   * @param os the datasource to write to
    * @throws IOException did the write go ok
    */
   public void write(OutputStream os)

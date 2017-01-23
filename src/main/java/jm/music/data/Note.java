@@ -141,51 +141,51 @@ public class Note implements Cloneable, Serializable {
   /**
    * The smallest value for a pitch.
    */
-  public final static int MIN_PITCH = 0;
+  public static final int MIN_PITCH = 0;
   /**
    * The smallest value for a frequency.
    */
-  public final static double MIN_FREQUENCY = 0.00000000000000001;
+  public static final double MIN_FREQUENCY = 0.00000000000000001;
   /**
    * The largest value for a pitch.
    */
-  public final static double MAX_MIDI_PITCH = 127.0;
+  public static final double MAX_MIDI_PITCH = 127.0;
   /**
    * The largest value for a pitch.
    */
-  public final static int MAX_PITCH = 127;
+  public static final int MAX_PITCH = 127;
   /**
    * The smallest value for a rhythmValue.
    */
-  public final static double MIN_RHYTHM_VALUE = 0.0;
+  public static final double MIN_RHYTHM_VALUE = 0.0;
   /**
    * The largest value for a rhythValue.
    */
-  public final static double MAX_RHYTHM_VALUE = Double.MAX_VALUE;
+  public static final double MAX_RHYTHM_VALUE = Double.MAX_VALUE;
   /**
    * The smallest value for a dynamic.
    */
-  public final static int MIN_DYNAMIC = 0;
+  public static final int MIN_DYNAMIC = 0;
   /**
    * The largest value for a dynamic.
    */
-  public final static int MAX_DYNAMIC = 127;
+  public static final int MAX_DYNAMIC = 127;
   /**
    * The smallest pan value for a note.
    */
-  public final static double MIN_PAN = 0.0;
+  public static final double MIN_PAN = 0.0;
   /**
    * The largest pan value for a note.
    */
-  public final static double MAX_PAN = Double.MAX_VALUE;
+  public static final double MAX_PAN = Double.MAX_VALUE;
   /**
    * The smallest value for a note's duration.
    */
-  public final static double MIN_DURATION = 0.0;
+  public static final double MIN_DURATION = 0.0;
   /**
    * The largest value for a note's duration.
    */
-  public final static double MAX_DURATION = Double.MAX_VALUE;
+  public static final double MAX_DURATION = Double.MAX_VALUE;
   /**
    * The pitch value which indicates a rest.
    */
@@ -515,6 +515,10 @@ public class Note implements Cloneable, Serializable {
     return freq;
   }
 
+  public static double pitchToFreq(int midiPitch) {
+    return Math.pow(2, (midiPitch-69)/12)*440;
+  }
+
   /**
    * gets the string representation for a note for a given MIDI pitch (0-127)
    */
@@ -634,7 +638,7 @@ public class Note implements Cloneable, Serializable {
    * Likewise, if <CODE>pitch</CODE> is greater than {@link #MAX_MIDI_PITCH},
    * pitch will be set to MAX_MIDI_PITCH.
    *
-   * @param int notes pitch
+   * @param pitch notes pitch
    */
   public void setPitch(int pitch) {
     if (pitch == REST) {
@@ -707,7 +711,7 @@ public class Note implements Cloneable, Serializable {
   /**
    * Assign notes pan. 0.0 (full left) 0.5 (center) 1.0 (full right).
    *
-   * @param double note's pan
+   * @param pan note's pan
    */
   public void setPan(double pan) {
     this.pan = (pan < MIN_PAN)
@@ -727,7 +731,7 @@ public class Note implements Cloneable, Serializable {
   /**
    * Set notes duration. 1.0 = Crotchet (Quater Note), 0.5 = Quaver (Eighth Note), etc...
    *
-   * @param double note's duration
+   * @param duration note's duration
    */
   public void setDuration(double duration) {
     this.duration = (duration < MIN_DURATION)
@@ -749,7 +753,7 @@ public class Note implements Cloneable, Serializable {
    * Set notes offset.
    * The range is 0 = no change, positive number delay the note, negative values rush (advance) it
    *
-   * @param double note's offset
+   * @param offset note's offset
    */
   public void setOffset(double offset) {
     this.offset = offset;
@@ -882,7 +886,7 @@ public class Note implements Cloneable, Serializable {
    * which can be used with this method,
    * these include MAJOR_SCALE, MINOR_SCALE, and PENTATONIC_SCALE
    *
-   * @param int[] - an array of scale degrees
+   * @param scale - an array of scale degrees
    * @return boolean - true means it is in the scale
    */
   public boolean isScale(int[] scale) {
@@ -914,11 +918,7 @@ public class Note implements Cloneable, Serializable {
    * @return boolean True if the note is a rest otherwise false.
    */
   public boolean isRest() {
-    if (this.getPitch() == REST) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.getPitch() == REST;
   }
 
   /**

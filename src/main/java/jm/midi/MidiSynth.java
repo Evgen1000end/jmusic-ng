@@ -51,7 +51,7 @@ import jm.music.data.Score;
 
 public class MidiSynth implements JMC, MetaEventListener {
 
-  private final static int STOP_TYPE = 47; // End of track
+  private static final int STOP_TYPE = 47; // End of track
   /**
    * Pulses per quarter note value
    */
@@ -352,7 +352,7 @@ public class MidiSynth implements JMC, MetaEventListener {
 
     //Create the Sequence
 
-    System.out.println("M pp qn = "+m_ppqn);
+    System.out.println("PPQN = "+ m_ppqn);
 
     Sequence sequence = new Sequence(Sequence.PPQ, m_ppqn);
     if (null == sequence) {

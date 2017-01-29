@@ -99,9 +99,9 @@ public class CpnZoomScreen extends Dialog
 
   // Check int input edit field for an error
   private static boolean intFieldError(
-      TextField theField,
-      double minValue,
-      double maxValue) {
+      final TextField theField,
+      final double minValue,
+      final double maxValue) {
     StringTokenizer fieldTokenizer
         = new StringTokenizer(theField.getText());
     if (!fieldTokenizer.hasMoreElements()) {
@@ -111,9 +111,7 @@ public class CpnZoomScreen extends Dialog
       String fieldString =
           fieldTokenizer.nextToken();
       try {
-        int fieldValue =
-            new Integer(fieldString)
-                .intValue();
+        int fieldValue = Integer.valueOf(fieldString);
         if (fieldValue < minValue) {
           theField.setText("Error");
           return true;
@@ -121,7 +119,7 @@ public class CpnZoomScreen extends Dialog
           theField.setText("Error");
           return true;
         }
-      } catch (Throwable e) {
+      } catch (Exception e) {
         theField.setText("Error");
         return true;
       }

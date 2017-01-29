@@ -203,8 +203,8 @@ public final class SMF implements JMC {
     this.numOfTracks = (short) trackList.size();
     //write header chunk
     try {
-      dos.writeInt(0x4D546864);    //MThd
-      dos.writeInt(6);        //Length
+      dos.writeInt(MTHD);    //MThd
+      dos.writeInt(STANDART_HEADER_LENGTH);        //Length
       dos.writeShort(1);        //Midi File Type
       dos.writeShort(numOfTracks);    //Number of tracks
       dos.writeShort(ppqn);        //Pulses Per Quarter Note
@@ -322,11 +322,9 @@ public final class SMF implements JMC {
           short selection = (short) (status / 0x10);
           short midiChannel = (short) (status - (selection * 0x10));
           VoiceEvt evt = (VoiceEvt) MidiUtil.createVoiceEvent(selection);
+          assert evt != null;
           evt.setMidiChannel(midiChannel);
           event = evt;
-          if (event == null) {
-            throw new IOException("MIDI file read error: invalid voice event type!");
-          }
         }
         oldStatus = status;
       } catch (Exception e) {
@@ -356,6 +354,7 @@ public final class SMF implements JMC {
    *
    * @param odos
    * @param track - track to write
+   * @throws IOException
    */
   private void writeTrackChunk(final DataOutputStream odos, final Track track)
       throws IOException {

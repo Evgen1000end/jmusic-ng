@@ -981,7 +981,7 @@ class XMLParser {
     }
     attributeValue = XMLStyles.getAppendAttributeValue(element);
     if (!attributeValue.equals("")) {
-      returnPhrase.setAppend(new Boolean(attributeValue).booleanValue());
+      returnPhrase.setAppend(Boolean.valueOf(attributeValue).booleanValue());
     }
     attributeValue = XMLStyles.getPanAttributeValue(element);
     if (!attributeValue.equals("")) {

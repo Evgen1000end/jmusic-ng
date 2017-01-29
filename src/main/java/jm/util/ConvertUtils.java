@@ -50,7 +50,7 @@ public final class ConvertUtils {
   public static String intToByteArrayFormat(final int value, final String pattern) {
     StringBuilder builder = new StringBuilder();
     for (byte b : intToByteArray(value)) {
-      builder.append(String.format(pattern));
+      builder.append(pattern);
     }
     return builder.toString();
   }

@@ -347,42 +347,36 @@ public class StavePhraseProperties extends Properties {
   public void updateStave(Stave stave) {
 
     stave.setKeySignature(
-        (new Integer(getProperty(KEY_SIGNATURE)))
-            .intValue()
+        new Integer(getProperty(KEY_SIGNATURE))
     );
 
     stave.setTitle(getProperty(STAVE_TITLE));
 
     stave.setMetre(
-        (new Double(getProperty(STAVE_METRE)))
-            .doubleValue()
+        new Double(getProperty(STAVE_METRE))
     );
   }
 
   public void updatePhrase(Phrase phrase) {
     phrase.setNumerator(
-        (new Integer(getProperty(PHRASE_NUMERATOR)))
-            .intValue()
+        new Integer(getProperty(PHRASE_NUMERATOR))
     );
 
     phrase.setDenominator(
-        (new Integer(getProperty(PHRASE_DENOMINATOR)))
-            .intValue()
+        new Integer(getProperty(PHRASE_DENOMINATOR))
     );
 
     phrase.setTitle(getProperty(PHRASE_TITLE));
 
     phrase.setTempo(
-        (new Double(getProperty(PHRASE_TEMPO)))
-            .doubleValue()
+        new Double(getProperty(PHRASE_TEMPO))
     );
 
     try {
       phrase.setInstrument(
-          (new Integer(getProperty(PHRASE_INSTRUMENT)))
-              .intValue()
+          new Integer(getProperty(PHRASE_INSTRUMENT))
       );
-    } catch (Throwable e) {
+    } catch (Exception e) {
       phrase.setInstrument(0);
     }
 
@@ -390,37 +384,31 @@ public class StavePhraseProperties extends Properties {
     if (lastNotePos >= 0) {
       phrase.getNote(lastNotePos)
           .setRhythmValue(
-              (new Double(getProperty(LAST_NOTE_RHYTHM)))
-                  .doubleValue()
+              new Double(getProperty(LAST_NOTE_RHYTHM))
           );
       phrase.getNote(lastNotePos)
           .setDuration(
-              (new Double(getProperty(LAST_NOTE_DUR)))
-                  .doubleValue()
+              new Double(getProperty(LAST_NOTE_DUR))
           );
     }
 
-    if (new Double(getProperty(FINAL_REST_RHYTHM)).doubleValue()
+    if (new Double(getProperty(FINAL_REST_RHYTHM))
         > 0.00001) {
       adjustFinalRestRhythm(
           phrase,
-          new Double(getProperty(FINAL_REST_RHYTHM))
-              .doubleValue(),
+          new Double(getProperty(FINAL_REST_RHYTHM)),
           new Double(getProperty(FINAL_REST_DUR))
-              .doubleValue()
       );
     }
 
     adjustOtherNotesTotalRhythm(
         phrase,
         new Double(getProperty(OTHER_NOTES_TOTAL_RHYTHM))
-            .doubleValue()
     );
 
     adjustOtherNotesTotalDuration(
         phrase,
-        new Double(getProperty(OTHER_NOTES_TOTAL_DUR))
-            .doubleValue()
+        Double.parseDouble(getProperty(OTHER_NOTES_TOTAL_DUR))
     );
 
     Score s = new Score();

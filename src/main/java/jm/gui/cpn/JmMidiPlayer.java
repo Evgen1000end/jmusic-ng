@@ -127,7 +127,7 @@ public class JmMidiPlayer extends OutputStream {
             System.out.println(
                 " Not a Sequencer");
           }
-        } catch (Throwable e) {
+        } catch (Exception e) {
           System.out.println(
               " Exception " + e.getMessage());
         }

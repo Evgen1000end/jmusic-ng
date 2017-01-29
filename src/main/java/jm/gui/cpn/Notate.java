@@ -469,7 +469,7 @@ public class Notate extends Frame implements
 
   private void updateAllStaves(Stave[] tempStaveArray) {
     int gridyVal = 0;
-    int gridheightVal = 0;
+    int gridheightVal;
     int totalHeight = 0;
     scoreBG.removeAll();
     for (int i = 0; i < staveArray.length; i++) {

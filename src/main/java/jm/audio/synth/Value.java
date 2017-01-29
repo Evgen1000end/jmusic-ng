@@ -149,7 +149,7 @@ public final class Value extends AudioObject {
       case 0: //use the value set by the constructor (ignore the note)
         break;
       case 1:
-        this.theValue = (float) (currentNote.getFrequency() * (double) changeRatio);
+        this.theValue = (float) (currentNote.getFrequency() * changeRatio);
         break;
       case 2:
         this.theValue = (float) 127.0 / (float) (currentNote.getDynamic() * changeRatio);

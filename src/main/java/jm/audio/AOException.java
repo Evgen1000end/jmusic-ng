@@ -29,10 +29,12 @@ package jm.audio;
  * @author Andrew Sorensen
  * @version 1.1 July 18:42:42  2001
  */
-
 public final class AOException extends Exception {
 
-  private static String[] MESSAGES = new String[2];
+  /**
+    List of exception description
+   */
+  private static final String[] MESSAGES = new String[2];
 
   static {
     MESSAGES[0] = "Unbalanced number of returned samples from " +
@@ -46,7 +48,7 @@ public final class AOException extends Exception {
    * @param name the name of the AudioObject throwing this exception
    * @param message message to assign this Exception.
    */
-  public AOException(String name, String message) {
+  public AOException(final String name, final String message) {
     super(name + message);
   }
 
@@ -57,7 +59,7 @@ public final class AOException extends Exception {
    * @param name the name of the AudioObject throwing this exception
    * @param message is the index to use to retrieve the stored message
    */
-  public AOException(String name, int message) {
+  public AOException(final String name, final int message) {
     super(name + MESSAGES[message]);
   }
 }

@@ -94,7 +94,7 @@ public final class AllPass extends AudioObject {
    *
    */
   public void build() {
-    int sampleDelay = (int) ((float) ((float) this.delay / (float) 1000) * this.sampleRate);
+    int sampleDelay = (int) ((float) this.delay / (float) 1000 * this.sampleRate);
     this.delayLine = new float[sampleDelay * this.channels];
     this.delayIndex = 0;
   }

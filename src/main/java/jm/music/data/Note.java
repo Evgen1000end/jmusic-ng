@@ -523,7 +523,7 @@ public class Note implements Cloneable, Serializable {
    * gets the string representation for a note for a given MIDI pitch (0-127)
    */
   public static String getNote(int pitch) {
-    String noteString = "";
+    String noteString;
     if (pitch % 12 == 0) {
       noteString = "C";
     } else if (pitch % 12 == 1) {
@@ -863,19 +863,19 @@ public class Note implements Cloneable, Serializable {
   public String toString() {
     String noteDetails;
     if (pitchType == MIDI_PITCH) {
-      noteDetails = new String("jMusic NOTE: " +
+      noteDetails = "jMusic NOTE: " +
           "[Pitch = " + (int) pitch +
           "][RhythmValue = " + rhythmValue +
           "][Dynamic = " + dynamic +
           "][Duration = " + duration +
-          "][Pan = " + pan + "]");
+          "][Pan = " + pan + "]";
     } else {
-      noteDetails = new String("Note: " +
+      noteDetails = "Note: " +
           "[Frequency = " + pitch +
           "][RhythmValue = " + rhythmValue +
           "][Dynamic = " + dynamic +
           "][Duration = " + duration +
-          "][Pan = " + pan + "]");
+          "][Pan = " + pan + "]";
     }
     return noteDetails;
   }

@@ -268,11 +268,11 @@ public class Histogram extends Component implements JMC {
   public void saveDataAs(String fileName) {
     try {
       FileOutputStream out = new FileOutputStream(fileName);
-      String headerText = "Pitch value" + String.valueOf("\t") + "Pitch data" +
-          String.valueOf("\t") + "Rhythm value" + String.valueOf("\t") + "Rhythm data" +
-          String.valueOf("\t") + "Dynamic value" + String.valueOf("\t") + "Dynamic data" +
-          String.valueOf("\t") + "Pan value" + String.valueOf("\t") + "Pan data" +
-          String.valueOf("\n");
+      String headerText = "Pitch value" + "\t" + "Pitch data" +
+          "\t" + "Rhythm value" + "\t" + "Rhythm data" +
+          "\t" + "Dynamic value" + "\t" + "Dynamic data" +
+          "\t" + "Pan value" + "\t" + "Pan data" +
+          "\n";
       out.write(headerText.getBytes());
       for (int i = 0; i < pitchValues.length; i++) {
         String data = String.valueOf(i) + String.valueOf("\t") + String.valueOf(pitchValues[i]);

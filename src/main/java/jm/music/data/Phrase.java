@@ -628,7 +628,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @param int noteNumb the index of the note to be deleted
    */
   public void removeNote(int noteNumb) {
-    Vector vct = (Vector) this.noteList;
+    Vector vct = this.noteList;
     try {
       vct.removeElement(vct.elementAt(noteNumb));
     } catch (RuntimeException re) {
@@ -649,7 +649,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * Deletes the last note in the phrase
    */
   public void removeLastNote() {
-    Vector vct = (Vector) this.noteList;
+    Vector vct = this.noteList;
     vct.removeElementAt(vct.size() - 1);
   }
 
@@ -677,7 +677,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @return Note[] An array containing all Note objects in this phrase
    */
   public Note[] getNoteArray() {
-    Vector vct = (Vector) this.noteList;
+    Vector vct = this.noteList;
     Note[] noteArray = new Note[vct.size()];
     for (int i = 0; i < noteArray.length; i++) {
       noteArray[i] = (Note) vct.elementAt(i);
@@ -768,8 +768,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @return double the phrases endTime
    */
   public double getEndTime() {
-    double tempStartTime = (getStartTime() < MIN_START_TIME) ? MIN_START_TIME : getStartTime();
-    double endTime = tempStartTime;
+    double endTime = (getStartTime() < MIN_START_TIME) ? MIN_START_TIME : getStartTime();
     Enumeration enum1 = this.noteList.elements();
     while (enum1.hasMoreElements()) {
       Note nextNote = (Note) enum1.nextElement();
@@ -1025,8 +1024,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @return Phrase a copy of the Phrase
    */
   public Phrase copy(double startLoc, double endLoc) {
-    Phrase phr = this.copy(startLoc, endLoc, true);
-    return phr;
+    return this.copy(startLoc, endLoc, true);
   }
 
   /**
@@ -1246,9 +1244,9 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * Prints the tracks attributes to stdout
    */
   public String toString() {
-    String phraseData = new String("-------- jMusic PHRASE: '" +
+    String phraseData = "-------- jMusic PHRASE: '" +
         title + "' contains " + this.size() + " notes.  Start time: " +
-        getStartTime() + " --------" + '\n');
+        getStartTime() + " --------" + '\n';
     if (this.tempo > 0) {
       phraseData += "Phrase Tempo = " + this.tempo + '\n';
     }

@@ -349,15 +349,8 @@ public class MidiSynth implements JMC, MetaEventListener {
    */
   protected Sequence scoreToSeq(Score score)
       throws InvalidMidiDataException {
-
-    //Create the Sequence
-
     System.out.println("PPQN = "+ m_ppqn);
-
     Sequence sequence = new Sequence(Sequence.PPQ, m_ppqn);
-    if (null == sequence) {
-      return null;
-    }
 
     m_masterTempo = m_currentTempo =
         new Float(score.getTempo()).floatValue();

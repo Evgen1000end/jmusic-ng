@@ -60,7 +60,7 @@ public final class AMNoiseInst extends jm.audio.Instrument {
     Noise noise = new Noise(this, Noise.FRACTAL_NOISE, this.sampleRate, this.channels);
     Envelope modEnv = new Envelope(noise,
         new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 1.0});
-    Volume modVol = new Volume(modEnv, (float) this.depth); // respond to note dynamic
+    Volume modVol = new Volume(modEnv, this.depth); // respond to note dynamic
     // constant
     Value offsetAmp = new Value(this, this.sampleRate, this.channels, (float) 0.5);
     AudioObject[] grp1 = {modVol, offsetAmp};

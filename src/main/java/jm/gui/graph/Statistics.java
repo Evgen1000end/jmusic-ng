@@ -132,16 +132,11 @@ public class Statistics implements Cloneable, java.io.Serializable {
 
   /**
    */
-  public Object clone() {
-    try {
-      Statistics stats = (Statistics) super.clone();
-      stats.elementData = new double[size];
-      System.arraycopy(elementData, 0, stats.elementData, 0, size);
-      return stats;
-    } catch (CloneNotSupportedException e) {
-      // this shouldn't happen, since we are Cloneable
-      throw new InternalError();
-    }
+  public Object clone() throws CloneNotSupportedException {
+    Statistics stats = (Statistics) super.clone();
+    stats.elementData = new double[size];
+    System.arraycopy(elementData, 0, stats.elementData, 0, size);
+    return stats;
   }
 
   /**

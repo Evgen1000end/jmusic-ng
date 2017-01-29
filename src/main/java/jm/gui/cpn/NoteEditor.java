@@ -82,14 +82,14 @@ public class NoteEditor extends Dialog
   }
 
 
-  private static String getOctaveStringValue(int pitch) {
+  private static String getOctaveStringValue(final int pitch) {
     int octave = -1;
     int note = pitch;
     while (note > 11) {
       ++octave;
       note -= 12;
     }
-    return (new Integer(octave)).toString();
+    return Integer.toString(octave);
   }
 
   private static String getPitchStringValue(
@@ -145,22 +145,21 @@ public class NoteEditor extends Dialog
   }
 
   private static void initializeDoubleEdit(
-      TextField theEdit,
-      double theValue) {
+      final TextField theEdit,
+      final double theValue) {
     theEdit.setText(decimalFormat.format(theValue));
   }
 
   private static void initializeIntEdit(
-      TextField theEdit,
-      int theValue) {
-    theEdit.setText(
-        new Integer(theValue).toString());
+      final TextField theEdit,
+      final int theValue) {
+    theEdit.setText(Integer.toString(theValue));
   }
 
   private static boolean validateFloatEdit(
-      TextField theField,
-      double minValue,
-      double maxValue) {
+      final TextField theField,
+      final double minValue,
+      final double maxValue) {
     StringTokenizer fieldTokenizer
         = new StringTokenizer(theField.getText());
     if (!fieldTokenizer.hasMoreElements()) {
@@ -170,9 +169,7 @@ public class NoteEditor extends Dialog
       String fieldString =
           fieldTokenizer.nextToken();
       try {
-        double fieldValue =
-            new Double(fieldString)
-                .doubleValue();
+        double fieldValue = Double.valueOf(fieldString);
         if (fieldValue < minValue) {
           theField.setText("Value Too Low");
           return false;
@@ -180,7 +177,7 @@ public class NoteEditor extends Dialog
           theField.setText("Value Too High");
           return false;
         }
-      } catch (Throwable e) {
+      } catch (Exception e) {
         theField.setText("Data Error");
         return false;
       }
@@ -194,19 +191,19 @@ public class NoteEditor extends Dialog
   }
 
   private static double getFieldDouble(
-      TextField theField
+      final TextField theField
   ) {
     StringTokenizer fieldTokenizer
         = new StringTokenizer(theField.getText());
     String fieldString =
         fieldTokenizer.nextToken();
-    return (new Double(fieldString)).doubleValue();
+    return Double.valueOf(fieldString);
   }
 
   private static boolean validateIntegerEdit(
-      TextField theField,
-      int minValue,
-      int maxValue) {
+      final TextField theField,
+      final int minValue,
+      final int maxValue) {
     StringTokenizer fieldTokenizer
         = new StringTokenizer(theField.getText());
     if (!fieldTokenizer.hasMoreElements()) {
@@ -216,9 +213,7 @@ public class NoteEditor extends Dialog
       String fieldString =
           fieldTokenizer.nextToken();
       try {
-        int fieldValue =
-            new Integer(fieldString)
-                .intValue();
+        int fieldValue = Integer.valueOf(fieldString);
         if (fieldValue < minValue) {
           theField.setText("Value Too Low");
           return false;
@@ -226,7 +221,7 @@ public class NoteEditor extends Dialog
           theField.setText("Value Too High");
           return false;
         }
-      } catch (Throwable e) {
+      } catch (Exception e) {
         theField.setText("Data Error");
         return false;
       }
@@ -240,7 +235,7 @@ public class NoteEditor extends Dialog
   }
 
   private static int getFieldInt(
-      TextField theField
+      final TextField theField
   ) {
     StringTokenizer fieldTokenizer
         = new StringTokenizer(theField.getText());
@@ -249,14 +244,14 @@ public class NoteEditor extends Dialog
     return (new Integer(fieldString)).intValue();
   }
 
-  private void initializeNoteListValue(int pitch) {
+  private void initializeNoteListValue(final int pitch) {
     setListToMatch(
         noteList,
         getPitchStringValue(pitch)
     );
   }
 
-  private void initializeOctaveListValue(int pitch) {
+  private void initializeOctaveListValue(final int pitch) {
     setListToMatch(
         octaveList,
         getOctaveStringValue(pitch)
@@ -291,9 +286,9 @@ public class NoteEditor extends Dialog
   }
 
   public void editNote(
-      Note theNote,
-      int locX,
-      int locY) {
+      final Note theNote,
+      final int locX,
+      final int locY) {
     note = theNote;
     setLocation(locX, locY);
     initializeData();

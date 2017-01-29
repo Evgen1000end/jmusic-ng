@@ -141,7 +141,7 @@ public class WaveScrollPanel extends Panel implements ActionListener, Adjustment
   * Notify panel of a new screen resolution value.
   */
   public void setResolution(int res) {
-    String resStr = new String("Display Resolution = 1:" + res);
+    String resStr = "Display Resolution = 1:" + res;
     if (res < 1000) {
       resStr += "  "; // spacing
     }

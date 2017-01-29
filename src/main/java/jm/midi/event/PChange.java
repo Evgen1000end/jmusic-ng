@@ -156,9 +156,8 @@ public final class PChange implements VoiceEvt, Cloneable {
   }
 
   public String toString() {
-    return new String(
-        "Program Change(007): [time = " + time + "][midiChannel = " + midiChannel + "][value = "
-            + value + "]");
+    return "Program Change(007): [time = " + time + "][midiChannel = " + midiChannel + "][value = "
+        + value + "]";
   }
 }
 

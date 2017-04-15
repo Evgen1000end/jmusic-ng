@@ -281,7 +281,7 @@ public class ParmScreen extends Dialog
     int maxVolume = 256;
     int volumeStep = 6;
     for (int i = minVolume; i <= maxVolume; i += volumeStep) {
-      volumeList.add(Integer.toString());
+      volumeList.add(Integer.toString(i));
     }
   }
 

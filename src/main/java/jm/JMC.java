@@ -44,89 +44,83 @@ import jm.constants.Waveforms;
 public interface JMC extends RhythmValues, Pitches, Frequencies, Tunings,
     Dynamics, Panning, ProgramChanges, DrumMap, Scales,
     Waveforms, Noises, Alignments {
-
-  //----------------------------------------------
-  // Programming Constants
-  //----------------------------------------------
   /**
-   * A constant used to toggle debugging information
+   * A constant used to toggle debugging information.
    */
-  public static final boolean DEBUG = false;
+  boolean DEBUG = false;
   /**
-   * A constant used to toggle the verbosity of output
+   * A constant used to toggle the verbosity of output.
    */
-  public static final boolean VERBOSE = true;
+  boolean VERBOSE = true;
 
   /**
-   * Constant for 8 bit
+   * Constant for 8 bit.
    */
-  public static final int EIGHT_BIT = 127;
+  int EIGHT_BIT = 127;
   /**
-   * Constant for 16 bit
+   * Constant for 16 bit.
    */
-  public static final int SIXTEEN_BIT = 32767;
+  int SIXTEEN_BIT = 32767;
   /**
-   * Constant for 32 bit
+   * Constant for 32 bit.
    */
-  public static final int THIRTY_TWO_BIT = 214748647;
+  int THIRTY_TWO_BIT = 214748647;
   /**
-   * Constant for program changes
+   * Constant for program changes.
    */
-  public static final int PROG_EVT = 748394; //Integer.MIN_VALUE + 1;
+  int PROG_EVT = 748394; //Integer.MIN_VALUE + 1;
   /**
-   * Constant for tempo changes
+   * Constant for tempo changes.
    */
-  public static final int TEMP_EVT = PROG_EVT + 1;
+  int TEMP_EVT = PROG_EVT + 1;
   /**
    * Constant for key signature events
    */
-  public static final int KEY_SIG_EVT = TEMP_EVT + 1;
+  int KEY_SIG_EVT = TEMP_EVT + 1;
   /**
    * Constant for time signature events
    */
-  public static final int TIME_SIG_EVT = KEY_SIG_EVT + 1;
+  int TIME_SIG_EVT = KEY_SIG_EVT + 1;
   /**
    * Constant for no key signature
    */
-  public static final int NO_KEY_SIGNATURE = Integer.MIN_VALUE;
+  int NO_KEY_SIGNATURE = Integer.MIN_VALUE;
   /**
    * Constant for no key quality
    */
-  public static final int NO_KEY_QUALITY = Integer.MIN_VALUE;
+  int NO_KEY_QUALITY = Integer.MIN_VALUE;
   /**
    * Constant for no numerator
    */
-  public static final int NO_NUMERATOR = Integer.MIN_VALUE;
+  int NO_NUMERATOR = Integer.MIN_VALUE;
   /**
    * Constant for no denominator
    */
-  public static final int NO_DENOMINATOR = Integer.MIN_VALUE;
+  int NO_DENOMINATOR = Integer.MIN_VALUE;
   /**
    * Constant for no instrument
    */
-  public static final int NO_INSTRUMENT = -1;
+  int NO_INSTRUMENT = -1;
 
   //----------------------------------------------
   // Audio constants
   //----------------------------------------------
         /* modulation sources */
-  public static final int AMPLITUDE = 0;
-  public static final int FREQUENCY = 1;
+  int AMPLITUDE = 0;
+  int FREQUENCY = 1;
 
   /* channels */
-  public static final int MONO = 1;
-  public static final int STEREO = 2;
-  public static final int QUADRAPHONIC = 4;
-  public static final int OCTAPHONIC = 8;
-  // What name should be given to the class containing the above four?
-  // jm.constants.SoundSystems perhaps?
+  int MONO = 1;
+  int STEREO = 2;
+  int QUADRAPHONIC = 4;
+  int OCTAPHONIC = 8;
 
   //----------------------------------------------
   // Data type constants
   //----------------------------------------------
-  public static final int PITCH = 0;
-  public static final int RHYTHM = 1;
-  public static final int DYNAMIC = 2;
-  public static final int PAN = 3;
+  int PITCH = 0;
+  int RHYTHM = 1;
+  int DYNAMIC = 2;
+  int PAN = 3;
 
 }

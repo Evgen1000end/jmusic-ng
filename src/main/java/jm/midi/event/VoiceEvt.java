@@ -68,10 +68,10 @@ public interface VoiceEvt extends Event {
   /**
    * Get a voice events MIDI channel
    */
-  public abstract short getMidiChannel();
+  short getMidiChannel();
 
   /**
    * Set a voice events MIDI channel
    */
-  public abstract void setMidiChannel(short midiChannel);
+  void setMidiChannel(short midiChannel);
 }

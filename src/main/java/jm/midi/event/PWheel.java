@@ -130,8 +130,8 @@ public final class PWheel implements VoiceEvt, Cloneable {
   public int read(DataInputStream dis) throws IOException {
     // Pitch wheel change is a 14 bit value stored in two bytes,
     // least significant first
-    this.value = (int) dis.readUnsignedByte();
-    this.value += ((int) dis.readUnsignedByte()) * 128;
+    this.value = dis.readUnsignedByte();
+    this.value += dis.readUnsignedByte() * 128;
     return 1;
   }
 

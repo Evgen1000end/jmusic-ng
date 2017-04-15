@@ -86,9 +86,7 @@ public final class Splitter extends AudioObject {
     if (++count == outputs) {
       count = 0;
     }
-    for (int i = 0; i < this.buf.length; i++) {
-      buffer[i] = this.buf[i];
-    }
+    System.arraycopy(this.buf, 0, buffer, 0, this.buf.length);
     return this.buf.length;
   }
 }

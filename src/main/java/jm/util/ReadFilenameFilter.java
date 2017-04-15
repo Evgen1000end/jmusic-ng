@@ -45,10 +45,8 @@ class ReadFilenameFilter implements FilenameFilter {
    * @return true if specified file ends with ".mid", ".midi" or ".jm" and does not begin with "."
    */
   public boolean accept(final File dir, final String name) {
-    return (!name.startsWith(".") && (name.endsWith(".mid")
+    return !name.startsWith(".") && (name.endsWith(".mid")
         || name.endsWith(".midi")
-        || name.endsWith(".jm")))
-        ? true
-        : false;
+        || name.endsWith(".jm"));
   }
 }

@@ -30,7 +30,7 @@ package jm.constants;
  */
 public interface Pitches {
 
-  public static final int
+  int
       G9 = 127,
       GF9 = 126,
       FS9 = 126,

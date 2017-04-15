@@ -137,7 +137,7 @@ public abstract class MidiCommunication implements Receiver {
       this.midiReceiver.send(message, -1L);
     } catch (InvalidMidiDataException e) {
     }
-    ;
+
   }
 
   /**

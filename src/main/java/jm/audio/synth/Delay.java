@@ -88,7 +88,7 @@ public final class Delay extends AudioObject {
     if (sampleCounter >= sampleDelay) {
       for (int i = 0; i < returned; i++) {
         // keep the current sample from the chain
-        storedSamples.addElement(new Float(buffer[i]));
+        storedSamples.addElement(buffer[i]);
         // replace it with a stored sample
         Float tempFloat = (Float) storedSamples.elementAt(storedSamples.size() - 1);
         buffer[i] = tempFloat.floatValue();
@@ -99,7 +99,7 @@ public final class Delay extends AudioObject {
     } else { // early on pad with silence
       for (int i = 0; i < returned; i++) {
         // keep the current sample from the chain
-        storedSamples.addElement(new Float(buffer[i]));
+        storedSamples.addElement(buffer[i]);
         // send out a zero value
         buffer[i] = (float) 0.0;
       }

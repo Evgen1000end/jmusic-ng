@@ -320,7 +320,6 @@ public class Play implements JMC {
       ((MidiSynth) ms.elementAt(index)).updateSeq(s);
     } catch (Exception e) {
       System.err.println("jMusic Play class can't update MIDI sequence:" + e);
-      return;
     }
   }
 
@@ -517,7 +516,6 @@ public class Play implements JMC {
       ((MidiSynth) ms.elementAt(index)).setCycle(true);
     } catch (Exception e) {
       System.err.println("MIDI Playback Error:" + e);
-      return;
     }
   }
 
@@ -699,7 +697,6 @@ public class Play implements JMC {
           Thread.sleep(500); // stop abrupt cutoff buzz
         } catch (InterruptedException e) {
         }
-        ;
         //mixer.stop();
         //mixerList.remove(mixer);
         //audioPaused = false;

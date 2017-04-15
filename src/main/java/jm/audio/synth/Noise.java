@@ -275,7 +275,6 @@ public class Noise extends AudioObject {
             buffer[ret++] = (float) (Math.random() * 2.0 - 1.0) * amp;
           }
         }
-        ;
         break;
       case BROWN_NOISE:
         float prev0 = 0.0f;
@@ -293,7 +292,6 @@ public class Noise extends AudioObject {
             prev2 = current;
           }
         }
-        ;
         break;
       case STEP_NOISE:
         // low sample resolution noise (RandH noise)
@@ -309,7 +307,6 @@ public class Noise extends AudioObject {
             buffer[ret++] = temp;
           }
         }
-        ;
         break;
       case SMOOTH_NOISE:
         // interpolated noise (RandI noise)
@@ -329,7 +326,6 @@ public class Noise extends AudioObject {
             }
           }
         }
-        ;
         break;
       case FRACTAL_NOISE:
         for (; ret < buffer.length; ) {
@@ -378,7 +374,6 @@ public class Noise extends AudioObject {
             buffer[ret++] = gaussValue * amp;
           }
         }
-        ;
         break;
 
       case WALK_NOISE:
@@ -490,14 +485,14 @@ public class Noise extends AudioObject {
     gendynIntArray = new int[(int) gendynIntArrayLength];
     mgaCounter = 0;
     // stage 1
-    mgaInc = (gendynAmpArray[0] - gendynAmp0) / (double) gendynTimeArray[0];
+    mgaInc = (gendynAmpArray[0] - gendynAmp0) / gendynTimeArray[0];
     //first - continuing from previous
     for (jindex = 0; jindex < (int) gendynTimeArray[0]; jindex++) {
       switch (gendynInterpolation) {
         case 2:
           // cos
           double diff =
-              (1.0 - (Math.cos(jindex / (double) gendynTimeArray[0] * 3.14) / 2.0 + 0.5)) *
+              (1.0 - (Math.cos(jindex / gendynTimeArray[0] * 3.14) / 2.0 + 0.5)) *
                   (gendynAmpArray[0] - gendynAmp0);
           gendynIntArray[mgaCounter++] = (int) ((gendynAmp0 + diff) /
               100.0 * gendynAmpGranularity);
@@ -515,12 +510,12 @@ public class Noise extends AudioObject {
     // remainder
     for (index = 1; index < gendynPointSize - 1; index++) {
       mgaInc =
-          (gendynAmpArray[index] - gendynAmpArray[index - 1]) / (double) gendynTimeArray[index];
+          (gendynAmpArray[index] - gendynAmpArray[index - 1]) / gendynTimeArray[index];
       for (jindex = 0; jindex < (int) gendynTimeArray[index]; jindex++) {
         switch (gendynInterpolation) {
           case 2:
             double diff =
-                (1.0 - (Math.cos(jindex / (double) gendynTimeArray[index] * 3.14) / 2.0 + 0.5)) *
+                (1.0 - (Math.cos(jindex / gendynTimeArray[index] * 3.14) / 2.0 + 0.5)) *
                     (gendynAmpArray[index] - gendynAmpArray[index - 1]);
             gendynIntArray[mgaCounter++] = (int) ((gendynAmpArray[index - 1] + diff) /
                 100.0 * gendynAmpGranularity);

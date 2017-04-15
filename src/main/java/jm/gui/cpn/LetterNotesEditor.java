@@ -191,7 +191,7 @@ public class LetterNotesEditor extends Dialog
   }
 
   private static String crunchLine(String s) {
-    StringBuffer b = new StringBuffer(s);
+    StringBuilder b = new StringBuilder(s);
     for (int i = 0; i < b.length(); ++i) {
       if (b.charAt(i) < ' ') {
         b.setCharAt(i, ' ');

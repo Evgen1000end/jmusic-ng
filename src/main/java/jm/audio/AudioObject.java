@@ -131,8 +131,8 @@ public abstract class AudioObject implements jm.JMC {
   protected AudioObject(AudioObject[] previous, String name) {
     this.name = name;
     this.previous = previous;
-    for (int i = 0; i < previous.length; i++) {
-      previous[i].setNext(this);
+    for (AudioObject previou : previous) {
+      previou.setNext(this);
     }
     inputs = previous.length;
   }
@@ -191,9 +191,7 @@ public abstract class AudioObject implements jm.JMC {
       this.next[0] = next;
     } else {
       AudioObject[] tmp = new AudioObject[this.next.length + 1];
-      for (int i = 0; i < this.next.length; i++) {
-        tmp[i] = this.next[i];
-      }
+      System.arraycopy(this.next, 0, tmp, 0, this.next.length);
       tmp[this.next.length] = next;
       this.next = tmp;
     }
@@ -233,12 +231,12 @@ public abstract class AudioObject implements jm.JMC {
    */
   protected void buildNext(final Note note, final double startTime, final int numOfSamples) {
     if (next != null) {
-      for (int i = 0; i < next.length; i++) {
-        next[i].numOfSamples = numOfSamples;
-        next[i].inst = this.inst;
-        next[i].channels = this.channels;
-        next[i].sampleRate = this.sampleRate;
-        next[i].newNote(note, startTime, numOfSamples);
+      for (AudioObject aNext : next) {
+        aNext.numOfSamples = numOfSamples;
+        aNext.inst = this.inst;
+        aNext.channels = this.channels;
+        aNext.sampleRate = this.sampleRate;
+        aNext.newNote(note, startTime, numOfSamples);
       }
     } else {
       try {

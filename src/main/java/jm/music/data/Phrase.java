@@ -1311,7 +1311,6 @@ public class Phrase implements JMC, Cloneable, Serializable {
           min = note.getPitch();
         }
       }
-      ;
     }
     return min;
   }
@@ -1496,14 +1495,14 @@ public class Phrase implements JMC, Cloneable, Serializable {
       this.phrase = phrase;
     }
 
-    private final Anchoring getAnchoring() {
+    private Anchoring getAnchoring() {
       if (isAbsolute) {
         return null;
       }
       return new Anchoring(anchor.phrase, alignment, offset);
     }
 
-    private final double getStartTime() {
+    private double getStartTime() {
       if (isAbsolute) {
         return startTime;
       } else {
@@ -1515,16 +1514,16 @@ public class Phrase implements JMC, Cloneable, Serializable {
       }
     }
 
-    private final void setStartTime(final double startTime) {
+    private void setStartTime(final double startTime) {
       this.isAbsolute = true;
       this.startTime = startTime;
     }
 
-    private final double getEndTime() {
+    private double getEndTime() {
       return phrase.getEndTime();
     }
 
-    private final Position copy(final Phrase newCopy) {
+    private Position copy(final Phrase newCopy) {
       return (isAbsolute)
           ? new Position(startTime, newCopy)
           : new Position(anchor, alignment, offset,

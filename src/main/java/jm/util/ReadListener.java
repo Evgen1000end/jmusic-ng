@@ -42,9 +42,9 @@ public interface ReadListener {
    * @param score Score imported by the object initiating this event
    * @return updated score to send back to the initiating object
    */
-  public Score scoreRead(final Score score);
+  Score scoreRead(final Score score);
 
-  public void startedReading();
+  void startedReading();
 
   /**
    * Implementations of this method can alter all the scores imported by the
@@ -54,5 +54,5 @@ public interface ReadListener {
    * @param scores all Scores imported by the object initiating this event
    * @return updated scores to send back to the initiating object
    */
-  public void finishedReading();
+  void finishedReading();
 }

@@ -202,7 +202,7 @@ public class TrebleStave extends Stave implements JMC {
 
     // draw notes and rests
     for (int i = 0; i < phrase.size(); i++) {
-      int notePitchNum = (int) phrase.getNote(i).getPitch();
+      int notePitchNum = phrase.getNote(i).getPitch();
       // reset pitch for rests
 
       // position?
@@ -359,8 +359,8 @@ public class TrebleStave extends Stave implements JMC {
     displayImage(g, currImage, totalBeatWidth, yCoordinate);
 
     // store position in a vector
-    notePositions.addElement(new Integer(totalBeatWidth));
-    notePositions.addElement(new Integer(yCoordinate));
+    notePositions.addElement(totalBeatWidth);
+    notePositions.addElement(yCoordinate);
 
     if (dottedNote) {
       boolean dotFlag = true;
@@ -526,14 +526,10 @@ public class TrebleStave extends Stave implements JMC {
     int[] flatPitches = {71, 76, 69, 74, 67, 72, 65};
     private String name;
 
-    ;
-
     // Due to a 1.1 compiler bug this constructor cannot be private
     Style(String name) {
       this.name = name;
     }
-
-    ;
 
     public String toString() {
       return name + " of displaying accidentals";
@@ -679,12 +675,12 @@ public class TrebleStave extends Stave implements JMC {
         if (keySignature > 0 && keySignature < 8) {
           for (int i = 0; i < keySignature; i++) {
             int degree = sharpPitches[i] % 12;
-            for (int j = (int) Note.MIN_PITCH;
-                j <= (int) Note.MAX_PITCH;
+            for (int j = Note.MIN_PITCH;
+                j <= Note.MAX_PITCH;
                 j++) {
               if ((j % 12) == degree) {
                 chromaticallyAffectedPitches.addElement(
-                    new Integer(j));
+                    j);
                 keyAccidentals++;
               }
             }
@@ -692,12 +688,12 @@ public class TrebleStave extends Stave implements JMC {
         } else if (keySignature < 0 && keySignature > -8) {
           for (int i = 0; i > keySignature; i--) {
             int degree = flatPitches[-i] % 12;
-            for (int j = (int) Note.MIN_PITCH;
-                j <= (int) Note.MAX_PITCH;
+            for (int j = Note.MIN_PITCH;
+                j <= Note.MAX_PITCH;
                 j++) {
               if ((j % 12) == degree) {
                 chromaticallyAffectedPitches.addElement(
-                    new Integer(j));
+                    j);
                 keyAccidentals++;
               }
             }
@@ -717,11 +713,11 @@ public class TrebleStave extends Stave implements JMC {
             || (pitch % 12) == 10) {
           if (keySignature > -1) {
             chromaticallyAffectedPitches.addElement(
-                new Integer(pitch - 1));
+                pitch - 1);
             return Accidental.SHARP;
           } else {
             chromaticallyAffectedPitches.addElement(
-                new Integer(pitch + 1));
+                pitch + 1);
             return Accidental.FLAT;
           }
         } else {

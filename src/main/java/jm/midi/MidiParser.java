@@ -271,7 +271,7 @@ public final class MidiParser implements JMC {
           ev = e;
         }
       }
-      ;
+
       LinkedList<EventPair> midiEvents = new LinkedList<EventPair>();
 
 			/*if(inst.getTempo() != Part.DEFAULT_TEMPO){
@@ -338,7 +338,7 @@ public final class MidiParser implements JMC {
             pitch = note.getPitch();
           }
           if (pitch != REST) {
-            midiEvents.add(new EventPair(new Double(startTime + offsetValue),
+            midiEvents.add(new EventPair(startTime + offsetValue,
                 new NoteOn((short) pitch, (short) note.getDynamic(), (short) inst.getChannel(),
                     0)));
 
@@ -346,7 +346,7 @@ public final class MidiParser implements JMC {
             //create a timing event at the end of the notes duration
             double endTime = startTime + (note.getDuration() * phraseTempoMultiplier);
             // Add the note-off time to the list
-            midiEvents.add(new EventPair(new Double(endTime + offsetValue),
+            midiEvents.add(new EventPair(endTime + offsetValue,
                 new NoteOn((short) pitch, (short) 0, (short) inst.getChannel(), 0)));
           }
           // move the note-on time forward by the rhythmic value

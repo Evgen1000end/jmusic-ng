@@ -30,7 +30,7 @@ package jm.constants;
  */
 public interface DrumMap {
 
-  public static final int
+  int
       ACOUSTIC_BASS_DRUM = 35,
       BASS_DRUM_1 = 36,
       SIDE_STICK = 37,

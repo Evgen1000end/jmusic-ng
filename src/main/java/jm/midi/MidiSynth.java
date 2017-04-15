@@ -377,7 +377,7 @@ public class MidiSynth implements JMC, MetaEventListener {
             currChannel);
       }
 
-      m_tempoHistory.push(new Float(m_currentTempo));
+      m_tempoHistory.push(m_currentTempo);
 
       float tempo = new Float(inst.getTempo()).floatValue();
 
@@ -425,7 +425,7 @@ public class MidiSynth implements JMC, MetaEventListener {
         evt = createProgramChangeEvent(currChannel, instrument, phraseTick);
         currTrack.add(evt);
 
-        m_tempoHistory.push(new Float(m_currentTempo));
+        m_tempoHistory.push(m_currentTempo);
 
         tempo = new Float(phrase.getTempo()).floatValue();
         if (tempo != Phrase.DEFAULT_TEMPO) {
@@ -458,7 +458,7 @@ public class MidiSynth implements JMC, MetaEventListener {
             continue;
           }
 
-          long onTick = (long) (phraseTick);
+          long onTick = phraseTick;
           // pan
           if (note.getPan() != lastPanPosition) {
             evt = createCChangeEvent(currChannel, 10, (int) (note.getPan() * 127), onTick);

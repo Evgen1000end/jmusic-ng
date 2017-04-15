@@ -67,10 +67,8 @@ public final class PrintOut extends AudioObject implements JMC {
         f.close();
       } catch (IOException e) {
       }
-      ;
     } catch (IOException e) {
     }
-    ;
   }
 
   public void finalize() {

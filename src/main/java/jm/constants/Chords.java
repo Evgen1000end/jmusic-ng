@@ -27,27 +27,27 @@ public interface Chords {
   /**
    * chord interval patterns
    */
-  public final static int[] MAJOR = {4, 7};
-  public final static int[] MINOR = {3, 7};
-  public final static int[] AUGMENTED = {4, 8};
-  public final static int[] DIMINISHED = {3, 6};
-  public final static int[] SUSPENDED_FOURTH = {5, 7};
-  public final static int[] FLATTED_FIFTH = {4, 6};
-  public final static int[] SIXTH = {4, 7, 9};
-  public final static int[] MINOR_SIXTH = {3, 7, 9};
-  public final static int[] SEVENTH = {4, 7, 10};
-  public final static int[] MINOR_SEVENTH = {3, 7, 10};
-  public final static int[] MAJOR_SEVENTH = {4, 7, 11};
-  public final static int[] SEVENTH_SHARP_FIFTH = {4, 8, 10};
-  public final static int[] DIMINISHED_SEVENTH = {4, 6, 9};
-  public final static int[] SEVENTH_FLAT_FIFTH = {4, 6, 10};
-  public final static int[] MINOR_SEVENTH_FLAT_FIFTH = {3, 6, 10};
-  public final static int[] SIXTH_ADDED_NINTH = {4, 7, 9, 14};
-  public final static int[] SEVENTH_SHARP_NINTH = {4, 7, 10, 15};
-  public final static int[] SEVENTH_FLAT_NINTH = {4, 7, 10, 13};
-  public final static int[] NINTH = {4, 7, 10, 14};
-  public final static int[] MINOR_NINTH = {3, 7, 10, 14};
-  public final static int[] ELEVENTH = {7, 10, 14, 17};
-  public final static int[] MINOR_ELEVENTH = {3, 7, 10, 14, 17};
-  public final static int[] THIRTEENTH = {4, 7, 10, 14, 21};
+  int[] MAJOR = {4, 7};
+  int[] MINOR = {3, 7};
+  int[] AUGMENTED = {4, 8};
+  int[] DIMINISHED = {3, 6};
+  int[] SUSPENDED_FOURTH = {5, 7};
+  int[] FLATTED_FIFTH = {4, 6};
+  int[] SIXTH = {4, 7, 9};
+  int[] MINOR_SIXTH = {3, 7, 9};
+  int[] SEVENTH = {4, 7, 10};
+  int[] MINOR_SEVENTH = {3, 7, 10};
+  int[] MAJOR_SEVENTH = {4, 7, 11};
+  int[] SEVENTH_SHARP_FIFTH = {4, 8, 10};
+  int[] DIMINISHED_SEVENTH = {4, 6, 9};
+  int[] SEVENTH_FLAT_FIFTH = {4, 6, 10};
+  int[] MINOR_SEVENTH_FLAT_FIFTH = {3, 6, 10};
+  int[] SIXTH_ADDED_NINTH = {4, 7, 9, 14};
+  int[] SEVENTH_SHARP_NINTH = {4, 7, 10, 15};
+  int[] SEVENTH_FLAT_NINTH = {4, 7, 10, 13};
+  int[] NINTH = {4, 7, 10, 14};
+  int[] MINOR_NINTH = {3, 7, 10, 14};
+  int[] ELEVENTH = {7, 10, 14, 17};
+  int[] MINOR_ELEVENTH = {3, 7, 10, 14, 17};
+  int[] THIRTEENTH = {4, 7, 10, 14, 21};
 }

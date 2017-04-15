@@ -448,9 +448,8 @@ public class NoteEditor extends Dialog
 
   private int getSelectedPitch() {
     String noteString = noteList.getSelectedItem();
-    ;
     if (noteString.equals("Rest")) {
-      return (int) Note.REST;
+      return Note.REST;
     } else {
       int answer;
       if (noteString.equals("C")) {

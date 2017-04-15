@@ -134,7 +134,7 @@ public abstract class Stave extends Panel implements JMC, KeyListener {
     // change 'paper' colour
     this.setBackground(Color.getHSBColor((float) 0.14, (float) 0.09, (float) 1.0)); // .17, .1, 1
     // set the appropriate size (at least 8 bars of 4/4) for the stave
-    this.setSize((int) (beatWidth * spacingValue), panelHeight);
+    this.setSize(beatWidth * spacingValue, panelHeight);
     if (this.getSize().width < (int) (phrase.getEndTime() * beatWidth * 1.5)) {
       this.setSize((int) (phrase.getEndTime() * beatWidth * 1.5), panelHeight);
     }
@@ -425,8 +425,6 @@ public abstract class Stave extends Panel implements JMC, KeyListener {
   public void update(Graphics g) {
     paint(g);
   }
-
-  ;
 
   public void paint(Graphics graphics) {
     // overridden by each class which extends Stave

@@ -231,11 +231,11 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
 
   public void mouseDragged(MouseEvent e) {
     // start loc
-    drawPoints.addElement(new Integer(x));
-    drawPoints.addElement(new Integer(y));
+    drawPoints.addElement(x);
+    drawPoints.addElement(y);
     // current loc
-    drawPoints.addElement(new Integer(e.getX()));
-    drawPoints.addElement(new Integer(e.getY()));
+    drawPoints.addElement(e.getX());
+    drawPoints.addElement(e.getY());
     // update old locations
     x = e.getX();
     y = e.getY();
@@ -282,8 +282,8 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
               intValue()) / beatWidth +
               ((double) Math.abs(x2 - x1) / beatWidth / (double) (Math.abs(y1 - y2)) + 1.0) /
                   (Math.abs(y1 - y2) + 1); //onset time
-          if ((int) ((Integer) drawPoints.elementAt(counter * 4)).intValue() >
-              (int) ((Integer) drawPoints.elementAt(counter * 4 + 2)).intValue()) {
+          if (((Integer) drawPoints.elementAt(counter * 4)).intValue() >
+              ((Integer) drawPoints.elementAt(counter * 4 + 2)).intValue()) {
             //revised onset time for drawing backwards
             storer[counter][0] = (double) (((Integer) drawPoints.elementAt(counter * 4 + 2)).
                 intValue()) / beatWidth / (double) (Math.abs(y1 - y2)) + 1.0;
@@ -299,8 +299,8 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
         // course grade
         storer[counter][0] = (double) (((Integer) drawPoints.elementAt(counter * 4)).
             intValue()) / beatWidth; //onset time
-        if ((int) ((Integer) drawPoints.elementAt(counter * 4)).intValue() >
-            (int) ((Integer) drawPoints.elementAt(counter * 4 + 2)).intValue()) {
+        if (((Integer) drawPoints.elementAt(counter * 4)).intValue() >
+            ((Integer) drawPoints.elementAt(counter * 4 + 2)).intValue()) {
           //revised onset time for drawing backwards
           storer[counter][0] = (double) (((Integer) drawPoints.elementAt(counter * 4 + 2)).
               intValue()) / beatWidth;

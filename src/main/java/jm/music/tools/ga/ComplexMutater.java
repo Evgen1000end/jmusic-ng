@@ -127,9 +127,7 @@ public class ComplexMutater extends Mutater {
     for (int i = 0; i < population.length; i++) {
       mutationArray[i] = population[i].getEndTime();
     }
-    for (int i = 0; i < population.length; i++) {
-      Phrase individual = population[i];
-
+    for (Phrase individual : population) {
       //Change the seed portion of the extension
       if (modifyAll) {
         initialSize = 0;
@@ -285,7 +283,7 @@ public class ComplexMutater extends Mutater {
       vector = (Vector) individual.getNoteList().clone();
       int currentPitch;
       double currentRV;
-      int previousPitch = (int) Note.REST;
+      int previousPitch = Note.REST;
       double previousRV = 0;
       int index1 = initialSize;
       while (index1 < vector.size() && previousPitch == Note.REST) {

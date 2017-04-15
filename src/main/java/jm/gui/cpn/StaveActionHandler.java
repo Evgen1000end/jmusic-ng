@@ -88,7 +88,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
   boolean inNoteArea(MouseEvent e) {
     Integer lastX;
     if (theApp.notePositions.size() < 2) {
-      lastX = new Integer(theApp.getTotalBeatWidth());
+      lastX = theApp.getTotalBeatWidth();
     } else {
       lastX = (Integer) theApp.notePositions.elementAt(theApp.notePositions.size() - 2);
     }

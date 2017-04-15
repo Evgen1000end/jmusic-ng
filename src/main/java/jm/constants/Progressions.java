@@ -27,27 +27,27 @@ public interface Progressions {
   /**
    * common chord progression templates
    */
-  public static final int[] I_IV_V7_I = {0, 3, 4, 0};
-  public static final int[] ii_V7_I = {1, 4, 0};
-  public static final int[] I_ii_iii_IV = {0, 1, 2, 3};
-  public static final int[] i_iv_v = {0, 3, 4};
-  public static final int[] ii_V_I = {1, 4, 0};
+  int[] I_IV_V7_I = {0, 3, 4, 0};
+  int[] ii_V7_I = {1, 4, 0};
+  int[] I_ii_iii_IV = {0, 1, 2, 3};
+  int[] i_iv_v = {0, 3, 4};
+  int[] ii_V_I = {1, 4, 0};
 
   //bridge progressions
-  public static final int[] I_IV_II_V = {0, 3, 1, 4};
-  public static final int[] IV_I_IV_V = {3, 0, 3, 4};
-  public static final int[] IV_I_II_V = {3, 0, 1, 4};
-  public static final int[] IV_V = {3, 4};
+  int[] I_IV_II_V = {0, 3, 1, 4};
+  int[] IV_I_IV_V = {3, 0, 3, 4};
+  int[] IV_I_II_V = {3, 0, 1, 4};
+  int[] IV_V = {3, 4};
 
   //rock progressions
-  public static final int[] I_IV_V = {0, 3, 4};
+  int[] I_IV_V = {0, 3, 4};
 
   //spanish, flamenco touch
 //	public static final int[] i_VIIb_VIb_V = {
 //	};
 
   //standard progression
-  public static final int[] I_vi_ii_V = {0, 5, 1, 4};
+  int[] I_vi_ii_V = {0, 5, 1, 4};
 
 
 }

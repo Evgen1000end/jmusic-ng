@@ -79,7 +79,7 @@ public final class ReSample extends AudioObject {
       upSample = 2;
       skip = 1;
     }//value 2 is no resample
-    float[] tmpBuf = new float[(int) ((double) (buffer.length * cfm) + 0.5) + 1]; // +1
+    float[] tmpBuf = new float[(int) (buffer.length * cfm + 0.5) + 1]; // +1
     int ret = this.previous[0].nextWork(tmpBuf);
     float tmp = 0.0f; //holds previous sample for interpolation
     int count = 0, index = 0;

@@ -131,7 +131,7 @@ public class Convert {
          * Assuming each pitch and rhythm value pair take no more than 10
          * characters to describe.
          */
-    StringBuffer stringBuffer = new StringBuffer(noteArray.length * 10);
+    StringBuilder stringBuffer = new StringBuilder(noteArray.length * 10);
 
         /* Describe all but the last note */
     for (int i = 0; i < (noteArray.length - 1); i++) {
@@ -199,7 +199,7 @@ public class Convert {
          * Assuming each pitch and rhythm value pair take no more than 10
          * characters to describe.
          */
-    StringBuffer stringBuffer = new StringBuffer(noteArray.length * 12);
+    StringBuilder stringBuffer = new StringBuilder(noteArray.length * 12);
 
         /* Describe all but the last note */
     for (int i = 0; i < (noteArray.length - 1); i++) {
@@ -309,7 +309,7 @@ public class Convert {
    * @see Class description of {@link Pitches}.
    * @see Class description of {@link Frequencies}.
    */
-  public static final float getFrequencyByMidiPitch(final int midiPitch) {
+  public static float getFrequencyByMidiPitch(final int midiPitch) {
     float freq = -1.0f;
     if (midiPitch >= 0 && midiPitch <= 127) {
       freq = (float) (6.875 * Math.pow(2.0, ((3 + midiPitch) / 12.0)));
@@ -325,7 +325,7 @@ public class Convert {
    * @see Class description of {@link Pitches}.
    * @see Class description of {@link Frequencies}.
    */
-  public static final int getMidiPitchByFrequency(final float frequency) {
+  public static int getMidiPitchByFrequency(final float frequency) {
     // check frequency bounds
     // lower bound: frequency(CN1) / (2^(1/12))
     // upper bound: frequency(G9) * (2^(1/12))
@@ -349,20 +349,17 @@ public class Convert {
    * @see Class description of {@link Pitches}.
    * @see Class description of {@link Frequencies}.
    */
-  public static final String getNameOfMidiPitch(final int pitch) {
+  public static String getNameOfMidiPitch(final int pitch) {
     // use java reflection API
     final Field[] fields = Pitches.class.getFields();
     if (fields != null) {
-      for (int i = 0; i < fields.length; i++) {
-        Field f = fields[i];
+      for (Field f : fields) {
         // try to find the pitch member variable
         try {
           if (f.getInt(null) == pitch) {
             return f.getName();
           }
-        } catch (IllegalArgumentException e) {
-          return "";
-        } catch (IllegalAccessException e) {
+        } catch (IllegalArgumentException | IllegalAccessException e) {
           return "";
         }
       }
@@ -395,7 +392,7 @@ public class Convert {
 
     private int getNextPitch() throws ConversionException,
         EOSException {
-      StringBuffer buffer = new StringBuffer();
+      StringBuilder buffer = new StringBuilder();
       try {
                 /* Ignore leading non-digit characters */
         while (!Character.isDigit(string.charAt(i++))) {
@@ -421,7 +418,7 @@ public class Convert {
     }
 
     private double getNextRhythm() throws EOSException {
-      StringBuffer buffer = new StringBuffer();
+      StringBuilder buffer = new StringBuilder();
       try {
                 /* Ignore leading non-digit characters */
         while (!Character.isDigit(string.charAt(i++))
@@ -435,11 +432,11 @@ public class Convert {
           i++;
         }
 
-        return Double.valueOf(buffer.toString()).doubleValue();
+        return Double.valueOf(buffer.toString());
 
       } catch (IndexOutOfBoundsException e) {
         if (buffer.length() > 0) {
-          return Double.valueOf(buffer.toString()).doubleValue();
+          return Double.valueOf(buffer.toString());
         }
         throw new EOSException();
       }

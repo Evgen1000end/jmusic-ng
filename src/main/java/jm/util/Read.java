@@ -669,13 +669,11 @@ public class Read implements JMC {
         if (message == null) {
           message = "Unknown IO Exception";
           score = null;
-          return;
         } else if (message.equals("Track Started in wrong place!!!!"
             + "  ABORTING")) {
           message = "The MIDI file corrupted.  Track data started in "
               + "the wrong place.";
           score = null;
-          return;
         } else if (message.equals("This is NOT a MIDI file !!!")) {
           try {
             FileInputStream fis = new FileInputStream(directory
@@ -687,22 +685,18 @@ public class Read implements JMC {
           } catch (SecurityException e2) {
             message = "Read access not allowed to " + filename;
             score = null;
-            return;
           } catch (ClassNotFoundException e2) {
             message = "The file " + filename
                 + " is neither a jm nor a MIDI file";
             score = null;
-            return;
           } catch (ClassCastException e2) {
             message = "The file " + filename
                 + " is neither a jm nor a MIDI file";
             score = null;
-            return;
           } catch (StreamCorruptedException e2) {
             message = "The file " + filename
                 + " is neither a jm nor a MIDI file";
             score = null;
-            return;
           } catch (IOException e2) {
             message = e2.getMessage();
             if (message == null) {
@@ -710,11 +704,9 @@ public class Read implements JMC {
                   + "information could be imported.";
             }
             score = null;
-            return;
           }
         } else {
           score = null;
-          return;
         }
       }
     }

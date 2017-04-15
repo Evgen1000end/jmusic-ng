@@ -30,7 +30,7 @@ package jm.constants;
  */
 public interface Waveforms {
 
-  public static final int
+  int
       SINE_WAVE = 0,
       COSINE_WAVE = 1,
       TRIANGLE_WAVE = 2,

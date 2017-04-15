@@ -30,7 +30,7 @@ package jm.constants;
  */
 public interface Tunings {
 
-  public static final double[]
+  double[]
 
       EQUAL = {1.0, 1.059, 1.122, 1.189, 1.26, 1.335, 1.414,
       1.498, 1.587, 1.682, 1.782, 1.888},

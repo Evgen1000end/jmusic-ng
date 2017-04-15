@@ -197,32 +197,22 @@ public class HistogramFrame extends Frame implements WindowListener, ActionListe
   public void windowActivated(WindowEvent we) {
   }
 
-  ;
+
 
   public void windowClosed(WindowEvent we) {
   }
 
-  ;
-
   public void windowDeactivated(WindowEvent we) {
   }
-
-  ;
 
   public void windowIconified(WindowEvent we) {
   }
 
-  ;
-
   public void windowDeiconified(WindowEvent we) {
   }
 
-  ;
-
   public void windowOpened(WindowEvent we) {
   }
-
-  ;
 
   /**
    * Handle menu items

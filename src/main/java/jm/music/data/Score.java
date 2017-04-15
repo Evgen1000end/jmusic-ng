@@ -568,10 +568,12 @@ public class Score implements JMC, Cloneable, Serializable {
         "' contains " + this.size() + " parts. ****" + '\n';
     scoreData += "Score Tempo = " + this.tempo + " bpm" + '\n';
     Enumeration enum1 = partList.elements();
+    StringBuilder scoreDataBuilder = new StringBuilder(scoreData);
     while (enum1.hasMoreElements()) {
       Part part = (Part) enum1.nextElement();
-      scoreData = scoreData + part.toString() + '\n';
+      scoreDataBuilder.append(part.toString()).append('\n');
     }
+    scoreData = scoreDataBuilder.toString();
     return scoreData;
   }
 
@@ -588,7 +590,7 @@ public class Score implements JMC, Cloneable, Serializable {
    * @param nullObjects If ture this sets all jMusic data objects to null priot to removing. This
    * facilitates garbage collection.
    */
-  public void empty(boolean nullObjects) {
+  public void empty(final boolean nullObjects) {
     if (nullObjects) {
       Enumeration enum1 = getPartList().elements();
       while (enum1.hasMoreElements()) {

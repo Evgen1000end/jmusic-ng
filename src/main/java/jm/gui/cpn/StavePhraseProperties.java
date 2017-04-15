@@ -76,7 +76,7 @@ public class StavePhraseProperties extends Properties {
       IOException {
     FileInputStream theStream
         = new FileInputStream(midiFileName + FILE_NAME_SUFFIX);
-    load((InputStream) theStream);
+    load(theStream);
   }
 
   public StavePhraseProperties(
@@ -332,7 +332,7 @@ public class StavePhraseProperties extends Properties {
     try {
       FileOutputStream theStream
           = new FileOutputStream(midiFileName + FILE_NAME_SUFFIX);
-      store((OutputStream) theStream,
+      store(theStream,
           "Stave and Phrase Properties for " +
               midiFileName
       );

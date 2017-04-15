@@ -244,11 +244,10 @@ public class CPhrase implements JMC, Cloneable, Serializable {
    * @return
    */
   public boolean hasNote(Note note) {
-    for (int i = 0; i < phraseList.size(); i++) {
-      Phrase phr = (Phrase) phraseList.get(i);
+    for (Object aPhraseList : phraseList) {
+      Phrase phr = (Phrase) aPhraseList;
       Note[] notes = phr.getNoteArray();
-      for (int j = 0; j < notes.length; j++) {
-        Note n = notes[j];
+      for (Note n : notes) {
         if (note.getNote().equals(n.getNote())) {
           return true;
         }

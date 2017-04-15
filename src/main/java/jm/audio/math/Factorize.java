@@ -78,7 +78,7 @@ public class Factorize {
     int log = 0;
 
     for (int k = 1; k < n; k *= 2, log++) {
-      ;
+
     }
 
     if (n != (1 << log)) {

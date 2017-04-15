@@ -70,7 +70,7 @@ public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListe
     // no notes yet?
     Integer lastX;
     if (theApp.notePositions.size() < 2) {
-      lastX = new Integer(theApp.getTotalBeatWidth());
+      lastX = theApp.getTotalBeatWidth();
     } else {
       lastX = (Integer) theApp.notePositions.elementAt(theApp.notePositions.size() - 2);
     }

@@ -54,7 +54,7 @@ public final class Prob {
    * @param meanPitch the pitch that should be most commonly returned by this method.
    * @param stdDeviation the standard deviation measured in semitones.
    */
-  public static final int gaussianPitch(final int meanPitch,
+  public static int gaussianPitch(final int meanPitch,
       final int stdDeviation) {
     long nextPitch;
     do {
@@ -75,7 +75,7 @@ public final class Prob {
    * @param meanFrequency values returned should average this frequency
    * @param stdDeviation the standard deviation. See method comment
    */
-  public static final double gaussianFrequency(
+  public static double gaussianFrequency(
       final double meanFrequency, final double stdDeviation) {
     double nextFrequency;
     do {
@@ -101,7 +101,7 @@ public final class Prob {
    * @param granularity a rhythm value representing the minimum sort of value returned here.  If you
    * only want quavers and multiples of quavers, use JMC.QUAVER.
    */
-  public static final double gaussianRhythmValue(final double meanRV,
+  public static double gaussianRhythmValue(final double meanRV,
       final double stdDev,
       final double granularity) {
     double nextRV;
@@ -126,7 +126,7 @@ public final class Prob {
    * @param meanDynamic the dynamic that should be most commonly returned by this method.
    * @param stdDeviation the standard deviation. See method comment.
    */
-  public static final int gaussianDynamic(final int meanDynamic,
+  public static int gaussianDynamic(final int meanDynamic,
       final int stdDeviation) {
     long nextDynamic;
     do {
@@ -151,7 +151,7 @@ public final class Prob {
    * @param meanPan the pan that should be most commonly returned by this method.
    * @param stdDeviation the standard deviation. See method comment.
    */
-  public static final double gaussianPan(final double meanPan,
+  public static double gaussianPan(final double meanPan,
       final double stdDeviation) {
     return gaussianPan(meanPan, stdDeviation, 1.0);
   }
@@ -170,7 +170,7 @@ public final class Prob {
    * @param meanPan the pan that should be most commonly returned by this method.
    * @param stdDeviation the standard deviation. See method comment.
    */
-  public static final double gaussianPan(final double meanPan,
+  public static double gaussianPan(final double meanPan,
       final double stdDeviation,
       double maxPan) {
     maxPan = (maxPan >= 0.0) ? maxPan : 0.0;

@@ -167,7 +167,7 @@ public class Mod implements JMC {
 
   //---------------------- PHRASE MODIFICATIONS ----------------------------//
 
-  public static final void crescendo(final Phrase phrase,
+  public static void crescendo(final Phrase phrase,
       final double startTime,
       final double endTime,
       final int startDynamic,
@@ -195,7 +195,7 @@ public class Mod implements JMC {
     }
   }
 
-  public static final void diminuendo(final Phrase phrase,
+  public static void diminuendo(final Phrase phrase,
       final double startTime,
       final double endTime,
       final int startDynamic,
@@ -203,7 +203,7 @@ public class Mod implements JMC {
     crescendo(phrase, startTime, endTime, startDynamic, endDynamic);
   }
 
-  public static final void decrescendo(final Phrase phrase,
+  public static void decrescendo(final Phrase phrase,
       final double startTime,
       final double endTime,
       final int startDynamic,
@@ -967,7 +967,7 @@ public class Mod implements JMC {
     }
 
     int i = 0;
-    int firstNote = (int) Note.REST;
+    int firstNote = Note.REST;
 
     // get the first pitch
     while (i < phrase.size() && firstNote == Note.REST) {
@@ -1002,7 +1002,7 @@ public class Mod implements JMC {
     }
 
     int i = 0;
-    int firstNote = (int) Note.REST;
+    int firstNote = Note.REST;
 
     // get the first pitch
     while (i < phrase.size() && firstNote == Note.REST) {
@@ -1040,7 +1040,7 @@ public class Mod implements JMC {
     }
     // base inversion on step within scale and octave
     int i = 0;
-    int firstNotePitch = (int) Note.REST;
+    int firstNotePitch = Note.REST;
     int firstNoteOctave = 0;
     int firstNoteStep = 0;
     int firstNoteStepOffset = 0;

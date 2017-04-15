@@ -643,7 +643,6 @@ public class WaveView implements ActionListener, ComponentListener {
    */
   public void pauseFile() {
     if (mixer != null) {
-      ;
     }
     mixer.pause();
   }

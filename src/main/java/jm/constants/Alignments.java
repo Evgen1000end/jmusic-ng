@@ -32,7 +32,7 @@ import jm.music.data.Alignment;
  */
 public interface Alignments {
 
-  public static final Alignment
+  Alignment
       START_TOGETHER = Alignment.START_TOGETHER,
       END_TOGETHER = Alignment.END_TOGETHER,
       AFTER = Alignment.AFTER,

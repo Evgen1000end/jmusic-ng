@@ -181,32 +181,20 @@ public class ShowScore extends Frame implements WindowListener, ActionListener {
   public void windowActivated(WindowEvent we) {
   }
 
-  ;
-
   public void windowClosed(WindowEvent we) {
   }
-
-  ;
 
   public void windowDeactivated(WindowEvent we) {
   }
 
-  ;
-
   public void windowIconified(WindowEvent we) {
   }
-
-  ;
 
   public void windowDeiconified(WindowEvent we) {
   }
 
-  ;
-
   public void windowOpened(WindowEvent we) {
   }
-
-  ;
 
   // handle menu items
   public void actionPerformed(ActionEvent e) {

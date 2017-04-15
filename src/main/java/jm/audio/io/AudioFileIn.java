@@ -136,7 +136,7 @@ public class AudioFileIn {
         FileInputStream fis = new FileInputStream(this.fileName);
         int val = fis.read();
         while (val != -1) {
-          buffer.addElement(new Float((float) val / 255f));
+          buffer.addElement((float) val / 255f);
           val = fis.read();
         }
         fis.close();
@@ -185,7 +185,7 @@ public class AudioFileIn {
     int ret = 0;
     int length = b.length;
     for (int i = 0; i < b.length; i++, length--) {
-      ret |= ((int) (b[i] & 0xFF) << ((((bigEndian) ? length : (i + 1)) * 8) - 8));
+      ret |= ((b[i] & 0xFF) << ((((bigEndian) ? length : (i + 1)) * 8) - 8));
     }
     switch (sampleSize) {
       case 1:
@@ -194,7 +194,7 @@ public class AudioFileIn {
           ret &= 0x7F;
           ret = ~ret + 1;
         }
-        sample = (float) ((float) ret / (float) Byte.MAX_VALUE);
+        sample = (float) ret / (float) Byte.MAX_VALUE;
         break;
       case 2:
         if (ret > 0x7FFF) {
@@ -202,7 +202,7 @@ public class AudioFileIn {
           ret &= 0x7FFF;
           ret = ~ret + 1;
         }
-        sample = (float) ((float) ret / (float) Short.MAX_VALUE);
+        sample = (float) ret / (float) Short.MAX_VALUE;
         break;
       case 3:
         if (ret > 0x7FFFFF) {
@@ -210,7 +210,7 @@ public class AudioFileIn {
           ret &= 0x7FFFFF;
           ret = ~ret + 1;
         }
-        sample = (float) ((float) ret / 8388608f);
+        sample = (float) ret / 8388608f;
         break;
       case 4:
         sample = (float) ((double) ret / (double) Integer.MAX_VALUE);

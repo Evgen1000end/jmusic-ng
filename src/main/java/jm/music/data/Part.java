@@ -23,6 +23,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 package jm.music.data;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Vector;
 import jm.JMC;
@@ -1089,9 +1090,7 @@ public class Part implements Cloneable, Serializable, JMC {
     quickSort(arr, 0, arr.length - 1);
     this.phraseList.removeAllElements();
     this.phraseList.ensureCapacity(arr.length);
-    for (int i = 0; i < arr.length; i++) {
-      phraseList.add(arr[i]);
-    }
+    Collections.addAll(phraseList, arr);
   }
 
   private void quickSort(Phrase[] phrases, int left, int right) {

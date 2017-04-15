@@ -30,7 +30,7 @@ package jm.constants;
  */
 public interface Articulations {
 
-  public static final double
+  double
       STACCATISSIMO = 0.25,
       STACCATO = 0.4,
       MEZZO_STACCATO = 0.75,

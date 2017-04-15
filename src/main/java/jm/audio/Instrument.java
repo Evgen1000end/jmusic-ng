@@ -165,7 +165,7 @@ public abstract class Instrument extends Thread implements Runnable, jm.JMC {
     AudioObject pao = (AudioObject) primaryAO.elementAt(0);
 
     // continue onward
-    this.numOfSamples = (int) ((float) pao.getSampleRate() * (float) ((float) note.getDuration()));
+    this.numOfSamples = (int) ((float) pao.getSampleRate() * (float) note.getDuration());
     this.numOfChannels = pao.channels;
     //System.out.println("Instrument: NumOfSamples = " + numOfSamples + " duration = " + note.getDuration());
 

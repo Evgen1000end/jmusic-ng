@@ -545,7 +545,6 @@ public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentL
       playing = true;
     } catch (Exception e) {
       System.err.println("JavaSound MIDI Playback Error:" + e);
-      return;
     }
   }
 

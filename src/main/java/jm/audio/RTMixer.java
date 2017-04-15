@@ -175,9 +175,7 @@ public class RTMixer implements AudioChainListener {
   //---------------------------------------
   public void addLines(RTLine[] lines) {
     RTLine[] temp = new RTLine[this.totLines + lines.length];
-    for (int i = 0; i < this.rtlines.length; i++) {
-      temp[i] = this.rtlines[i];
-    }
+    System.arraycopy(this.rtlines, 0, temp, 0, this.rtlines.length);
     for (int i = this.rtlines.length; i < temp.length; i++) {
       // check for matching values
       if (rtlines[i].getSampleRate() != this.sampleRate) {

@@ -135,7 +135,7 @@ public class JGrandStave extends JPanel implements JMC {
     this(new Phrase());
     bPos = 110;
     panelHeight = 310;
-    this.setSize((int) (beatWidth * 40), panelHeight);
+    this.setSize(beatWidth * 40, panelHeight);
   }
 
   public JGrandStave(Phrase phrase) {
@@ -145,7 +145,7 @@ public class JGrandStave extends JPanel implements JMC {
     // change 'paper' colour
     this.setBackground(Color.getHSBColor((float) 0.14, (float) 0.09, (float) 1.0)); // .17, .1, 1
     // set the appropriate size (at least 8 bars of 4/4) for the stave
-    this.setSize((int) (beatWidth * 40), panelHeight);
+    this.setSize(beatWidth * 40, panelHeight);
     if (this.getSize().width < (int) (phrase.getEndTime() * beatWidth * 1.5)) {
       this.setSize((int) (phrase.getEndTime() * beatWidth * 1.5), panelHeight);
     }
@@ -377,7 +377,7 @@ public class JGrandStave extends JPanel implements JMC {
 
     bPos = 110;
     panelHeight = 310;
-    this.setSize((int) (beatWidth * 40), panelHeight);
+    this.setSize(beatWidth * 40, panelHeight);
   }
 
   public void paintComponent(Graphics graphics) {
@@ -421,7 +421,7 @@ public class JGrandStave extends JPanel implements JMC {
         int theModValue = sharps[ks] % 12;
         for (int pc = 0; pc < 128; pc++) {
           if ((pc % 12) == theModValue) {
-            previouslyChromatic.addElement(new Integer(pc));
+            previouslyChromatic.addElement(pc);
             keyAccidentals++;
           }
         }
@@ -445,7 +445,7 @@ public class JGrandStave extends JPanel implements JMC {
           int theModValue = flats[ks] % 12;
           for (int pc = 0; pc < 128; pc++) {
             if ((pc % 12) == theModValue) {
-              previouslyChromatic.addElement(new Integer(pc));
+              previouslyChromatic.addElement(pc);
               keyAccidentals++;
             }
           }
@@ -497,14 +497,10 @@ public class JGrandStave extends JPanel implements JMC {
                 (6 - notePitchNum / 12) * 4);
       }
 
-      if (notePitchNum == REST
+      isNormalColor = notePitchNum == REST
           || PhraseAnalysis.isScale(phrase.getNote(i),
           tonic,
-          scale)) {
-        isNormalColor = true;
-      } else {
-        isNormalColor = false;
-      }
+          scale);
 
       firstAccidentalDisplayed = false;
 
@@ -651,14 +647,14 @@ public class JGrandStave extends JPanel implements JMC {
         }
 //                        g.drawImage(sharp, totalBeatWidth - 9, pitchTempPos, this);
         previouslyChromatic.addElement(
-            new Integer(notePitchNum - 1)); // enter the note made sharp i.e, F for an F#
+            notePitchNum - 1); // enter the note made sharp i.e, F for an F#
       } else { // flat
         pitchTempPos -= 4; // to show the note a semitone higher for flats
         if (!firstAccidentalDisplayed) {
           displayImage(g, flat, totalBeatWidth - 9, pitchTempPos);
         }
 //                        g.drawImage(flat, totalBeatWidth - 9, pitchTempPos, this);
-        previouslyChromatic.addElement(new Integer(notePitchNum + 1));
+        previouslyChromatic.addElement(notePitchNum + 1);
         notePitchNum++; // assume it is a semitone higher for legerlines etc...
         semitoneShiftUp = true;
       }
@@ -688,8 +684,8 @@ public class JGrandStave extends JPanel implements JMC {
     displayImage(g, currImage, totalBeatWidth, pitchTempPos);
 //            g.drawImage(currImage, totalBeatWidth, pitchTempPos, this);
     // store position in a vector
-    notePositions.addElement(new Integer(totalBeatWidth));
-    notePositions.addElement(new Integer(pitchTempPos));
+    notePositions.addElement(totalBeatWidth);
+    notePositions.addElement(pitchTempPos);
     //System.out.println("Position "+i+" "+totalBeatWidth + " "+ pitchTempPos);
 
     if (dottedNote) {
@@ -981,7 +977,6 @@ public class JGrandStave extends JPanel implements JMC {
     for (int i = 0; i < keys.length; i++) {
       if (keys[i] == degree) {
         keySignature = i - 7;
-        continue;
       }
     }
     repaint();

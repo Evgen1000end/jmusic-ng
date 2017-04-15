@@ -30,7 +30,7 @@ package jm.constants;
  */
 public interface Durations {
 
-  public static final double
+  double
       SB = 4.0, SEMIBREVE = 4.0, WHOLE_NOTE = 4.0, WN = 4.0,
       MD = 3.0, DM = 3.0, DOTTED_MINIM = 3.0, DOTTED_HALF_NOTE = 3.0,
       DHN = 3.0,

@@ -39,35 +39,35 @@ public interface Event {
   /**
    * Retrieve an events time
    */
-  public int getTime();
+  int getTime();
 
   /**
    * Set an events time
    */
-  public void setTime(int time);
+  void setTime(int time);
 
   /**
    * Retrieve an events id
    */
-  public short getID();
+  short getID();
 
   /**
    * Makes a copy of an event
    */
-  public Event copy() throws CloneNotSupportedException;
+  Event copy() throws CloneNotSupportedException;
 
   /**
    * Print this events data in a System.out.println format
    */
-  public void print();
+  void print();
 
   /**
    * write out event data to disk
    */
-  public int write(DataOutputStream dos) throws IOException;
+  int write(DataOutputStream dos) throws IOException;
 
   /**
    * read in event data from disk
    */
-  public int read(DataInputStream dis) throws IOException;
+  int read(DataInputStream dis) throws IOException;
 }

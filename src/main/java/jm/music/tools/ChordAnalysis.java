@@ -177,9 +177,9 @@ public final class ChordAnalysis {
   private static boolean acceptableChange(final int[] chords,
       final int dominantIndex,
       final int previous) {
-    for (int i = 0; i < chords.length; i++) {
-      if (chords[i] == dominantIndex
-          && !(RATINGS[chords[i]] > 2 + RATINGS[previous])) {
+    for (int chord : chords) {
+      if (chord == dominantIndex
+          && !(RATINGS[chord] > 2 + RATINGS[previous])) {
         return true;
       }
     }
@@ -213,21 +213,9 @@ public final class ChordAnalysis {
     }
   }
 
-  private static boolean isBad(final Note note, final int tonic,
-      final int[] scale) {
-    if (note == null) {
-      return true;
-    }
-
-    if (note.getPitch() == Note.REST) {
-      return true;
-    }
-
-    if (PhraseAnalysis.isScale(note, tonic, scale)) {
-      return false;
-    }
-
-    return true;
+  private static boolean isBad(final Note note, final int tonic, final int[] scale) {
+    return note == null || note.getPitch() == Note.REST || !PhraseAnalysis
+        .isScale(note, tonic, scale);
   }
 
   private static Possible firstPassChords(final Note note,
@@ -260,8 +248,8 @@ public final class ChordAnalysis {
   }
 
   private static boolean isInTriad(final int degree, final int[] triad) {
-    for (int i = 0; i < triad.length; i++) {
-      if (triad[i] == degree) {
+    for (int aTriad : triad) {
+      if (aTriad == degree) {
         return true;
       }
     }
@@ -272,10 +260,10 @@ public final class ChordAnalysis {
       final int[] secondChords) {
     Possible returnChords = new Possible(new int[2]);
     int index = 0;
-    for (int i = 0; i < firstChords.length; i++) {
+    for (int firstChord : firstChords) {
       for (int j = 0; j < secondChords.length; j++) {
-        if (firstChords[i] == secondChords[j]) {
-          returnChords.chords[index++] = firstChords[i];
+        if (firstChord == secondChords[j]) {
+          returnChords.chords[index++] = firstChord;
         }
       }
     }
@@ -309,9 +297,9 @@ public final class ChordAnalysis {
       }
 
       int currentBest = 6;
-      for (int i = 0; i < chords.length; i++) {
-        if (RATINGS[chords[i]] < RATINGS[currentBest]) {
-          currentBest = chords[i];
+      for (int chord : chords) {
+        if (RATINGS[chord] < RATINGS[currentBest]) {
+          currentBest = chord;
         }
       }
       return currentBest;

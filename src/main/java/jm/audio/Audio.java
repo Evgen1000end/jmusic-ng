@@ -76,13 +76,13 @@ public final class Audio implements jm.JMC {
     Stack inst = new Stack();
     // add an instrument to avoid errors from no instrument assignment by user
     inst.push(instList[0]);
-    for (int i = 0; i < instList.length; i++) {
-      if (instList[i] != null) {
-        if (!instList[i].getInitialised()) {
+    for (Instrument anInstList : instList) {
+      if (anInstList != null) {
+        if (!anInstList.getInitialised()) {
           try {
-            if (instList[i].getInitialised() == false) {
-              instList[i].createChain();
-              instList[i].setInitialised(true);
+            if (!anInstList.getInitialised()) {
+              anInstList.createChain();
+              anInstList.setInitialised(true);
             }
           } catch (AOException e) {
             e.printStackTrace();
@@ -167,7 +167,7 @@ public final class Audio implements jm.JMC {
           Instrument currInst = (Instrument) inst.peek();
           currInst.setBlock(false);
           currInst.setFinished(true);
-          currInst.renderNote(new_note, ((double) time + ntime));
+          currInst.renderNote(new_note, (time + ntime));
           currInst.setFinished(false);
           currInst.iterateChain();
           ntime += phrase_ratio * note.getRhythmValue();
@@ -194,7 +194,6 @@ public final class Audio implements jm.JMC {
       System.out.println("Bit Depth: 16" + " Sample rate: " + SampleOut.samprate +
           " Channels: " + SampleOut.numofchan);
       Audio.addEmUp(tmpFile, fileOut, SampleOut.max);
-      return;
     } else {
       int numofdot = 1; //For print outs only
 
@@ -309,7 +308,7 @@ public final class Audio implements jm.JMC {
       try {
         raf.seek(position);
         //read in and convert to sample
-        float sample = (float) ((float) dis.readShort() / (float) 32767);
+        float sample = (float) dis.readShort() / (float) 32767;
         try {//if we can read from the file
           float d = raf.readFloat();
           raf.seek(position);
@@ -426,7 +425,6 @@ public final class Audio implements jm.JMC {
         auxraf.writeInt(numOfBytes);
         auxraf.close();
         // End added FP nov 2004
-        return;
       } catch (IOException ioe) {
         ioe.printStackTrace();
       }

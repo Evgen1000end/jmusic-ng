@@ -238,7 +238,7 @@ public final class PhraseAnalysis {
    * extremely large lowering intervals with rests.
    */
   public static final int INTERVAL_WITH_REST =
-      ((int) Note.MAX_PITCH - (int) Note.MIN_PITCH) * 2 + 1;
+      (Note.MAX_PITCH - Note.MIN_PITCH) * 2 + 1;
   /**
    * Integer array containing the pitches that represent 'good' intervals.  A
    * 'good' interval is one that is generally considered acceptable when the
@@ -723,7 +723,7 @@ public final class PhraseAnalysis {
   public static double climaxStrength(final Note[] noteArray)
       throws NoteListException {
     int count = 0;
-    int highestPitch = (int) Note.MIN_PITCH;
+    int highestPitch = Note.MIN_PITCH;
     int currentPitch;
 
     for (int i = 0; i < noteArray.length; i++) {
@@ -1523,7 +1523,7 @@ public final class PhraseAnalysis {
       int[] scale)
       throws NoteListException {
     if (noteCount(noteArray) > 0) {
-      int highestPitch = (int) Note.MIN_PITCH;
+      int highestPitch = Note.MIN_PITCH;
       int currentPitch;
 
       for (int i = 0; i < noteArray.length; i++) {
@@ -1904,13 +1904,13 @@ public final class PhraseAnalysis {
    */
   public static int pitchRange(final Note[] noteArray)
       throws NoteListException {
-    int highestPitch = (int) Note.MIN_PITCH;
-    int lowestPitch = (int) Note.MAX_PITCH;
+    int highestPitch = Note.MIN_PITCH;
+    int lowestPitch = Note.MAX_PITCH;
     int currentPitch;
 
     for (int i = 0; i < noteArray.length; i++) {
       currentPitch = noteArray[i].getPitch();
-      if (currentPitch != (int) jm.JMC.REST) {
+      if (currentPitch != jm.JMC.REST) {
         if (currentPitch > highestPitch) {
           highestPitch = currentPitch;
         } else if (currentPitch < lowestPitch) {
@@ -1918,7 +1918,7 @@ public final class PhraseAnalysis {
         }
       }
     }
-    if (highestPitch != (int) Note.MIN_PITCH && lowestPitch != (int) Note.MAX_PITCH) {
+    if (highestPitch != Note.MIN_PITCH && lowestPitch != Note.MAX_PITCH) {
       return highestPitch - lowestPitch;
     } else {
       throw new NoteListException("There are no notes in the melody.");
@@ -2515,10 +2515,7 @@ public final class PhraseAnalysis {
 
       for (int i = 0; i < intervalArray.length - chunkSize; i++) {
         int[] match = new int[chunkSize];
-
-        for (int j = 0; j < chunkSize; j++) {
-          match[j] = intervalArray[i + j];
-        }
+        System.arraycopy(intervalArray, i, match, 0, chunkSize);
         if (!isAlreadyMatched(patterns, match, index)) {
           for (int j = i + 1;
               j < intervalArray.length - chunkSize + 1;
@@ -2579,9 +2576,7 @@ public final class PhraseAnalysis {
       for (int i = 0; i < intervalArray.length - chunkSize; i++) {
         double[] match = new double[chunkSize];
 
-        for (int j = 0; j < chunkSize; j++) {
-          match[j] = intervalArray[i + j];
-        }
+        System.arraycopy(intervalArray, i, match, 0, chunkSize);
         if (!isAlreadyMatched(patterns, match, index)) {
           for (int j = i + 1;
               j < intervalArray.length - chunkSize + 1;

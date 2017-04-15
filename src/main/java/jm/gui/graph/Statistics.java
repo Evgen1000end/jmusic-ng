@@ -360,7 +360,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
   /**
    */
   public String toString() {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append("[");
     int maxIndex = size() - 1;
     for (int i = 0; i <= maxIndex; i++) {

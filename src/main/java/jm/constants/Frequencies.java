@@ -34,7 +34,7 @@ public interface Frequencies {
   // A=440; FOR x = 0 to 127; MIDI(x) = (A / 32) * (2 ^ ((x - 9) / 12))
   // Hertz (number of vibrations a second) = 6.875 x 2 ^ ( ( 3 + MIDI_Pitch ) / 12 )
 
-  public static final double[] FRQ = {
+  double[] FRQ = {
                 /* (0) CN1 */   8.1757989156,
                 /* (1) CSN1*/   8.6619572180,
                 /* (2) DN1*/    9.1770239974,

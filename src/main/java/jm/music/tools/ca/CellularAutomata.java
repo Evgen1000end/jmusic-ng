@@ -57,14 +57,10 @@ public class CellularAutomata {
       for (int j = 0; j < ySize; j++) {
         //if cell is already alive, it must be surrounded by 3 live cells to stay alive
         if (this.getState(i, j)) {
-          if (this.getSurrounding(i, j) == 2) {
-            nextCellStates[i][j] = true;
-          } else {
-            nextCellStates[i][j] = false;
-          }
+          nextCellStates[i][j] = this.getSurrounding(i, j) == 2;
         }
         //if cell is dead, it must be surrounded by 2 or 3 live cells to come alive
-        else if (this.getState(i, j) == false) {
+        else if (!this.getState(i, j)) {
           if ((this.getSurrounding(i, j) == 2) || (this.getSurrounding(i, j) == 3)) {
             nextCellStates[i][j] = true;
           }
@@ -266,11 +262,7 @@ public class CellularAutomata {
   private boolean trueFalse(int seed) {
     boolean choice;
     int randNum = (int) (Math.random() * 100);
-    if (randNum < seed) {
-      choice = true;
-    } else {
-      choice = false;
-    }
+    choice = randNum < seed;
     return choice;
   }
 }

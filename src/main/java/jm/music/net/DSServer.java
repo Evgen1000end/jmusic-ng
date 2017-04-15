@@ -71,7 +71,7 @@ public class DSServer extends Thread {
     clientConnections = new Vector();
     try {
       this.ss = new ServerSocket(port);
-    } catch (IOException ioe) {
+    } catch (IOException ignored) {
     }
     this.start();
   }

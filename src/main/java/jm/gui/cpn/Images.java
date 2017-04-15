@@ -45,165 +45,165 @@ public interface Images {
   /**
    * Returns an Image representing a treble clef.
    */
-  public Image getTrebleClef();
+  Image getTrebleClef();
 
   /**
    * Returns an Image representing a bass clef.
    */
-  public Image getBassClef();
+  Image getBassClef();
 
   /**
    * Returns an Image representing a semibreve.
    */
-  public Image getSemibreve();
+  Image getSemibreve();
 
   /**
    * Returns an Image representing a minim with stem raised.
    */
-  public Image getMinimUp();
+  Image getMinimUp();
 
   /**
    * Returns an Image representing a minim with stem lowered.
    */
-  public Image getMinimDown();
+  Image getMinimDown();
 
   /**
    * Returns an Image representing a crotchet with stem raised.
    */
-  public Image getCrotchetUp();
+  Image getCrotchetUp();
 
   /**
    * Returns an Image representing a crotchet with stem lowered.
    */
-  public Image getCrotchetDown();
+  Image getCrotchetDown();
 
   /**
    * Returns an Image representing a quaver with stem raised.
    */
-  public Image getQuaverUp();
+  Image getQuaverUp();
 
   /**
    * Returns an Image representing a quaver with stem lowered.
    */
-  public Image getQuaverDown();
+  Image getQuaverDown();
 
   /**
    * Returns an Image representing a semiquaver with stem raised.
    */
-  public Image getSemiquaverUp();
+  Image getSemiquaverUp();
 
   /**
    * Returns an Image representing a semiquaver with stem lowered.
    */
-  public Image getSemiquaverDown();
+  Image getSemiquaverDown();
 
   /**
    * Returns an Image representing a semibreve rest.
    */
-  public Image getSemibreveRest();
+  Image getSemibreveRest();
 
   /**
    * Returns an Image representing a minim rest.
    */
-  public Image getMinimRest();
+  Image getMinimRest();
 
   /**
    * Returns an Image representing a crotchet rest.
    */
-  public Image getCrotchetRest();
+  Image getCrotchetRest();
 
   /**
    * Returns an Image representing a quaver rest.
    */
-  public Image getQuaverRest();
+  Image getQuaverRest();
 
   /**
    * Returns an Image representing a semiquaver rest.
    */
-  public Image getSemiquaverRest();
+  Image getSemiquaverRest();
 
   /**
    * Returns an Image representing the dot symbol used to indicate the
    * duration of the preceeding symbol should be about half as long again.
    */
-  public Image getDot();
+  Image getDot();
 
   /**
    * Returns an Image representing a sharp symbol.
    */
-  public Image getSharp();
+  Image getSharp();
 
   /**
    * Returns an Image representing a flat symbol.
    */
-  public Image getFlat();
+  Image getFlat();
 
   /**
    * Returns an Image representing a natural symbol.
    */
-  public Image getNatural();
+  Image getNatural();
 
   /**
    * Returns an Image representing the digit '1' used in time signatures.
    */
-  public Image getOne();
+  Image getOne();
 
   /**
    * Returns an Image representing the digit '2' used in time signatures.
    */
-  public Image getTwo();
+  Image getTwo();
 
   /**
    * Returns an Image representing the digit '3' used in time signatures.
    */
-  public Image getThree();
+  Image getThree();
 
   /**
    * Returns an Image representing the digit '4' used in time signatures.
    */
-  public Image getFour();
+  Image getFour();
 
   /**
    * Returns an Image representing the digit '5' used in time signatures.
    */
-  public Image getFive();
+  Image getFive();
 
   /**
    * Returns an Image representing the digit '6' used in time signatures.
    */
-  public Image getSix();
+  Image getSix();
 
   /**
    * Returns an Image representing the digit '7' used in time signatures.
    */
-  public Image getSeven();
+  Image getSeven();
 
   /**
    * Returns an Image representing the digit '8' used in time signatures.
    */
-  public Image getEight();
+  Image getEight();
 
   /**
    * Returns an Image representing the digit '9' used in time signatures.
    */
-  public Image getNine();
+  Image getNine();
 
   /**
    * Returns an Image representing a symbol unique to JMusic which indicates
    * that the selected symbol/note/rest should be deleted.
    */
-  public Image getDelete();
+  Image getDelete();
 
   /**
    * Returns an Image representing a tie used with notes that have stems
    * lowered.
    */
-  public Image getTieOver();
+  Image getTieOver();
 
   /**
    * Returns an Image representing a tie used with notes that have stems
    * raised.
    */
-  public Image getTieUnder();
+  Image getTieUnder();
 
 }

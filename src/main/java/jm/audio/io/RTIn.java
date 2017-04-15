@@ -90,8 +90,8 @@ public final class RTIn extends AudioObject {
     dline.read(data, 0, amount);
     for (; ret < buffer.length; ret++) {
       short input = (short) ((data[bc++] << 8) + (data[bc++]));
-      buffer[ret] = (float) ((float) input /
-          (float) Short.MAX_VALUE);
+      buffer[ret] = (float) input /
+          (float) Short.MAX_VALUE;
     }
     return ret;
   }

@@ -30,7 +30,7 @@ package jm.constants;
  */
 public interface ProgramChanges {
 
-  public static final int
+  int
       PIANO = 0, ACOUSTIC_GRAND = 0,
       BRIGHT_ACOUSTIC = 1,
       ELECTRIC_GRAND = 2,

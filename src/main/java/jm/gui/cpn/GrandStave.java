@@ -36,14 +36,14 @@ public class GrandStave extends Stave implements JMC {
     super();
     bPos = 110;
     panelHeight = 310;
-    this.setSize((int) (beatWidth * spacingValue), panelHeight);
+    this.setSize(beatWidth * spacingValue, panelHeight);
   }
 
   public GrandStave(Phrase phrase) {
     super(phrase);
     bPos = 110;
     panelHeight = 310;
-    this.setSize((int) (beatWidth * spacingValue), panelHeight);
+    this.setSize(beatWidth * spacingValue, panelHeight);
   }
 
   public void paint(Graphics graphics) {
@@ -84,7 +84,7 @@ public class GrandStave extends Stave implements JMC {
         int theModValue = sharps[ks] % 12;
         for (int pc = 0; pc < 128; pc++) {
           if ((pc % 12) == theModValue) {
-            previouslyChromatic.addElement(new Integer(pc));
+            previouslyChromatic.addElement(pc);
             keyAccidentals++;
           }
         }
@@ -108,7 +108,7 @@ public class GrandStave extends Stave implements JMC {
           int theModValue = flats[ks] % 12;
           for (int pc = 0; pc < 128; pc++) {
             if ((pc % 12) == theModValue) {
-              previouslyChromatic.addElement(new Integer(pc));
+              previouslyChromatic.addElement(pc);
               keyAccidentals++;
             }
           }
@@ -138,7 +138,7 @@ public class GrandStave extends Stave implements JMC {
 
     // draw notes and rests
     for (int i = 0; i < phrase.size(); i++) {
-      int notePitchNum = (int) phrase.getNote(i).getPitch();
+      int notePitchNum = phrase.getNote(i).getPitch();
       // choose graphic
       chooseImage(notePitchNum, phrase.getNote(i).getRhythmValue(), 71, 60, 50);
       // reset pitch for rests
@@ -161,11 +161,11 @@ public class GrandStave extends Stave implements JMC {
         if (keySignature > -1) {
           g.drawImage(sharp, totalBeatWidth - 9, pitchTempPos, this);
           previouslyChromatic.addElement(
-              new Integer(notePitchNum - 1)); // enter the note made sharp i.e, F for an F#
+              notePitchNum - 1); // enter the note made sharp i.e, F for an F#
         } else { // flat
           pitchTempPos -= 4; // to show the note a semitone higher for flats
           g.drawImage(flat, totalBeatWidth - 9, pitchTempPos, this);
-          previouslyChromatic.addElement(new Integer(notePitchNum + 1));
+          previouslyChromatic.addElement(notePitchNum + 1);
           notePitchNum++; // assume it is a semitone higher for legerlines etc...
         }
       } else { // check for a natural
@@ -189,8 +189,8 @@ public class GrandStave extends Stave implements JMC {
       // draw note/rest
       g.drawImage(currImage, totalBeatWidth, pitchTempPos, this);
       // store position in a vector
-      notePositions.addElement(new Integer(totalBeatWidth));
-      notePositions.addElement(new Integer(pitchTempPos));
+      notePositions.addElement(totalBeatWidth);
+      notePositions.addElement(pitchTempPos);
 
       if (dottedNote) {
         boolean dotFlag = true;

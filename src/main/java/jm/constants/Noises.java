@@ -30,7 +30,7 @@ package jm.constants;
  */
 public interface Noises {
 
-  public static final int
+  int
       WHITE_NOISE = 0,
       STEP_NOISE = 1,
       SMOOTH_NOISE = 2,

@@ -241,8 +241,8 @@ public final class AdaptiveMatrix {
       String prefix = (String) enum1.nextElement();
       double[] postfix = (double[]) this.weightMatrix.get(prefix);
       System.out.print(prefix + "\t: ");
-      for (int i = 0; i < postfix.length; i++) {
-        System.out.print(" " + postfix[i]);
+      for (double aPostfix : postfix) {
+        System.out.print(" " + aPostfix);
       }
       System.out.println();
     }
@@ -331,8 +331,8 @@ public final class AdaptiveMatrix {
       String prefix = (String) enum1.nextElement();
       int[] postfix = (int[]) this.countMatrix.get(prefix);
       int count = 0;
-      for (int i = 0; i < postfix.length; i++) {
-        count += postfix[i];
+      for (int aPostfix : postfix) {
+        count += aPostfix;
       }
       double[] postfix2 = new double[indexRange];
       for (int i = 0; i < postfix.length; i++) {

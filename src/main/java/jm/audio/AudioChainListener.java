@@ -39,5 +39,5 @@ public interface AudioChainListener {
    * buffer.  This effectively becomes the rate at which changes to an
    * instrument can be made (including starting new notes).
    */
-  public abstract void controlChange(float[] buffer, int returned, boolean finished);
+  void controlChange(float[] buffer, int returned, boolean finished);
 }

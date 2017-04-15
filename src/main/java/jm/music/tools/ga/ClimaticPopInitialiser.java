@@ -192,7 +192,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
 
       int[] intervals = generateIntervalArray(phrase);
       int counter = returnPhrase.size() - 1;
-      int pitch = (int) Note.REST;
+      int pitch = Note.REST;
       while (pitch == Note.REST) {
         pitch = returnPhrase.getNote(counter--)
             .getPitch();
@@ -327,15 +327,9 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       }
       cumulativeRV += phrase.getNote(i).getRhythmValue();
     }
-    if (location < 8 * beatsPerBar * (CLIMAX_AVERAGE - CLIMAX_ST_DEV)
-        || location > 8 * beatsPerBar * (CLIMAX_AVERAGE + CLIMAX_ST_DEV)) {
-      return false;
-    }
-    if (lastHighestPitch > phrase.getNote(0).getPitch() + 12
-        && repetitions <= 1) {
-      return true;
-    }
-    return false;
+    return !(location < 8 * beatsPerBar * (CLIMAX_AVERAGE - CLIMAX_ST_DEV)
+        || location > 8 * beatsPerBar * (CLIMAX_AVERAGE + CLIMAX_ST_DEV))
+        && lastHighestPitch > phrase.getNote(0).getPitch() + 12 && repetitions <= 1;
   }
 
   private int findClimax(Phrase phrase) {
@@ -422,8 +416,8 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
         int counter = 0;
 
         // Don't add group of beats that will not cross the next bar line
-        while (counter < 30 && length + beatsInArray > ((int) (length
-            / beatsPerBar)
+        while (counter < 30 && length + beatsInArray > (length
+            / beatsPerBar
             + 1)
             * beatsPerBar) {
           beatIndex = (int) (Math.random() * beatArray.length);
@@ -448,7 +442,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
           }
         } else {
           addNote(phrase, target, targetBeat,
-              (((int) (length / beatsPerBar) + 1) * beatsPerBar) - length,
+              ((length / beatsPerBar + 1) * beatsPerBar) - length,
               intervalArray, climax, lowerlimit);
         }
       }

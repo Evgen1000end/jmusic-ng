@@ -222,8 +222,8 @@ public class ShowArea extends Canvas {
             // (octavePixelheight) is the height of
             // an octave, 156 is offset to put in position
             int octavePixelheight = noteHeight * 7;
-            int y = (int) (((10 - currNote / 12) * octavePixelheight +
-                (ePos)) - noteOffset[currNote % 12]);
+            int y = ((10 - currNote / 12) * octavePixelheight +
+                (ePos)) - noteOffset[currNote % 12];
             int x = (int) (Math.round(aNote.getDuration() * beatWidth)); //480 ppq note
             int xRV = (int) (Math.round(aNote.getRhythmValue() * beatWidth)); //480 ppq note
             // check if the width of the note is less than 1 so

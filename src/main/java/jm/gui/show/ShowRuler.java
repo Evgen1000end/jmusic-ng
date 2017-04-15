@@ -112,7 +112,7 @@ public class ShowRuler extends Canvas implements MouseListener, MouseMotionListe
   public void mouseDragged(MouseEvent e) {
     //System.out.println("Dragged");
     double beatWidth = sp.beatWidth;
-    beatWidth += (double) ((double) e.getX() - (double) startX) / 5.0;
+    beatWidth += ((double) e.getX() - (double) startX) / 5.0;
     if (beatWidth < 1.0) {
       beatWidth = 1.0;
     }

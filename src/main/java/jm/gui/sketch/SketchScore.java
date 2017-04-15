@@ -175,32 +175,20 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
   public void windowActivated(WindowEvent we) {
   }
 
-  ;
-
   public void windowClosed(WindowEvent we) {
   }
-
-  ;
 
   public void windowDeactivated(WindowEvent we) {
   }
 
-  ;
-
   public void windowIconified(WindowEvent we) {
   }
-
-  ;
 
   public void windowDeiconified(WindowEvent we) {
   }
 
-  ;
-
   public void windowOpened(WindowEvent we) {
   }
-
-  ;
 
   /**
    * recalulate and draw the sketch
@@ -273,7 +261,6 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
       ms.play(score);
     } catch (Exception e) {
       System.err.println("MIDI Playback Error:" + e);
-      return;
     }
   }
 

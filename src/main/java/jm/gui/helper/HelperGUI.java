@@ -58,7 +58,7 @@ import jm.util.Write;
  * and assigned to the Instrument array varianble 'insts' - which is already
  * declared in the HelperGUI class. As in this
  * example code fragment:
- * Instrument sine = new SineInst(44100);
+ * Instrument sine = new jm.instruments.SineInst(44100);
  * Instrument[] instArray = {sine};
  * insts = instArray;
  * <p/>
@@ -528,7 +528,7 @@ public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentL
     phrase.addNote(n);
     //}
 
-    //Instrument[] tempInsts = {new SineInst(44100)};
+    //Instrument[] tempInsts = {new jm.instruments.SineInst(44100)};
     //insts = tempInsts;
     return s;
   }

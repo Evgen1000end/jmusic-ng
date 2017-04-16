@@ -15,6 +15,17 @@ public class NoteUtilsTest {
   @Test
   public void testFreqToMidiPitch() throws Exception {
     assertEquals(frequencyToPitch(27), 21);
+    assertEquals(frequencyToPitch(127), 47);
+    assertEquals(frequencyToPitch(227), 58);
+    assertEquals(frequencyToPitch(2227), 97);
+    assertEquals(frequencyToPitch(5627), 113);
+    assertEquals(frequencyToPitch(1127), 85);
+    assertEquals(frequencyToPitch(100), 43);
+    assertEquals(frequencyToPitch(200), 55);
+    assertEquals(frequencyToPitch(500), 71);
+    assertEquals(frequencyToPitch(279), 61);
+    assertEquals(frequencyToPitch(11272), 125);
+
   }
 
   @Test

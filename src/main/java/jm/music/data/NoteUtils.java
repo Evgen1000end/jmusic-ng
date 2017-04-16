@@ -17,7 +17,7 @@ public class NoteUtils {
    */
   public static int frequencyToPitch(double frequency) {
     if ((frequency < 26.73) || (frequency > 14496.0)) {
-      System.err.println("frequencyToPitch error: "
+      System.err.println("freqToMidiPitch error: "
           + "Frequency " + frequency + " is not within the MIDI note range.");
       return -1;
     }
@@ -57,6 +57,7 @@ public class NoteUtils {
         index--;
       }
     }
+
     return 69 + index;
   }
 
@@ -90,6 +91,7 @@ public class NoteUtils {
 
   /**
    * Calculate the frequency in hertz of a MIDI note pitch.
+   *
    * @param pitch - Midi pitch value.
    * @return frequency.
    */
@@ -102,6 +104,7 @@ public class NoteUtils {
 
   /**
    * Calculate the frequency in hertz of a MIDI note pitch.
+   *
    * @param pitch - Midi pitch value.
    * @return frequency.
    */
@@ -112,6 +115,7 @@ public class NoteUtils {
 
   /**
    * Gets the string representation for a note for a given MIDI pitch (0-127)
+   *
    * @param pitch - Midi pitch value.
    */
   public static String getNote(int pitch) {

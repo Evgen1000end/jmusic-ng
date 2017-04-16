@@ -12,11 +12,10 @@ public class NoteTest {
 
   @Test
   public void defaultNoteInitTest() {
-    Note note = Note.newBuilder().build();
+    Note note = Note.defaultNote();
     assertEquals(note.getDuration(), Note.DEFAULT_DURATION);
     assertEquals(note.getDynamic(),Note.DEFAULT_DYNAMIC);
     assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
-    assertEquals(note.getPitchValue(),0);
     assertEquals(note.getRhythm(), Note.DEFAULT_RHYTHM);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), Note.DEFAULT_PAN);
@@ -34,7 +33,6 @@ public class NoteTest {
     assertEquals(note.getDuration(), Note.DEFAULT_DURATION);
     assertEquals(note.getDynamic(),Note.DEFAULT_DYNAMIC);
     assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
-    assertEquals(note.getPitchValue(),0);
     assertEquals(note.getRhythm(), Note.DEFAULT_RHYTHM);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), Note.DEFAULT_PAN);
@@ -53,7 +51,6 @@ public class NoteTest {
     assertEquals(note.getDuration(), Note.DEFAULT_DURATION);
     assertEquals(note.getDynamic(),Note.DEFAULT_DYNAMIC);
     assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
-    assertEquals(note.getPitchValue(),0);
     assertEquals(note.getRhythm(), Note.DEFAULT_RHYTHM);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
@@ -73,7 +70,6 @@ public class NoteTest {
     assertEquals(note.getDuration(), Note.DEFAULT_DURATION);
     assertEquals(note.getDynamic(),90);
     assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
-    assertEquals(note.getPitchValue(),0);
     assertEquals(note.getRhythm(), Note.DEFAULT_RHYTHM);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
@@ -95,7 +91,6 @@ public class NoteTest {
     assertEquals(note.getDuration(), 2.0);
     assertEquals(note.getDynamic(),90);
     assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
-    assertEquals(note.getPitchValue(),0);
     assertEquals(note.getRhythm(), 2.6);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
@@ -118,7 +113,6 @@ public class NoteTest {
     assertEquals(note.getDuration(), 2.7);
     assertEquals(note.getDynamic(),90);
     assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
-    assertEquals(note.getPitchValue(),0);
     assertEquals(note.getRhythm(), 3.0);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
@@ -142,7 +136,6 @@ public class NoteTest {
     assertEquals(note.getDuration(), 2.0);
     assertEquals(note.getDynamic(),90);
     assertEquals(note.getPitch(),22);
-    assertEquals(note.getPitchValue(),0);
     assertEquals(note.getRhythm(), 2.6);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
@@ -165,7 +158,6 @@ public class NoteTest {
     assertEquals(note.getDuration(), 2.0);
     assertEquals(note.getDynamic(),90);
     assertEquals(note.getPitch(),68);
-    assertEquals(note.getPitchValue(),0);
     assertEquals(note.getRhythm(), 2.6);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
@@ -203,6 +195,11 @@ public class NoteTest {
     assertEquals(note11.getNote(), "B");
   }
 
-
-
+  @Test
+  public void isRestTest() {
+    Note rest = Note.newBuilder().rest().build();
+    assertTrue(rest.isRest());
+    Note notRest = Note.newBuilder().pitch(12).build();
+    assertFalse(notRest.isRest());
+  }
 }

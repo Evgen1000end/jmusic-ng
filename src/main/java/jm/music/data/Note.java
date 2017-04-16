@@ -103,11 +103,11 @@ public class Note implements Cloneable, Serializable {
   public static final double DEFAULT_FREQUENCY = 261.6255653006;
 
   /**
-   * default pan value
+   * default pan value.
    */
   public static final double DEFAULT_PAN = 0.5;
   /**
-   * default duration multiplier
+   * default duration multiplier.
    */
   // should be deprecated in favour of the more musically meaning term
   // DEFAULT_ARTICULATION
@@ -188,26 +188,12 @@ public class Note implements Cloneable, Serializable {
   /**
    * string constants for keys on the keyboard
    */
-  public static final String C = "C";
-  public static final String G = "G";
-  public static final String D = "D";
-  public static final String A = "A";
-  public static final String E = "E";
-  public static final String B = "B";
-  public static final String F_SHARP = "F#";
-  public static final String C_SHARP = "C#";
-  public static final String G_SHARP = "Ab";
-  public static final String D_SHARP = "Eb";
-  public static final String A_SHARP = "Bb";
-  public static final String A_FLAT = "Ab";
-  public static final String E_FLAT = "Eb";
-  public static final String B_FLAT = "Bb";
-  public static final String F = "F";
+
   private Logger log = LoggerFactory.getLogger(Note.class);
   /**
    * the string that this note maps to being one of the 12 string constants
    */
-  private String noteString = "";
+  private String note = "";
 
   /**
    * Pitch/frequency value of the note
@@ -277,6 +263,7 @@ public class Note implements Cloneable, Serializable {
     setOffset(builder.offset);
     setPan(builder.pan);
     setDynamic(builder.dynamic);
+    note = NoteUtils.getNote(this.getPitch());
   }
 
   public static Note defaultNote() {
@@ -306,11 +293,12 @@ public class Note implements Cloneable, Serializable {
     if (frequency == REST) {
       this.frequency = REST;
       this.pitch = REST;
+      note = "N/A";
     } else {
       this.frequency = (frequency < MIN_FREQUENCY) ? MIN_FREQUENCY : frequency;
       pitch = NoteUtils.frequencyToPitch(this.frequency);
+      note = NoteUtils.getNote(pitch);
     }
-
   }
 
   /**
@@ -335,9 +323,11 @@ public class Note implements Cloneable, Serializable {
     if (pitch == REST) {
       this.pitch = REST;
       this.frequency = REST;
+      note = "N/A";
     } else {
       this.pitch = (pitch < MIN_PITCH) ? MIN_PITCH : ((pitch > MAX_PITCH) ? MAX_PITCH : pitch);
       frequency = NoteUtils.pitchToFrequency(this.pitch);
+      note = NoteUtils.getNote(this.getPitch());
     }
   }
 
@@ -603,16 +593,16 @@ public class Note implements Cloneable, Serializable {
    * tells whether the note is a sharp or not
    */
   public boolean isSharp() {
-    return (getNote().equals("C#") || getNote().equals("F#"));
+    return (note.equals("C#") || note.equals("F#"));
   }
 
   /**
-   * tells whether the note is a sharp or not by using its string value
+   * tells whether the note is a sharp or not by using its string value.
    */
   public boolean isFlat() {
-    return getNote().equals("Eb")
-        || getNote().equals("Ab")
-        || getNote().equals("Bb");
+    return note.equals("Eb")
+        || note.equals("Ab")
+        || note.equals("Bb");
   }
 
   /**
@@ -646,7 +636,7 @@ public class Note implements Cloneable, Serializable {
   public Note nextNote(int[] scale) {
     Note nextNote = null;
     for (int i = 0; i < scale.length; i++) {
-      if (this.getPitchValue() % 12 == 0) {
+      if (NoteUtils.pitchValue(note) % 12 == 0) {
         nextNote = Note.newBuilder().pitch(this.getPitch() + scale[i]).build();
       }
     }
@@ -655,58 +645,8 @@ public class Note implements Cloneable, Serializable {
     return Note.newBuilder().pitch(nextpitch).build();
   }
 
-  /**
-   * returns the pitches for the middle scale(default) on a keyboard
-   */
-  public int getPitchValue() {
-    int pitch = 0;
-    switch (noteString) {
-      case C:
-        pitch = 60;
-        break;
-      case C_SHARP:
-        pitch = 61;
-        break;
-      case D:
-        pitch = 62;
-        break;
-      case E_FLAT:
-        pitch = 63;
-        break;
-      case E:
-        pitch = 64;
-        break;
-      case F:
-        pitch = 65;
-        break;
-      case F_SHARP:
-        pitch = 66;
-        break;
-      case G:
-        pitch = 67;
-        break;
-      case A_FLAT:
-        pitch = 68;
-        break;
-      case A:
-        pitch = 69;
-        break;
-      case B_FLAT:
-        pitch = 70;
-        break;
-      case B:
-        pitch = 71;
-        break;
-    }
-    return pitch;
-  }
-
-  /**
-   * gets the string representation for a note for a given MIDI pitch (0-127)
-   */
   public String getNote() {
-    noteString = NoteUtils.getNote(this.getPitch());
-    return noteString;
+    return note;
   }
 
   public static class Builder {

@@ -7,6 +7,20 @@ import static jm.constants.Frequencies.FRQ;
  */
 public class NoteUtils {
 
+
+  private static final String C = "C";
+  private static final String G = "G";
+  private static final String D = "D";
+  private static final String A = "A";
+  private static final String E = "E";
+  private static final String B = "B";
+  private static final String F_SHARP = "F#";
+  private static final String C_SHARP = "C#";
+  private static final String A_FLAT = "Ab";
+  private static final String E_FLAT = "Eb";
+  private static final String B_FLAT = "Bb";
+  private static final String F = "F";
+
   /**
    * Convert a frequency into a MIDI note pitch.
    * Assumes A440 and equal tempered intonation.
@@ -121,33 +135,82 @@ public class NoteUtils {
   public static String getNote(int pitch) {
     String noteString;
     if (pitch % 12 == 0) {
-      noteString = "C";
+      noteString = C;
     } else if (pitch % 12 == 1) {
-      noteString = "C#";
+      noteString = C_SHARP;
     } else if (pitch % 12 == 2) {
-      noteString = "D";
+      noteString = D;
     } else if (pitch % 12 == 3) {
-      noteString = "Eb";
+      noteString = E_FLAT;
     } else if (pitch % 12 == 4) {
-      noteString = "E";
+      noteString = E;
     } else if (pitch % 12 == 5) {
-      noteString = "F";
+      noteString = F;
     } else if (pitch % 12 == 6) {
-      noteString = "F#";
+      noteString = F_SHARP;
     } else if (pitch % 12 == 7) {
-      noteString = "G";
+      noteString = G;
     } else if (pitch % 12 == 8) {
-      noteString = "Ab";
+      noteString = A_FLAT;
     } else if (pitch % 12 == 9) {
-      noteString = "A";
+      noteString = A;
     } else if (pitch % 12 == 10) {
-      noteString = "Bb";
+      noteString = B_FLAT;
     } else if (pitch % 12 == 11) {
-      noteString = "B";
+      noteString = B;
     } else {
       noteString = "N/A";
     }
     return noteString;
   }
+
+  /**
+   * returns the pitches for the middle scale(default) on a keyboard.
+   */
+  public static int pitchValue(String noteString) {
+    int pitch;
+    switch (noteString) {
+      case C:
+        pitch = 60;
+        break;
+      case C_SHARP:
+        pitch = 61;
+        break;
+      case D:
+        pitch = 62;
+        break;
+      case E_FLAT:
+        pitch = 63;
+        break;
+      case E:
+        pitch = 64;
+        break;
+      case F:
+        pitch = 65;
+        break;
+      case F_SHARP:
+        pitch = 66;
+        break;
+      case G:
+        pitch = 67;
+        break;
+      case A_FLAT:
+        pitch = 68;
+        break;
+      case A:
+        pitch = 69;
+        break;
+      case B_FLAT:
+        pitch = 70;
+        break;
+      case B:
+        pitch = 71;
+        break;
+      default:
+        throw new IllegalArgumentException(noteString + " is wrong note representation");
+    }
+    return pitch;
+  }
+
 
 }

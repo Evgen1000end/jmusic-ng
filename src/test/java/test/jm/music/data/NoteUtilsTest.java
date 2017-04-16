@@ -76,4 +76,25 @@ public class NoteUtilsTest {
     assertEquals(getNote(34), "Bb");
     assertEquals(getNote(35), "B");
   }
+
+  @Test
+  public void pitchValueTest() {
+    assertEquals(pitchValue("C"), 60);
+    assertEquals(pitchValue("C#"), 61);
+    assertEquals(pitchValue("D"), 62);
+    assertEquals(pitchValue("Eb"), 63);
+    assertEquals(pitchValue("E"), 64);
+    assertEquals(pitchValue("F"), 65);
+    assertEquals(pitchValue("F#"), 66);
+    assertEquals(pitchValue("G"), 67);
+    assertEquals(pitchValue("Ab"), 68);
+    assertEquals(pitchValue("A"), 69);
+    assertEquals(pitchValue("Bb"), 70);
+    assertEquals(pitchValue("B"), 71);
+  }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void invalidPitchValue() {
+    pitchValue("BAR");
+  }
 }

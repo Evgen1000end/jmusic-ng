@@ -383,7 +383,7 @@ public class Note implements Cloneable, Serializable {
    * @return double note's pitch
    */
   public double getFrequency() {
-    return frequency < (REST+2) ? REST : frequency;
+    return frequency < (REST + 2) ? REST : frequency;
   }
 
   /**

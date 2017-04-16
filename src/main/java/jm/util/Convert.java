@@ -263,22 +263,22 @@ public class Convert {
     return dString.substring(0, lastIndex);
   }
 
-  public static String scoreToXMLString(final Score score) {
-    return XMLParser.scoreToXMLString(score);
+  public static String scoreToXMLString(final Score score, final boolean asPitch) {
+    return XMLParser.scoreToXMLString(score, asPitch);
   }
 
   public static String partToXMLString(final Part part) {
-    return XMLParser.partToXMLString(part);
+    return XMLParser.partToXMLString(part,true);
   }
 
   //--- XML conversions ---//
 
-  public static String phraseToXMLString(final Phrase phrase) {
-    return XMLParser.phraseToXMLString(phrase);
+  public static String phraseToXMLString(final Phrase phrase, final boolean asPitch) {
+    return XMLParser.phraseToXMLString(phrase, asPitch);
   }
 
-  public static String noteToXMLString(final Note note) {
-    return XMLParser.noteToXMLString(note);
+  public static String noteToXMLString(final Note note, final boolean asPitch) {
+    return XMLParser.noteToXMLString(note, asPitch);
   }
 
   public static Score xmlStringToScore(final String string)

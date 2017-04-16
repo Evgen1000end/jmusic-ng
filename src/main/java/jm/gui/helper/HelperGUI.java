@@ -666,20 +666,21 @@ public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentL
       //System.out.println(sliderA.getValue());
       labelA.setText(" variableA = " + sliderA.getValue());
       //System.out.println(labelA.getText());
-      variableA = new Integer(sliderA.getValue()).intValue();
+      switch (variableA = sliderA.getValue()) {
+      }
       //labelA.repaint(1l);
     } else if (ae.getSource() == sliderB) {
       labelB.setText(" variableB = " + sliderB.getValue());
-      variableB = new Integer(sliderB.getValue()).intValue();
+      variableB = sliderB.getValue();
     } else if (ae.getSource() == sliderC) {
       labelC.setText(" variableC = " + sliderC.getValue());
-      variableC = new Integer(sliderC.getValue()).intValue();
+      variableC = sliderC.getValue();
     } else if (ae.getSource() == sliderD) {
       labelD.setText(" variableD = " + sliderD.getValue());
-      variableD = new Integer(sliderD.getValue()).intValue();
+      variableD = sliderD.getValue();
     } else if (ae.getSource() == sliderE) {
       labelE.setText(" variableE = " + sliderE.getValue());
-      variableE = new Integer(sliderE.getValue()).intValue();
+      variableE = sliderE.getValue();
     }
 
   }
@@ -693,7 +694,7 @@ public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentL
         FileDialog.SAVE);
     fd.show();
     if (fd.getFile() != null) {
-      jm.util.Write.xml(score, fd.getDirectory() + fd.getFile());
+      jm.util.Write.xml(score, fd.getDirectory() + fd.getFile(), true);
     }
   }
 

@@ -872,9 +872,8 @@ public class Notate extends Frame implements
     FileDialog fd = new FileDialog(this, "Save as a jMusic XML file...", FileDialog.SAVE);
     fd.show();
 
-    //write an XML file to disk
     if (fd.getFile() != null) {
-      Write.xml(score, fd.getDirectory() + fd.getFile());
+      Write.xml(score, fd.getDirectory() + fd.getFile(), true);
     }
   }
 

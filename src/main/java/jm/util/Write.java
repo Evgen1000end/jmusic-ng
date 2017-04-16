@@ -537,7 +537,7 @@ public class Write implements JMC {
    * Save the jMusic Score to an xml file
    */
   public static void xml(Score s) {
-    xml(s, s.getTitle() + ".xml");
+    xml(s, s.getTitle() + ".xml", true);
   }
 
   /**
@@ -545,11 +545,11 @@ public class Write implements JMC {
    *
    * @param String - the file name to write to
    */
-  public static void xml(Score s, String fileName) {
+  public static void xml(Score s, String fileName, final boolean asPitch) {
     try {
       PrintWriter pw = new PrintWriter(new FileWriter(fileName));
       System.out.println("--------------------- Writing XML File -----------------------");
-      String xmlString = XMLParser.scoreToXMLString(s);
+      String xmlString = XMLParser.scoreToXMLString(s, asPitch);
       //System.out.println(xmlString);
       pw.print(xmlString);
       pw.close();
@@ -568,7 +568,7 @@ public class Write implements JMC {
   public static void xml(Part p) {
     Score s = new Score("Score of " + p.getTitle());
     s.addPart(p);
-    xml(s, p.getTitle() + ".xml");
+    xml(s, p.getTitle() + ".xml", true);
   }
 
   /**
@@ -579,7 +579,7 @@ public class Write implements JMC {
   public static void xml(Part p, String fileName) {
     Score s = new Score("Score of " + p.getTitle());
     s.addPart(p);
-    xml(s, fileName);
+    xml(s, fileName, true);
   }
 
   /**
@@ -591,7 +591,7 @@ public class Write implements JMC {
     p.addPhrase(phr);
     Score s = new Score("Score of " + phr.getTitle());
     s.addPart(p);
-    xml(s, phr.getTitle() + ".xml");
+    xml(s, phr.getTitle() + ".xml", true);
   }
 
   /**
@@ -604,7 +604,7 @@ public class Write implements JMC {
     p.addPhrase(phr);
     Score s = new Score("Score of " + phr.getTitle());
     s.addPart(p);
-    xml(s, fileName);
+    xml(s, fileName, true);
   }
 
   /**
@@ -616,7 +616,7 @@ public class Write implements JMC {
     p.addCPhrase(cphr);
     Score s = new Score("Score of " + cphr.getTitle());
     s.addPart(p);
-    xml(s, cphr.getTitle() + ".xml");
+    xml(s, cphr.getTitle() + ".xml", true);
   }
 
   /**
@@ -629,7 +629,7 @@ public class Write implements JMC {
     p.addCPhrase(cphr);
     Score s = new Score("Score of " + cphr.getTitle());
     s.addPart(p);
-    xml(s, fileName);
+    xml(s, fileName, true);
   }
 
   //------------------------------------------------------------

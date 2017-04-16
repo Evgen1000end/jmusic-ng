@@ -123,10 +123,7 @@ public class ShowArea extends Canvas {
     repaint();
   }
 
-  public void paint(Graphics offScreenGraphics) {
-    //Image offScreenImage = this.createImage(this.getSize().width, this.areaHeight);
-    //Graphics offScreenGraphics = g.create();
-    //offScreenImage.getGraphics();
+  public void paint(Graphics offScreenGraphics, boolean asPitch) {
     int rectLeft, rectTop, rectRight, rectBot;
     //clear
     offScreenGraphics.setColor(Color.white);
@@ -210,10 +207,7 @@ public class ShowArea extends Canvas {
           Note aNote = (Note) enum3.nextElement();
           int currNote = aNote.getPitch();
           if ((currNote <= 127) && (currNote >= 0)) {
-            // 10 - numb of octaves, 12 notes in an octave, 21
-            // (octavePixelheight) is the height of
-            // an octave, 156 is offset to put in position
-            int octavePixelheight = noteHeight * 7;
+             int octavePixelheight = noteHeight * 7;
             int y = ((10 - currNote / 12) * octavePixelheight +
                 (ePos)) - noteOffset[currNote % 12];
             int x = (int) (Math.round(aNote.getDuration() * beatWidth)); //480 ppq note
@@ -234,10 +228,10 @@ public class ShowArea extends Canvas {
                 theColours[i % maxColours][1],
                 (float) (0.7 - (aNote.getDynamic() * 0.004))));
             // draw note inside
-            if (aNote.getPitchType() == PitchType.MIDI_PITCH) {
+            if (asPitch) {
               offScreenGraphics.fillRect(oldX, y - noteHeight + thinNote, x,
                   noteHeight * 2 - 2 * thinNote);
-            } else { // draw frequency derrived note
+            } else {
               int heightOffset = 7;
               for (int j = oldX; j < oldX + x - 4; j += 4) {
                 offScreenGraphics.drawLine(j, y - noteHeight + heightOffset,
@@ -246,8 +240,6 @@ public class ShowArea extends Canvas {
                     j + 4, y - noteHeight + heightOffset);
               }
             }
-
-            // draw note ouside
             offScreenGraphics.setColor(Color.getHSBColor(theColours[i % maxColours][0],
                 theColours[i % maxColours][1], (float) (0.4)));
             offScreenGraphics.drawRect(oldX, y - noteHeight + thinNote, xRV,
@@ -266,16 +258,12 @@ public class ShowArea extends Canvas {
           oldX = (int) (Math.round(oldXBeat * beatWidth));
           rectRight = oldX - rectLeft; //update value for phrase rectangle
         }
-        // draw the phrase rectangle
-        //offScreenGraphics.setColor(Color.lightGray);
         offScreenGraphics.setColor(Color.getHSBColor(theColours[i % maxColours][0],
             theColours[i % maxColours][1], (float) (0.9)));
         offScreenGraphics.drawRect(rectLeft - 1, rectTop - noteHeight - 1, rectRight + 1,
             rectBot - rectTop + noteHeight * 2 + 2);
       }
-      i++; //increment the part index
+      i++;
     }
-    //g.drawImage(offScreenImage, 0, 0, this);
-    //offScreenGraphics.dispose();
   }
 }

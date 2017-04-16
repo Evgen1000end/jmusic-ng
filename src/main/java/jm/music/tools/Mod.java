@@ -86,7 +86,7 @@ public class Mod implements JMC {
       throw new IllegalArgumentException("Note should not be null");
     }
 
-    if (note.getPitchType() == PitchType.MIDI_PITCH && note.getPitch() != REST) {
+    if ( note.getPitch() != REST) {
       note.setPitch(note.getPitch() + transposition);
     }
   }

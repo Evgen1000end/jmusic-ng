@@ -321,14 +321,8 @@ public final class MidiParser implements JMC {
                 new CChange((short) 10, (short) (pan * 127), (short) inst.getChannel(), 0)));
           }
           //check for frequency rather than MIDI notes
-          int pitch = 0;
-          if (note.getPitchType() == PitchType.FREQUENCY) {
-            System.err.println(
-                "jMusic warning: converting note frequency to the closest MIDI pitch for SMF.");
-            pitch = NoteUtils.frequencyToPitch(note.getFrequency());
-          } else {
-            pitch = note.getPitch();
-          }
+          int pitch = note.getPitch();
+
           if (pitch != REST) {
             midiEvents.add(new EventPair(startTime + offsetValue,
                 new NoteOn((short) pitch, (short) note.getDynamic(), (short) inst.getChannel(),
@@ -347,39 +341,6 @@ public final class MidiParser implements JMC {
           System.out.print("."); // completed a note
         }
       }
-        /*
-			//Sort lists so start times are in the right order
-			Enumeration start = midiNoteEvents.elements();
-			Enumeration timeing = timeingList.elements();
-			Vector sortedStarts = new Vector();
-			Vector sortedEvents = new Vector();
-			while(start.hasMoreElements()){
-				double smallest = ((Double)start.nextElement()).doubleValue();
-				Event anevent = (Event) timeing.nextElement();
-				int index = 0, count = 0;
-				while(start.hasMoreElements()){
-					count++;
-					double d1 = ((Double)start.nextElement()).doubleValue();
-					Event event1 = (Event) timeing.nextElement();
-					if(smallest == d1){ //if note time is equal
-						if(zeroVelEventQ(event1)) {
-							index = count;
-						}
-					}
-					if(smallest > d1){
-						smallest = d1;
-						index = count;
-					}
-				}
-				sortedStarts.addElement(midiNoteEvents.elementAt(index));
-				sortedEvents.addElement(timeingList.elementAt(index));
-				midiNoteEvents.removeElementAt(index);
-				timeingList.removeElementAt(index);
-				//reset lists for next run
-				start = midiNoteEvents.elements();
-				timeing = timeingList.elements();
-			}
-			*/
 
       //Sort the hashmap by starttime (key value)
       class CompareKey implements Comparator {

@@ -270,7 +270,7 @@ public class ShowScore extends Frame implements WindowListener, ActionListener {
         FileDialog.SAVE);
     fd.show();
     if (fd.getFile() != null) {
-      jm.util.Write.xml(score, fd.getDirectory() + fd.getFile());
+      jm.util.Write.xml(score, fd.getDirectory() + fd.getFile(), true);
     }
   }
 

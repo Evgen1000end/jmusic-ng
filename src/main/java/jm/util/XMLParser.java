@@ -42,14 +42,14 @@ class XMLParser {
   private XMLParser() {
   }
 
-  public static String scoreToXMLString(final Score score) {
+  public static String scoreToXMLString(final Score score, final boolean asPitch) {
     return DEFAULT_XML_STYLE.initialXMLDeclaration()
-        + XMLParser.scoreToXMLString(score, DEFAULT_XML_STYLE);
+        + XMLParser.scoreToXMLString(score, DEFAULT_XML_STYLE, asPitch);
   }
 
   private static String scoreToXMLString(
       final Score score,
-      final XMLStyle xmlStyle) {
+      final XMLStyle xmlStyle, final boolean asPitch) {
     StringBuilder buffer = new StringBuilder();
     buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getScoreTagName());
     if (!score.getTitle().equals(Score.DEFAULT_TITLE)) {
@@ -114,7 +114,7 @@ class XMLParser {
     } else {
       buffer.append(xmlStyle.getRightAngleBracket());
       for (int i = 0; i < score.size(); i++) {
-        buffer.append(partToXMLString(score.getPart(i), xmlStyle));
+        buffer.append(partToXMLString(score.getPart(i), xmlStyle, asPitch));
       }
       buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getSlash())
           .append(xmlStyle.getScoreTagName()).append(xmlStyle.getRightAngleBracket());
@@ -122,14 +122,14 @@ class XMLParser {
     return buffer.toString();
   }
 
-  public static String partToXMLString(final Part part) {
+  public static String partToXMLString(final Part part,final boolean asPitch) {
     return DEFAULT_XML_STYLE.initialXMLDeclaration()
-        + XMLParser.partToXMLString(part, DEFAULT_XML_STYLE);
+        + XMLParser.partToXMLString(part, DEFAULT_XML_STYLE, asPitch);
   }
 
   private static String partToXMLString(
       final Part part,
-      final XMLStyle xmlStyle) {
+      final XMLStyle xmlStyle,final boolean asPitch) {
     StringBuilder buffer = new StringBuilder();
     buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getPartTagName());
     if (!part.getTitle().equals(Part.DEFAULT_TITLE)) {
@@ -210,7 +210,7 @@ class XMLParser {
     } else {
       buffer.append(xmlStyle.getRightAngleBracket());
       for (int i = 0; i < part.size(); i++) {
-        buffer.append(phraseToXMLString(part.getPhrase(i), xmlStyle));
+        buffer.append(phraseToXMLString(part.getPhrase(i), xmlStyle, asPitch));
       }
       buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getSlash())
           .append(xmlStyle.getPartTagName()).append(xmlStyle.getRightAngleBracket());
@@ -218,14 +218,14 @@ class XMLParser {
     return buffer.toString();
   }
 
-  public static String phraseToXMLString(final Phrase phrase) {
+  public static String phraseToXMLString(final Phrase phrase, final boolean asPitch) {
     return DEFAULT_XML_STYLE.initialXMLDeclaration()
-        + XMLParser.phraseToXMLString(phrase, DEFAULT_XML_STYLE);
+        + XMLParser.phraseToXMLString(phrase, DEFAULT_XML_STYLE, asPitch);
   }
 
   private static String phraseToXMLString(
       final Phrase phrase,
-      final XMLStyle xmlStyle) {
+      final XMLStyle xmlStyle, final boolean asPitch) {
     StringBuilder buffer = new StringBuilder();
     buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getPhraseTagName());
     if (!phrase.getTitle().equals(Phrase.DEFAULT_TITLE)) {
@@ -293,7 +293,7 @@ class XMLParser {
     } else {
       buffer.append(xmlStyle.getRightAngleBracket());
       for (int i = 0; i < size; i++) {
-        buffer.append(noteToXMLString(phrase.getNote(i), xmlStyle));
+        buffer.append(noteToXMLString(phrase.getNote(i), xmlStyle,asPitch));
       }
       buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getSlash())
           .append(xmlStyle.getPhraseTagName()).append(xmlStyle.getRightAngleBracket());
@@ -301,17 +301,17 @@ class XMLParser {
     return buffer.toString();
   }
 
-  public static String noteToXMLString(final Note note) {
+  public static String noteToXMLString(final Note note, final boolean asPitch) {
     return DEFAULT_XML_STYLE.initialXMLDeclaration()
-        + XMLParser.noteToXMLString(note, DEFAULT_XML_STYLE);
+        + XMLParser.noteToXMLString(note, DEFAULT_XML_STYLE, asPitch);
   }
 
   private static String noteToXMLString(
       final Note note,
-      final XMLStyle xmlStyle) {
+      final XMLStyle xmlStyle, final boolean asPitch) {
     StringBuilder buffer = new StringBuilder();
     buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getNoteTagName());
-    if (note.getPitchType() == PitchType.MIDI_PITCH) {
+    if (asPitch) {
       if (note.getPitch() != Note.DEFAULT_PITCH) {
         buffer.append(xmlStyle.getSpace()).append(xmlStyle.getPitchAttributeName()).append("=")
             .append(xmlStyle.getDoubleQuote()).append(Integer.toString(note.getPitch()))

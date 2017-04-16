@@ -288,7 +288,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Sets the program change value
    *
-   * @param int program change
+   * @param value program change
    */
   public void setInstrument(int value) {
     this.instrument = value;
@@ -297,7 +297,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Add a note to this Phrase
    *
-   * @param Note note - add a note to this phrase
+   * @param note - add a note to this phrase
    */
   public void addNote(Note note) {
     note.setMyPhrase(this);
@@ -1401,7 +1401,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * and adds it to this phrase.
    */
   public Note createNote() {
-    Note n = new Note();
+    Note n = Note.newBuilder().build();
     this.addNote(n);
     return n;
   }

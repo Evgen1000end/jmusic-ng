@@ -1895,7 +1895,7 @@ public class Mod implements JMC {
    * Vary both the rhythm value and duration of each note in the phrase by the specified amount.
    *
    * @param phrase The phrase to be modified.
-   * @param double The amount to add.
+   * @param amount The amount to add.
    */
   public static void addToLength(Phrase phrase, double amount) {
     Enumeration enum1 = phrase.getNoteList().elements();
@@ -1938,7 +1938,7 @@ public class Mod implements JMC {
    * will be set to a value as described in the {@link Note#setPitch} method.
    *
    * @param cphrase CPhrase to be transposed
-   * @param transpose integer describing the amount to transpose in semitones
+   * @param trans integer describing the amount to transpose in semitones
    */
   public static void transpose(CPhrase cphrase, final int trans) {
     if (cphrase == null) {

@@ -64,8 +64,8 @@ public final class ChordAnalysis {
     if (endTime == 0.0) {
       return new Possible[0];
     }
-    Note downBeat = new Note();
-    Note halfBeat = new Note();
+    Note downBeat = Note.newBuilder().build();
+    Note halfBeat = Note.newBuilder().build();
 
     int size = phrase.size();
     final Possible[] chords =

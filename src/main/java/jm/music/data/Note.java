@@ -17,7 +17,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.music.data;
 
-import static jm.music.data.PitchType.*;
+import static jm.music.data.PitchType.FREQUENCY;
+import static jm.music.data.PitchType.MIDI_PITCH;
 
 import java.io.Serializable;
 import org.slf4j.Logger;
@@ -264,7 +265,7 @@ public class Note implements Cloneable, Serializable {
   /**
    * Default constructor assigns null values to all note attributes
    */
-  public Note() {
+  private Note() {
     this(DEFAULT_PITCH, DEFAULT_RHYTHM_VALUE);
     this.pitch = DEFAULT_PITCH;
     this.pitchType = MIDI_PITCH;
@@ -292,8 +293,8 @@ public class Note implements Cloneable, Serializable {
    * Assigns pitch and rhythmic values to the note object upon creation
    * Other values (e.g. dynamic) and given reasonable defaults
    *
-   * @param pitch pitch range is 0-127 (middle c = 60): Constant values representing pitch values can
-   * be found in JMC
+   * @param pitch pitch range is 0-127 (middle c = 60): Constant values representing pitch values
+   * can be found in JMC
    * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
    * in JMC
    * @param dynamic range is 0-127 (0 = off; 127 = loud): Constant values representing some basic
@@ -378,7 +379,8 @@ public class Note implements Cloneable, Serializable {
     }
     this.pitchType = FREQUENCY;
     this.rhythmValue = rhythmValue;
-    this.dynamic = (dynamic < MIN_DYNAMIC) ? MIN_DYNAMIC : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
+    this.dynamic =
+        (dynamic < MIN_DYNAMIC) ? MIN_DYNAMIC : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
     this.pan = pan;
     this.duration = rhythmValue * DEFAULT_DURATION_MULTIPLIER;
     this.offset = DEFAULT_OFFSET;
@@ -421,8 +423,8 @@ public class Note implements Cloneable, Serializable {
    * @param freq note pitch as a frequency in hertz
    */
   public void setFrequency(final double freq) {
-      this.pitch = (pitch < MIN_FREQUENCY) ? MIN_FREQUENCY : freq;
-      pitchType = FREQUENCY;
+    this.pitch = (pitch < MIN_FREQUENCY) ? MIN_FREQUENCY : freq;
+    pitchType = FREQUENCY;
   }
 
   /**
@@ -691,8 +693,8 @@ public class Note implements Cloneable, Serializable {
    * @return boolean - true means it is in the scale
    */
   public boolean isScale(final int[] scale) {
-    for (int aScale : scale) {
-      if (this.pitch % 12 == aScale) {
+    for (int scaleItem : scale) {
+      if (this.pitch % 12 == scaleItem) {
         return true;
       }
     }
@@ -869,4 +871,34 @@ public class Note implements Cloneable, Serializable {
     }
     return noteString;
   }
+
+  private Note(Builder builder) {
+    this();
+    setOffset(builder.offset);
+    setPan(builder.pan);
+  }
+
+  public static Builder newBuilder(){
+    return new Builder();
+  }
+
+  public static class Builder {
+    private double offset = DEFAULT_OFFSET;
+    private double pan = DEFAULT_PAN;
+
+    public Builder offset(final double offset) {
+      this.offset = offset;
+      return this;
+    }
+
+    public Builder pan(final double pan) {
+      this.pan = pan;
+      return this;
+    }
+
+    public Note build() {
+      return new Note(this);
+    }
+  }
+
 }

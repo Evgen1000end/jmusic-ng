@@ -844,7 +844,7 @@ class XMLParser {
               + "accepted tag name is '" + xmlStyle.getNoteTagName() + "'."
       );
     }
-    Note returnNote = new Note();
+    Note returnNote = Note.newBuilder().build();
     String attributeValue;
 
     attributeValue = XMLStyles.getPitchAttributeValue(element);

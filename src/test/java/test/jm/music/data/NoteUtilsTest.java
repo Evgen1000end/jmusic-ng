@@ -59,4 +59,21 @@ public class NoteUtilsTest {
   public void convertToFreqShouldThrowExceptionIfPitchGreaterThatShouldBe() {
     pitchToFrequency(200);
   }
+
+  @Test
+  public void getNoteTest() {
+    assertEquals(getNote(24), getNote(36));
+    assertEquals(getNote(24), "C");
+    assertEquals(getNote(25), "C#");
+    assertEquals(getNote(26), "D");
+    assertEquals(getNote(27), "Eb");
+    assertEquals(getNote(28), "E");
+    assertEquals(getNote(29), "F");
+    assertEquals(getNote(30), "F#");
+    assertEquals(getNote(31), "G");
+    assertEquals(getNote(32), "Ab");
+    assertEquals(getNote(33), "A");
+    assertEquals(getNote(34), "Bb");
+    assertEquals(getNote(35), "B");
+  }
 }

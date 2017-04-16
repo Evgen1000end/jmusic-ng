@@ -26,6 +26,6 @@ public class ByteConvertingTest {
 
   @Test
   public void intToByteStringWithFormat() {
-    assertEquals(intToByteArrayFormat(1, "0x%02X"), "ds");
+    assertEquals(intToByteArrayFormat(1, "0x%02X"), "0x%02X0x%02X0x%02X0x%02X");
   }
 }

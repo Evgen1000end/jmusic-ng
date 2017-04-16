@@ -416,7 +416,7 @@ public class LetterNotesEditor extends Dialog
     if (currentNote != null) {
       newNote = currentNote.copy();
     } else {
-      newNote = new Note();
+      newNote = Note.newBuilder().build();
     }
     if (charValue != 'R') {
       if (pv > currentPitch) {

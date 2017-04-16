@@ -188,8 +188,8 @@ public final class PhraseMatrix implements JMC {
     //Make an array of default notes as long as required by numOfNotes
     Note[] noteList = new Note[numOfNotes];
     for (int i = 0; i < numOfNotes; i++) {
-      noteList[i] = new Note();
-    }
+      noteList[i] = Note.newBuilder().build();
+  }
                 /*
         for(int i=0;i<this.depth;i++){
 			pitch[i] = notes[i].getPitch();

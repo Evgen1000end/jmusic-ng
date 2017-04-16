@@ -165,7 +165,7 @@ public class StavePhraseProperties extends Properties {
     restPresent = getFinalRestRhythm(phrase);
     Note restToAdd;
     if (rhythm - restPresent > 0.001) {
-      restToAdd = new Note();
+      restToAdd = Note.newBuilder().build();
       restToAdd.setFrequency(Note.REST);
       restToAdd.setRhythmValue(
           rhythm - restPresent);

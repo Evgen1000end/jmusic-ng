@@ -42,6 +42,7 @@ import jm.music.data.Note;
 import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
+import jm.music.data.PitchType;
 import jm.music.data.Score;
 
 /**
@@ -322,7 +323,7 @@ public final class MidiParser implements JMC {
           }
           //check for frequency rather than MIDI notes
           int pitch = 0;
-          if (note.getPitchType() == Note.FREQUENCY) {
+          if (note.getPitchType() == PitchType.FREQUENCY) {
             System.err.println(
                 "jMusic warning: converting note frequency to the closest MIDI pitch for SMF.");
             pitch = NoteUtils.freqToMidiPitch(note.getFrequency());

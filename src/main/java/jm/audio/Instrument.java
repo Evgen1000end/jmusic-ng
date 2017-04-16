@@ -26,6 +26,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 import jm.JMC;
 import jm.music.data.Note;
+import jm.music.data.PitchType;
 import jm.music.rt.RTLine;
 
 /**
@@ -176,7 +177,7 @@ public abstract class Instrument extends Thread implements Runnable, jm.JMC {
     } else {
       // calc frequency
       double frequency = 0.0;
-      if (note.getPitchType() == Note.MIDI_PITCH && note.getPitch() != JMC.REST &&
+      if (note.getPitchType() == PitchType.MIDI_PITCH && note.getPitch() != JMC.REST &&
           note.getPitch() <= Note.MIN_PITCH && note.getPitch() >= Note.MAX_PITCH) {
         frequency = jm.JMC.FRQ[note.getPitch()];
       } else {

@@ -28,6 +28,7 @@ import java.util.Vector;
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
+import jm.music.data.PitchType;
 import jm.music.data.Score;
 
 /**
@@ -311,7 +312,7 @@ class XMLParser {
       final XMLStyle xmlStyle) {
     StringBuilder buffer = new StringBuilder();
     buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getNoteTagName());
-    if (note.getPitchType() == Note.MIDI_PITCH) {
+    if (note.getPitchType() == PitchType.MIDI_PITCH) {
       if (note.getPitch() != Note.DEFAULT_PITCH) {
         buffer.append(xmlStyle.getSpace()).append(xmlStyle.getPitchAttributeName()).append("=")
             .append(xmlStyle.getDoubleQuote()).append(Integer.toString(note.getPitch()))

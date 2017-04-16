@@ -17,6 +17,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.music.data;
 
+import static jm.music.data.PitchType.*;
+
 import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -180,14 +182,6 @@ public class Note implements Cloneable, Serializable {
    */
   public static final int REST = Integer.MIN_VALUE;
   /**
-   * Pitch type flag - indicates that pitch should be a frequency in hertz.
-   */
-  public static final boolean FREQUENCY = true;
-  /**
-   * Pitch type flag - indicates that pitch should be MIDI note number.
-   */
-  public static final boolean MIDI_PITCH = false;
-  /**
    * Specified envelope break point value indexes
    */
   public static final int AMP_ENV = 0;
@@ -251,7 +245,9 @@ public class Note implements Cloneable, Serializable {
   /**
    * The type of value that pitch is representing - frequency (true) or MIDI note (false)
    */
-  private boolean pitchType;
+  //private boolean pitchType;
+
+  private PitchType pitchType;
   /**
    * The phrase that this note has been added to.
    */
@@ -390,23 +386,12 @@ public class Note implements Cloneable, Serializable {
     setPitch(getPitchValue());
   }
 
-  /**
-   * Retrieve note's pitch type
-   *
-   * @return boolean notes pitch type
-   */
-  public boolean getPitchType() {
-    return this.pitchType;
+  public PitchType getPitchType() {
+    return pitchType;
   }
 
-  /**
-   * Specifies the note's pitch type.
-   * There are constants for FREQUENCY and MIDI_PITCH
-   *
-   * @param newType note's pitch type
-   */
-  public void setPitchType(final boolean newType) {
-    this.pitchType = newType;
+  public void setPitchType(final PitchType pitchType) {
+    this.pitchType = pitchType;
   }
 
   /**

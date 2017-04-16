@@ -39,6 +39,7 @@ import jm.music.data.Note;
 import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
+import jm.music.data.PitchType;
 
 //--------------
 //second class!!
@@ -213,7 +214,7 @@ public class ShowArea extends Canvas {
         while (enum3.hasMoreElements()) {
           Note aNote = (Note) enum3.nextElement();
           int currNote = -1;
-          if (aNote.getPitchType() == Note.MIDI_PITCH) {
+          if (aNote.getPitchType() == PitchType.MIDI_PITCH) {
             currNote = aNote.getPitch();
           } else {
             currNote = NoteUtils.freqToMidiPitch(aNote.getFrequency());
@@ -243,7 +244,7 @@ public class ShowArea extends Canvas {
                 theColours[i % maxColours][1],
                 (float) (0.7 - (aNote.getDynamic() * 0.004))));
             // draw note inside
-            if (aNote.getPitchType() == Note.MIDI_PITCH) {
+            if (aNote.getPitchType() == PitchType.MIDI_PITCH) {
               offScreenGraphics.fillRect(oldX, y - noteHeight + thinNote, x,
                   noteHeight * 2 - 2 * thinNote);
             } else { // draw frequency derrived note

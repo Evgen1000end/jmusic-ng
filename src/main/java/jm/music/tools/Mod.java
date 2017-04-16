@@ -28,6 +28,7 @@ import jm.music.data.CPhrase;
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
+import jm.music.data.PitchType;
 import jm.music.data.Score;
 
 /**
@@ -86,10 +87,10 @@ public class Mod implements JMC {
       throw new IllegalArgumentException("Note should not be null");
     }
 
-    if (note.getPitchType() == Note.MIDI_PITCH && note.getPitch() != REST) {
+    if (note.getPitchType() == PitchType.MIDI_PITCH && note.getPitch() != REST) {
       note.setPitch(note.getPitch() + transposition);
     }
-    if (note.getPitchType() == Note.FREQUENCY) {
+    if (note.getPitchType() == PitchType.FREQUENCY) {
       System.err.println(
           "jMusic Mod transpose: No action taken - notes with frequency values cannot yet be transposed.");
     }

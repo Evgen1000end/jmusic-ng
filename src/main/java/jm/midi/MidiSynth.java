@@ -445,7 +445,7 @@ public class MidiSynth implements JMC, MetaEventListener {
           if (note.getPitchType() == PitchType.MIDI_PITCH) {
             pitch = note.getPitch();
           } else {
-            pitch = NoteUtils.freqToMidiPitch(note.getFrequency());
+            pitch = NoteUtils.frequencyToPitch(note.getFrequency());
           }
 
           int dynamic = note.getDynamic();

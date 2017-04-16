@@ -216,6 +216,9 @@ public class Note implements Cloneable, Serializable {
    * Pitch/frequency value of the note
    */
   private double pitch;
+
+  private double frequency;
+
   /**
    * Dynamic value ranging from 0-127 (0 = off; 1 = quiet; 127=loud)
    */

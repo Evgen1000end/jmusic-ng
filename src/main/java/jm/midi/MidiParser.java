@@ -326,7 +326,7 @@ public final class MidiParser implements JMC {
           if (note.getPitchType() == PitchType.FREQUENCY) {
             System.err.println(
                 "jMusic warning: converting note frequency to the closest MIDI pitch for SMF.");
-            pitch = NoteUtils.freqToMidiPitch(note.getFrequency());
+            pitch = NoteUtils.frequencyToPitch(note.getFrequency());
           } else {
             pitch = note.getPitch();
           }
@@ -516,7 +516,7 @@ public final class MidiParser implements JMC {
 //          if (note.getPitchType() == Note.MIDI_PITCH) {
 //            pitch = note.getPitch();
 //          } else {
-//            pitch = Note.freqToMidiPitch(note.getFrequency());
+//            pitch = Note.frequencyToPitch(note.getFrequency());
 //          }
 //
 //          int dynamic = note.getDynamic();

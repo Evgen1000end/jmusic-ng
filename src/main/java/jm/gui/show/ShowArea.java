@@ -217,7 +217,7 @@ public class ShowArea extends Canvas {
           if (aNote.getPitchType() == PitchType.MIDI_PITCH) {
             currNote = aNote.getPitch();
           } else {
-            currNote = NoteUtils.freqToMidiPitch(aNote.getFrequency());
+            currNote = NoteUtils.frequencyToPitch(aNote.getFrequency());
           }
           if ((currNote <= 127) && (currNote >= 0)) {
             // 10 - numb of octaves, 12 notes in an octave, 21

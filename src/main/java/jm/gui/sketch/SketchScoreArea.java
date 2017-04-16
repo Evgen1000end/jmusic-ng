@@ -164,7 +164,7 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
           if (aNote.getPitchType() == PitchType.MIDI_PITCH) {
             currNote = aNote.getPitch();
           } else {
-            currNote = NoteUtils.freqToMidiPitch(aNote.getFrequency());
+            currNote = NoteUtils.frequencyToPitch(aNote.getFrequency());
           }
           if (currNote != REST) {
             int x = 127 - currNote;

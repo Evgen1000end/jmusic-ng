@@ -1,5 +1,7 @@
 package jm.music.data;
 
+import static jm.constants.Frequencies.FRQ;
+
 /**
  * @author <a href="mailto:evgen1000end@gmail.com">demkinev</a>
  */
@@ -10,62 +12,52 @@ public class NoteUtils {
    * Assumes A440 and equal tempered intonation.
    * Adapted from C code written by Andrew Botros.
    *
-   * @param freq The frequency value to convert.
+   * @param frequency The frequency value to convert.
    * @return int The MIDI pitch number closest to the input frequency.
    */
-  public static int freqToMidiPitch(double freq) {
-    if ((freq < 26.73) || (freq > 14496.0)) {
-      System.err.println("freqToMidiPitch error: " +
-          "Frequency " + freq + " is not within the MIDI note range.");
+  public static int frequencyToPitch(double frequency) {
+    if ((frequency < 26.73) || (frequency > 14496.0)) {
+      System.err.println("frequencyToPitch error: "
+          + "Frequency " + frequency + " is not within the MIDI note range.");
       return -1;
     }
-    // A semitone higher than a given frequency
-    // is 2^(1/12) times the frequency.
     double r = Math.pow(2, 1.0 / 12.0);
-    // A cent higher than a given frequency
-    // is 2^(1/1200) times the frequency
     double cent = Math.pow(2, 1.0 / 1200.0);
-    int r_index = 0;
-    int cent_index = 0;
-    int side;
-        /* search for input ratio against A4 to the nearest cent
-           in range -49 to +50 cents around closest note */
+    int index = 0;
+    int centIndex = 0;
     double referenceFreq = 440.0;
-    if (freq >= referenceFreq) {
-      while (freq > r * referenceFreq) {
+    if (frequency >= referenceFreq) {
+      while (frequency > r * referenceFreq) {
         referenceFreq = r * referenceFreq;
-        r_index++;
+        index++;
       }
-      while (freq > cent * referenceFreq) {
+      while (frequency > cent * referenceFreq) {
         referenceFreq = cent * referenceFreq;
-        cent_index++;
+        centIndex++;
       }
-      if ((cent * referenceFreq - freq) < (freq - referenceFreq)) {
-        cent_index++;
+      if ((cent * referenceFreq - frequency) < (frequency - referenceFreq)) {
+        centIndex++;
       }
-      if (cent_index > 50) {
-        r_index++;
-        cent_index = 100 - cent_index;
+      if (centIndex > 50) {
+        index++;
       }
     } else {
-      while (freq < referenceFreq / r) {
+      while (frequency < referenceFreq / r) {
         referenceFreq = referenceFreq / r;
-        r_index--;
+        index--;
       }
-      while (freq < referenceFreq / cent) {
+      while (frequency < referenceFreq / cent) {
         referenceFreq = referenceFreq / cent;
-        cent_index++;
+        centIndex++;
       }
-      if ((freq - referenceFreq / cent) < (referenceFreq - freq)) {
-        cent_index++;
+      if ((frequency - referenceFreq / cent) < (referenceFreq - frequency)) {
+        centIndex++;
       }
-      if (cent_index >= 50) {
-        r_index--;
-        cent_index = 100 - cent_index;
+      if (centIndex >= 50) {
+        index--;
       }
     }
-
-    return 69 + r_index;
+    return 69 + index;
   }
 
   /**
@@ -73,42 +65,54 @@ public class NoteUtils {
    * Assumes an A440.0 reference and equal tempered intonation.
    * Written by Andrew Brown based on C code by Andrew Botros.
    *
-   * @param midiPitch The note pitch value to convert.
+   * @param pitch The note pitch value to convert.
    * @return double The frequency equivalent in cycles per second.
    */
-  public static double midiPitchToFreq(int midiPitch) {
-    //range OK
-    if (midiPitch < 0 || midiPitch > 127) {
-      System.err.println("jMusic Note.midiPitchToFreq error:" +
-          "midiPitch of " + midiPitch + " is out side valid range.");
-      return -1.0;
+  @Deprecated
+  public static double pitchToFrequencyByNumericalMethod(int pitch) {
+    if (pitch < 0 || pitch > 127) {
+      throw new IllegalArgumentException(pitch + " should be in 0-127 interval");
     }
-    // A semitone higher than a given frequency
-    // is 2^(1/12) times the frequency.
     double r = Math.pow(2, 1.0 / 12.0);
-    int pitchOffset = midiPitch - 69;
     double freq = 440.0;
-    if (midiPitch > 69) {
-      for (int i = 69; i < midiPitch; i++) {
+    if (pitch > 69) {
+      for (int i = 69; i < pitch; i++) {
         freq = freq * r;
       }
     } else {
-      for (int i = 69; i > midiPitch; i--) {
+      for (int i = 69; i > pitch; i--) {
         freq = freq / r;
       }
     }
-    // rounding to get more reasonable values
     freq = Math.round(freq * 1000.0) / 1000.0;
-
     return freq;
   }
 
-  public static double pitchToFreq(int midiPitch) {
-    return Math.pow(2, (midiPitch - 69) / 12) * 440;
+  /**
+   * Calculate the frequency in hertz of a MIDI note pitch.
+   * @param pitch - Midi pitch value.
+   * @return frequency.
+   */
+  public static double pitchToFrequency(int pitch) {
+    if (pitch < 0 || pitch > 127) {
+      throw new IllegalArgumentException(pitch + " should be in 0-127 interval");
+    }
+    return FRQ[pitch];
   }
 
   /**
-   * gets the string representation for a note for a given MIDI pitch (0-127)
+   * Calculate the frequency in hertz of a MIDI note pitch.
+   * @param pitch - Midi pitch value.
+   * @return frequency.
+   */
+  @Deprecated
+  public static double pitchToFrequencyByApproximate(int pitch) {
+    return Math.pow(2, (pitch - 69) / 12) * 440;
+  }
+
+  /**
+   * Gets the string representation for a note for a given MIDI pitch (0-127)
+   * @param pitch - Midi pitch value.
    */
   public static String getNote(int pitch) {
     String noteString;

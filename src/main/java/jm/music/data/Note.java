@@ -18,6 +18,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 package jm.music.data;
 
 import java.io.Serializable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Note class is representative of notes in standard western
@@ -84,30 +86,23 @@ import java.io.Serializable;
  */
 
 public class Note implements Cloneable, Serializable {
-  //----------------------------------------------
-  // Defaults
-  //-----------------------------------------------
 
   /**
-   * default pitch value
+   * Default pitch value.
    */
   public static final int DEFAULT_PITCH = 60;
-
   /**
-   * default rhythmValue
+   * Default rhythmValue.
    */
   public static final double DEFAULT_RHYTHM_VALUE = 1.0;
-
   /**
-   * default dynamic
+   * Default dynamic.
    */
   public static final int DEFAULT_DYNAMIC = 85;
-
   /**
    * default pan value
    */
   public static final double DEFAULT_PAN = 0.5;
-
   /**
    * default duration multiplier
    */
@@ -128,16 +123,10 @@ public class Note implements Cloneable, Serializable {
    * default offset value
    */
   public static final double DEFAULT_OFFSET = 0.0;
-
   /**
    * The number of seconds into a sample to begin reading data
    */
   public static final double DEFAULT_SAMPLE_START_TIME = 0.0;
-
-  //----------------------------------------------
-  // Constants
-  //-----------------------------------------------
-
   /**
    * The smallest value for a pitch.
    */
@@ -205,7 +194,6 @@ public class Note implements Cloneable, Serializable {
   public static final int PITCH_ENV = 1;
   public static final int FILTER_ENV = 2;
   public static final int PAN_ENV = 3;
-
   /**
    * string constants for keys on the keyboard
    */
@@ -224,15 +212,12 @@ public class Note implements Cloneable, Serializable {
   public static final String E_FLAT = "Eb";
   public static final String B_FLAT = "Bb";
   public static final String F = "F";
-
+  private Logger log = LoggerFactory.getLogger(Note.class);
   /**
    * the string that this note maps to being one of the 12 string constants
    */
   private String noteString = "";
 
-  //----------------------------------------------
-  // Attributes
-  //----------------------------------------------
   /**
    * Pitch/frequency value of the note
    */
@@ -286,7 +271,7 @@ public class Note implements Cloneable, Serializable {
     this.pitchType = MIDI_PITCH;
     this.rhythmValue = DEFAULT_RHYTHM_VALUE;
     this.dynamic = DEFAULT_DYNAMIC;
-    this.pan = DEFAULT_PAN; //centre pan
+    this.pan = DEFAULT_PAN;
     this.duration = DEFAULT_DURATION;
     this.offset = DEFAULT_OFFSET;
   }
@@ -295,12 +280,12 @@ public class Note implements Cloneable, Serializable {
    * Assigns pitch and rhythmic values to the note object upon creation
    * Other values (e.g. dynamic) are given reasonable defaults
    *
-   * @param MIDI pitch range is 0-127 (middle c = 60): Constant values representing pitch values can
-   * be found in JMC
+   * @param pitch pitch range is 0-127 (middle c = 60): Constant values representing pitch values
+   * can be found in JMC
    * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
    * in JMC
    */
-  public Note(int pitch, double rhythmValue) {
+  public Note(final int pitch, final double rhythmValue) {
     this(pitch, rhythmValue, DEFAULT_DYNAMIC);
   }
 
@@ -308,7 +293,7 @@ public class Note implements Cloneable, Serializable {
    * Assigns pitch and rhythmic values to the note object upon creation
    * Other values (e.g. dynamic) and given reasonable defaults
    *
-   * @param MIDI pitch range is 0-127 (middle c = 60): Constant values representing pitch values can
+   * @param pitch pitch range is 0-127 (middle c = 60): Constant values representing pitch values can
    * be found in JMC
    * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
    * in JMC
@@ -323,8 +308,8 @@ public class Note implements Cloneable, Serializable {
    * Assigns pitch and rhythmic values to the note object upon creation
    * Other values (e.g. dynamic) and given reasonable defaults
    *
-   * @param MIDI pitch range is 0-127 (middle c = 60): Constant values representing pitch values can
-   * be found in JMC
+   * @param pitch pitch range is 0-127 (middle c = 60): Constant values representing pitch values
+   * can be found in JMC
    * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
    * in JMC
    * @param dynamic range is 0-127 (0 = off; 127 = loud): Constant values representing some basic
@@ -332,13 +317,11 @@ public class Note implements Cloneable, Serializable {
    * @param pan Specifies the balance between output channels; usually between 0 - left, and 1 -
    * right.
    */
-  public Note(int pitch, double rhythmValue, int dynamic, double pan) {
+  public Note(final int pitch, final double rhythmValue, final int dynamic, final double pan) {
     if (pitch < MIN_PITCH && pitch > REST + 2) {
-      // bit of a hack to cater for casting error
-      System.err.println("jMusic Note constructor error: Pitch is"
+      throw new IllegalArgumentException("jMusic Note constructor error: Pitch is"
           + " " + pitch + ", it must be no less than "
           + MIN_PITCH + " (REST = " + REST + ")");
-      System.exit(1);
     }
     this.pitchType = MIDI_PITCH;
     this.pitch = (double) pitch;
@@ -349,7 +332,6 @@ public class Note implements Cloneable, Serializable {
     this.pan = pan;
     this.duration = rhythmValue * DEFAULT_DURATION_MULTIPLIER;
     this.offset = DEFAULT_OFFSET;
-    //this.sampleStartTime = DEFAULT_SAMPLE_START_TIME;
   }
 
   /**
@@ -359,7 +341,7 @@ public class Note implements Cloneable, Serializable {
    * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
    * in JMC
    */
-  public Note(double frequency, double rhythmValue) {
+  public Note(final double frequency, final double rhythmValue) {
     this(frequency, rhythmValue, DEFAULT_DYNAMIC);
   }
 
@@ -372,7 +354,7 @@ public class Note implements Cloneable, Serializable {
    * @param dynamic range is 0-127 (0 = off; 127 = loud): Constant values representing some basic
    * dynamic types can be found in JMC
    */
-  public Note(double frequency, double rhythmValue, int dynamic) {
+  public Note(final double frequency, final double rhythmValue, final int dynamic) {
     this(frequency, rhythmValue, dynamic, DEFAULT_PAN);
   }
 
@@ -387,171 +369,25 @@ public class Note implements Cloneable, Serializable {
    * @param pan Specifies the balance between output channels; usually between 0 - left, and 1 -
    * right.
    */
-  public Note(double frequency, double rhythmValue, int dynamic, double pan) {
+  public Note(final double frequency, final double rhythmValue, final int dynamic,
+      final double pan) {
     if (frequency > MIN_FREQUENCY) {
       this.pitch = frequency;
     } else {
-      System.err.println("jMusic Note constructor error: Frequency is " +
+      throw new IllegalArgumentException("jMusic Note constructor error: Frequency is " +
           frequency + ", it must be greater than " + MIN_FREQUENCY + " hertz.");
-      System.exit(1);
     }
     this.pitchType = FREQUENCY;
     this.rhythmValue = rhythmValue;
-    this.dynamic = (dynamic < MIN_DYNAMIC)
-        ? MIN_DYNAMIC
-        : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
+    this.dynamic = (dynamic < MIN_DYNAMIC) ? MIN_DYNAMIC : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
     this.pan = pan;
     this.duration = rhythmValue * DEFAULT_DURATION_MULTIPLIER;
     this.offset = DEFAULT_OFFSET;
-    //this.sampleStartTime = DEFAULT_SAMPLE_START_TIME;
   }
 
-  public Note(String note) {
-    super();
+  public Note(final String note) {
     noteString = note;
     setPitch(getPitchValue());
-  }
-
-  //----------------------------------------------
-  // Data Methods
-  //----------------------------------------------
-
-  /**
-   * Convert a frequency into a MIDI note pitch.
-   * Assumes A440 and equal tempered intonation.
-   * Adapted from C code written by Andrew Botros.
-   *
-   * @param freq The frequency value to convert.
-   * @return int The MIDI pitch number closest to the input frequency.
-   */
-  public static int freqToMidiPitch(double freq) {
-        /* input frequency must be between A0 and A9 */
-    if ((freq < 26.73) || (freq > 14496.0)) {
-      System.err.println("freqToMidiPitch error: " +
-          "Frequency " + freq + " is not within the MIDI note range.");
-      return -1;
-    }
-    // A semitone higher than a given frequency
-    // is 2^(1/12) times the frequency.
-    double r = Math.pow(2, 1.0 / 12.0);
-    // A cent higher than a given frequency
-    // is 2^(1/1200) times the frequency
-    double cent = Math.pow(2, 1.0 / 1200.0);
-    int r_index = 0;
-    int cent_index = 0;
-    int side;
-        /* search for input ratio against A4 to the nearest cent
-           in range -49 to +50 cents around closest note */
-    double referenceFreq = 440.0;
-    if (freq >= referenceFreq) {
-      while (freq > r * referenceFreq) {
-        referenceFreq = r * referenceFreq;
-        r_index++;
-      }
-      while (freq > cent * referenceFreq) {
-        referenceFreq = cent * referenceFreq;
-        cent_index++;
-      }
-      if ((cent * referenceFreq - freq) < (freq - referenceFreq)) {
-        cent_index++;
-      }
-      if (cent_index > 50) {
-        r_index++;
-        cent_index = 100 - cent_index;
-      }
-    } else {
-      while (freq < referenceFreq / r) {
-        referenceFreq = referenceFreq / r;
-        r_index--;
-      }
-      while (freq < referenceFreq / cent) {
-        referenceFreq = referenceFreq / cent;
-        cent_index++;
-      }
-      if ((freq - referenceFreq / cent) < (referenceFreq - freq)) {
-        cent_index++;
-      }
-      if (cent_index >= 50) {
-        r_index--;
-        cent_index = 100 - cent_index;
-      }
-    }
-
-    return 69 + r_index;
-  }
-
-  /**
-   * Calculate the frequency in hertz of a MIDI note pitch.
-   * Assumes an A440.0 reference and equal tempered intonation.
-   * Written by Andrew Brown based on C code by Andrew Botros.
-   *
-   * @param midiPitch The note pitch value to convert.
-   * @return double The frequency equivalent in cycles per second.
-   */
-  public static double midiPitchToFreq(int midiPitch) {
-    //range OK
-    if (midiPitch < 0 || midiPitch > 127) {
-      System.err.println("jMusic Note.midiPitchToFreq error:" +
-          "midiPitch of " + midiPitch + " is out side valid range.");
-      return -1.0;
-    }
-    // A semitone higher than a given frequency
-    // is 2^(1/12) times the frequency.
-    double r = Math.pow(2, 1.0 / 12.0);
-    int pitchOffset = midiPitch - 69;
-    double freq = 440.0;
-    if (midiPitch > 69) {
-      for (int i = 69; i < midiPitch; i++) {
-        freq = freq * r;
-      }
-    } else {
-      for (int i = 69; i > midiPitch; i--) {
-        freq = freq / r;
-      }
-    }
-    // rounding to get more reasonable values
-    freq = Math.round(freq * 1000.0) / 1000.0;
-
-    return freq;
-  }
-
-  public static double pitchToFreq(int midiPitch) {
-    return Math.pow(2, (midiPitch-69)/12)*440;
-  }
-
-  /**
-   * gets the string representation for a note for a given MIDI pitch (0-127)
-   */
-  public static String getNote(int pitch) {
-    String noteString;
-    if (pitch % 12 == 0) {
-      noteString = "C";
-    } else if (pitch % 12 == 1) {
-      noteString = "C#";
-    } else if (pitch % 12 == 2) {
-      noteString = "D";
-    } else if (pitch % 12 == 3) {
-      noteString = "Eb";
-    } else if (pitch % 12 == 4) {
-      noteString = "E";
-    } else if (pitch % 12 == 5) {
-      noteString = "F";
-    } else if (pitch % 12 == 6) {
-      noteString = "F#";
-    } else if (pitch % 12 == 7) {
-      noteString = "G";
-    } else if (pitch % 12 == 8) {
-      noteString = "Ab";
-    } else if (pitch % 12 == 9) {
-      noteString = "A";
-    } else if (pitch % 12 == 10) {
-      noteString = "Bb";
-    } else if (pitch % 12 == 11) {
-      noteString = "B";
-    } else {
-      noteString = "N/A"; //throw an exception
-    }
-    return noteString;
   }
 
   /**
@@ -567,9 +403,9 @@ public class Note implements Cloneable, Serializable {
    * Specifies the note's pitch type.
    * There are constants for FREQUENCY and MIDI_PITCH
    *
-   * @param boolean note's pitch type
+   * @param newType note's pitch type
    */
-  public void setPitchType(boolean newType) {
+  public void setPitchType(final boolean newType) {
     this.pitchType = newType;
   }
 
@@ -594,19 +430,11 @@ public class Note implements Cloneable, Serializable {
    * Assign notes pitch as a frequency.  If the parameter <CODE>pitch</CODE> is less than
    * {@link #MIN_FREQUENCY} then the pitch of this note will be set to MIN_FREQUENCY.
    *
-   * @param double note pitch as a frequency in hertz
+   * @param freq note pitch as a frequency in hertz
    */
-  public void setFrequency(double freq) {
-    try {
-      this.pitch = (pitch < MIN_FREQUENCY)
-          ? MIN_FREQUENCY : freq;
+  public void setFrequency(final double freq) {
+      this.pitch = (pitch < MIN_FREQUENCY) ? MIN_FREQUENCY : freq;
       pitchType = FREQUENCY;
-    } catch (RuntimeException re) {
-      System.err.println("Error setting note value: " +
-          "You must enter frequency values above " + MIN_FREQUENCY);
-      System.exit(1);
-    }
-
   }
 
   /**
@@ -617,14 +445,12 @@ public class Note implements Cloneable, Serializable {
    */
   public int getPitch() {
     if (pitchType == FREQUENCY && this.pitch != (double) REST) {
-      System.err.println("jMusic error getting Note pitch: Pitch is a frequency - " +
-          "getPitch() can't be used.");
-      System.exit(1);
-      //return 0; // to do - calculation to work out MIDI note from freq.
+      throw new IllegalArgumentException(
+          "jMusic error getting Note pitch: Pitch is a frequency - " +
+              "getPitch() can't be used.");
     }
     int val;
-    if (this.pitch < (double) (REST + 2)) // allow for some rounding error
-    {
+    if (this.pitch < (double) (REST + 2)) {
       val = REST;
     } else {
       val = (int) this.pitch;
@@ -640,19 +466,12 @@ public class Note implements Cloneable, Serializable {
    *
    * @param pitch notes pitch
    */
-  public void setPitch(int pitch) {
+  public void setPitch(final int pitch) {
     if (pitch == REST) {
       this.pitch = (double) REST;
     } else {
-      try {
-        this.pitch = (pitch < MIN_PITCH)
-            ? MIN_PITCH
-            : ((pitch > MAX_MIDI_PITCH) ? MAX_MIDI_PITCH : pitch);
-      } catch (RuntimeException re) {
-        System.err.println("Error setting pitch value: " +
-            "You must enter pitch values between "
-            + MIN_PITCH + " and " + MAX_MIDI_PITCH);
-      }
+      this.pitch =
+          (pitch < MIN_PITCH) ? MIN_PITCH : ((pitch > MAX_MIDI_PITCH) ? MAX_MIDI_PITCH : pitch);
     }
     pitchType = MIDI_PITCH;
   }
@@ -669,9 +488,9 @@ public class Note implements Cloneable, Serializable {
   /**
    * Assign notes rhythmValue
    *
-   * @param float notes rhythmValue
+   * @param rhythmValue notes rhythmValue
    */
-  public void setRhythmValue(double rhythmValue) {
+  public void setRhythmValue(final double rhythmValue) {
     this.rhythmValue = (rhythmValue < MIN_RHYTHM_VALUE)
         ? MIN_RHYTHM_VALUE
         : ((rhythmValue > MAX_RHYTHM_VALUE)
@@ -691,9 +510,9 @@ public class Note implements Cloneable, Serializable {
   /**
    * Assign notes dynamic
    *
-   * @param int notes dynamic
+   * @param dynamic notes dynamic
    */
-  public void setDynamic(int dynamic) {
+  public void setDynamic(final int dynamic) {
     this.dynamic = (dynamic < MIN_DYNAMIC)
         ? MIN_DYNAMIC
         : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
@@ -713,7 +532,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @param pan note's pan
    */
-  public void setPan(double pan) {
+  public void setPan(final double pan) {
     this.pan = (pan < MIN_PAN)
         ? MIN_PAN
         : ((pan > MAX_PAN) ? MAX_PAN : pan);
@@ -733,7 +552,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @param duration note's duration
    */
-  public void setDuration(double duration) {
+  public void setDuration(final double duration) {
     this.duration = (duration < MIN_DURATION)
         ? MIN_DURATION
         : ((duration > MAX_DURATION) ? MAX_DURATION : duration);
@@ -743,7 +562,7 @@ public class Note implements Cloneable, Serializable {
    * Return note offset.
    * The range is 0 = no change, positive number delay the note, negative values rush (advance) it
    *
-   * @return double note's offset
+   * @return double note's offset.
    */
   public double getOffset() {
     return this.offset;
@@ -751,49 +570,45 @@ public class Note implements Cloneable, Serializable {
 
   /**
    * Set notes offset.
-   * The range is 0 = no change, positive number delay the note, negative values rush (advance) it
+   * The range is 0 = no change, positive number delay the note, negative values rush (advance) it.
    *
-   * @param offset note's offset
+   * @param offset note's offset.
    */
-  public void setOffset(double offset) {
+  public void setOffset(final double offset) {
     this.offset = offset;
   }
 
   /**
-   * Return note sampleStartTime
+   * Return note sampleStartTime.
    *
-   * @return int note's sampleStartTime
+   * @return int note's sampleStartTime.
    */
   public double getSampleStartTime() {
     return this.sampleStartTime;
   }
 
   /**
-   * Set notes sampleStartTime
+   * Set notes sampleStartTime.
    *
-   * @param int note's sampleStartTime
+   * @param sampleStartTime note's sampleStartTime
    */
-  public void setSampleStartTime(double sampleStartTime) {
+  public void setSampleStartTime(final double sampleStartTime) {
     this.sampleStartTime = sampleStartTime;
   }
 
   /**
-   * Return a reference to the phrase containing this note
+   * Return a reference to the phrase containing this note.
    */
   public Phrase getMyPhrase() {
     return this.myPhrase;
   }
 
   /**
-   * Sets a reference to the phrase that contains this note
+   * Sets a reference to the phrase that contains this note.
    */
-  public void setMyPhrase(Phrase phr) {
+  public void setMyPhrase(final Phrase phr) {
     this.myPhrase = phr;
   }
-
-  //----------------------------------------------
-  // Utility Methods
-  //----------------------------------------------
 
   /**
    * Returns a copy of this note
@@ -830,9 +645,8 @@ public class Note implements Cloneable, Serializable {
    */
   public void setBreakPoints(final int index, final double[] points) {
     if (index < 0 || index > breakPoints.length) {
-      System.err.println("jMusic Note error: BreakPoint index " + index +
+      throw new IllegalArgumentException("jMusic Note error: BreakPoint index " + index +
           " is out of range when setting.");
-      System.exit(1);
     }
     this.breakPoints[index] = points;
   }
@@ -846,13 +660,12 @@ public class Note implements Cloneable, Serializable {
    */
   public double[] getBreakPoints(final int index) {
     if (index < 0 || index > breakPoints.length) {
-      System.err.println("jMusic Note error: BreakPoint index " + index +
+      throw new IllegalArgumentException("jMusic Note error: BreakPoint index " + index +
           "is out of range when getting.");
-      System.exit(1);
     }
     if (breakPoints[index] == null) {
-      System.err.println("jMusic Note error: Breakpoint index " + index + " is empty.");
-      System.exit(1);
+      throw new IllegalArgumentException(
+          "jMusic Note error: Breakpoint index " + index + " is empty.");
     }
     return this.breakPoints[index];
   }
@@ -889,9 +702,9 @@ public class Note implements Cloneable, Serializable {
    * @param scale - an array of scale degrees
    * @return boolean - true means it is in the scale
    */
-  public boolean isScale(int[] scale) {
-    for (int j = 0; j < scale.length; j++) {
-      if (this.pitch % 12 == scale[j]) {
+  public boolean isScale(final int[] scale) {
+    for (int aScale : scale) {
+      if (this.pitch % 12 == aScale) {
         return true;
       }
     }
@@ -905,7 +718,7 @@ public class Note implements Cloneable, Serializable {
    * @param factorDuration wether or not to change the duration to be a multiple of the rhythm value
    * as well
    */
-  public void setRhythmValue(double rv, boolean factorDuration) {
+  public void setRhythmValue(final double rv, final boolean factorDuration) {
     setRhythmValue(rv);
     if (factorDuration) {
       setDuration(rv * DEFAULT_DURATION_MULTIPLIER);
@@ -926,7 +739,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @param newLength The new rhythmValue for the note (Duration is a proportion of this value)
    */
-  public void setLength(double newLength) {
+  public void setLength(final double newLength) {
     this.setRhythmValue(newLength);
     this.setDuration(newLength * DEFAULT_DURATION_MULTIPLIER);
   }
@@ -983,7 +796,7 @@ public class Note implements Cloneable, Serializable {
       }
     }
     int nextpitch = this.getPitch() + scale[1];
-    System.out.println("NEXT PITCH " + nextpitch + " " + this.getPitch() + " " + scale[1]);
+    log.info("Next pitch {} {} {}", nextpitch, getPitch(), scale[1]);
     return new Note(nextpitch, DEFAULT_RHYTHM_VALUE);
   }
 
@@ -1037,7 +850,8 @@ public class Note implements Cloneable, Serializable {
    * gets the string representation for a note for a given MIDI pitch (0-127)
    */
   public String getNote() {
-    //String note = "";
+//    noteString = NoteUtils.getNote(this.getPitch());
+//    return
     if (this.getPitch() % 12 == 0) {
       noteString = "C";
     } else if (this.getPitch() % 12 == 1) {
@@ -1063,7 +877,7 @@ public class Note implements Cloneable, Serializable {
     } else if (this.getPitch() % 12 == 11) {
       noteString = "B";
     } else {
-      noteString = "N/A"; //throw an exception
+      noteString = "N/A";
     }
     return noteString;
   }

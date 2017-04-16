@@ -25,15 +25,10 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.midi;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.Vector;
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MetaMessage;
-import javax.sound.midi.MidiEvent;
-import javax.sound.midi.Sequence;
 import jm.JMC;
 import jm.midi.event.CChange;
 import jm.midi.event.EndTrack;
@@ -44,6 +39,7 @@ import jm.midi.event.PChange;
 import jm.midi.event.TempoEvent;
 import jm.midi.event.TimeSig;
 import jm.music.data.Note;
+import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
@@ -203,6 +199,7 @@ public final class MidiParser implements JMC {
 
   /**
    * Converts jmusic score data into SMF  data
+   *
    * @param score - Basic Jmusic storage
    * @param smf - Standart Midi File object
    */
@@ -328,8 +325,7 @@ public final class MidiParser implements JMC {
           if (note.getPitchType() == Note.FREQUENCY) {
             System.err.println(
                 "jMusic warning: converting note frequency to the closest MIDI pitch for SMF.");
-            //System.exit(1);
-            pitch = Note.freqToMidiPitch(note.getFrequency());
+            pitch = NoteUtils.freqToMidiPitch(note.getFrequency());
           } else {
             pitch = note.getPitch();
           }
@@ -351,7 +347,7 @@ public final class MidiParser implements JMC {
           System.out.print("."); // completed a note
         }
       }
-			  /*
+        /*
 			//Sort lists so start times are in the right order
 			Enumeration start = midiNoteEvents.elements();
 			Enumeration timeing = timeingList.elements();
@@ -422,7 +418,6 @@ public final class MidiParser implements JMC {
       System.out.println();
     }
   }
-
 
 //  public Sequence scoreToSeq(Score score)
 //      throws InvalidMidiDataException {

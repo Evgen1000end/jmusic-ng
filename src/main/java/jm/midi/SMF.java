@@ -85,7 +85,7 @@ public final class SMF implements JMC {
    * about a MIDI file which has just been read or written.
    */
   public SMF() {
-    this((short)1, (short) 480);
+    this((short) 1, (short) 480);
   }
 
   /**
@@ -225,6 +225,7 @@ public final class SMF implements JMC {
 
   /**
    * Write to a standard MIDI file
+   *
    * @throws IOException did the write go ok
    */
   public OutputStream toStream() throws IOException {
@@ -352,9 +353,7 @@ public final class SMF implements JMC {
   /**
    * Write the Track Chunk
    *
-   * @param odos
    * @param track - track to write
-   * @throws IOException
    */
   private void writeTrackChunk(final DataOutputStream odos, final Track track)
       throws IOException {

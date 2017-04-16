@@ -21,7 +21,6 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.midi;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Stack;
 import javax.sound.midi.InvalidMidiDataException;
@@ -37,6 +36,7 @@ import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Track;
 import jm.JMC;
 import jm.music.data.Note;
+import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
@@ -349,13 +349,13 @@ public class MidiSynth implements JMC, MetaEventListener {
    */
   protected Sequence scoreToSeq(Score score)
       throws InvalidMidiDataException {
-    System.out.println("PPQN = "+ m_ppqn);
+    System.out.println("PPQN = " + m_ppqn);
     Sequence sequence = new Sequence(Sequence.PPQ, m_ppqn);
 
     m_masterTempo = m_currentTempo =
         new Float(score.getTempo()).floatValue();
 
-    System.out.println("Начальный темп: master "+m_masterTempo+ " текущий "+ m_currentTempo);
+    System.out.println("Начальный темп: master " + m_masterTempo + " текущий " + m_currentTempo);
 
     Track longestTrack = null;
     double longestTime = 0.0;
@@ -365,9 +365,6 @@ public class MidiSynth implements JMC, MetaEventListener {
     System.out.println("Начинаю обработку частей: ");
     while (parts.hasMoreElements()) {
       Part inst = (Part) parts.nextElement();
-
-
-
 
       int currChannel = inst.getChannel();
       if (currChannel > 16) {
@@ -381,8 +378,7 @@ public class MidiSynth implements JMC, MetaEventListener {
 
       float tempo = new Float(inst.getTempo()).floatValue();
 
-
-      System.out.println("Part "+inst.getChannel()+" tempo "+tempo);
+      System.out.println("Part " + inst.getChannel() + " tempo " + tempo);
 
       if (tempo != Part.DEFAULT_TEMPO) {
         m_currentTempo = tempo;
@@ -392,7 +388,7 @@ public class MidiSynth implements JMC, MetaEventListener {
 
       trackTempoRatio = m_masterTempo / m_currentTempo;
 
-      System.out.println("TrackTempoRatio "+trackTempoRatio);
+      System.out.println("TrackTempoRatio " + trackTempoRatio);
 
       int instrument = inst.getInstrument();
       if (instrument == NO_INSTRUMENT) {
@@ -448,7 +444,7 @@ public class MidiSynth implements JMC, MetaEventListener {
           if (note.getPitchType() == Note.MIDI_PITCH) {
             pitch = note.getPitch();
           } else {
-            pitch = Note.freqToMidiPitch(note.getFrequency());
+            pitch = NoteUtils.freqToMidiPitch(note.getFrequency());
           }
 
           int dynamic = note.getDynamic();
@@ -510,16 +506,18 @@ public class MidiSynth implements JMC, MetaEventListener {
 
     //sequence.
 
-    System.out.println("[SEQUENCE] Length: "+sequence.getMicrosecondLength()+" tick length "+sequence.getTickLength());
+    System.out.println(
+        "[SEQUENCE] Length: " + sequence.getMicrosecondLength() + " tick length " + sequence
+            .getTickLength());
 
-    for (Track track: sequence.getTracks()) {
-      System.out.println("  [TRACK] ticks: "+track.ticks());
+    for (Track track : sequence.getTracks()) {
+      System.out.println("  [TRACK] ticks: " + track.ticks());
 
       for (int i = 0; i < track.size(); i++) {
         MidiEvent event = track.get(i);
-        System.out.println("    [EVENT] ticks: "+event.getTick());
-        System.out.println("    [EVENT-MESSAGE] length: "+event.getMessage().getLength());
-        System.out.println("     |||Butes: "+bytesToHex(event.getMessage().getMessage()));
+        System.out.println("    [EVENT] ticks: " + event.getTick());
+        System.out.println("    [EVENT-MESSAGE] length: " + event.getMessage().getLength());
+        System.out.println("     |||Butes: " + bytesToHex(event.getMessage().getMessage()));
       }
     }
 
@@ -531,7 +529,7 @@ public class MidiSynth implements JMC, MetaEventListener {
 
     char[] hexArray = "0123456789ABCDEF".toCharArray();
     char[] hexChars = new char[bytes.length * 2];
-    for ( int j = 0; j < bytes.length; j++ ) {
+    for (int j = 0; j < bytes.length; j++) {
       int v = bytes[j] & 0xFF;
       hexChars[j * 2] = hexArray[v >>> 4];
       hexChars[j * 2 + 1] = hexArray[v & 0x0F];

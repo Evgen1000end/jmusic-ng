@@ -22,11 +22,13 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.constants;
 
+import jm.music.data.Note;
+
 /**
  * An interface storing pitch constants.
  *
  * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
- * @see jm.music.data.Note
+ * @see Note
  */
 public interface Pitches {
 
@@ -477,6 +479,6 @@ public interface Pitches {
       dfn1 = 1,
       csn1 = 1,
       cn1 = 0,
-      REST = (int) jm.music.data.Note.REST;  //No Note
+      REST = (int) Note.REST;  //No Note
 
 }

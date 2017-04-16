@@ -34,6 +34,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 import jm.JMC;
 import jm.music.data.Note;
+import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
@@ -162,7 +163,7 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
           if (aNote.getPitchType() == Note.MIDI_PITCH) {
             currNote = aNote.getPitch();
           } else {
-            currNote = Note.freqToMidiPitch(aNote.getFrequency());
+            currNote = NoteUtils.freqToMidiPitch(aNote.getFrequency());
           }
           if (currNote != REST) {
             int x = 127 - currNote;

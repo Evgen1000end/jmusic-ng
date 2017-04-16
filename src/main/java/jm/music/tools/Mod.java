@@ -82,10 +82,9 @@ public class Mod implements JMC {
    * @param transposition the amount to transpose in semitones
    */
   public static void transpose(final Note note, final int transposition) {
-      if (note == null) {
-        throw new IllegalArgumentException("Note should not be null");
-      }
-
+    if (note == null) {
+      throw new IllegalArgumentException("Note should not be null");
+    }
 
     if (note.getPitchType() == Note.MIDI_PITCH && note.getPitch() != REST) {
       note.setPitch(note.getPitch() + transposition);
@@ -116,10 +115,11 @@ public class Mod implements JMC {
    * @param mode the scale to use for the transposition (the JMC has some scale constants)
    * @param key the chromatic note to be used as the root of the mode. i.e., 0 = C, 1 = C# etc.
    */
-  public static void transpose(final Note note, final int transposition, final int[] mode,final int key) {
+  public static void transpose(final Note note, final int transposition, final int[] mode,
+      final int key) {
     if (note == null) {
-        throw new IllegalArgumentException("Note should not be null");
-      }
+      throw new IllegalArgumentException("Note should not be null");
+    }
 
     int pitch = note.getPitch();
     if (pitch != Note.REST) {
@@ -225,10 +225,9 @@ public class Mod implements JMC {
    * @param transposition the amount to transpose in semitones
    */
   public static void transpose(Phrase phrase, final int transposition) {
-      if (phrase == null) {
-        throw new IllegalArgumentException("Phrase should not be null");
-      }
-
+    if (phrase == null) {
+      throw new IllegalArgumentException("Phrase should not be null");
+    }
 
     Vector noteList = phrase.getNoteList();
     Enumeration enum1 = noteList.elements();
@@ -261,10 +260,11 @@ public class Mod implements JMC {
    * @param mode the scale to use for the transposition
    * @param key the chromatic note to be used as the rooth of the mode. i.e., 0 = C, 1 = C# etc.
    */
-  public static void transpose(final Phrase phrase, final int transposition, final int[] mode,final int key) {
-      if (phrase == null) {
-        throw new IllegalArgumentException("Phrase should not be null");
-      }
+  public static void transpose(final Phrase phrase, final int transposition, final int[] mode,
+      final int key) {
+    if (phrase == null) {
+      throw new IllegalArgumentException("Phrase should not be null");
+    }
 
     // make sure the root is in the first octave
     int rootNote = key % 12;
@@ -299,10 +299,9 @@ public class Mod implements JMC {
    * single added repetitions, and so forth
    */
   public static void repeat(final Phrase phrase, final int n) {
-      if (phrase == null) {
-        throw new IllegalArgumentException("phrase should not be null");
-      }
-
+    if (phrase == null) {
+      throw new IllegalArgumentException("phrase should not be null");
+    }
 
     int initialLength = phrase.size();
     for (int t = 0; t < (n - 1); t++) {
@@ -432,9 +431,9 @@ public class Mod implements JMC {
    * @param amount the amount that it is to be affected by
    */
   public static void increaseDynamic(final Phrase phr, final int amount) {
-      if (phr == null) {
-        throw new IllegalArgumentException("'phr' should not be null");
-      }
+    if (phr == null) {
+      throw new IllegalArgumentException("'phr' should not be null");
+    }
 
     Enumeration enum1 = phr.getNoteList().elements();
     while (enum1.hasMoreElements()) {
@@ -3077,7 +3076,7 @@ public class Mod implements JMC {
    */
   public static void increaseDynamic(Part p, int amount) {
     if (p == null) {
-        throw new IllegalArgumentException("'p' should not be null");
+      throw new IllegalArgumentException("'p' should not be null");
     }
 
     Enumeration enum1 = p.getPhraseList().elements();
@@ -3859,9 +3858,9 @@ public class Mod implements JMC {
    * @param amount the amount
    */
   public static void increaseDynamic(final Score score, final int amount) {
-      if (score == null) {
-        throw new IllegalArgumentException("'s' should not be null");
-      }
+    if (score == null) {
+      throw new IllegalArgumentException("'s' should not be null");
+    }
 
     Enumeration enum1 = score.getPartList().elements();
     while (enum1.hasMoreElements()) {

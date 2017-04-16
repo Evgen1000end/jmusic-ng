@@ -26,8 +26,6 @@ package jm.util;
 import java.awt.Button;
 import java.awt.FileDialog;
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import jm.music.data.Score;
 
 /**
@@ -64,19 +62,19 @@ public class ReadFileButton extends Button {
     load.setFilenameFilter(new ReadFilenameFilter());
 
     addActionListener(evt -> {
-      load.show();
+          load.show();
 
-      Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
-          load.getFile(),
-          owner);
-      if (score == null) {
-        return;
-      }
-      if (readListenerList != null) {
-        score = readListenerList.scoreRead(score);
-        readListenerList.finishedReading();
-      }
-    }
+          Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
+              load.getFile(),
+              owner);
+          if (score == null) {
+            return;
+          }
+          if (readListenerList != null) {
+            score = readListenerList.scoreRead(score);
+            readListenerList.finishedReading();
+          }
+        }
     );
   }
 

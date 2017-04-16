@@ -155,8 +155,6 @@ public class CPhrase implements JMC, Cloneable, Serializable {
 
   /**
    * Set Phrase List
-   *
-   * @param phraseList
    */
   public void setPhraseList(Vector phraseList) {
     this.phraseList = phraseList;
@@ -197,7 +195,7 @@ public class CPhrase implements JMC, Cloneable, Serializable {
   /**
    * Add a new Chord
    *
-   * @param pitchArray  short[]
+   * @param pitchArray short[]
    * @param rhythmValue double
    */
   public void addChord(int[] pitchArray, double rhythmValue) {
@@ -207,11 +205,11 @@ public class CPhrase implements JMC, Cloneable, Serializable {
   /**
    * Add a new Chord
    *
-   * @param pitchArray  short[]
+   * @param pitchArray short[]
    * @param rhythmValue short
-   * @param dynmaic     short
+   * @param dynamic short
    */
-  public void addChord(int[] pitchArray, double rhythmValue, int dynamic) {
+  public void addChord(final int[] pitchArray, final double rhythmValue, final int dynamic) {
     //this.currentTime = this.getEndTime();
     //If we have more notes in the chord than we have available phrases
     //we will need to make more phrases
@@ -239,9 +237,6 @@ public class CPhrase implements JMC, Cloneable, Serializable {
 
   /**
    * checks against the phrase list for a particular note
-   *
-   * @param note
-   * @return
    */
   public boolean hasNote(Note note) {
     for (Object aPhraseList : phraseList) {
@@ -345,15 +340,6 @@ public class CPhrase implements JMC, Cloneable, Serializable {
   }
 
   /**
-   * Gives the CPhrase a new title
-   *
-   * @param phrases title
-   */
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  /**
    * Gives the CPhrase a new instrument
    *
    * @param phrases instrument number
@@ -362,6 +348,15 @@ public class CPhrase implements JMC, Cloneable, Serializable {
     if (instrument < NO_INSTRUMENT) {
       this.instrument = instrument;
     }
+  }
+
+  /**
+   * Gives the CPhrase a new title
+   *
+   * @param phrases title
+   */
+  public void setTitle(String title) {
+    this.title = title;
   }
 
   /**

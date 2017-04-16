@@ -127,7 +127,7 @@ public class RealFloatFFT_Radix2 extends RealFloatFFT {
 	    /* t0 = z0 + w * z1 */
             data[i0 + stride * (b * p + a)] = z0_real + w_real * z1_real - w_imag * z1_imag;
             data[i0 + stride * (b * p + p - a)] = z0_imag + w_real * z1_imag + w_imag * z1_real;
-	    /* t1 = -(z0 - w * z1) */
+      /* t1 = -(z0 - w * z1) */
             data[i0 + stride * (b * p + p_1 - a)] = z0_real - w_real * z1_real + w_imag * z1_imag;
             data[i0 + stride * (b * p + p_1 + a)] = -(z0_imag - w_real * z1_imag
                 - w_imag * z1_real);

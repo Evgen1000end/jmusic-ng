@@ -178,7 +178,8 @@ public class BassStave extends Stave implements JMC {
       g.drawImage(currImage, totalBeatWidth, pitchTempPos, this);
       // store position in a vector
       notePositions.addElement(totalBeatWidth);
-      notePositions.addElement(pitchTempPos + staveDelta); // stave delta required for bass clef offset from treble
+      notePositions.addElement(
+          pitchTempPos + staveDelta); // stave delta required for bass clef offset from treble
       //System.out.println("Position "+i+" "+totalBeatWidth + " "+ pitchTempPos);
 
       if (dottedNote) {

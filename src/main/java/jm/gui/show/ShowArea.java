@@ -36,6 +36,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Enumeration;
 import jm.music.data.Note;
+import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 
@@ -215,7 +216,7 @@ public class ShowArea extends Canvas {
           if (aNote.getPitchType() == Note.MIDI_PITCH) {
             currNote = aNote.getPitch();
           } else {
-            currNote = Note.freqToMidiPitch(aNote.getFrequency());
+            currNote = NoteUtils.freqToMidiPitch(aNote.getFrequency());
           }
           if ((currNote <= 127) && (currNote >= 0)) {
             // 10 - numb of octaves, 12 notes in an octave, 21

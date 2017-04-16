@@ -21,6 +21,8 @@
 
 package jm.music.tools;
 
+import jm.music.data.Phrase;
+
 /**
  * Thrown to indicate a problem when trying to quantise a set of values.
  * <p/>
@@ -34,7 +36,7 @@ package jm.music.tools;
  *
  * @author Adam Kirby
  * @version 1.0, Sun Feb 25 18:43:52  2001
- * @see jm.music.data.Phrase
+ * @see Phrase
  * @since jMusic November 2000 Release
  */
 public class QuantisationException extends Exception {

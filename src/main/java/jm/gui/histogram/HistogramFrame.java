@@ -198,7 +198,6 @@ public class HistogramFrame extends Frame implements WindowListener, ActionListe
   }
 
 
-
   public void windowClosed(WindowEvent we) {
   }
 

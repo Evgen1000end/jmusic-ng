@@ -23,12 +23,13 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 package jm.constants;
 
 import jm.music.data.Alignment;
+import jm.music.data.Note;
 
 /**
  * An interface storing noise constants.
  *
  * @author Andrew Sorensen, Andrew Brown, Andrew Troedson, Adam Kirby
- * @see jm.music.data.Note
+ * @see Note
  */
 public interface Alignments {
 

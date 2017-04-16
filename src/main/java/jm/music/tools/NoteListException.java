@@ -23,10 +23,13 @@
 
 package jm.music.tools;
 
+import jm.music.data.Note;
+import jm.music.data.Phrase;
+
 /**
- * Thrown by a method when a set of {@link jm.music.data.Note Notes} does not fit
+ * Thrown by a method when a set of {@link Note Notes} does not fit
  * its criteria.  The set of Notes might be a Vector stored within a {@link
- * jm.music.data.Phrase Phrase} or a array of Notes.
+ * Phrase Phrase} or a array of Notes.
  * <p/>
  * <p> The actual problem with the Notes will be dependent on the function of
  * the method throwing this error.  For instance, a method might require that

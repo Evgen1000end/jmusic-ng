@@ -33,17 +33,19 @@ import jm.constants.RhythmValues;
 import jm.constants.Scales;
 import jm.constants.Tunings;
 import jm.constants.Waveforms;
+import jm.music.data.Note;
 
 /**
  * JMConstants holds constant values used across the whole
  * jMusic system.
  *
  * @author Andrew Sorensen with lots of help from Andrew Brown and Andrew Troedson
- * @see jm.music.data.Note
+ * @see Note
  */
 public interface JMC extends RhythmValues, Pitches, Frequencies, Tunings,
     Dynamics, Panning, ProgramChanges, DrumMap, Scales,
     Waveforms, Noises, Alignments {
+
   /**
    * A constant used to toggle debugging information.
    */

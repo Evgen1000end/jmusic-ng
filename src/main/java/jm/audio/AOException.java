@@ -32,7 +32,7 @@ package jm.audio;
 public final class AOException extends Exception {
 
   /**
-    List of exception description
+   * List of exception description
    */
   private static final String[] MESSAGES = new String[2];
 

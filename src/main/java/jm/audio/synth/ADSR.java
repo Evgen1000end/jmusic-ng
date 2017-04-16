@@ -81,7 +81,7 @@ public class ADSR extends AudioObject implements JMC {
   private int position = 0;
   // keep the number of samples for attack, decay and release
   private double attackSamps, decaySamps, releaseSamps;
-  // the previous rhythmValue
+  // the previous rhythm
   private double prevRV = 0.0;
 
   //----------------------------------------------
@@ -252,7 +252,7 @@ public class ADSR extends AudioObject implements JMC {
       return;
     }
     // avoid recalc?
-    if (currentNote.getRhythmValue() == prevRV) {
+    if (currentNote.getRhythm() == prevRV) {
       return;
     }
 

@@ -265,11 +265,11 @@ public class NoteEditor extends Dialog
 
     initializeDoubleEdit(
         durationEdit,
-        note.getDuration() / note.getRhythmValue()
+        note.getDuration() / note.getRhythm()
     );
 
     initializeDoubleEdit(
-        rhythmEdit, note.getRhythmValue()
+        rhythmEdit, note.getRhythm()
     );
 
     initializeDoubleEdit(
@@ -492,8 +492,8 @@ public class NoteEditor extends Dialog
 
   private void updateTheNote() {
     note.setPitch(getSelectedPitch());
-    note.setRhythmValue(getFieldDouble(rhythmEdit));
-    note.setDuration(note.getRhythmValue() *
+    note.setRhythm(getFieldDouble(rhythmEdit));
+    note.setDuration(note.getRhythm() *
         getFieldDouble(durationEdit));
     note.setDynamic(getFieldInt(dynamicEdit));
     note.setPan(getFieldDouble(panEdit));

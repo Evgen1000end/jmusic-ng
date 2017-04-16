@@ -218,7 +218,7 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
         maxWidth = (int) (phrase.getStartTime() * beatWidth);
         while (enum3.hasMoreElements()) {
           Note aNote = (Note) enum3.nextElement();
-          maxWidth = maxWidth + (int) (aNote.getRhythmValue() * beatWidth);
+          maxWidth = maxWidth + (int) (aNote.getRhythm() * beatWidth);
         }
       }
     }
@@ -310,7 +310,7 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
     fd.setFile("FileName.xml");
     fd.show();
     if (fd.getFile() != null) {
-      jm.util.Write.xml(score, fd.getDirectory() + fd.getFile(),true);
+      jm.util.Write.xml(score, fd.getDirectory() + fd.getFile(), true);
     }
   }
 

@@ -128,7 +128,7 @@ public final class PhraseMatrix implements JMC {
     for (int i = 0; i < notes.length; i++) {
       boolean flag = false;
       for (int j = 0; j < rhythmMap.length; j++) {
-        if (notes[i].getRhythmValue() == rhythmMap[j]) {
+        if (notes[i].getRhythm() == rhythmMap[j]) {
           flag = true;
           numArray[i] = j;
           break;
@@ -189,13 +189,13 @@ public final class PhraseMatrix implements JMC {
     Note[] noteList = new Note[numOfNotes];
     for (int i = 0; i < numOfNotes; i++) {
       noteList[i] = Note.newBuilder().build();
-  }
+    }
                 /*
         for(int i=0;i<this.depth;i++){
 			pitch[i] = notes[i].getPitch();
 			dynamic[i] = notes[i].getDynamic();
 			for(int j=0;j<rhythmMap.length;j++){
-				if(notes[i].getRhythmValue() == rhythmMap[j]){
+				if(notes[i].getRhythm() == rhythmMap[j]){
 					rhythm[i] = j;
 					break;
 				}
@@ -210,7 +210,7 @@ public final class PhraseMatrix implements JMC {
     // rhythm
     for (int i = 0; i < this.rhythmDepth; i++) {
       for (int j = 0; j < rhythmMap.length; j++) {
-        if (notes[i].getRhythmValue() == rhythmMap[j]) {
+        if (notes[i].getRhythm() == rhythmMap[j]) {
           rhythm[i] = j;
           break;
         }
@@ -232,7 +232,7 @@ public final class PhraseMatrix implements JMC {
     }
     if (r) {
       for (int i = 0; i < numOfNotes; i++) {
-        noteList[i].setRhythmValue(rhythmMap[retRhythm[i]]);
+        noteList[i].setRhythm(rhythmMap[retRhythm[i]]);
         noteList[i].setDuration(rhythmMap[retRhythm[i]] * 0.9);
       }
     }

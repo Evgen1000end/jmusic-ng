@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * the beat, or a sound with a slow attack might need to be triggered
  * early in order to sound in time with other parts.
  * <p/>
- * With this in mind, offset should have no influence on rhythmValue or
+ * With this in mind, offset should have no influence on rhythm or
  * duration calculations within the jMusic data structure, only when
  * translated to another format (eg MIDI). In your
  * example (offset 0.1, duration 0.8, and rv 1.0) the rendering
@@ -92,13 +92,16 @@ public class Note implements Cloneable, Serializable {
    */
   public static final int DEFAULT_PITCH = 60;
   /**
-   * Default rhythmValue.
+   * Default rhythm.
    */
-  public static final double DEFAULT_RHYTHM_VALUE = 1.0;
+  public static final double DEFAULT_RHYTHM = 1.0;
   /**
    * Default dynamic.
    */
   public static final int DEFAULT_DYNAMIC = 85;
+
+  public static final double DEFAULT_FREQUENCY = 261.6255653006;
+
   /**
    * default pan value
    */
@@ -113,7 +116,7 @@ public class Note implements Cloneable, Serializable {
    * default duration
    */
   public static final double DEFAULT_DURATION =
-      DEFAULT_RHYTHM_VALUE * DEFAULT_DURATION_MULTIPLIER;
+      DEFAULT_RHYTHM * DEFAULT_DURATION_MULTIPLIER;
   /**
    * Default articulation.  This field is meant to replace
    * DEFAULT_DURATION_MULTIPLIER.
@@ -140,13 +143,13 @@ public class Note implements Cloneable, Serializable {
    */
   public static final int MAX_PITCH = 127;
   /**
-   * The smallest value for a rhythmValue.
+   * The smallest value for a rhythm.
    */
-  public static final double MIN_RHYTHM_VALUE = 0.0;
+  public static final double MIN_RHYTHM = 0.0;
   /**
    * The largest value for a rhythValue.
    */
-  public static final double MAX_RHYTHM_VALUE = Double.MAX_VALUE;
+  public static final double MAX_RHYTHM = Double.MAX_VALUE;
   /**
    * The smallest value for a dynamic.
    */
@@ -221,7 +224,7 @@ public class Note implements Cloneable, Serializable {
    * The length of the note. Constant values representing standard note
    * lengths are defined in JMC
    */
-  private double rhythmValue;
+  private double rhythm;
   /**
    * 0.0 (full left) 0.5 (center) 1.0 (full right)
    */
@@ -255,126 +258,33 @@ public class Note implements Cloneable, Serializable {
    */
   private double[][] breakPoints = new double[64][];
 
-  /**
-   * Default constructor assigns null values to all note attributes
-   */
-  private Note() {
-    this(DEFAULT_PITCH, DEFAULT_RHYTHM_VALUE);
-    setPitch(DEFAULT_PITCH);
-    //this.pitchType = MIDI_PITCH;
-    this.rhythmValue = DEFAULT_RHYTHM_VALUE;
-    this.dynamic = DEFAULT_DYNAMIC;
-    this.pan = DEFAULT_PAN;
-    this.duration = DEFAULT_DURATION;
-    this.offset = DEFAULT_OFFSET;
-  }
-
-  /**
-   * Assigns pitch and rhythmic values to the note object upon creation
-   * Other values (e.g. dynamic) are given reasonable defaults
-   *
-   * @param pitch pitch range is 0-127 (middle c = 60): Constant values representing pitch values
-   * can be found in JMC
-   * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
-   * in JMC
-   */
-  public Note(final int pitch, final double rhythmValue) {
-    this(pitch, rhythmValue, DEFAULT_DYNAMIC);
-  }
-
-  /**
-   * Assigns pitch and rhythmic values to the note object upon creation
-   * Other values (e.g. dynamic) and given reasonable defaults
-   *
-   * @param pitch pitch range is 0-127 (middle c = 60): Constant values representing pitch values
-   * can be found in JMC
-   * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
-   * in JMC
-   * @param dynamic range is 0-127 (0 = off; 127 = loud): Constant values representing some basic
-   * dynamic types can be found in JMC
-   */
-  public Note(int pitch, double rhythmValue, int dynamic) {
-    this(pitch, rhythmValue, dynamic, DEFAULT_PAN);
-  }
-
-  /**
-   * Assigns pitch and rhythmic values to the note object upon creation
-   * Other values (e.g. dynamic) and given reasonable defaults
-   *
-   * @param pitch pitch range is 0-127 (middle c = 60): Constant values representing pitch values
-   * can be found in JMC
-   * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
-   * in JMC
-   * @param dynamic range is 0-127 (0 = off; 127 = loud): Constant values representing some basic
-   * dynamic types can be found in JMC
-   * @param pan Specifies the balance between output channels; usually between 0 - left, and 1 -
-   * right.
-   */
-  public Note(final int pitch, final double rhythmValue, final int dynamic, final double pan) {
-    if (pitch < MIN_PITCH && pitch > REST + 2) {
-      throw new IllegalArgumentException("jMusic Note constructor error: Pitch is"
-          + " " + pitch + ", it must be no less than "
-          + MIN_PITCH + " (REST = " + REST + ")");
+  private Note(Builder builder) {
+    if (!builder.initFrequence && !builder.initPitch) {
+      setPitch(Note.DEFAULT_PITCH);
     }
-    setPitch(pitch);
-    this.rhythmValue = rhythmValue;
-    this.dynamic = (dynamic < MIN_DYNAMIC)
-        ? MIN_DYNAMIC
-        : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
-    this.pan = pan;
-    this.duration = rhythmValue * DEFAULT_DURATION_MULTIPLIER;
-    this.offset = DEFAULT_OFFSET;
+    if (builder.initFrequence) {
+      setFrequency(builder.frequency);
+    }
+    if (builder.initPitch) {
+      setPitch(builder.pitch);
+    }
+    setRhythm(builder.rhythm);
+    if (builder.factor) {
+      setDuration(builder.rhythm * DEFAULT_DURATION_MULTIPLIER);
+    } else {
+      setDuration(builder.duration);
+    }
+    setOffset(builder.offset);
+    setPan(builder.pan);
+    setDynamic(builder.dynamic);
   }
 
-  /**
-   * Assigns frequency and rhythmic values to the note object upon creation
-   *
-   * @param frequency Pitch in hertz, any double value (A4 = 400)
-   * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
-   * in JMC
-   */
-  public Note(final double frequency, final double rhythmValue) {
-    this(frequency, rhythmValue, DEFAULT_DYNAMIC);
+  public static Note defaultNote() {
+    return newBuilder().build();
   }
 
-  /**
-   * Assigns frequency and rhythmic values to the note object upon creation
-   *
-   * @param frequency Pitch in hertz, any double value (e.g., A4 = 440.0)
-   * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
-   * in JMC
-   * @param dynamic range is 0-127 (0 = off; 127 = loud): Constant values representing some basic
-   * dynamic types can be found in JMC
-   */
-  public Note(final double frequency, final double rhythmValue, final int dynamic) {
-    this(frequency, rhythmValue, dynamic, DEFAULT_PAN);
-  }
-
-  /**
-   * Assigns frequency and rhythmic values to the note object upon creation
-   *
-   * @param frequency Pitch in hertz, any double value (e.g., A4 = 440.0)
-   * @param rhythmValue 0.5 = quaver: constant values representing most duration types can be found
-   * in JMC
-   * @param dynamic range is 0-127 (0 = off; 127 = loud): Constant values representing some basic
-   * dynamic types can be found in JMC
-   * @param pan Specifies the balance between output channels; usually between 0 - left, and 1 -
-   * right.
-   */
-  public Note(final double frequency, final double rhythmValue, final int dynamic,
-      final double pan) {
-    setFrequency(frequency);
-    this.rhythmValue = rhythmValue;
-    this.dynamic =
-        (dynamic < MIN_DYNAMIC) ? MIN_DYNAMIC : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
-    this.pan = pan;
-    this.duration = rhythmValue * DEFAULT_DURATION_MULTIPLIER;
-    this.offset = DEFAULT_OFFSET;
-  }
-
-  public Note(final String note) {
-    noteString = note;
-    setPitch(getPitchValue());
+  public static Builder newBuilder() {
+    return new Builder();
   }
 
   /**
@@ -390,14 +300,14 @@ public class Note implements Cloneable, Serializable {
    * Assign notes pitch as a frequency.  If the parameter <CODE>pitch</CODE> is less than
    * {@link #MIN_FREQUENCY} then the pitch of this note will be set to MIN_FREQUENCY.
    *
-   * @param freq note pitch as a frequency in hertz
+   * @param frequency note pitch as a frequency in hertz
    */
-  public void setFrequency(final double freq) {
-    if (freq == REST) {
+  public void setFrequency(double frequency) {
+    if (frequency == REST) {
       this.frequency = REST;
       this.pitch = REST;
     } else {
-      this.frequency = (frequency < MIN_FREQUENCY) ? MIN_FREQUENCY : freq;
+      this.frequency = (frequency < MIN_FREQUENCY) ? MIN_FREQUENCY : frequency;
       pitch = NoteUtils.frequencyToPitch(this.frequency);
     }
 
@@ -421,7 +331,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @param pitch notes pitch
    */
-  public void setPitch(final int pitch) {
+  public void setPitch(int pitch) {
     if (pitch == REST) {
       this.pitch = REST;
       this.frequency = REST;
@@ -432,25 +342,25 @@ public class Note implements Cloneable, Serializable {
   }
 
   /**
-   * Retrieve note's rhythmValue
+   * Retrieve note's rhythm
    *
-   * @return float notes rhythmValue
+   * @return float notes rhythm
    */
-  public double getRhythmValue() {
-    return this.rhythmValue;
+  public double getRhythm() {
+    return this.rhythm;
   }
 
   /**
-   * Assign notes rhythmValue
+   * Assign notes rhythm
    *
-   * @param rhythmValue notes rhythmValue
+   * @param rhythm notes rhythm
    */
-  public void setRhythmValue(final double rhythmValue) {
-    this.rhythmValue = (rhythmValue < MIN_RHYTHM_VALUE)
-        ? MIN_RHYTHM_VALUE
-        : ((rhythmValue > MAX_RHYTHM_VALUE)
-            ? MAX_RHYTHM_VALUE
-            : rhythmValue);
+  public void setRhythm(double rhythm) {
+    this.rhythm = (rhythm < MIN_RHYTHM)
+        ? MIN_RHYTHM
+        : ((rhythm > MAX_RHYTHM)
+            ? MAX_RHYTHM
+            : rhythm);
   }
 
   /**
@@ -467,7 +377,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @param dynamic notes dynamic
    */
-  public void setDynamic(final int dynamic) {
+  public void setDynamic(int dynamic) {
     this.dynamic = (dynamic < MIN_DYNAMIC)
         ? MIN_DYNAMIC
         : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
@@ -487,7 +397,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @param pan note's pan
    */
-  public void setPan(final double pan) {
+  public void setPan(double pan) {
     this.pan = (pan < MIN_PAN)
         ? MIN_PAN
         : ((pan > MAX_PAN) ? MAX_PAN : pan);
@@ -507,7 +417,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @param duration note's duration
    */
-  public void setDuration(final double duration) {
+  public void setDuration(double duration) {
     this.duration = (duration < MIN_DURATION)
         ? MIN_DURATION
         : ((duration > MAX_DURATION) ? MAX_DURATION : duration);
@@ -529,7 +439,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @param offset note's offset.
    */
-  public void setOffset(final double offset) {
+  public void setOffset(double offset) {
     this.offset = offset;
   }
 
@@ -547,7 +457,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @param sampleStartTime note's sampleStartTime
    */
-  public void setSampleStartTime(final double sampleStartTime) {
+  public void setSampleStartTime(double sampleStartTime) {
     this.sampleStartTime = sampleStartTime;
   }
 
@@ -561,7 +471,7 @@ public class Note implements Cloneable, Serializable {
   /**
    * Sets a reference to the phrase that contains this note.
    */
-  public void setMyPhrase(final Phrase phr) {
+  public void setMyPhrase(Phrase phr) {
     this.myPhrase = phr;
   }
 
@@ -572,7 +482,11 @@ public class Note implements Cloneable, Serializable {
    */
   public Note copy() {
     Note note;
-    note = new Note(this.getPitch(), this.rhythmValue, this.dynamic);
+    note = Note.newBuilder()
+        .pitch(this.getPitch())
+        .rhythm(this.rhythm)
+        .dynamic(this.dynamic)
+        .build();
     note.setPan(this.pan);
     note.setDuration(this.duration);
     note.setOffset(this.offset);
@@ -627,8 +541,8 @@ public class Note implements Cloneable, Serializable {
   public String toString() {
     return "jMusic NOTE: " +
         "[Frequency = " + frequency +
-        "[Pitch = " +  pitch +
-        "][RhythmValue = " + rhythmValue +
+        "[Pitch = " + pitch +
+        "][RhythmValue = " + rhythm +
         "][Dynamic = " + dynamic +
         "][Duration = " + duration +
         "][Pan = " + pan + "]";
@@ -653,14 +567,14 @@ public class Note implements Cloneable, Serializable {
   }
 
   /**
-   * Sets the rhythmValue, and optionally change the duration
+   * Sets the rhythm, and optionally change the duration
    * at the same time.
    *
    * @param factorDuration wether or not to change the duration to be a multiple of the rhythm value
    * as well
    */
   public void setRhythmValue(final double rv, final boolean factorDuration) {
-    setRhythmValue(rv);
+    setRhythm(rv);
     if (factorDuration) {
       setDuration(rv * DEFAULT_DURATION_MULTIPLIER);
     }
@@ -676,12 +590,12 @@ public class Note implements Cloneable, Serializable {
   }
 
   /**
-   * Change both the rhythmValue and duration of a note in the one step.
+   * Change both the rhythm and duration of a note in the one step.
    *
-   * @param newLength The new rhythmValue for the note (Duration is a proportion of this value)
+   * @param newLength The new rhythm for the note (Duration is a proportion of this value)
    */
   public void setLength(final double newLength) {
-    this.setRhythmValue(newLength);
+    this.setRhythm(newLength);
     this.setDuration(newLength * DEFAULT_DURATION_MULTIPLIER);
   }
 
@@ -733,12 +647,12 @@ public class Note implements Cloneable, Serializable {
     Note nextNote = null;
     for (int i = 0; i < scale.length; i++) {
       if (this.getPitchValue() % 12 == 0) {
-        nextNote = new Note(this.getPitch() + scale[i], DEFAULT_RHYTHM_VALUE);
+        nextNote = Note.newBuilder().pitch(this.getPitch() + scale[i]).build();
       }
     }
     int nextpitch = this.getPitch() + scale[1];
     log.info("Next pitch {} {} {}", nextpitch, getPitch(), scale[1]);
-    return new Note(nextpitch, DEFAULT_RHYTHM_VALUE);
+    return Note.newBuilder().pitch(nextpitch).build();
   }
 
   /**
@@ -791,51 +705,22 @@ public class Note implements Cloneable, Serializable {
    * gets the string representation for a note for a given MIDI pitch (0-127)
    */
   public String getNote() {
-//    noteString = NoteUtils.getNote(this.getPitch());
-//    return
-    if (this.getPitch() % 12 == 0) {
-      noteString = "C";
-    } else if (this.getPitch() % 12 == 1) {
-      noteString = "C#";
-    } else if (this.getPitch() % 12 == 2) {
-      noteString = "D";
-    } else if (this.getPitch() % 12 == 3) {
-      noteString = "Eb";
-    } else if (this.getPitch() % 12 == 4) {
-      noteString = "E";
-    } else if (this.getPitch() % 12 == 5) {
-      noteString = "F";
-    } else if (this.getPitch() % 12 == 6) {
-      noteString = "F#";
-    } else if (this.getPitch() % 12 == 7) {
-      noteString = "G";
-    } else if (this.getPitch() % 12 == 8) {
-      noteString = "Ab";
-    } else if (this.getPitch() % 12 == 9) {
-      noteString = "A";
-    } else if (this.getPitch() % 12 == 10) {
-      noteString = "Bb";
-    } else if (this.getPitch() % 12 == 11) {
-      noteString = "B";
-    } else {
-      noteString = "N/A";
-    }
+    noteString = NoteUtils.getNote(this.getPitch());
     return noteString;
   }
 
-  private Note(Builder builder) {
-    this();
-    setOffset(builder.offset);
-    setPan(builder.pan);
-  }
-
-  public static Builder newBuilder(){
-    return new Builder();
-  }
-
   public static class Builder {
+
     private double offset = DEFAULT_OFFSET;
     private double pan = DEFAULT_PAN;
+    private int dynamic = DEFAULT_DYNAMIC;
+    private double rhythm = DEFAULT_RHYTHM;
+    private double duration = DEFAULT_DURATION;
+    private boolean factor = false;
+    private int pitch = DEFAULT_PITCH;
+    private double frequency = DEFAULT_FREQUENCY;
+    private boolean initPitch = false;
+    private boolean initFrequence = false;
 
     public Builder offset(final double offset) {
       this.offset = offset;
@@ -844,6 +729,44 @@ public class Note implements Cloneable, Serializable {
 
     public Builder pan(final double pan) {
       this.pan = pan;
+      return this;
+    }
+
+    public Builder dynamic(final int dynamic) {
+      this.dynamic = dynamic;
+      return this;
+    }
+
+    public Builder duration(final double duration) {
+      this.duration = duration;
+      return this;
+    }
+
+    public Builder rhythm(final double rhythm) {
+      this.rhythm = rhythm;
+      return this;
+    }
+
+    public Builder frequency(final double frequency) {
+      this.frequency = frequency;
+      this.initFrequence = true;
+      return this;
+    }
+
+    public Builder pitch(final int pitch) {
+      this.pitch = pitch;
+      this.initPitch = true;
+      return this;
+    }
+
+    public Builder rest() {
+      this.pitch = REST;
+      this.initPitch = true;
+      return this;
+    }
+
+    public Builder factorDuration(final boolean factor) {
+      this.factor = factor;
       return this;
     }
 

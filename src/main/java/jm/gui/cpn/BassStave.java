@@ -128,12 +128,12 @@ public class BassStave extends Stave implements JMC {
     for (int i = 0; i < phrase.size(); i++) {
       int notePitchNum = phrase.getNote(i).getPitch();
       // choose graphic
-      chooseImage(notePitchNum, phrase.getNote(i).getRhythmValue(), 50, 0, 50);
+      chooseImage(notePitchNum, phrase.getNote(i).getRhythm(), 50, 0, 50);
       // reset pitch for rests
 
       // position?
       int pitchTempPos;
-      if (notePitchNum == REST || phrase.getNote(i).getRhythmValue() == 0.0) { // rest or delete
+      if (notePitchNum == REST || phrase.getNote(i).getRhythm() == 0.0) { // rest or delete
         pitchTempPos =
             notePosOffset[71 % 12] + bPos - 4 + ((5 - 71 / 12) * 24) + ((6 - 71 / 12) * 4);
       } else {
@@ -145,7 +145,7 @@ public class BassStave extends Stave implements JMC {
       // accidental?
       if (((notePitchNum % 12) == 1 || (notePitchNum % 12) == 3 || (notePitchNum % 12) == 6
           || (notePitchNum % 12) == 8 || (notePitchNum % 12) == 10) && notePitchNum != REST
-          && phrase.getNote(i).getRhythmValue() != 0.0) {
+          && phrase.getNote(i).getRhythm() != 0.0) {
         if (keySignature > -1) {
           g.drawImage(sharp, totalBeatWidth - 9, pitchTempPos, this);
           previouslyChromatic.addElement(
@@ -162,7 +162,7 @@ public class BassStave extends Stave implements JMC {
         for (int j = 0; j < size; j++) {
           Integer temp = (Integer) previouslyChromatic.elementAt(j);
           if (temp.intValue() == notePitchNum && notePitchNum != REST
-              && phrase.getNote(i).getRhythmValue() != 0.0) {
+              && phrase.getNote(i).getRhythm() != 0.0) {
             // add natural
             g.drawImage(natural, totalBeatWidth - 7, pitchTempPos, this);
             // remove element if not in key signature
@@ -198,35 +198,35 @@ public class BassStave extends Stave implements JMC {
         }
       }
       // leger lines down
-      if (notePitchNum <= 40 && notePitchNum > -1 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum <= 40 && notePitchNum > -1 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos + 52, totalBeatWidth + 12, bPos + 52);
       }
-      if (notePitchNum <= 37 && notePitchNum > -1 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum <= 37 && notePitchNum > -1 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos + 60, totalBeatWidth + 12, bPos + 60);
       }
-      if (notePitchNum <= 34 && notePitchNum > -1 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum <= 34 && notePitchNum > -1 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos + 68, totalBeatWidth + 12, bPos + 68);
       }
-      if (notePitchNum <= 30 && notePitchNum > -1 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum <= 30 && notePitchNum > -1 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos + 76, totalBeatWidth + 12, bPos + 76);
       }
-      if (notePitchNum <= 26 && notePitchNum > -1 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum <= 26 && notePitchNum > -1 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos + 84, totalBeatWidth + 12, bPos + 84);
       }
       // leger lines up
-      if (notePitchNum >= 60 && notePitchNum < 128 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum >= 60 && notePitchNum < 128 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos + 4, totalBeatWidth + 12, bPos + 4);
       }
-      if (notePitchNum >= 64 && notePitchNum < 128 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum >= 64 && notePitchNum < 128 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos - 4, totalBeatWidth + 12, bPos - 4);
       }
-      if (notePitchNum >= 67 && notePitchNum < 128 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum >= 67 && notePitchNum < 128 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos - 12, totalBeatWidth + 12, bPos - 12);
       }
-      if (notePitchNum >= 71 && notePitchNum < 128 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum >= 71 && notePitchNum < 128 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos - 20, totalBeatWidth + 12, bPos - 20);
       }
-      if (notePitchNum >= 74 && notePitchNum < 128 && phrase.getNote(i).getRhythmValue() != 0.0) {
+      if (notePitchNum >= 74 && notePitchNum < 128 && phrase.getNote(i).getRhythm() != 0.0) {
         g.drawLine(totalBeatWidth - 3, bPos - 28, totalBeatWidth + 12, bPos - 28);
       }
 
@@ -234,8 +234,8 @@ public class BassStave extends Stave implements JMC {
       totalBeatWidth += currBeatWidth;
       dottedNote = false;
       // quantised to semiquvers!
-      // (int)((phrase.getNote(i).getRhythmValue()/0.25) * 0.25);
-      beatCounter += (int) (phrase.getNote(i).getRhythmValue() / 0.25) * 0.25;
+      // (int)((phrase.getNote(i).getRhythm()/0.25) * 0.25);
+      beatCounter += (int) (phrase.getNote(i).getRhythm() / 0.25) * 0.25;
 
       // add bar line if required
       if (metre != 0.0) {

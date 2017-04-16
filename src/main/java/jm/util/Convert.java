@@ -108,8 +108,10 @@ public class Convert {
     Phrase phrase = new Phrase();
     try {
       while (true) {
-        phrase.addNote(new Note(
-            (int) processor.getNextRhythm(), processor.getNextRhythm()));
+        phrase.addNote(Note.newBuilder()
+            .pitch((int) processor.getNextRhythm())
+            .rhythm(processor.getNextRhythm())
+            .build());
       }
     } catch (EOSException e) {
             /* This is okay.  Continue. */
@@ -139,7 +141,7 @@ public class Convert {
       stringBuffer.append(noteArray[i].getPitch());
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(
-          limitDecimalPlaces(noteArray[i].getRhythmValue(), 3));
+          limitDecimalPlaces(noteArray[i].getRhythm(), 3));
 //            stringBuffer.append(RIGHT_BRACKET);
       stringBuffer.append(DEFAULT_SEPARATOR);
     }
@@ -151,7 +153,7 @@ public class Convert {
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(
           limitDecimalPlaces(
-              noteArray[noteArray.length - 1].getRhythmValue(),
+              noteArray[noteArray.length - 1].getRhythm(),
               3)
       );
 //            stringBuffer.append(RIGHT_BRACKET);
@@ -172,10 +174,11 @@ public class Convert {
     Phrase phrase = new Phrase();
     try {
       while (true) {
-        phrase.addNote(new Note(
-            (int) processor.getNextRhythm(),
-            processor.getNextRhythm(),
-            (int) processor.getNextRhythm()));
+        phrase.addNote(Note.newBuilder()
+            .pitch((int) processor.getNextRhythm())
+            .rhythm(processor.getNextRhythm())
+            .dynamic((int) processor.getNextRhythm())
+            .build());
       }
     } catch (EOSException e) {
             /* This is okay.  Continue. */
@@ -207,7 +210,7 @@ public class Convert {
       stringBuffer.append(noteArray[i].getPitch());
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(
-          limitDecimalPlaces(noteArray[i].getRhythmValue(), 3));
+          limitDecimalPlaces(noteArray[i].getRhythm(), 3));
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(noteArray[i].getDynamic());
       stringBuffer.append(RIGHT_BRACKET);
@@ -221,7 +224,7 @@ public class Convert {
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(
           limitDecimalPlaces(
-              noteArray[noteArray.length - 1].getRhythmValue(),
+              noteArray[noteArray.length - 1].getRhythm(),
               3)
       );
       stringBuffer.append(DEFAULT_SEPARATOR);
@@ -268,7 +271,7 @@ public class Convert {
   }
 
   public static String partToXMLString(final Part part) {
-    return XMLParser.partToXMLString(part,true);
+    return XMLParser.partToXMLString(part, true);
   }
 
   //--- XML conversions ---//

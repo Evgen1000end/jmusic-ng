@@ -34,7 +34,6 @@ import java.util.Enumeration;
 import java.util.Vector;
 import jm.JMC;
 import jm.music.data.Note;
-import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
@@ -167,7 +166,7 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
             int oldY = (int) Math.round(oldStartTime * beatWidth);
             g.drawLine(oldY, x, oldY + y, x);
           }
-          oldStartTime += aNote.getRhythmValue();
+          oldStartTime += aNote.getRhythm();
         }
       }
     }
@@ -322,9 +321,12 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
       if (storer[i][1] > 127) {
         storer[i][1] = 127;
       }
-      Note n = new Note((int) storer[i][1], storer[i + 1][0] - storer[i][0]);
+      Note n = Note.newBuilder()
+          .pitch((int) storer[i][1])
+          .rhythm(storer[i + 1][0] - storer[i][0])
+          .build();
       // avoid unnecessary repeat notes
-      if (i > 0 ) {
+      if (i > 0) {
         if (phr.size() > 0 && n.getPitch() ==
             ((Note) (phr.getNoteList().lastElement())).getPitch()) {
           Mod.append(((Note) (phr.getNoteList().lastElement())), n);
@@ -342,7 +344,10 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
     if (storer[storer.length - 1][1] > 127) {
       storer[storer.length - 1][1] = 127;
     }
-    Note n = new Note((int) storer[storer.length - 1][1], storer[storer.length - 1][2]);
+    Note n = Note.newBuilder()
+        .pitch((int) storer[storer.length - 1][1])
+        .rhythm(storer[storer.length - 1][2])
+        .build();
     n.setDuration(storer[storer.length - 1][2]);
     phr.addNote(n);
 

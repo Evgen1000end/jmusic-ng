@@ -122,14 +122,14 @@ class XMLParser {
     return buffer.toString();
   }
 
-  public static String partToXMLString(final Part part,final boolean asPitch) {
+  public static String partToXMLString(final Part part, final boolean asPitch) {
     return DEFAULT_XML_STYLE.initialXMLDeclaration()
         + XMLParser.partToXMLString(part, DEFAULT_XML_STYLE, asPitch);
   }
 
   private static String partToXMLString(
       final Part part,
-      final XMLStyle xmlStyle,final boolean asPitch) {
+      final XMLStyle xmlStyle, final boolean asPitch) {
     StringBuilder buffer = new StringBuilder();
     buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getPartTagName());
     if (!part.getTitle().equals(Part.DEFAULT_TITLE)) {
@@ -293,7 +293,7 @@ class XMLParser {
     } else {
       buffer.append(xmlStyle.getRightAngleBracket());
       for (int i = 0; i < size; i++) {
-        buffer.append(noteToXMLString(phrase.getNote(i), xmlStyle,asPitch));
+        buffer.append(noteToXMLString(phrase.getNote(i), xmlStyle, asPitch));
       }
       buffer.append(xmlStyle.getLeftAngleBracket()).append(xmlStyle.getSlash())
           .append(xmlStyle.getPhraseTagName()).append(xmlStyle.getRightAngleBracket());
@@ -327,11 +327,11 @@ class XMLParser {
           .append(xmlStyle.getDoubleQuote()).append(Integer.toString(note.getDynamic()))
           .append(xmlStyle.getDoubleQuote());
     }
-    if (note.getRhythmValue() != Note.DEFAULT_RHYTHM_VALUE) {
+    if (note.getRhythm() != Note.DEFAULT_RHYTHM) {
       buffer.append(xmlStyle.getSpace()).append(xmlStyle.getRhythmValueAttributeName()).append("=")
           .append(xmlStyle.getDoubleQuote()).append(xmlStyle.limitDecimalPlaces()
-          ? XMLParser.limitDecimalPlaces(note.getRhythmValue(), 2)
-          : Double.toString(note.getRhythmValue())).append(xmlStyle.getDoubleQuote());
+          ? XMLParser.limitDecimalPlaces(note.getRhythm(), 2)
+          : Double.toString(note.getRhythm())).append(xmlStyle.getDoubleQuote());
     }
     if (note.getPan() != Note.DEFAULT_PAN) {
       buffer.append(xmlStyle.getSpace()).append(xmlStyle.getPanAttributeName()).append("=")
@@ -886,7 +886,7 @@ class XMLParser {
     attributeValue = XMLStyles.getRhythmValueAttributeValue(element);
     if (!attributeValue.equals("")) {
       try {
-        returnNote.setRhythmValue(
+        returnNote.setRhythm(
             Double.valueOf(attributeValue).doubleValue());
       } catch (NumberFormatException e) {
         throw new ConversionException(
@@ -1583,7 +1583,7 @@ abstract class XMLStyle {
   }
 
   public String getRhythmValueAttributeName() {
-    return "rhythmValue";
+    return "rhythm";
   }
 
   public String getDurationAttributeName() {

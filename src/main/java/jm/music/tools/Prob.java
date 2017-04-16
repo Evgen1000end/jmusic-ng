@@ -110,8 +110,8 @@ public final class Prob {
       nextRV /= granularity;
       nextRV = (double) Math.round(nextRV);
       nextRV *= granularity;
-    } while (nextRV < Note.MIN_RHYTHM_VALUE
-        || nextRV > Note.MAX_RHYTHM_VALUE);
+    } while (nextRV < Note.MIN_RHYTHM
+        || nextRV > Note.MAX_RHYTHM);
     return nextRV;
   }
 

@@ -36,7 +36,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Enumeration;
 import jm.music.data.Note;
-import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 
@@ -207,11 +206,11 @@ public class ShowArea extends Canvas {
           Note aNote = (Note) enum3.nextElement();
           int currNote = aNote.getPitch();
           if ((currNote <= 127) && (currNote >= 0)) {
-             int octavePixelheight = noteHeight * 7;
+            int octavePixelheight = noteHeight * 7;
             int y = ((10 - currNote / 12) * octavePixelheight +
                 (ePos)) - noteOffset[currNote % 12];
             int x = (int) (Math.round(aNote.getDuration() * beatWidth)); //480 ppq note
-            int xRV = (int) (Math.round(aNote.getRhythmValue() * beatWidth)); //480 ppq note
+            int xRV = (int) (Math.round(aNote.getRhythm() * beatWidth)); //480 ppq note
             // check if the width of the note is less than 1 so
             // that it will be displayed
             if (x < 1) {
@@ -254,7 +253,7 @@ public class ShowArea extends Canvas {
               offScreenGraphics.drawString("#", oldX - 7, y + 5);
             }
           }
-          oldXBeat += aNote.getRhythmValue();
+          oldXBeat += aNote.getRhythm();
           oldX = (int) (Math.round(oldXBeat * beatWidth));
           rectRight = oldX - rectLeft; //update value for phrase rectangle
         }

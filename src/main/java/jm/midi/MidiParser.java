@@ -39,7 +39,6 @@ import jm.midi.event.PChange;
 import jm.midi.event.TempoEvent;
 import jm.midi.event.TimeSig;
 import jm.music.data.Note;
-import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
@@ -173,11 +172,15 @@ public final class MidiParser implements JMC {
       //perform a level of quantisation first
       if (newTime < 0.25) {
         double length =
-            curNote[phrIndex].getRhythmValue();
-        curNote[phrIndex].setRhythmValue(
+            curNote[phrIndex].getRhythm();
+        curNote[phrIndex].setRhythm(
             length + newTime);
       } else {
-        Note restNote = new Note(REST, newTime, 0);
+        Note restNote = Note.newBuilder()
+            .rest()
+            .rhythm(newTime)
+            .dynamic(0)
+            .build();
         restNote.setPan(midiChannel);
         restNote.setDuration(newTime);
         restNote.setOffset(0.0);
@@ -190,11 +193,15 @@ public final class MidiParser implements JMC {
     double time = MidiUtil.getEndEvt(pitch, evtList, i) /
         (double) smf.getPPQN();
     // create the new note
-    Note tempNote = new Note(pitch, time, dynamic);
+    Note tempNote = Note.newBuilder()
+        .pitch(pitch)
+        .rhythm(time)
+        .dynamic(dynamic)
+        .build();
     tempNote.setDuration(time);
     curNote[phrIndex] = tempNote;
     ((Phrase) phrVct.elementAt(phrIndex)).addNote(curNote[phrIndex]);
-    currentLength[phrIndex] += curNote[phrIndex].getRhythmValue();
+    currentLength[phrIndex] += curNote[phrIndex].getRhythm();
   }
 
   /**
@@ -337,7 +344,7 @@ public final class MidiParser implements JMC {
           }
           // move the note-on time forward by the rhythmic value
           startTime += tickRounder(
-              note.getRhythmValue() * phraseTempoMultiplier); //time between start times
+              note.getRhythm() * phraseTempoMultiplier); //time between start times
           System.out.print("."); // completed a note
         }
       }
@@ -482,7 +489,7 @@ public final class MidiParser implements JMC {
 //          int dynamic = note.getDynamic();
 //
 //          if (pitch == Note.REST) {
-//            phraseTick += note.getRhythmValue() * m_ppqn * elementTempoRatio;
+//            phraseTick += note.getRhythm() * m_ppqn * elementTempoRatio;
 //            continue;
 //          }
 //
@@ -502,7 +509,7 @@ public final class MidiParser implements JMC {
 //          evt = createNoteOffEvent(currChannel, pitch, dynamic, offTick + offSetTime);
 //          currTrack.add(evt);
 //
-//          phraseTick += note.getRhythmValue() * m_ppqn * elementTempoRatio;
+//          phraseTick += note.getRhythm() * m_ppqn * elementTempoRatio;
 //
 //          // TODO:  Should this be ticks since we have tempo stuff
 //          // to worry about

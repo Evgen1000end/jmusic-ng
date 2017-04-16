@@ -171,35 +171,35 @@ public class Histogram extends Component implements JMC {
         while (enum3.hasMoreElements()) {
           Note note = (Note) enum3.nextElement();
           // ignore notes with frequency as a pitch
-            if (note.getPitch() != REST) {
-              // pitch
-              pitchValues[note.getPitch()]++;
-              if (pitchValues[note.getPitch()] > maxPitchValue) {
-                maxPitchValue =
-                    pitchValues[note.getPitch()];
-              }
-              // rhythm
-              int val = (int) (note.getRhythmValue() / 0.125);
-              if (val >= rhythmValues.length) {
-                val = rhythmValues.length - 1;
-              }
-              rhythmValues[val]++;
-              if (rhythmValues[val] > maxRhythmValue) {
-                maxRhythmValue = rhythmValues[val];
-              }
-              // velocities
-              dynamicValues[note.getDynamic()]++;
-              if (dynamicValues[note.getDynamic()] > maxDynamicValue) {
-                maxDynamicValue =
-                    dynamicValues[note.getDynamic()];
-              }
-              // pan
-              panValues[(int) (note.getPan() * 100)]++;
-              if (panValues[(int) (note.getPan() * 100)] > maxPanValue) {
-                maxPanValue =
-                    panValues[(int) (note.getPan() * 100)];
-              }
+          if (note.getPitch() != REST) {
+            // pitch
+            pitchValues[note.getPitch()]++;
+            if (pitchValues[note.getPitch()] > maxPitchValue) {
+              maxPitchValue =
+                  pitchValues[note.getPitch()];
             }
+            // rhythm
+            int val = (int) (note.getRhythm() / 0.125);
+            if (val >= rhythmValues.length) {
+              val = rhythmValues.length - 1;
+            }
+            rhythmValues[val]++;
+            if (rhythmValues[val] > maxRhythmValue) {
+              maxRhythmValue = rhythmValues[val];
+            }
+            // velocities
+            dynamicValues[note.getDynamic()]++;
+            if (dynamicValues[note.getDynamic()] > maxDynamicValue) {
+              maxDynamicValue =
+                  dynamicValues[note.getDynamic()];
+            }
+            // pan
+            panValues[(int) (note.getPan() * 100)]++;
+            if (panValues[(int) (note.getPan() * 100)] > maxPanValue) {
+              maxPanValue =
+                  panValues[(int) (note.getPan() * 100)];
+            }
+          }
 
         }
       }

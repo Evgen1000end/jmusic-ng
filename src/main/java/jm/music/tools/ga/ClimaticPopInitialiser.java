@@ -103,7 +103,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       // Set target
       if (isClimaxAccepted(seed, beatsPerBar)) {
         climax = findClimax(seed);
-        target = new Note(TONIC, (double) beatsPerBar);
+        target = Note.newBuilder().pitch(TONIC).rhythm((double) beatsPerBar).build();
         targetBeat = 7 * beatsPerBar;
       } else {
         int lowestPitch = Note.MAX_PITCH;
@@ -134,15 +134,11 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
         lowerlimit = 53;
       }
 
-      // Extend to target
       extend(population[i], target, targetBeat, beatRhythmArray,
           intervalArray, climax, beatsPerBar, lowerlimit);
       addAppropriateTarget(population[i], target);
-//            population[i].addNote(target);
-
-      // If the melody isn't complete, extend to final note
       if (population[i].getEndTime() != 8 * beatsPerBar) {
-        target = new Note(TONIC, (double) beatsPerBar);
+        target = Note.newBuilder().pitch(TONIC).rhythm((double) beatsPerBar).build();
         targetBeat = 7 * beatsPerBar;
         extend(population[i], target, targetBeat,
             beatRhythmArray, intervalArray, climax,
@@ -168,14 +164,8 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
         }
         population[i].addNote(target);
       }
-
       cleanMelody(population[i], size);
-
-
     }
-    // confirm done
-    //System.out.println("Created new population.");
-
     return population;
   }
 
@@ -205,10 +195,10 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
           --pitch;
         }
       }
-
-      // Complete the beat
-      returnPhrase.addNote(new Note(pitch,
-          rhythmValueToCompleteBeat));
+      returnPhrase.addNote(Note.newBuilder()
+          .pitch(pitch)
+          .rhythm(rhythmValueToCompleteBeat)
+          .build());
     }
     return returnPhrase;
   }
@@ -231,7 +221,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       double[] tempRVArray = new double[phrase.size()];
       int count = 0;
       note = phrase.getNote(notesProcessed++);
-      double rhythmValue = note.getRhythmValue();
+      double rhythmValue = note.getRhythm();
       tempRVArray[count++] = rhythmValue;
       if (note.getPitch() == Note.REST) {
         tempRVArray[count - 1] *= -1;
@@ -240,7 +230,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       cumulativeRV += rhythmValue;
       while (cumulativeRV != Math.ceil(cumulativeRV)) {
         note = phrase.getNote(notesProcessed++);
-        rhythmValue = note.getRhythmValue();
+        rhythmValue = note.getRhythm();
         tempRVArray[count++] = rhythmValue;
         if (note.getPitch() == Note.REST) {
           tempRVArray[count - 1] *= -1;
@@ -258,7 +248,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       while (cumulativeRV < originalCumulativeRV + (double) beatsPerBar
           && notesProcessed < phrase.size()) {
         note = phrase.getNote(notesProcessed++);
-        rhythmValue = note.getRhythmValue();
+        rhythmValue = note.getRhythm();
         tempRVArray[count++] = rhythmValue;
         if (note.getPitch() == Note.REST) {
           tempRVArray[count - 1] *= -1;
@@ -267,7 +257,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
         cumulativeRV += rhythmValue;
         while (cumulativeRV != Math.ceil(cumulativeRV)) {
           note = phrase.getNote(notesProcessed++);
-          rhythmValue = note.getRhythmValue();
+          rhythmValue = note.getRhythm();
           tempRVArray[count++] = rhythmValue;
           if (note.getPitch() == Note.REST) {
             tempRVArray[count - 1] *= -1;
@@ -325,7 +315,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
           location = cumulativeRV;
         }
       }
-      cumulativeRV += phrase.getNote(i).getRhythmValue();
+      cumulativeRV += phrase.getNote(i).getRhythm();
     }
     return !(location < 8 * beatsPerBar * (CLIMAX_AVERAGE - CLIMAX_ST_DEV)
         || location > 8 * beatsPerBar * (CLIMAX_AVERAGE + CLIMAX_ST_DEV))
@@ -362,8 +352,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       }
       currentPitch--;
     }
-
-    return new Note(pitch, 1.0);
+    return Note.newBuilder().pitch(pitch).rhythm(1.0).build();
   }
 
   private void extend(Phrase phrase, Note target, int targetBeat,
@@ -404,11 +393,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
             previousPitch = nextHarmoniousNote;
           }
         }
-        phrase.addNote(new Note(previousPitch, 2.0));
-//                for (int i = 0; i < beatsPerBar - 2; i++) {                     
-//                    addNote(phrase, target, targetBeat, 1.0, intervalArray, climax,
-//                            lowerlimit);
-//                }
+        phrase.addNote(Note.newBuilder().pitch(previousPitch).rhythm(2.0).build());
       } else {
         int beatsInArray = targetBeat;
         int beatIndex = 0;
@@ -475,7 +460,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       double rhythmValue, int[] intervalArray, int climax,
       final int lowerlimit) {
     if (rhythmValue < 0.0) {
-      phrase.addNote(new Note(Note.REST, 0.0 - rhythmValue));
+      phrase.addNote(Note.newBuilder().rest().rhythm(0.0 - rhythmValue).build());
     } else {
       // select previous non rest
       int noteIndex = phrase.size() - 1;
@@ -512,8 +497,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       if (pitch >= climax || pitch < lowerlimit) {
         pitch = previousPitch - selectedInterval / 4;
       }
-
-      phrase.addNote(new Note(pitch, rhythmValue));
+      phrase.addNote(Note.newBuilder().pitch(pitch).rhythm(rhythmValue).build());
     }
   }
 

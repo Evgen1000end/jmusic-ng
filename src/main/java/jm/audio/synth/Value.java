@@ -56,7 +56,7 @@ public final class Value extends AudioObject {
    * 1 = pitch<br>
    * 2 = dynamic<br>
    * 3 = duration<br>
-   * 4 = rhythmValue<br>
+   * 4 = rhythm<br>
    */
   int noteAttribute = 0;
   /**
@@ -158,7 +158,7 @@ public final class Value extends AudioObject {
         this.theValue = (float) (currentNote.getDuration() * changeRatio);
         break;
       case 4:
-        this.theValue = (float) (currentNote.getRhythmValue() * changeRatio);
+        this.theValue = (float) (currentNote.getRhythm() * changeRatio);
         break;
       default:
         System.err.println(this.name + " A value setting of " + theValue + " is not supported yet");

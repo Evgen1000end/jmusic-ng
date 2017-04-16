@@ -24,7 +24,6 @@ package jm.audio;
 
 import java.util.Enumeration;
 import java.util.Vector;
-import jm.JMC;
 import jm.music.data.Note;
 import jm.music.rt.RTLine;
 

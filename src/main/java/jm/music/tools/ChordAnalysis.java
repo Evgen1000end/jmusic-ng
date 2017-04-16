@@ -81,7 +81,7 @@ public final class ChordAnalysis {
       }
 
       while (rvCount < (i + 0.5) * beatLength) {
-        rvCount += phrase.getNote(noteCount).getRhythmValue();
+        rvCount += phrase.getNote(noteCount).getRhythm();
         noteCount++;
         if (noteCount >= size) {
           halfBeat = null;
@@ -96,7 +96,7 @@ public final class ChordAnalysis {
       }
 
       while (rvCount < (i + 1) * beatLength) {
-        rvCount += phrase.getNote(noteCount).getRhythmValue();
+        rvCount += phrase.getNote(noteCount).getRhythm();
         noteCount++;
         if (noteCount >= size) {
           break beatLoop;

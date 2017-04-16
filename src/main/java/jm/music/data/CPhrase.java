@@ -224,15 +224,19 @@ public class CPhrase implements JMC, Cloneable, Serializable {
     int i = 0;
     // add notes
     for (; i < pitchArray.length; i++) {
-      Note newNote = new Note(pitchArray[i], rhythmValue, dynamic);
+      Note newNote = Note.newBuilder()
+          .pitch(pitchArray[i])
+          .rhythm(rhythmValue)
+          .dynamic(dynamic)
+          .build();
       ((Phrase) this.phraseList.elementAt(i)).addNote(newNote);
     }
     // pad remaining phrases with rests
     for (; i < phraseList.size(); i++) {
-      Note newNote = new Note(REST, rhythmValue);
+      Note newNote = Note.newBuilder().rest().rhythm(rhythmValue).build();
       ((Phrase) this.phraseList.elementAt(i)).addNote(newNote);
     }
-    //this.currentTime += rhythmValue;
+    //this.currentTime += rhythm;
   }
 
   /**
@@ -260,7 +264,7 @@ public class CPhrase implements JMC, Cloneable, Serializable {
    */
   public void addChord(Note[] noteArray) {
     this.currentTime = this.getEndTime();
-    double rhythmValue = noteArray[0].getRhythmValue();
+    double rhythmValue = noteArray[0].getRhythm();
     //If we have more notes in the chord than we have available phrases
     //we will need to make more phrases
     if (this.phraseList.size() < noteArray.length) {
@@ -273,14 +277,14 @@ public class CPhrase implements JMC, Cloneable, Serializable {
     }
     int i = 0;
     for (; i < noteArray.length; i++) {
-      // enseure all notes have the same rhythmValue
-      noteArray[i].setRhythmValue(rhythmValue);
+      // enseure all notes have the same rhythm
+      noteArray[i].setRhythm(rhythmValue);
       // add the notes tlo the phrases
       ((Phrase) this.phraseList.elementAt(i)).addNote(noteArray[i]);
     }
     // fill extra phrases with a rest
     for (; i < phraseList.size(); i++) {
-      Note newNote = new Note(REST, rhythmValue);
+      Note newNote = Note.newBuilder().rest().rhythm(rhythmValue).build();
       ((Phrase) this.phraseList.elementAt(i)).addNote(newNote);
     }
     this.currentTime += rhythmValue;
@@ -298,7 +302,7 @@ public class CPhrase implements JMC, Cloneable, Serializable {
   /**
    * Sets the CPhrases startTime
    *
-   * @param double the time at which to start the CPhrase
+   * @param startTime the time at which to start the CPhrase
    */
   public void setStartTime(double startTime) {
     double startOffset = startTime - this.startTime;
@@ -340,6 +344,15 @@ public class CPhrase implements JMC, Cloneable, Serializable {
   }
 
   /**
+   * Gives the CPhrase a new title
+   *
+   * @param phrases title
+   */
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  /**
    * Gives the CPhrase a new instrument
    *
    * @param phrases instrument number
@@ -348,15 +361,6 @@ public class CPhrase implements JMC, Cloneable, Serializable {
     if (instrument < NO_INSTRUMENT) {
       this.instrument = instrument;
     }
-  }
-
-  /**
-   * Gives the CPhrase a new title
-   *
-   * @param phrases title
-   */
-  public void setTitle(String title) {
-    this.title = title;
   }
 
   /**
@@ -579,7 +583,7 @@ public class CPhrase implements JMC, Cloneable, Serializable {
   }
 
   /**
-   * Change the rhythmValue value of each note in the CPhrase.
+   * Change the rhythm value of each note in the CPhrase.
    */
   public void setRhythmValue(int val) {
     Enumeration enum1 = getPhraseList().elements();

@@ -267,7 +267,7 @@ public class CpnZoomScreen extends Dialog
     double answer = 0.0;
     for (int i = 0; i < p.size(); ++i) {
       answer = answer
-          + p.getNote(i).getRhythmValue();
+          + p.getNote(i).getRhythm();
     }
     return answer / p.getNumerator();
   }
@@ -302,7 +302,7 @@ public class CpnZoomScreen extends Dialog
     while ((beatCount > 0.005) &&
         (fromPhrase.size() > 0)) {
       theNote = fromPhrase.getNote(0);
-      beatValue = theNote.getRhythmValue();
+      beatValue = theNote.getRhythm();
       toPhrase.addNote(theNote);
       fromPhrase.removeNote(0);
       beatCount -= beatValue;

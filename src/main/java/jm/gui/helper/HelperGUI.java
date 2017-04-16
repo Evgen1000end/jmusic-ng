@@ -523,13 +523,11 @@ public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentL
     // Simple example composition
     Phrase phrase = new Phrase();
     Score s = new Score(new Part(phrase));
-    //for(int i = 0; i < 8; i++) {
-    Note n = new Note(48 + (int) (Math.random() * variableA), 0.5 + variableB * 0.25);
+    Note n = Note.newBuilder()
+        .pitch(48 + (int) (Math.random() * variableA))
+        .rhythm(0.5 + variableB * 0.25)
+        .build();
     phrase.addNote(n);
-    //}
-
-    //Instrument[] tempInsts = {new jm.instruments.SineInst(44100)};
-    //insts = tempInsts;
     return s;
   }
 

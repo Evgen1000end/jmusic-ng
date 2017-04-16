@@ -36,7 +36,6 @@ import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Track;
 import jm.JMC;
 import jm.music.data.Note;
-import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
@@ -445,7 +444,7 @@ public class MidiSynth implements JMC, MetaEventListener {
           int dynamic = note.getDynamic();
 
           if (pitch == Note.REST) {
-            phraseTick += note.getRhythmValue() * m_ppqn * elementTempoRatio;
+            phraseTick += note.getRhythm() * m_ppqn * elementTempoRatio;
             continue;
           }
 
@@ -465,7 +464,7 @@ public class MidiSynth implements JMC, MetaEventListener {
           evt = createNoteOffEvent(currChannel, pitch, dynamic, offTick + offSetTime);
           currTrack.add(evt);
 
-          phraseTick += note.getRhythmValue() * m_ppqn * elementTempoRatio;
+          phraseTick += note.getRhythm() * m_ppqn * elementTempoRatio;
 
           // TODO:  Should this be ticks since we have tempo stuff
           // to worry about

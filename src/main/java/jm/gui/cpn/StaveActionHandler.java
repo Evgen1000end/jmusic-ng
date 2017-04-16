@@ -158,7 +158,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
           newPitch--;
         }
       }
-      Note n = new Note(newPitch, 1.0);
+      Note n = Note.newBuilder().pitch(newPitch).rhythm(1.0).build();
       Phrase phr = theApp.getPhrase();
       phr.addNote(n);
       theApp.repaint();
@@ -192,7 +192,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
               newPitch--;
             }
           }
-          Note n = new Note(newPitch, 1.0);
+          Note n = Note.newBuilder().pitch(newPitch).rhythm(1.0).build();
           Phrase phr = theApp.getPhrase();
           phr.getNoteList().insertElementAt(n, j / 2 + 1);
           theApp.repaint();
@@ -263,7 +263,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
       }
       // move note right - increase RV
       if (e.getX() > clickedPosX + 6) {
-        double tempRV = n.getRhythmValue();
+        double tempRV = n.getRhythm();
         int tempPitch = n.getPitch();
         // use +100 numbers for rests
         if (tempPitch == REST) {
@@ -273,18 +273,18 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
         // find current rhythm value and update RV
         for (int i = 0; i < rhythmValues.length - 1; i++) {
           if (tempRV == rhythmValues[i]) {
-            n.setRhythmValue(rhythmValues[i + 1]);
+            n.setRhythm(rhythmValues[i + 1]);
             // update duration value
-            n.setDuration(n.getRhythmValue() * 0.9);
+            n.setDuration(n.getRhythm() * 0.9);
           }
         }
         clickedPosX = e.getX();
         // update pitch
-        if (n.getRhythmValue() > 100.0) {
+        if (n.getRhythm() > 100.0) {
           n.setPitch(REST);
-          n.setRhythmValue(n.getRhythmValue() - 100);
+          n.setRhythm(n.getRhythm() - 100);
           // update duration value
-          n.setDuration(n.getRhythmValue() * 0.9);
+          n.setDuration(n.getRhythm() * 0.9);
         } else {
           if (tempPitch == REST) {
             n.setPitch(storedPitch);
@@ -294,7 +294,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
       }
       // move note left - decrease RV
       if (e.getX() < clickedPosX - 6) {
-        double tempRV = n.getRhythmValue();
+        double tempRV = n.getRhythm();
         int tempPitch = n.getPitch();
         // use +100 numbers for rests
         if (tempPitch == REST) {
@@ -309,16 +309,16 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
         }
         // update rv
         if (currRVindex > 0) {
-          n.setRhythmValue(rhythmValues[currRVindex - 1]);
+          n.setRhythm(rhythmValues[currRVindex - 1]);
           // update duration value
-          n.setDuration(n.getRhythmValue() * 0.9);
+          n.setDuration(n.getRhythm() * 0.9);
           clickedPosX = e.getX();
           // update pitch
-          if (n.getRhythmValue() > 100.0) {
+          if (n.getRhythm() > 100.0) {
             n.setPitch(REST);
-            n.setRhythmValue(n.getRhythmValue() - 100);
+            n.setRhythm(n.getRhythm() - 100);
             // update duration value
-            n.setDuration(n.getRhythmValue() * 0.9);
+            n.setDuration(n.getRhythm() * 0.9);
           } else {
             if (tempPitch == REST) {
               n.setPitch(storedPitch);
@@ -405,7 +405,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
     }
     // delete note if necessary
     for (int i = 0; i < theApp.getPhrase().getNoteList().size(); i++) {
-      if (theApp.getPhrase().getNote(i).getRhythmValue() == 0.0) {
+      if (theApp.getPhrase().getNote(i).getRhythm() == 0.0) {
         theApp.getPhrase().getNoteList().removeElementAt(i);
       }
     }

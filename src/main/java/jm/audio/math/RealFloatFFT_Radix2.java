@@ -137,7 +137,7 @@ public class RealFloatFFT_Radix2 extends RealFloatFFT {
 
       if (p_1 > 1) {
         for (b = 0; b < q; b++) {
-	  /* a = p_{i-1}/2 */
+    /* a = p_{i-1}/2 */
           data[i0 + stride * (b * p + p - p_1 / 2)] *= -1;
         }
       }

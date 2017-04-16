@@ -116,7 +116,7 @@ public class PhraseViewer extends Dialog
     );
     textArea.append(
         "   Rhythm " +
-            decimalFormat.format(n.getRhythmValue())
+            decimalFormat.format(n.getRhythm())
     );
     textArea.append(
         "   Dur " +

@@ -204,15 +204,13 @@ public abstract class RTLine implements AudioChainListener {
     if (scorePos
         > testPos) { //(scorePos > (testPos - 0.00001)) { // && scorePos < (testPos + 0.0001)){
       note = getNextNote().copy();
-      note.setRhythmValue(note.getRhythmValue() * temp);
+      note.setRhythm(note.getRhythm() * temp);
       note.setDuration(note.getDuration() * temp);
-      testPos += note.getRhythmValue();
-      //System.out.println("RTLine: processing a note. Pitch = " + note.getPitch() + " Length = " + (testPos-scorePos) + " Duration = " + note.getDuration());
+      testPos += note.getRhythm();
     } else {
-      note = new Note(jm.JMC.REST, (testPos - scorePos));
-      note.setRhythmValue(note.getRhythmValue() * temp);
-      note.setDuration(note.getRhythmValue());
-      //System.out.println("RTLine: adding a rest. Length = " + (testPos-scorePos) + " Sampled processed = " + samplesProcessed);
+      note = Note.newBuilder().pitch(jm.JMC.REST).rhythm(testPos - scorePos).build();
+      note.setRhythm(note.getRhythm() * temp);
+      note.setDuration(note.getRhythm());
     }
     inst.renderNote(note, scorePos);
   }

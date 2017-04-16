@@ -1002,7 +1002,7 @@ public class Part implements Cloneable, Serializable, JMC {
   }
 
   /**
-   * Change the rhythmValue value of each note in the Part.
+   * Change the rhythm value of each note in the Part.
    */
   public void setRhythmValue(double val) {
     Enumeration enum1 = getPhraseList().elements();
@@ -1073,9 +1073,9 @@ public class Part implements Cloneable, Serializable, JMC {
   }
 
   /**
-   * Change both the rhythmValue and duration of each note in the part.
+   * Change both the rhythm and duration of each note in the part.
    *
-   * @param newLength The new rhythmValue for the note (Duration is a proportion of this value)
+   * @param newLength The new rhythm for the note (Duration is a proportion of this value)
    */
   public void setLength(double newLength) {
     this.setRhythmValue(newLength);

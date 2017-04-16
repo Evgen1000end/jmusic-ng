@@ -1317,7 +1317,7 @@ public final class PhraseAnalysis {
     double rhythmValue;
 
     for (int i = 0; i < noteArray.length; i++) {
-      rhythmValue = noteArray[i].getRhythmValue();
+      rhythmValue = noteArray[i].getRhythm();
       if (rhythmValue >= 1.0
           && noteArray[i].getPitch() != jm.JMC.REST
           && position % 1.0 != 0.0) {
@@ -1443,7 +1443,7 @@ public final class PhraseAnalysis {
       int index = 0;
 
       for (int i = 0; i < noteArray.length; i++) {
-        length += noteArray[i].getRhythmValue();
+        length += noteArray[i].getRhythm();
         int currentPitch = noteArray[i].getPitch();
         if (currentPitch != jm.JMC.REST) {
           if (currentPitch >= highestPitch) {
@@ -1454,7 +1454,7 @@ public final class PhraseAnalysis {
       }
       double lengthToClimax = 0;
       for (int i = 0; i < index - 1; i++) {
-        lengthToClimax += noteArray[i].getRhythmValue();
+        lengthToClimax += noteArray[i].getRhythm();
       }
       return lengthToClimax / length;
     } else {
@@ -1611,7 +1611,7 @@ public final class PhraseAnalysis {
     if (isQuantised(noteArray, duration)) {
       int count = 0;
       for (int i = 0; i < noteArray.length; i++) {
-        count += (int) (noteArray[i].getRhythmValue() / duration);
+        count += (int) (noteArray[i].getRhythm() / duration);
       }
       return count;
     } else {
@@ -1680,7 +1680,7 @@ public final class PhraseAnalysis {
     double rhythm;
     for (int i = 0; i < noteArray.length; i++) {
       if (noteArray[i].getPitch() <= jm.JMC.REST) {
-        rhythm = noteArray[i].getRhythmValue();
+        rhythm = noteArray[i].getRhythm();
         if (!isElementOf(rhythm, rhythmArray, index)) {
           rhythmArray[index] = rhythm;
           index++;
@@ -1729,7 +1729,7 @@ public final class PhraseAnalysis {
       int count = 0;
       for (int i = 0; i < noteArray.length; i++) {
         if (noteArray[i].getPitch() == jm.JMC.REST) {
-          count += (int) (noteArray[i].getRhythmValue() / duration);
+          count += (int) (noteArray[i].getRhythm() / duration);
         }
       }
       return count;
@@ -1798,7 +1798,7 @@ public final class PhraseAnalysis {
         if (pitch != jm.JMC.REST
             && !isElementOf(pitchToDegree(pitch, tonic),
             scale)) {
-          count += (int) (noteArray[i].getRhythmValue()
+          count += (int) (noteArray[i].getRhythm()
               / duration);
         }
       }
@@ -1869,7 +1869,7 @@ public final class PhraseAnalysis {
         if (pitch == jm.JMC.REST
             || isElementOf(pitchToDegree(pitch, tonic),
             PRIMARY_NOTES)) {
-          count += (int) (noteArray[i].getRhythmValue()
+          count += (int) (noteArray[i].getRhythm()
               / duration);
         }
       }
@@ -1948,12 +1948,12 @@ public final class PhraseAnalysis {
    */
   public static double rhythmRange(final Note[] noteArray)
       throws NoteListException {
-    double longestRhythm = Note.MIN_RHYTHM_VALUE;
-    double shortestRhythm = Note.MAX_RHYTHM_VALUE;
+    double longestRhythm = Note.MIN_RHYTHM;
+    double shortestRhythm = Note.MAX_RHYTHM;
     double currentRhythm;
 
     for (int i = 0; i < noteArray.length; i++) {
-      currentRhythm = noteArray[i].getRhythmValue();
+      currentRhythm = noteArray[i].getRhythm();
       if (noteArray[i].getPitch() != jm.JMC.REST) {
         if (currentRhythm > longestRhythm) {
           longestRhythm = currentRhythm;
@@ -1962,8 +1962,8 @@ public final class PhraseAnalysis {
         }
       }
     }
-    if (longestRhythm != Note.MIN_RHYTHM_VALUE
-        && shortestRhythm != Note.MAX_RHYTHM_VALUE) {
+    if (longestRhythm != Note.MIN_RHYTHM
+        && shortestRhythm != Note.MAX_RHYTHM) {
       return longestRhythm / shortestRhythm;
     } else {
       throw new NoteListException("There are no notes in the melody.");
@@ -2250,8 +2250,8 @@ public final class PhraseAnalysis {
     if (intervalCount > 0) {
       double[] intervalArray = new double[intervalCount];
       for (int i = 0; i < intervalArray.length; i++) {
-        intervalArray[i] = noteArray[i + 1].getRhythmValue()
-            / noteArray[i].getRhythmValue();
+        intervalArray[i] = noteArray[i + 1].getRhythm()
+            / noteArray[i].getRhythm();
 
         // Indicate a rest with a negative sign
         if (noteArray[i].getPitch() == jm.JMC.REST) {
@@ -2613,7 +2613,7 @@ public final class PhraseAnalysis {
   public static double rhythmValueCount(final Note[] noteArray) {
     double count = 0;
     for (int i = 0; i < noteArray.length; i++) {
-      count = count + noteArray[i].getRhythmValue();
+      count = count + noteArray[i].getRhythm();
     }
     return count;
   }
@@ -2668,7 +2668,7 @@ public final class PhraseAnalysis {
       throws QuantisationException {
     if (duration > 0) {
       for (int i = 0; i < noteArray.length; i++) {
-        if (noteArray[i].getRhythmValue() % duration != 0.0) {
+        if (noteArray[i].getRhythm() % duration != 0.0) {
           return false;
         }
       }

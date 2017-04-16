@@ -113,26 +113,30 @@ public class OnePointCrossover extends Recombiner {
     int currentNote = 0;
 
     while (returnPhrase.getEndTime()
-        + currentPhrase.getNote(currentNote).getRhythmValue()
+        + currentPhrase.getNote(currentNote).getRhythm()
         < crossoverBar * beatsPerBar) {
       returnPhrase.addNote(currentPhrase.getNote(currentNote++).copy());
     }
     double rhythmValue = crossoverBar * beatsPerBar
         - returnPhrase.getEndTime();
-    returnPhrase.addNote(new Note(
-        currentPhrase.getNote(currentNote).getPitch(),
-        crossoverBar * beatsPerBar - returnPhrase.getEndTime()));
+
+    returnPhrase.addNote(Note.newBuilder()
+        .pitch(currentPhrase.getNote(currentNote).getPitch())
+        .rhythm(crossoverBar * beatsPerBar - returnPhrase.getEndTime())
+        .build());
     currentNote = -1;
     currentPhrase = isFatherFirst ? mother : father;
     double currentRhythmValue = 0;
     while (currentRhythmValue <= crossoverBar * beatsPerBar) {
       currentNote++;
       currentRhythmValue +=
-          currentPhrase.getNote(currentNote).getRhythmValue();
+          currentPhrase.getNote(currentNote).getRhythm();
     }
-    returnPhrase.addNote(new Note(
-        currentPhrase.getNote(currentNote++).getPitch(),
-        currentRhythmValue - crossoverBar * beatsPerBar));
+
+    returnPhrase.addNote(Note.newBuilder()
+        .pitch(currentPhrase.getNote(currentNote++).getPitch())
+        .rhythm(currentRhythmValue - crossoverBar * beatsPerBar)
+        .build());
     while (currentNote < currentPhrase.size()) {
       returnPhrase.addNote(currentPhrase.getNote(currentNote++));
     }

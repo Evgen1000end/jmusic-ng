@@ -113,7 +113,7 @@ public class StavePhraseProperties extends Properties {
     if (n >= 0) {
       setSavedProperty(
           LAST_NOTE_RHYTHM,
-          phrase.getNote(n).getRhythmValue()
+          phrase.getNote(n).getRhythm()
       );
       setSavedProperty(
           LAST_NOTE_DUR,
@@ -167,7 +167,7 @@ public class StavePhraseProperties extends Properties {
     if (rhythm - restPresent > 0.001) {
       restToAdd = Note.newBuilder().build();
       restToAdd.setFrequency(Note.REST);
-      restToAdd.setRhythmValue(
+      restToAdd.setRhythm(
           rhythm - restPresent);
       restToAdd.setDuration(
           (rhythm - restPresent) *
@@ -192,8 +192,8 @@ public class StavePhraseProperties extends Properties {
       int n;
       n = findLastNonRest(phrase);
       for (int i = 0; i < n; ++i) {
-        phrase.getNote(i).setRhythmValue(
-            phrase.getNote(i).getRhythmValue()
+        phrase.getNote(i).setRhythm(
+            phrase.getNote(i).getRhythm()
                 * adjustmentFactor
         );
       }
@@ -224,7 +224,7 @@ public class StavePhraseProperties extends Properties {
         } else {
           phrase.getNote(i).setDuration(
               phrase.getNote(i)
-                  .getRhythmValue()
+                  .getRhythm()
           );
         }
       }
@@ -240,7 +240,7 @@ public class StavePhraseProperties extends Properties {
     i = findLastNonRest(phrase) + 1;
     while (i < n) {
       answer = answer + phrase.getNote(i)
-          .getRhythmValue();
+          .getRhythm();
       ++i;
     }
     return answer;
@@ -270,7 +270,7 @@ public class StavePhraseProperties extends Properties {
     n = findLastNonRest(phrase);
     while (i < n) {
       answer = answer + phrase.getNote(i)
-          .getRhythmValue();
+          .getRhythm();
       ++i;
     }
     return answer;
@@ -381,7 +381,7 @@ public class StavePhraseProperties extends Properties {
     int lastNotePos = findLastNonRest(phrase);
     if (lastNotePos >= 0) {
       phrase.getNote(lastNotePos)
-          .setRhythmValue(
+          .setRhythm(
               new Double(getProperty(LAST_NOTE_RHYTHM))
           );
       phrase.getNote(lastNotePos)

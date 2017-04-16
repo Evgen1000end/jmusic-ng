@@ -651,7 +651,7 @@ public class Write implements JMC {
         Enumeration enumNotes = phrase.getNoteList().elements();
         while (enumNotes.hasMoreElements()) {
           Note note = (Note) enumNotes.nextElement();
-          note.setRhythmValue(note.getRhythmValue() * partTempo);
+          note.setRhythm(note.getRhythm() * partTempo);
           note.setDuration(note.getDuration() * partTempo);
         }
       }

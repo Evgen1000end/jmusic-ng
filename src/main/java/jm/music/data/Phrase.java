@@ -309,17 +309,17 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * Add a note to this Phrase
    *
    * @param pitch -the pitch of the note
-   * @param rv - the rhythmValue of the note
+   * @param rv - the rhythm of the note
    */
   public void addNote(int pitch, double rv) {
-    Note note = new Note(pitch, rv);
+    Note note = Note.newBuilder().pitch(pitch).rhythm(rv).build();
     this.addNote(note);
   }
 
   /**
    * Add a note to this Phrase
    *
-   * @param Note note - add a note to this phrase
+   * @param note - add a note to this phrase
    */
   public void add(Note note) {
     this.addNote(note);
@@ -328,18 +328,18 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Add a rest to this Phrase
    *
-   * @param Rest rest - The rest to be added to this phrase
+   * @param newRest - The rest to be added to this phrase
    */
-  public void addRest(Rest newRest) {
-    newRest.setMyPhrase(this);
-    noteList.addElement(newRest);
-  }
+//  public void addRest(Rest newRest) {
+//    newRest.setMyPhrase(this);
+//    noteList.addElement(newRest);
+//  }
 
 
   /**
    * Appends the specified notes to the end of this Phrase.
    *
-   * @param array of Notes to append.
+   * @param notes of Notes to append.
    */
   public void addNoteList(Note[] notes) {
     for (int i = 0; i < notes.length; i++) {
@@ -502,7 +502,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
     }
     for (int i = 0; i < pitchArray.length; i++) {
       try {
-        Note knote = new Note(pitchArray[i], rhythmArray[i], dynamic[i]);
+        Note knote = Note.newBuilder()
+            .pitch(pitchArray[i])
+            .rhythm(rhythmArray[i])
+            .dynamic(dynamic[i])
+            .build();
         this.addNote(knote);
       } catch (RuntimeException re) {
         System.err.println("You must enter arrays of even length");
@@ -527,7 +531,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
     }
     for (int i = 0; i < freqArray.length; i++) {
       try {
-        Note knote = new Note(freqArray[i], rhythmArray[i], dynamic[i]);
+        Note knote = Note.newBuilder()
+            .frequency(freqArray[i])
+            .rhythm(rhythmArray[i])
+            .dynamic(dynamic[i])
+            .build();
         this.addNote(knote);
       } catch (RuntimeException re) {
         System.err.println("jMusic Phrase error: You must enter arrays of even length");
@@ -543,7 +551,10 @@ public class Phrase implements JMC, Cloneable, Serializable {
   public void addNoteList(double[] pitchAndRhythmArray) {
     for (int i = 0; i < pitchAndRhythmArray.length; i += 2) {
       try {
-        Note knote = new Note((int) pitchAndRhythmArray[i], pitchAndRhythmArray[i + 1]);
+        Note knote = Note.newBuilder()
+            .pitch((int) pitchAndRhythmArray[i])
+            .rhythm(pitchAndRhythmArray[i + 1])
+            .build();
         this.addNote(knote);
       } catch (RuntimeException re) {
         System.err.println(
@@ -560,7 +571,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   public void addNoteList(int pitch, double[] rhythms) {
     for (int i = 0; i < rhythms.length; i++) {
-      this.addNote(new Note(pitch, rhythms[i]));
+      this.addNote(Note.newBuilder().pitch(pitch).rhythm(rhythms[i]).build());
     }
   }
 
@@ -572,7 +583,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   public void addNoteList(double frequency, double[] rhythms) {
     for (int i = 0; i < rhythms.length; i++) {
-      this.addNote(new Note(frequency, rhythms[i]));
+      this.addNote(Note.newBuilder().frequency(frequency).rhythm(rhythms[i]).build());
     }
   }
 
@@ -582,11 +593,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * and share the same duration.
    *
    * @param pitches An array of pitch values
-   * @param rv the rhythmValue
+   * @param rv the rhythm
    */
   public void addChord(int[] pitches, double rv) {
     for (int i = 0; i < pitches.length - 1; i++) {
-      Note n = new Note(pitches[i], 0.0);
+      Note n = Note.newBuilder().pitch(pitches[i]).rhythm(0.0).build();
       n.setDuration(rv * Note.DEFAULT_DURATION_MULTIPLIER);
       this.addNote(n);
     }
@@ -608,7 +619,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Note[] notes = this.getNoteArray();
     double[] rhythms = new double[notes.length];
     for (int i = 0; i < notes.length; i++) {
-      rhythms[i] = notes[i].getRhythmValue();
+      rhythms[i] = notes[i].getRhythm();
     }
     return rhythms;
   }
@@ -772,7 +783,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Enumeration enum1 = this.noteList.elements();
     while (enum1.hasMoreElements()) {
       Note nextNote = (Note) enum1.nextElement();
-      endTime += nextNote.getRhythmValue();
+      endTime += nextNote.getRhythm();
     }
     return endTime;
   }
@@ -787,7 +798,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Enumeration enum1 = this.noteList.elements();
     while (enum1.hasMoreElements()) {
       Note nextNote = (Note) enum1.nextElement();
-      cumulativeLength += nextNote.getRhythmValue();
+      cumulativeLength += nextNote.getRhythm();
     }
     return cumulativeLength;
   }
@@ -1032,11 +1043,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * pads beginning and end with shortedend notes and rests
    * if notes or phrase boundaries don't align with locations.
    *
-   * @param double start location
-   * @param double end location
-   * @param boolean requireNoteStart If true, only notes that start inside the copy range are
-   * included in the copy. Notes starting prior but overlapping are replaced by rests. Otherwise
-   * sections of notes inseide the bounds are included.
+   * @param startLoc start location
+   * @param endLoc end location
+   * @param requireNoteStart If true, only notes that start inside the copy range are included in
+   * the copy. Notes starting prior but overlapping are replaced by rests. Otherwise sections of
+   * notes inseide the bounds are included.
    * @return Phrase a copy of the Phrase
    */
 
@@ -1053,7 +1064,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     }
     //is it before the phrase?
     if (startLoc < beatCounter) {
-      Note r = new Note(REST, beatCounter - startLoc);
+      Note r = Note.newBuilder().pitch(REST).rhythm(beatCounter - startLoc).build();
       tempPhr.addNote(r);
       endLoc += beatCounter - startLoc;
     }
@@ -1062,49 +1073,60 @@ public class Phrase implements JMC, Cloneable, Serializable {
     for (int i = 0; i < this.size(); i++) {
 
       if (beatCounter < startLoc) {
-        if ((beatCounter + this.getNote(i).getRhythmValue() > startLoc) &&
-            (beatCounter + this.getNote(i).getRhythmValue() <= endLoc)) {
+        if ((beatCounter + this.getNote(i).getRhythm() > startLoc) &&
+            (beatCounter + this.getNote(i).getRhythm() <= endLoc)) {
           if (requireNoteStart) {
-            Note n = new Note(REST, beatCounter +
-                this.getNote(i).getRhythmValue() - startLoc);
+            Note n = Note.newBuilder().pitch(REST).rhythm(beatCounter +
+                this.getNote(i).getRhythm() - startLoc).build();
             tempPhr.addNote(n);
           } else {
-            Note n = new Note(this.getNote(i).getPitch(), beatCounter +
-                this.getNote(i).getRhythmValue() - startLoc,
-                this.getNote(i).getDynamic()
-            );
+            Note n = Note.newBuilder()
+                .pitch(this.getNote(i).getPitch())
+                .rhythm(beatCounter + this.getNote(i).getRhythm() - startLoc)
+                .dynamic(this.getNote(i).getDynamic())
+                .build();
+
             tempPhr.addNote(n);
           }
         }
-        if (beatCounter + this.getNote(i).getRhythmValue() > endLoc) {
+        if (beatCounter + this.getNote(i).getRhythm() > endLoc) {
           if (requireNoteStart) {
-            Note n = new Note(REST, beatCounter +
-                this.getNote(i).getRhythmValue() - startLoc, this.getNote(i).getDynamic());
+            Note n = Note.newBuilder()
+                .rest()
+                .rhythm(beatCounter + this.getNote(i).getRhythm() - startLoc)
+                .dynamic(this.getNote(i).getDynamic())
+                .build();
             tempPhr.addNote(n);
           } else {
 
-              Note n = new Note(this.getNote(i).getPitch(), beatCounter +
-                  endLoc - startLoc, this.getNote(i).getDynamic());
-              tempPhr.addNote(n);
+            Note n = Note.newBuilder()
+                .pitch(this.getNote(i).getPitch())
+                .rhythm(beatCounter + endLoc - startLoc)
+                .dynamic(this.getNote(i).getDynamic())
+                .build();
+            tempPhr.addNote(n);
 
           }
         }
       }
 
       if (beatCounter >= startLoc && beatCounter < endLoc) { // this note starts in the space
-        if (beatCounter + this.getNote(i).getRhythmValue() <= endLoc) { // also ends in it
+        if (beatCounter + this.getNote(i).getRhythm() <= endLoc) { // also ends in it
           tempPhr.addNote(this.getNote(i));
         } else { //ends after the end. Make up last note.
-          Note n = new Note(this.getNote(i).getPitch(), endLoc - beatCounter,
-              this.getNote(i).getDynamic());
+          Note n = Note.newBuilder()
+              .pitch(this.getNote(i).getPitch())
+              .rhythm(endLoc - beatCounter)
+              .dynamic(this.getNote(i).getDynamic())
+              .build();
           tempPhr.addNote(n);
         }
       }
-      beatCounter += this.getNote(i).getRhythmValue();
+      beatCounter += this.getNote(i).getRhythm();
     }
     // is there more space past the end of the phrase?
     if (beatCounter < endLoc) { // make up a rest to fill the space
-      Note r = new Note(REST, endLoc - beatCounter);
+      Note r = Note.newBuilder().pitch(REST).rhythm(endLoc - beatCounter).build();
       tempPhr.addNote(r);
     }
     // done!
@@ -1117,11 +1139,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * pads beginning and end with shortedend notes and rests
    * if notes or phrase boundaries don't align with locations.
    *
-   * @param boolean trimmed wether to truncte notes (as per the other versions of copy) or not
-   * @param boolean startTimeShifts wether to shift the start time or to add a rest if if the start
-   * is afte startloc
-   * @param double start location
-   * @param double end location
+   * @param trimmed wether to truncte notes (as per the other versions of copy) or not
+   * @param startTimeShifts wether to shift the start time or to add a rest if if the start is afte
+   * startloc
+   * @param startLoc start location
+   * @param endLoc end location
    * @return Phrase a copy of the Phrase
    */
   public Phrase copy(double startLoc, double endLoc,
@@ -1147,7 +1169,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Enumeration noteEnum = this.getNoteList().elements();
     while (startLoc > beatCounter && noteEnum.hasMoreElements()) {
       Note n = (Note) noteEnum.nextElement();
-      beatCounter += n.getRhythmValue();
+      beatCounter += n.getRhythm();
     }
 
     // now it is in the segment, should a rest be added in the begining because
@@ -1157,11 +1179,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
         if (startTimeShifts) {
           tempPhr.setStartTime(beatCounter + this.getStartTime());
         } else {
-          Note r = new Note(REST, beatCounter - startLoc);
+          Note r = Note.newBuilder().rest().rhythm(beatCounter - startLoc).build();
           tempPhr.addNote(r);
         }
       } else {
-        Note r = new Note(REST, endLoc - startLoc);
+        Note r = Note.newBuilder().rest().rhythm(endLoc - startLoc).build();
         tempPhr.addNote(r);
         return tempPhr;
       }
@@ -1173,21 +1195,20 @@ public class Phrase implements JMC, Cloneable, Serializable {
     while (noteEnum.hasMoreElements() && beatCounter < endLoc) {
       Note n = ((Note) noteEnum.nextElement()).copy();
       //if the note goes over the end
-      if ((n.getRhythmValue() + beatCounter) > endLoc && trimmed) {
+      if ((n.getRhythm() + beatCounter) > endLoc && trimmed) {
         //trimm it back
         n.setRhythmValue(endLoc - beatCounter, truncated);
       }
       tempPhr.addNote(n);
-      addedCounter += n.getRhythmValue();
-      beatCounter += n.getRhythmValue();
+      addedCounter += n.getRhythm();
+      beatCounter += n.getRhythm();
     }
 
-    // is there more space past the end of the phrase?
-    if (beatCounter < endLoc) { // make up a rest to fill the space
-      Note r = new Note(REST, endLoc - beatCounter);
+    if (beatCounter < endLoc) {
+      Note r = Note.newBuilder().rest().rhythm(endLoc - beatCounter).build();
       tempPhr.addNote(r);
-    } else if (addedCounter == 0.0) { // or if nothing was added at all
-      Note r = new Note(REST, endLoc - startLoc);
+    } else if (addedCounter == 0.0) {
+      Note r = Note.newBuilder().rest().rhythm(endLoc - startLoc).build();
       tempPhr.addNote(r);
     }
     // done!
@@ -1277,9 +1298,9 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Enumeration enum1 = getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-        if (note.getPitch() > max) {
-          max = note.getPitch();
-        }
+      if (note.getPitch() > max) {
+        max = note.getPitch();
+      }
     }
     return max;
   }
@@ -1292,9 +1313,9 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Enumeration enum1 = getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-        if (note.getPitch() < min && note.getPitch() >= 0) {
-          min = note.getPitch();
-        }
+      if (note.getPitch() < min && note.getPitch() >= 0) {
+        min = note.getPitch();
+      }
     }
     return min;
   }
@@ -1307,8 +1328,8 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Enumeration enum1 = getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-      if (note.getRhythmValue() > max) {
-        max = note.getRhythmValue();
+      if (note.getRhythm() > max) {
+        max = note.getRhythm();
       }
     }
     return max;
@@ -1322,8 +1343,8 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Enumeration enum1 = getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-      if (note.getRhythmValue() < min) {
-        min = note.getRhythmValue();
+      if (note.getRhythm() < min) {
+        min = note.getRhythm();
       }
     }
     return min;
@@ -1352,13 +1373,13 @@ public class Phrase implements JMC, Cloneable, Serializable {
   }
 
   /**
-   * Change the rhythmValue value of each note in the phrase.
+   * Change the rhythm value of each note in the phrase.
    */
   public void setRhythmValue(double val) {
     Enumeration enum1 = getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-      note.setRhythmValue(val);
+      note.setRhythm(val);
     }
   }
 
@@ -1423,9 +1444,9 @@ public class Phrase implements JMC, Cloneable, Serializable {
   }
 
   /**
-   * Change both the rhythmValue and duration of each note in the phrase.
+   * Change both the rhythm and duration of each note in the phrase.
    *
-   * @param newLength The new rhythmValue for the note (Duration is a proportion of this value)
+   * @param newLength The new rhythm for the note (Duration is a proportion of this value)
    */
   public void setLength(double newLength) {
     this.setRhythmValue(newLength);
@@ -1445,7 +1466,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     }
     double startLoc = this.getStartTime();
     for (int i = 0; i < noteIndex; i++) {
-      startLoc += this.getNote(i).getRhythmValue();
+      startLoc += this.getNote(i).getRhythm();
     }
     return startLoc;
   }

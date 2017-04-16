@@ -498,35 +498,35 @@ public class LetterNotesEditor extends Dialog
 
   private void makeHalfNote() {
     adjustNoteByFactor(
-        JMC.HALF_NOTE / currentNote.getRhythmValue());
+        JMC.HALF_NOTE / currentNote.getRhythm());
   }
 
   private void makeWholeNote() {
     adjustNoteByFactor(
-        JMC.WHOLE_NOTE / currentNote.getRhythmValue());
+        JMC.WHOLE_NOTE / currentNote.getRhythm());
   }
 
   private void makeQuarterNote() {
     adjustNoteByFactor(
-        JMC.QUARTER_NOTE / currentNote.getRhythmValue());
+        JMC.QUARTER_NOTE / currentNote.getRhythm());
   }
 
   private void makeEighthNote() {
     adjustNoteByFactor(
-        JMC.EIGHTH_NOTE / currentNote.getRhythmValue());
+        JMC.EIGHTH_NOTE / currentNote.getRhythm());
   }
 
   private void makeTriplet() {
     adjustNoteByFactor(
         JMC.QUAVER_TRIPLET
-            / currentNote.getRhythmValue()
+            / currentNote.getRhythm()
     );
   }
 
   private void makeSixteenthNote() {
     adjustNoteByFactor(
         JMC.SIXTEENTH_NOTE
-            / currentNote.getRhythmValue()
+            / currentNote.getRhythm()
     );
   }
 
@@ -539,9 +539,9 @@ public class LetterNotesEditor extends Dialog
           lastNote.getDuration()
               + currentNote.getDuration()
       );
-      lastNote.setRhythmValue(
-          lastNote.getRhythmValue()
-              + currentNote.getRhythmValue()
+      lastNote.setRhythm(
+          lastNote.getRhythm()
+              + currentNote.getRhythm()
       );
       currentNote = lastNote;
     }
@@ -574,8 +574,8 @@ public class LetterNotesEditor extends Dialog
   }
 
   private void adjustNoteByFactor(double x) {
-    currentNote.setRhythmValue(
-        x * currentNote.getRhythmValue());
+    currentNote.setRhythm(
+        x * currentNote.getRhythm());
     currentNote.setDuration(
         x * currentNote.getDuration());
   }

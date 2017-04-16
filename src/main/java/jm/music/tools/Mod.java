@@ -63,8 +63,8 @@ public class Mod implements JMC {
       throw new IllegalArgumentException("notes should not be null");
     }
 
-    note1.setRhythmValue(note1.getRhythmValue()
-        + note2.getRhythmValue());
+    note1.setRhythm(note1.getRhythm()
+        + note2.getRhythm());
     note1.setDuration(note1.getDuration() + note2.getDuration());
   }
 
@@ -86,7 +86,7 @@ public class Mod implements JMC {
       throw new IllegalArgumentException("Note should not be null");
     }
 
-    if ( note.getPitch() != REST) {
+    if (note.getPitch() != REST) {
       note.setPitch(note.getPitch() + transposition);
     }
   }
@@ -184,7 +184,7 @@ public class Mod implements JMC {
         n.setDynamic((int) ((time - startTime) / timeDiff
             * dynDiff + startDynamic));
       }
-      time += n.getRhythmValue();
+      time += n.getRhythm();
       if (time > endTime) {
         break;
       }
@@ -366,28 +366,28 @@ public class Mod implements JMC {
     // Add notes for the first time through
     int beforeCount;
     for (beforeCount = 0; beforeCount < phrase.size() && beatCounter +
-        phrase.getNote(beforeCount).getRhythmValue() <= endLoc; beforeCount++) {
+        phrase.getNote(beforeCount).getRhythm() <= endLoc; beforeCount++) {
       //yes add the whole note
       tempPhr.addNote(phrase.getNote(beforeCount));
       // overlapping first note?
       if (beatCounter < startLoc
-          && beatCounter + phrase.getNote(beforeCount).getRhythmValue() > startLoc) {
+          && beatCounter + phrase.getNote(beforeCount).getRhythm() > startLoc) {
         overlappingFirst = true;
         overlappingNoteAt = beforeCount;
       }
-      beatCounter += phrase.getNote(beforeCount).getRhythmValue();
+      beatCounter += phrase.getNote(beforeCount).getRhythm();
 
     }
     // is the next note overlapping the end?
     if (beforeCount + 1 < phrase.size()) { // make sure we haven't gone through all notes
       if (beatCounter < endLoc
-          && beatCounter + phrase.getNote(beforeCount + 1).getRhythmValue() > endLoc) {
+          && beatCounter + phrase.getNote(beforeCount + 1).getRhythm() > endLoc) {
         overlappingLast = true;
         // add partial note
         Note partialNote = phrase.getNote(beforeCount).copy();
         partialNote.setDuration(
-            partialNote.getDuration() * endLoc - beatCounter / partialNote.getRhythmValue());
-        partialNote.setRhythmValue(endLoc - beatCounter);
+            partialNote.getDuration() * endLoc - beatCounter / partialNote.getRhythm());
+        partialNote.setRhythm(endLoc - beatCounter);
         tempPhr.addNote(partialNote);
       }
     }
@@ -465,7 +465,7 @@ public class Mod implements JMC {
         dynamic = 1;
       }
       nextNote.setDynamic(dynamic);
-      rhythmValueCounter += nextNote.getRhythmValue();
+      rhythmValueCounter += nextNote.getRhythm();
     }
   }
 
@@ -503,7 +503,7 @@ public class Mod implements JMC {
         dynamic = 1;
       }
       nextNote.setDynamic(dynamic);
-      rhythmValueCounter += nextNote.getRhythmValue();
+      rhythmValueCounter += nextNote.getRhythm();
     }
   }
 
@@ -534,7 +534,7 @@ public class Mod implements JMC {
         dynamic = 1;
       }
       nextNote.setDynamic(dynamic);
-      rhythmValueCounter += nextNote.getRhythmValue();
+      rhythmValueCounter += nextNote.getRhythm();
     }
   }
 
@@ -574,7 +574,7 @@ public class Mod implements JMC {
         dynamic = 1;
       }
       nextNote.setDynamic(dynamic);
-      rhythmValueCounter += nextNote.getRhythmValue();
+      rhythmValueCounter += nextNote.getRhythm();
     }
   }
 
@@ -714,9 +714,9 @@ public class Mod implements JMC {
     Enumeration enum1 = phrase.getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-      double rv = note.getRhythmValue();
+      double rv = note.getRhythm();
       //rhythm
-      note.setRhythmValue((int) Math.round(rv / qValue) * qValue);
+      note.setRhythm((int) Math.round(rv / qValue) * qValue);
       // pitch
       quantizePitch(note, mode, key);
     }
@@ -1065,7 +1065,7 @@ public class Mod implements JMC {
       }
       // cal caccidental offset
       int accidental = 0;
-      Note n = new Note(pitch, 1);
+      Note n = Note.newBuilder().pitch(pitch).rhythm(1).build();
       while (!n.isScale(scale)) {
         n.setPitch(n.getPitch() - 1);
         accidental++;
@@ -1160,7 +1160,7 @@ public class Mod implements JMC {
     Enumeration enum1 = phrase.getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-      note.setRhythmValue(note.getRhythmValue() * scaleFactor);
+      note.setRhythm(note.getRhythm() * scaleFactor);
       note.setDuration(note.getDuration() * scaleFactor);
     }
   }
@@ -1323,7 +1323,7 @@ public class Mod implements JMC {
           n.setDynamic(tempDyn);
         }
       }
-      beatCounter += n.getRhythmValue();
+      beatCounter += n.getRhythm();
     }
   }
 
@@ -1383,7 +1383,7 @@ public class Mod implements JMC {
           n.setDynamic(tempDyn);
         }
       }
-      beatCounter += n.getRhythmValue();
+      beatCounter += n.getRhythm();
     }
   }
 
@@ -1529,7 +1529,7 @@ public class Mod implements JMC {
     for (int i = 0; i < rhythmCount; i++) {
       double newRV = rhythms[(int) (Math.random() * rhythms.length)];
       Note noteToChange = phrase.getNote((int) (Math.random() * phrase.size()));
-      noteToChange.setRhythmValue(newRV);
+      noteToChange.setRhythm(newRV);
       noteToChange.setDuration(newRV * 0.9);
     }
   }
@@ -1549,7 +1549,7 @@ public class Mod implements JMC {
       Note currNote = phrase.getNote(i);
       Note nextNote = phrase.getNote(i + 1);
       if (currNote.getPitch() == nextNote.getPitch()) {
-        currNote.setRhythmValue(currNote.getRhythmValue() + nextNote.getRhythmValue());
+        currNote.setRhythm(currNote.getRhythm() + nextNote.getRhythm());
         currNote.setDuration(currNote.getDuration() + nextNote.getDuration());
         phrase.removeNote(i + 1);
       } else {
@@ -1571,7 +1571,7 @@ public class Mod implements JMC {
       Note currNote = phrase.getNote(i);
       Note nextNote = phrase.getNote(i + 1);
       if (currNote.getPitch() == REST && nextNote.getPitch() == REST) {
-        currNote.setRhythmValue(currNote.getRhythmValue() + nextNote.getRhythmValue());
+        currNote.setRhythm(currNote.getRhythm() + nextNote.getRhythm());
         currNote.setDuration(currNote.getDuration() + nextNote.getDuration());
         phrase.removeNote(i + 1);
       } else {
@@ -1594,7 +1594,7 @@ public class Mod implements JMC {
       Note currNote = phrase.getNote(i);
       Note nextNote = phrase.getNote(i + 1);
       if (currNote.getPitch() != REST && nextNote.getPitch() == REST) {
-        currNote.setRhythmValue(currNote.getRhythmValue() + nextNote.getRhythmValue());
+        currNote.setRhythm(currNote.getRhythm() + nextNote.getRhythm());
         currNote.setDuration(currNote.getDuration() + nextNote.getDuration());
         phrase.removeNote(i + 1);
       } else {
@@ -1727,7 +1727,7 @@ public class Mod implements JMC {
       // create new rhythm and duration values
       if (rhythmVariation > 0.0) {
         double var = (Math.random() * (rhythmVariation * 2) - rhythmVariation);
-        n.setRhythmValue(n.getRhythmValue() + var);
+        n.setRhythm(n.getRhythm() + var);
         n.setDuration(n.getDuration() + var);
       }
       // create new dynamic value
@@ -1793,7 +1793,7 @@ public class Mod implements JMC {
       }
       if (change) {
         for (int k = 0; k < numberOfNotes - 1; k++) {
-          phrase.getNote(i + k).setDuration(phrase.getNote(i + k).getRhythmValue());
+          phrase.getNote(i + k).setDuration(phrase.getNote(i + k).getRhythm());
         }
         i += numberOfNotes - 1;
       } else {
@@ -1833,7 +1833,7 @@ public class Mod implements JMC {
       }
       if (change) {
         for (int k = 0; k < numberOfNotes - 1; k++) {
-          phrase.getNote(i + k).setDuration(phrase.getNote(i + k).getRhythmValue());
+          phrase.getNote(i + k).setDuration(phrase.getNote(i + k).getRhythm());
         }
         i += numberOfNotes - 1;
       } else {
@@ -1882,7 +1882,7 @@ public class Mod implements JMC {
     Enumeration enum1 = phrase.getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note n = (Note) enum1.nextElement();
-      n.setRhythmValue(n.getRhythmValue() + amount);
+      n.setRhythm(n.getRhythm() + amount);
     }
   }
 
@@ -1897,9 +1897,9 @@ public class Mod implements JMC {
     double articulation = 0.0;
     while (enum1.hasMoreElements()) {
       Note n = (Note) enum1.nextElement();
-      articulation = n.getRhythmValue() / n.getDuration();
-      n.setRhythmValue(n.getRhythmValue() + amount);
-      n.setDuration(n.getRhythmValue() * articulation);
+      articulation = n.getRhythm() / n.getDuration();
+      n.setRhythm(n.getRhythm() + amount);
+      n.setDuration(n.getRhythm() * articulation);
     }
   }
 
@@ -3748,14 +3748,14 @@ public class Mod implements JMC {
         break;
       }
       //get a note out of that phrase and, if it is not a rest,
-      // put it into the new phrase, adjusting the rhythmValue
+      // put it into the new phrase, adjusting the rhythm
       // of the previous note accordingly
       n = tphr.getNote(0);
 
       if (!n.isRest()) {
         if (nphr.getSize() > 0) { // if it is not the first note
           nphr.getNote(nphr.getSize() - 1)
-              .setRhythmValue(((int) ((sst - prevsst) * 100000 + 0.5)) / 100000.0);
+              .setRhythm(((int) ((sst - prevsst) * 100000 + 0.5)) / 100000.0);
         } else {// if it is the first note to go in, set the startime
           nphr.setStartTime(sst);
         }
@@ -3763,7 +3763,7 @@ public class Mod implements JMC {
       }
 // adjust the start time and remove the note
       tphr.setStartTime(((int) ((sst +
-          n.getRhythmValue()) * 100000 + 0.5)) / 100000.0);
+          n.getRhythm()) * 100000 + 0.5)) / 100000.0);
       tphr.removeNote(0);
 
       prevsst = sst;

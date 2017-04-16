@@ -82,7 +82,8 @@ public final class TextInst extends jm.audio.Instrument {
     loadFile.show();
     String fileName = loadFile.getDirectory() + loadFile.getFile();
     if (fileName == null) {
-      System.out.println("jMusic jm.instruments.TextInst error: No file was selected, exiting program.");
+      System.out
+          .println("jMusic jm.instruments.TextInst error: No file was selected, exiting program.");
       System.exit(0);
     }
     return fileName;

@@ -166,17 +166,17 @@ public class Notate extends Frame implements
     int i;
     double t, dt, st;
     for (i = 0; i < phr.size(); ++i) {
-      t = phr.getNote(i).getRhythmValue();
+      t = phr.getNote(i).getRhythm();
       dt = getRhythmAdjustment(t, 1.0 / 256.0);
-      phr.getNote(i).setRhythmValue(t + dt);
+      phr.getNote(i).setRhythm(t + dt);
     }
 
     st = 0.0;
     for (i = 0; i < phr.size(); ++i) {
-      t = phr.getNote(i).getRhythmValue();
+      t = phr.getNote(i).getRhythm();
       st = st + t;
       dt = getRhythmAdjustment(st, 1.0);
-      phr.getNote(i).setRhythmValue(t + dt);
+      phr.getNote(i).setRhythm(t + dt);
       st = st + dt;
     }
   }

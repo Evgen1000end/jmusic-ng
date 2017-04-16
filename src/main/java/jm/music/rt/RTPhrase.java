@@ -36,7 +36,7 @@ public class RTPhrase extends RTLine implements JMC {
   private Phrase phrase;
   private int noteCounter = 0;
   private boolean waitForStartTime = true;
-  private Note aRest = new Note(REST, 1.0);
+  private Note aRest = Note.newBuilder().rest().rhythm(1.0).build();
 
   /**
    * constructor that takes a phrase and a single instrument as arguments.
@@ -73,12 +73,12 @@ public class RTPhrase extends RTLine implements JMC {
    */
   public synchronized Note getNextNote() {
     // default value for slience
-    aRest.setRhythmValue(1.0);
+    aRest.setRhythm(1.0);
     // wait for start time
     if (waitForStartTime) {
       //System.out.println("RTPhrase padded rest");
       waitForStartTime = false;
-      aRest.setRhythmValue(phrase.getStartTime());
+      aRest.setRhythm(phrase.getStartTime());
       return aRest;
     }
     // stream notes

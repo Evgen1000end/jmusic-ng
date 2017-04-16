@@ -151,7 +151,7 @@ public final class Audio implements jm.JMC {
 
           Note note = (Note) enum3.nextElement();
           if (note.getFrequency() == (double) REST) { //This a rest ???
-            ntime += phrase_ratio * note.getRhythmValue();
+            ntime += phrase_ratio * note.getRhythm();
             continue;
           }
           phraseNoteCounter++;
@@ -163,14 +163,14 @@ public final class Audio implements jm.JMC {
           Note new_note = note.copy();
           //System.out.println("new note pitch = " + new_note.getPitch());
           new_note.setDuration(phrase_ratio * note.getDuration());
-          new_note.setRhythmValue(phrase_ratio * note.getRhythmValue());
+          new_note.setRhythm(phrase_ratio * note.getRhythm());
           Instrument currInst = (Instrument) inst.peek();
           currInst.setBlock(false);
           currInst.setFinished(true);
           currInst.renderNote(new_note, (time + ntime));
           currInst.setFinished(false);
           currInst.iterateChain();
-          ntime += phrase_ratio * note.getRhythmValue();
+          ntime += phrase_ratio * note.getRhythm();
         }
 
         System.out.println();

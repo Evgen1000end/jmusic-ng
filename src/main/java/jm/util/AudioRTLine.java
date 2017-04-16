@@ -37,10 +37,10 @@ public class AudioRTLine extends RTLine {
     // duration and pitch are disregarded by the instrument
     Note n;
     if (firstTime) {
-      n = new Note(67, 1.0);
+      n = Note.newBuilder().pitch(67).rhythm(1.0).build();
       firstTime = false;
     } else {
-      n = new Note(jm.JMC.REST, 1.0);
+      n = Note.newBuilder().rest().rhythm(1.0).build();
     }
     return n;
   }

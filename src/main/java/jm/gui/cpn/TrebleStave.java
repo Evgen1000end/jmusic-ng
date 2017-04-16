@@ -207,7 +207,7 @@ public class TrebleStave extends Stave implements JMC {
 
       // position?
       int pitchTempPos;
-      if (notePitchNum == REST || phrase.getNote(i).getRhythmValue() == 0.0) { // rest or delete
+      if (notePitchNum == REST || phrase.getNote(i).getRhythm() == 0.0) { // rest or delete
         pitchTempPos =
             notePosOffset[71 % 12] + bPos - 4 + ((5 - 71 / 12) * 24) + ((6 - 71 / 12) * 4);
       } else {
@@ -224,7 +224,7 @@ public class TrebleStave extends Stave implements JMC {
       extraImagesUsed = false;
       savedBeatWidth = totalBeatWidth;
       savedBeatWidth2 = 0;
-      double rhythmValue = phrase.getNote(i).getRhythmValue();
+      double rhythmValue = phrase.getNote(i).getRhythm();
       double rvToEndOfBar = metre - (beatCounter % metre);
 
       while (rvToEndOfBar < rhythmValue) {
@@ -452,7 +452,7 @@ public class TrebleStave extends Stave implements JMC {
     totalBeatWidth += currBeatWidth;
     dottedNote = false;
     // quantised to semiquvers!
-    // (int)((rhythmValue/0.25) * 0.25);
+    // (int)((rhythm/0.25) * 0.25);
     beatCounter += (int) (rhythmValue / 0.25) * 0.25;
 
     // draw bar line

@@ -736,7 +736,7 @@ public class Mod implements JMC {
    * nothing.
    *
    * @param phrase Phrase to be cycled
-   * @param numbNotes the number of notes in the final phrase
+   * @param numNotes the number of notes in the final phrase
    */
   public static void cycle(Phrase phrase, final int numNotes) {
     if (phrase == null) {
@@ -757,7 +757,7 @@ public class Mod implements JMC {
     }
 
     // update the phrase
-    phrase.getNoteList().removeAllElements();
+    phrase.getNoteList().clear();
     Enumeration enum1 = newPhr.getNoteList().elements();
     while (enum1.hasMoreElements()) {
       phrase.getNoteList().addElement(enum1.nextElement());

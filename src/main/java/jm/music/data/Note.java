@@ -237,7 +237,7 @@ public class Note implements Cloneable, Serializable {
   /**
    * The phrase that this note has been added to.
    */
-  private Phrase myPhrase = null;
+  private Phrase phrase = null;
   /**
    * An array of break point envelope values to be used by this note
    * - see Note constants for specified index allocations
@@ -454,15 +454,15 @@ public class Note implements Cloneable, Serializable {
   /**
    * Return a reference to the phrase containing this note.
    */
-  public Phrase getMyPhrase() {
-    return this.myPhrase;
+  public Phrase getPhrase() {
+    return this.phrase;
   }
 
   /**
    * Sets a reference to the phrase that contains this note.
    */
-  public void setMyPhrase(Phrase phr) {
-    this.myPhrase = phr;
+  public void setPhrase(Phrase phr) {
+    this.phrase = phr;
   }
 
   /**
@@ -476,12 +476,12 @@ public class Note implements Cloneable, Serializable {
         .pitch(this.getPitch())
         .rhythm(this.rhythm)
         .dynamic(this.dynamic)
+        .pan(this.pan)
+        .duration(this.duration)
+        .offset(this.offset)
         .build();
-    note.setPan(this.pan);
-    note.setDuration(this.duration);
-    note.setOffset(this.offset);
     note.setSampleStartTime(this.sampleStartTime);
-    note.setMyPhrase(this.myPhrase);
+    note.setPhrase(this.phrase);
     for (int i = 0; i < breakPoints.length; i++) {
       if (this.breakPoints[i] != null) {
         note.setBreakPoints(i, this.getBreakPoints(i));
@@ -528,6 +528,7 @@ public class Note implements Cloneable, Serializable {
   /**
    * Collects a string of the notes attributes
    */
+  @Override
   public String toString() {
     return "jMusic NOTE: " +
         "[Frequency = " + frequency +
@@ -537,6 +538,8 @@ public class Note implements Cloneable, Serializable {
         "][Duration = " + duration +
         "][Pan = " + pan + "]";
   }
+
+
 
   /**
    * Checks if the note is within a particular scale
@@ -585,8 +588,8 @@ public class Note implements Cloneable, Serializable {
    * @param newLength The new rhythm for the note (Duration is a proportion of this value)
    */
   public void setLength(final double newLength) {
-    this.setRhythm(newLength);
-    this.setDuration(newLength * DEFAULT_DURATION_MULTIPLIER);
+    setRhythm(newLength);
+    setDuration(newLength * DEFAULT_DURATION_MULTIPLIER);
   }
 
   /**
@@ -612,17 +615,13 @@ public class Note implements Cloneable, Serializable {
     return !isSharp() && !isFlat();
   }
 
-  public boolean samePitch(Note note) {
-    return this.getPitch() == note.getPitch();
-  }
-
-  public boolean sameDuration(Note note) {
-    return this.getDuration() == note.getDuration();
-  }
-
-  //same pitch and same duration
+  /**
+   *
+   * @param note
+   * @return note has same duration and pitch
+   */
   public boolean equals(Note note) {
-    return samePitch(note) && sameDuration(note);
+    return this.getPitch() == note.getPitch() && this.getDuration() == note.getDuration();
   }
 
   /**

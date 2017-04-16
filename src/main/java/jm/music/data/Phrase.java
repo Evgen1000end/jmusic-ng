@@ -50,9 +50,6 @@ import jm.JMC;
  */
 
 public class Phrase implements JMC, Cloneable, Serializable {
-  //----------------------------------------------
-  // Limits
-  //-----------------------------------------------
   /**
    * The smallest start time in beats
    */
@@ -300,7 +297,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @param note - add a note to this phrase
    */
   public void addNote(Note note) {
-    note.setMyPhrase(this);
+    note.setPhrase(this);
     noteList.addElement(note);
   }
 
@@ -322,18 +319,8 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @param note - add a note to this phrase
    */
   public void add(Note note) {
-    this.addNote(note);
+    addNote(note);
   }
-
-  /**
-   * Add a rest to this Phrase
-   *
-   * @param newRest - The rest to be added to this phrase
-   */
-//  public void addRest(Rest newRest) {
-//    newRest.setMyPhrase(this);
-//    noteList.addElement(newRest);
-//  }
 
 
   /**
@@ -364,7 +351,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
       try {
         Note note = (Note) enum1.nextElement();
         this.addNote(note);
-        //note.setMyPhrase(this);
+        //note.setPhrase(this);
       } catch (RuntimeException re) {
         System.err.println("The vector passed to this method must " + "contain Notes only!");
       }

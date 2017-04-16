@@ -1,5 +1,6 @@
 package test.jm.music.data;
 
+import static jm.JMC.*;
 import static org.testng.Assert.*;
 
 import jm.music.data.Note;
@@ -22,7 +23,7 @@ public class NoteTest {
     assertEquals(note.getOffset(), Note.DEFAULT_OFFSET);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getMyPhrase(),null);
+    assertEquals(note.getPhrase(),null);
   }
 
   @Test
@@ -39,7 +40,7 @@ public class NoteTest {
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getMyPhrase(),null);
+    assertEquals(note.getPhrase(),null);
   }
 
   @Test
@@ -57,7 +58,7 @@ public class NoteTest {
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getMyPhrase(),null);
+    assertEquals(note.getPhrase(),null);
   }
 
   @Test
@@ -76,7 +77,7 @@ public class NoteTest {
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getMyPhrase(),null);
+    assertEquals(note.getPhrase(),null);
   }
 
   @Test
@@ -97,7 +98,7 @@ public class NoteTest {
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getMyPhrase(),null);
+    assertEquals(note.getPhrase(),null);
   }
 
   @Test
@@ -119,7 +120,7 @@ public class NoteTest {
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getMyPhrase(),null);
+    assertEquals(note.getPhrase(),null);
   }
 
 
@@ -142,7 +143,7 @@ public class NoteTest {
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "Bb");
     assertEquals(note.getFrequency(), 29.1352350949);
-    assertEquals(note.getMyPhrase(),null);
+    assertEquals(note.getPhrase(),null);
   }
 
   @Test
@@ -164,7 +165,7 @@ public class NoteTest {
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "Ab");
     assertEquals(note.getFrequency(), 415.3046975799);
-    assertEquals(note.getMyPhrase(),null);
+    assertEquals(note.getPhrase(),null);
   }
 
   @Test
@@ -201,5 +202,28 @@ public class NoteTest {
     assertTrue(rest.isRest());
     Note notRest = Note.newBuilder().pitch(12).build();
     assertFalse(notRest.isRest());
+  }
+
+  @Test
+  public void isSharpTest() {
+    assertTrue(Note.newBuilder().pitch(CS4).build().isSharp());
+    assertTrue(Note.newBuilder().pitch(FS4).build().isSharp());
+  }
+
+  @Test
+  public void isFlatTest() {
+    assertTrue(Note.newBuilder().pitch(EF4).build().isFlat());
+    assertTrue(Note.newBuilder().pitch(BF4).build().isFlat());
+    assertTrue(Note.newBuilder().pitch(AF4).build().isFlat());
+  }
+
+  public void isNaturalTest() {
+    assertTrue(Note.newBuilder().pitch(A4).build().isNatural());
+    assertTrue(Note.newBuilder().pitch(B4).build().isNatural());
+    assertTrue(Note.newBuilder().pitch(C4).build().isNatural());
+    assertTrue(Note.newBuilder().pitch(E4).build().isNatural());
+    assertTrue(Note.newBuilder().pitch(F4).build().isNatural());
+    assertTrue(Note.newBuilder().pitch(G4).build().isNatural());
+    assertTrue(Note.newBuilder().pitch(D4).build().isNatural());
   }
 }

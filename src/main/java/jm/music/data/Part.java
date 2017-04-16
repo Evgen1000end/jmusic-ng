@@ -854,19 +854,19 @@ public class Part implements Cloneable, Serializable, JMC {
    * Collects the Parts attributes to a string
    */
   public String toString() {
-    String partData = "----- jMusic PART: '" + title +
-        "' contains " + this.size() + " phrases.  -----" + '\n';
-    partData += "Channel = " + channel + '\n';
-    partData += "Instrument = " + instrument + '\n';
+    StringBuilder partData = new StringBuilder("----- jMusic PART: '" + title +
+        "' contains " + this.size() + " phrases.  -----" + '\n');
+    partData.append("Channel = ").append(channel).append('\n');
+    partData.append("Instrument = ").append(instrument).append('\n');
     if (this.tempo > 0) {
-      partData += "Part Tempo = " + this.tempo + '\n';
+      partData.append("Part Tempo = ").append(this.tempo).append('\n');
     }
     Enumeration enum1 = phraseList.elements();
     while (enum1.hasMoreElements()) {
       Phrase phrase = (Phrase) enum1.nextElement();
-      partData = partData + phrase.toString() + '\n';
+      partData.append(phrase.toString()).append('\n');
     }
-    return partData;
+    return partData.toString();
   }
 
   /**

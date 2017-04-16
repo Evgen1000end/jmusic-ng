@@ -100,13 +100,7 @@ public abstract class AbstractReadButton extends Button {
           fis.close();
         } catch (SecurityException e2) {
           message = "Read access not allowed to " + fileName;
-        } catch (ClassNotFoundException e2) {
-          message = "The file " + fileName
-              + " is neither a jm or MIDI file";
-        } catch (ClassCastException e2) {
-          message = "The file " + fileName
-              + " is neither a jm or MIDI file";
-        } catch (StreamCorruptedException e2) {
+        } catch (ClassNotFoundException | ClassCastException | StreamCorruptedException e2) {
           message = "The file " + fileName
               + " is neither a jm or MIDI file";
         } catch (IOException e2) {

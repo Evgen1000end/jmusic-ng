@@ -65,28 +65,26 @@ public class ReadFolderButton extends Button {
     final FilenameFilter filter = new ReadFilenameFilter();
     load.setFilenameFilter(filter);
 
-    addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                          load.show();
+    addActionListener(evt -> {
+      load.show();
 
-                          String directoryName = load.getDirectory();
-                          if (directoryName == null) {
-                            return;
-                          }
-                          String[] filenames = new File(directoryName).list(filter);
-                          for (int i = 0; i < filenames.length; i++) {
-                            Score score = Read.midiOrJmWithAWTMessaging(directoryName,
-                                filenames[i],
-                                owner);
-                            if (score != null && readListenerList != null) {
-                              readListenerList.scoreRead(score);
-                            }
-                          }
-                          if (readListenerList != null) {
-                            readListenerList.finishedReading();
-                          }
-                        }
-                      }
+      String directoryName = load.getDirectory();
+      if (directoryName == null) {
+        return;
+      }
+      String[] filenames = new File(directoryName).list(filter);
+      for (int i = 0; i < filenames.length; i++) {
+        Score score = Read.midiOrJmWithAWTMessaging(directoryName,
+            filenames[i],
+            owner);
+        if (score != null && readListenerList != null) {
+          readListenerList.scoreRead(score);
+        }
+      }
+      if (readListenerList != null) {
+        readListenerList.finishedReading();
+      }
+    }
     );
   }
 

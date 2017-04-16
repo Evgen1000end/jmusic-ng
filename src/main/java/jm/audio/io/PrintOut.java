@@ -92,23 +92,23 @@ public final class PrintOut extends AudioObject implements JMC {
     for (int i = 0; i < returned; i++) {
       float sample = buffer[i];
       //fill left side of dot
-      String dot = "";
+      StringBuilder dot = new StringBuilder();
 
       if (i % ((int) ((double) sampleRate / 8000.0) + 1) == 0) {
         int counter = 0;
         for (int j = 0; j < (int) ((sample + 1.0) * (width * 0.5 - 4)); j++) {
-          dot += " ";
+          dot.append(" ");
           counter++;
         }
         // draw the dot
-        dot += "o";
+        dot.append("o");
         // fill right side of dot
         for (int k = counter; k < width - 4; k++) {
-          dot += " ";
+          dot.append(" ");
         }
         // add value
         sample *= 1000;
-        dot += (double) ((int) (sample) / 1000.0);
+        dot.append((double) ((int) (sample) / 1000.0));
         System.out.println(dot);
       }
     }

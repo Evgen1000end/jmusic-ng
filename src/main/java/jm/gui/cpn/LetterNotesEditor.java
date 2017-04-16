@@ -554,11 +554,8 @@ public class LetterNotesEditor extends Dialog
     int numSharps = stave.getKeySignature();
     if (charValue == 'R') {
       answer = false;
-    } else if (numSharps > 0) {
-      answer = sharpNotes.indexOf(charValue)
-          < numSharps;
     } else {
-      answer = false;
+      answer = numSharps > 0 && sharpNotes.indexOf(charValue) < numSharps;
     }
     return answer;
   }
@@ -570,11 +567,8 @@ public class LetterNotesEditor extends Dialog
     int numFlats = -stave.getKeySignature();
     if (charValue == 'R') {
       answer = false;
-    } else if (numFlats > 0) {
-      answer = flatNotes.indexOf(charValue)
-          < numFlats;
     } else {
-      answer = false;
+      answer = numFlats > 0 && flatNotes.indexOf(charValue) < numFlats;
     }
     return answer;
   }

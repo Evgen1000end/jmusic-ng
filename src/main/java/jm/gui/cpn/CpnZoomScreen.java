@@ -139,7 +139,7 @@ public class CpnZoomScreen extends Dialog
         = new StringTokenizer(theField.getText());
     String fieldString =
         fieldTokenizer.nextToken();
-    return new Integer(fieldString).intValue();
+    return Integer.parseInt(fieldString);
   }
 
   public void windowOpened(WindowEvent e) {

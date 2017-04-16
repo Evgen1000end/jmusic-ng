@@ -260,9 +260,7 @@ public class SampleIn extends AudioObject implements jm.JMC {
           // treat each channel in the frame separately
           for (int j = 0; j < channels; j++) {
             // split the frame into channels
-            for (int k = 0; k < sampleSize; k++) {
-              sampleTmp[k] = tmp[k + j * sampleSize];
-            }
+            System.arraycopy(tmp, 0 + j * sampleSize, sampleTmp, 0, sampleSize);
             //System.out.println(i+j);
             buffer[i + j] = this.getFloat(sampleTmp);
 

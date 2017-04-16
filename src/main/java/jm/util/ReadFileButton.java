@@ -63,22 +63,20 @@ public class ReadFileButton extends Button {
         FileDialog.LOAD);
     load.setFilenameFilter(new ReadFilenameFilter());
 
-    addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent evt) {
-                          load.show();
+    addActionListener(evt -> {
+      load.show();
 
-                          Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
-                              load.getFile(),
-                              owner);
-                          if (score == null) {
-                            return;
-                          }
-                          if (readListenerList != null) {
-                            score = readListenerList.scoreRead(score);
-                            readListenerList.finishedReading();
-                          }
-                        }
-                      }
+      Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
+          load.getFile(),
+          owner);
+      if (score == null) {
+        return;
+      }
+      if (readListenerList != null) {
+        score = readListenerList.scoreRead(score);
+        readListenerList.finishedReading();
+      }
+    }
     );
   }
 

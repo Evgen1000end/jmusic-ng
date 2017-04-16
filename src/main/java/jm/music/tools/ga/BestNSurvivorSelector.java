@@ -39,9 +39,9 @@ public class BestNSurvivorSelector extends SurvivorSelector {
     Phrase[] returnPopulation = new Phrase[population.length];
     double[] combinedFitness = new double[fitness.length + parentsFitness.length];
     System.arraycopy(fitness, 0, combinedFitness, 0, fitness.length);
-    for (int i = fitness.length; i < combinedFitness.length; i++) {
-      combinedFitness[i] = parentsFitness[i - fitness.length];
-    }
+    System
+        .arraycopy(parentsFitness, fitness.length - fitness.length, combinedFitness, fitness.length,
+            combinedFitness.length - fitness.length);
     int[] indices = new int[returnPopulation.length];
     int currentBestIndex;
     boolean flag;

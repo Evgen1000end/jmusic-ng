@@ -1244,19 +1244,19 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * Prints the tracks attributes to stdout
    */
   public String toString() {
-    String phraseData = "-------- jMusic PHRASE: '" +
+    StringBuilder phraseData = new StringBuilder("-------- jMusic PHRASE: '" +
         title + "' contains " + this.size() + " notes.  Start time: " +
-        getStartTime() + " --------" + '\n';
+        getStartTime() + " --------" + '\n');
     if (this.tempo > 0) {
-      phraseData += "Phrase Tempo = " + this.tempo + '\n';
+      phraseData.append("Phrase Tempo = ").append(this.tempo).append('\n');
     }
     Enumeration enum1 = getNoteList().elements();
     int counter = 0;
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-      phraseData = phraseData + note.toString() + '\n';
+      phraseData.append(note.toString()).append('\n');
     }
-    return phraseData;
+    return phraseData.toString();
   }
 
   /**

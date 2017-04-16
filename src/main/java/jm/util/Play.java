@@ -683,25 +683,23 @@ public class Play implements JMC {
 
   // Spawn a thread to keep app alive during playback
   private static void audioWait(final Score score, final RTMixer mixer) {
-    pauseThread = new Thread(new Runnable() {
-      public void run() {
-        try {
-          pauseThread.sleep((int) (score.getEndTime() * 60.0 / score.getTempo() * 1000.0));
-        } catch (Exception e) {
-          System.out.println("jMusic Play.audioWait error in pauseThread");
-        }
-        System.out.println("Completed audio playback.");
-        //mixer.pause();
-        audioPaused = true;
-        try {
-          Thread.sleep(500); // stop abrupt cutoff buzz
-        } catch (InterruptedException e) {
-        }
-        //mixer.stop();
-        //mixerList.remove(mixer);
-        //audioPaused = false;
-        //audioPlaying = false;
+    pauseThread = new Thread(() -> {
+      try {
+        pauseThread.sleep((int) (score.getEndTime() * 60.0 / score.getTempo() * 1000.0));
+      } catch (Exception e) {
+        System.out.println("jMusic Play.audioWait error in pauseThread");
       }
+      System.out.println("Completed audio playback.");
+      //mixer.pause();
+      audioPaused = true;
+      try {
+        Thread.sleep(500); // stop abrupt cutoff buzz
+      } catch (InterruptedException e) {
+      }
+      //mixer.stop();
+      //mixerList.remove(mixer);
+      //audioPaused = false;
+      //audioPlaying = false;
     });
     pauseThread.start();
   }

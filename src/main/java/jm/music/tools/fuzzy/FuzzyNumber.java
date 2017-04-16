@@ -42,7 +42,7 @@ public class FuzzyNumber {
    * @param min - The leftmost or minimum value for the triangular membership function.
    * @param max - The rightmost or maximum value for the triangular membership function.
    */
-  public FuzzyNumber(double peak, double min, double max) {
+  public FuzzyNumber(final double peak, final double min, final double max) {
     this.peak = peak;
     this.min = min;
     this.max = max;
@@ -54,7 +54,7 @@ public class FuzzyNumber {
    * @param value - The number to be tested for its membership.
    * @return The degree of membership within this fuzzy number.
    */
-  public double getMembership(double value) {
+  public double getMembership(final double value) {
     if (value < min || value > max) {
       return 0.0;
     }
@@ -81,7 +81,7 @@ public class FuzzyNumber {
    *
    * @param newValue - The number to set the peak to.
    */
-  public void setPeak(double newValue) {
+  public void setPeak(final double newValue) {
     this.peak = newValue;
     if (min > newValue) {
       min = newValue;
@@ -105,7 +105,7 @@ public class FuzzyNumber {
    *
    * @param newValue - The number to set the minimum to.
    */
-  public void setMin(double newValue) {
+  public void setMin(final double newValue) {
     this.min = newValue;
     if (peak < newValue) {
       peak = newValue;

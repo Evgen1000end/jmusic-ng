@@ -601,11 +601,8 @@ public class Score implements JMC, Cloneable, Serializable {
           Enumeration enum3 = part.getPhraseList().elements();
           while (enum3.hasMoreElements()) {
             Note note = (Note) enum3.nextElement();
-            note = null;
           }
-          phrase = null;
         }
-        part = null;
       }
     }
     partList.removeAllElements();

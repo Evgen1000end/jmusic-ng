@@ -254,14 +254,10 @@ public final class Filter extends AudioObject {
         //System.out.println("Cutoff = " + cutoffs[i] + " Initial = " + initialCutoff);
       }
       //Adjust the input buffer
-      for (int j = (int) poles; j > 0; j--) {
-        xbuf[chan][j] = xbuf[chan][j - 1];
-      }
+      System.arraycopy(xbuf[chan], 0, xbuf[chan], 1, (int) poles);
       xbuf[chan][0] = (double) buffer[i];
       //Adjust the output buffer
-      for (int j = (int) poles; j > 0; j--) {
-        ybuf[chan][j] = ybuf[chan][j - 1];
-      }
+      System.arraycopy(ybuf[chan], 0, ybuf[chan], 1, (int) poles);
       //Zero input buffer
       ybuf[chan][0] = 0.0;
       //Convolve the output buffer input buffer and coefficients

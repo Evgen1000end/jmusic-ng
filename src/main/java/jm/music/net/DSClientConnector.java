@@ -97,9 +97,7 @@ public class DSClientConnector extends Thread {
     for (; ; ) {
       try {
         client.newObject(ois.readObject());
-      } catch (ClassNotFoundException cnfe) {
-        //Stuff
-      } catch (IOException ioe) {
+      } catch (ClassNotFoundException | IOException cnfe) {
         //Stuff
       }
     }

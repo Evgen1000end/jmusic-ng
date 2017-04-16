@@ -480,9 +480,8 @@ public class NoteEditor extends Dialog
         answer = 0;
       }
       int octave
-          = (new Integer(
-          octaveList.getSelectedItem()))
-          .intValue();
+          = new Integer(
+          octaveList.getSelectedItem());
       while (octave > -1) {
         answer += 12;
         --octave;

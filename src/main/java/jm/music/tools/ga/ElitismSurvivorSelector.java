@@ -76,9 +76,7 @@ public class ElitismSurvivorSelector extends SurvivorSelector {
     }
 
     // replace all but the best with thier children
-    for (int i = 0; i < returnPopulation.length - ELITISM_CONSTANT; i++) {
-      returnPopulation[i + ELITISM_CONSTANT] = children[i];
-    }
+    System.arraycopy(children, 0, returnPopulation, 2, returnPopulation.length - ELITISM_CONSTANT);
     //display top score
     //System.out.println("Elitism  best Index = " + currentBestIndex + " score = " + fitness[currentBestIndex]);
     return returnPopulation;

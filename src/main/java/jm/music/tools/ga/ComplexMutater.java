@@ -68,22 +68,18 @@ public class ComplexMutater extends Mutater {
     choice.add("Split and merge");
     choice.add("Step interpolation");
     choice.add("Tonal Pauses");
-    choice.addItemListener(new ItemListener() {
-                             public void itemStateChanged(ItemEvent evt) {
-                               mutateLabel.setText(Integer.toString(
-                                   MUTATE_PERCENTAGE[choice.getSelectedIndex()]));
-                               scrollbar.setValue(MUTATE_PERCENTAGE[choice.getSelectedIndex()]);
-                             }
-                           }
+    choice.addItemListener(evt -> {
+      mutateLabel.setText(Integer.toString(
+          MUTATE_PERCENTAGE[choice.getSelectedIndex()]));
+      scrollbar.setValue(MUTATE_PERCENTAGE[choice.getSelectedIndex()]);
+    }
     );
-    scrollbar.addAdjustmentListener(new AdjustmentListener() {
-                                      public void adjustmentValueChanged(AdjustmentEvent evt) {
-                                        MUTATE_PERCENTAGE[choice.getSelectedIndex()] =
-                                            scrollbar.getValue();
-                                        mutateLabel.setText(Integer.toString(scrollbar.getValue()));
-                                        mutateLabel.repaint();
-                                      }
-                                    }
+    scrollbar.addAdjustmentListener(evt -> {
+      MUTATE_PERCENTAGE[choice.getSelectedIndex()] =
+          scrollbar.getValue();
+      mutateLabel.setText(Integer.toString(scrollbar.getValue()));
+      mutateLabel.repaint();
+    }
     );
     gbc.gridy = GridBagConstraints.RELATIVE;
     gbc.gridwidth = 2;

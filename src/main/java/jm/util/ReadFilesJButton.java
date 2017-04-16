@@ -105,49 +105,45 @@ public class ReadFilesJButton extends JButton {
     super();
     this.owner = owner;
     setMode(mode);
-    addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
-        Runnable processRun = new Runnable() {
-          public void run() {
-            readListenerList.startedReading();
+    addActionListener(evt -> {
+      Runnable processRun = () -> {
+        readListenerList.startedReading();
 
-            int chooserReturnValue = chooser.showOpenDialog(owner);
-            if (chooserReturnValue != chooser.APPROVE_OPTION) {
-              return;
-            }
+        int chooserReturnValue = chooser.showOpenDialog(owner);
+        if (chooserReturnValue != chooser.APPROVE_OPTION) {
+          return;
+        }
 
-            if (mode == SINGLE_FILE_MODE) {
-              processFile(chooser.getSelectedFile());
-            } else if (mode == MULTIPLE_FILES_MODE) {
-              processFiles(chooser.getSelectedFiles());
-            } else if (mode == FOLDER_MODE) {
-              File file = chooser.getSelectedFile();
-              if (file.isDirectory()) {
-                                /*
-                                 * When jMusic supports only JDK1.2 and later,
-                                 * the following code can be simplified to:
-                                 *
-                                 * processFiles(file.listFiles(
-                                 *         new ReadFilenameFilter()));
-                                 */
-                String[] filenames = file.list(
-                    new ReadFilenameFilter());
-                for (int i = 0; i < filenames.length; i++) {
-                  processFile(new File(file.getAbsolutePath(),
-                      filenames[i]));
-                }
-              }
-            }
-
-            if (readListenerList != null) {
-              readListenerList.finishedReading();
+        if (mode == SINGLE_FILE_MODE) {
+          processFile(chooser.getSelectedFile());
+        } else if (mode == MULTIPLE_FILES_MODE) {
+          processFiles(chooser.getSelectedFiles());
+        } else if (mode == FOLDER_MODE) {
+          File file = chooser.getSelectedFile();
+          if (file.isDirectory()) {
+                            /*
+                             * When jMusic supports only JDK1.2 and later,
+                             * the following code can be simplified to:
+                             *
+                             * processFiles(file.listFiles(
+                             *         new ReadFilenameFilter()));
+                             */
+            String[] filenames = file.list(
+                new ReadFilenameFilter());
+            for (int i = 0; i < filenames.length; i++) {
+              processFile(new File(file.getAbsolutePath(),
+                  filenames[i]));
             }
           }
-        };
-        Thread processThread = new Thread(processRun, "processThread");
-        processThread.start();
+        }
 
-      }
+        if (readListenerList != null) {
+          readListenerList.finishedReading();
+        }
+      };
+      Thread processThread = new Thread(processRun, "processThread");
+      processThread.start();
+
     });
   }
 

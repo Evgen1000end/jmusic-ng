@@ -551,14 +551,14 @@ public class CPhrase implements JMC, Cloneable, Serializable {
    * Collects the CPhrase attributes to a string
    */
   public String toString() {
-    String cphraseData = "---- jMusic CPHRASE: '" + title +
-        "' Start time: " + startTime + " ----" + '\n';
+    StringBuilder cphraseData = new StringBuilder("---- jMusic CPHRASE: '" + title +
+        "' Start time: " + startTime + " ----" + '\n');
     Enumeration enum1 = phraseList.elements();
     while (enum1.hasMoreElements()) {
       Phrase phrase = (Phrase) enum1.nextElement();
-      cphraseData = cphraseData + phrase.toString() + '\n';
+      cphraseData.append(phrase.toString()).append('\n');
     }
-    return cphraseData;
+    return cphraseData.toString();
   }
 
   /**

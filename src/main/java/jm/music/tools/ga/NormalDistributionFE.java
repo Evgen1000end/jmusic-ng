@@ -653,11 +653,7 @@ public class NormalDistributionFE extends FitnessEvaluater {
         case 22:
           return PhraseAnalysis.climaxTonality(phrase, tonic, scale);
       }
-    } catch (NoteListException e) {
-      e.printStackTrace();
-      System.err.println(e);
-      System.exit(-1);
-    } catch (QuantisationException e) {
+    } catch (NoteListException | QuantisationException e) {
       e.printStackTrace();
       System.err.println(e);
       System.exit(-1);

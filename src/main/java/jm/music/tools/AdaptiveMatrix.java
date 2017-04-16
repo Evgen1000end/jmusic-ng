@@ -154,30 +154,30 @@ public final class AdaptiveMatrix {
       return null;
     }
     int[] array = new int[length];
-    String seedString = "";
+    StringBuilder seedString = new StringBuilder();
     int[] seedbak = new int[seed.length];
     //change seed into a string and add seed to the outgoing array
     for (int i = 0; i < seed.length; i++) {
       array[i] = seed[i];
       seedbak[i] = seed[i];
-      seedString += seed[i] + " "; //create the prefix
+      seedString.append(seed[i]).append(" "); //create the prefix
     }
-    String bak = seedString;
+    String bak = seedString.toString();
     //Check that this seed is available from the matrix
-    if (!weightMatrix.containsKey(seedString)) {
+    if (!weightMatrix.containsKey(seedString.toString())) {
       System.err.println("[WARNING] This seed is unavailable .. try another");
       return null;
     }
     //Calculate the new index values
     for (int i = seed.length; i < array.length; i++) {
-      if (!weightMatrix.containsKey(seedString)) { //If there are no other choices
-        seedString = bak;//select the original seed;
+      if (!weightMatrix.containsKey(seedString.toString())) { //If there are no other choices
+        seedString = new StringBuilder(bak);//select the original seed;
         seed = seedbak;
       }
-      double[] tmp = (double[]) weightMatrix.get(seedString);
-      seedString = ""; //reset the prefix
+      double[] tmp = (double[]) weightMatrix.get(seedString.toString());
+      seedString = new StringBuilder(); //reset the prefix
       for (int k = 1; k < seed.length; k++) {
-        seedString += seed[k] + " ";
+        seedString.append(seed[k]).append(" ");
         seed[k - 1] = seed[k];
       }
       double rand = Math.random();
@@ -186,7 +186,7 @@ public final class AdaptiveMatrix {
         count += tmp[j];
         if (count > rand) {
           array[i] = j;
-          seedString += j + " ";
+          seedString.append(j).append(" ");
           seed[depth - 1] = j;
           break;
         }
@@ -303,18 +303,18 @@ public final class AdaptiveMatrix {
    */
   private void calcCount(int[] numArray) {
     for (int i = this.depth - 1; i < numArray.length - 1; i++) {
-      String prefix = "";
+      StringBuilder prefix = new StringBuilder();
       int[] post = new int[indexRange];
       for (int j = 0, k = this.depth - 1; j < this.depth; j++, k--) {
-        prefix += numArray[i - k] + " ";
+        prefix.append(numArray[i - k]).append(" ");
       }
-      if (this.countMatrix.containsKey(prefix)) {
-        int[] postfix = (int[]) countMatrix.get(prefix);
+      if (this.countMatrix.containsKey(prefix.toString())) {
+        int[] postfix = (int[]) countMatrix.get(prefix.toString());
         postfix[numArray[i + 1]]++;
-        countMatrix.put(prefix, postfix);
+        countMatrix.put(prefix.toString(), postfix);
       } else {
         post[numArray[i + 1]]++;
-        countMatrix.put(prefix, post);
+        countMatrix.put(prefix.toString(), post);
       }
     }
   }

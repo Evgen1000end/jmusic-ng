@@ -514,11 +514,7 @@ public class Read implements JMC {
     dialog.add(new Label(message), BorderLayout.CENTER);
 
     Button okButton = new Button("OK");
-    okButton.addActionListener(new ActionListener() {
-                                 public void actionPerformed(ActionEvent e) {
-                                   dialog.dispose();
-                                 }
-                               }
+    okButton.addActionListener(e -> dialog.dispose()
     );
     Panel buttonPanel = new Panel();
     buttonPanel.add(okButton);
@@ -685,15 +681,7 @@ public class Read implements JMC {
           } catch (SecurityException e2) {
             message = "Read access not allowed to " + filename;
             score = null;
-          } catch (ClassNotFoundException e2) {
-            message = "The file " + filename
-                + " is neither a jm nor a MIDI file";
-            score = null;
-          } catch (ClassCastException e2) {
-            message = "The file " + filename
-                + " is neither a jm nor a MIDI file";
-            score = null;
-          } catch (StreamCorruptedException e2) {
+          } catch (ClassNotFoundException | StreamCorruptedException | ClassCastException e2) {
             message = "The file " + filename
                 + " is neither a jm nor a MIDI file";
             score = null;

@@ -272,12 +272,8 @@ public final class MidiParser implements JMC {
         }
       }
 
-      LinkedList<EventPair> midiEvents = new LinkedList<EventPair>();
+      LinkedList<EventPair> midiEvents = new LinkedList<>();
 
-			/*if(inst.getTempo() != Part.DEFAULT_TEMPO){
-        //System.out.println("Adding part tempo");
-				midiEvents.add(new EventPair(0, new TempoEvent(inst.getTempo())));
-			} */
       //if this part has a Program Change value then set it
       if (inst.getInstrument() != NO_INSTRUMENT) {
         //System.out.println("Instrument change no. " + inst.getInstrument());
@@ -404,7 +400,7 @@ public final class MidiParser implements JMC {
           }
         }
       }
-      Collections.sort(midiEvents, new CompareKey());
+      midiEvents.sort(new CompareKey());
       //Add times to events, now that things are sorted
       double st = 0.0; //start time
       double sortStart; // start time from list of notes ons and offs.

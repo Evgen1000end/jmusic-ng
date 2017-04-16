@@ -828,7 +828,7 @@ public class Note implements Cloneable, Serializable {
    * @param index The specific breakPoint number to set.
    * @param points The values for this break point array.
    */
-  public void setBreakPoints(int index, double[] points) {
+  public void setBreakPoints(final int index, final double[] points) {
     if (index < 0 || index > breakPoints.length) {
       System.err.println("jMusic Note error: BreakPoint index " + index +
           " is out of range when setting.");
@@ -844,7 +844,7 @@ public class Note implements Cloneable, Serializable {
    *
    * @return double[] The break oint values for the specified index
    */
-  public double[] getBreakPoints(int index) {
+  public double[] getBreakPoints(final int index) {
     if (index < 0 || index > breakPoints.length) {
       System.err.println("jMusic Note error: BreakPoint index " + index +
           "is out of range when getting.");
@@ -976,23 +976,12 @@ public class Note implements Cloneable, Serializable {
    * @param scale a constant from Scales.java goes here
    */
   public Note nextNote(int[] scale) {
-    //int[] scaleType = scale.getScaleType();
     Note nextNote = null;
     for (int i = 0; i < scale.length; i++) {
-////	    this.getPitch()
-////	    //scale[i]
-//Note note = (Note)scale.get(i);
-      //System.out.println("Scale " + scale[i]);
-      //System.out.println("Mod This Note " + this.getPitchValue() % 12);
       if (this.getPitchValue() % 12 == 0) {
         nextNote = new Note(this.getPitch() + scale[i], DEFAULT_RHYTHM_VALUE);
       }
-////			Note note2 = (Note)scale.get(i+1);
-////			return note2;
-////		}
-//
     }
-//	return null;
     int nextpitch = this.getPitch() + scale[1];
     System.out.println("NEXT PITCH " + nextpitch + " " + this.getPitch() + " " + scale[1]);
     return new Note(nextpitch, DEFAULT_RHYTHM_VALUE);
@@ -1003,30 +992,43 @@ public class Note implements Cloneable, Serializable {
    */
   public int getPitchValue() {
     int pitch = 0;
-    if (noteString.equals(C)) {
-      pitch = 60;
-    } else if (noteString.equals(C_SHARP)) {
-      pitch = 61;
-    } else if (noteString.equals(D)) {
-      pitch = 62;
-    } else if (noteString.equals(E_FLAT)) {
-      pitch = 63;
-    } else if (noteString.equals(E)) {
-      pitch = 64;
-    } else if (noteString.equals(F)) {
-      pitch = 65;
-    } else if (noteString.equals(F_SHARP)) {
-      pitch = 66;
-    } else if (noteString.equals(G)) {
-      pitch = 67;
-    } else if (noteString.equals(A_FLAT)) {
-      pitch = 68;
-    } else if (noteString.equals(A)) {
-      pitch = 69;
-    } else if (noteString.equals(B_FLAT)) {
-      pitch = 70;
-    } else if (noteString.equals(B)) {
-      pitch = 71;
+    switch (noteString) {
+      case C:
+        pitch = 60;
+        break;
+      case C_SHARP:
+        pitch = 61;
+        break;
+      case D:
+        pitch = 62;
+        break;
+      case E_FLAT:
+        pitch = 63;
+        break;
+      case E:
+        pitch = 64;
+        break;
+      case F:
+        pitch = 65;
+        break;
+      case F_SHARP:
+        pitch = 66;
+        break;
+      case G:
+        pitch = 67;
+        break;
+      case A_FLAT:
+        pitch = 68;
+        break;
+      case A:
+        pitch = 69;
+        break;
+      case B_FLAT:
+        pitch = 70;
+        break;
+      case B:
+        pitch = 71;
+        break;
     }
     return pitch;
   }

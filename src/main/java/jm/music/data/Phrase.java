@@ -24,7 +24,9 @@
 package jm.music.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Vector;
 import jm.JMC;
 
@@ -80,7 +82,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * An array containing mutiple voices
    */
-  private Vector noteList;
+  private List<Note> noteList;
 
   //	/** The phrases start time in beats */
   //	private double startTime;
@@ -207,7 +209,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
       System.exit(1); //crash ungracefully
     }
     this.instrument = instrument;
-    this.noteList = new Vector();
+    this.noteList = new ArrayList<>();
     this.numerator = DEFAULT_NUMERATOR;
     this.denominator = DEFAULT_DENOMINATOR;
     this.tempo = DEFAULT_TEMPO;
@@ -262,7 +264,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * the specified <CODE>title</CODE>.
    *
    * @param note Note to be containing by the phrase.
-   * @param title String describing the title of the Phrase.
+   * @param startTime String describing the title of the Phrase.
    */
   public Phrase(Note note, double startTime) {
     this(note);
@@ -298,7 +300,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   public void addNote(Note note) {
     note.setPhrase(this);
-    noteList.addElement(note);
+    noteList.add(note);
   }
 
 
@@ -329,8 +331,8 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @param notes of Notes to append.
    */
   public void addNoteList(Note[] notes) {
-    for (int i = 0; i < notes.length; i++) {
-      this.addNote(notes[i]);
+    for (Note note : notes) {
+      addNote(note);
     }
   }
 
@@ -345,16 +347,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
   public void addNoteList(Vector noteVector, boolean append) {
     Enumeration enum1 = noteVector.elements();
     if (!append) {
-      this.noteList.removeAllElements();
+      this.noteList.clear();
     }
     while (enum1.hasMoreElements()) {
-      try {
-        Note note = (Note) enum1.nextElement();
-        this.addNote(note);
-        //note.setPhrase(this);
-      } catch (RuntimeException re) {
-        System.err.println("The vector passed to this method must " + "contain Notes only!");
-      }
+      Note note = (Note) enum1.nextElement();
+      addNote(note);
     }
   }
 
@@ -367,10 +364,10 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   public void addNoteList(Note[] noteArray, boolean append) {
     if (!append) {
-      this.noteList.removeAllElements();
+      this.noteList.clear();
     }
-    for (int i = 0; i < noteArray.length; i++) {
-      this.addNote(noteArray[i]);
+    for (Note note : noteArray) {
+      addNote(note);
     }
   }
 
@@ -385,7 +382,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     for (int i = 0; i < rvArray.length; i++) {
       rvArray[i] = rhythmValue;
     }
-    this.addNoteList(pitchArray, rvArray);
+    addNoteList(pitchArray, rvArray);
   }
 
   /**
@@ -402,7 +399,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
       rvArray[i] = rhythmValue;
       dynArray[i] = dynamic;
     }
-    this.addNoteList(pitchArray, rvArray, dynArray);
+    addNoteList(pitchArray, rvArray, dynArray);
   }
 
   /**
@@ -416,7 +413,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     for (int i = 0; i < rvArray.length; i++) {
       rvArray[i] = rhythmValue;
     }
-    this.addNoteList(freqArray, rvArray);
+    addNoteList(freqArray, rvArray);
   }
 
 
@@ -431,7 +428,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     for (int i = 0; i < pitchArray.length; i++) {
       dynamic[i] = Note.DEFAULT_DYNAMIC;
     }
-    this.addNoteList(pitchArray, rhythmArray, dynamic);
+    addNoteList(pitchArray, rhythmArray, dynamic);
   }
 
   /**
@@ -445,7 +442,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
     for (int i = 0; i < freqArray.length; i++) {
       dynamic[i] = Note.DEFAULT_DYNAMIC;
     }
-    this.addNoteList(freqArray, rhythmArray, dynamic);
+    addNoteList(freqArray, rhythmArray, dynamic);
   }
 
   /**
@@ -453,11 +450,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
    *
    * @param pitchArray array of pitch values
    * @param rhythmArray array of rhythmic values
-   * @param dynmaic array of dynamic values
+   * @param dynamic array of dynamic values
    */
   public void addNoteList(int[] pitchArray, double[] rhythmArray,
       int[] dynamic) {
-    this.addNoteList(pitchArray, rhythmArray, dynamic, true);
+    addNoteList(pitchArray, rhythmArray, dynamic, true);
   }
 
   /**
@@ -465,11 +462,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
    *
    * @param freqArray array of frequency values
    * @param rhythmArray array of rhythmic values
-   * @param dynmaic array of dynamic values
+   * @param dynamic array of dynamic values
    */
   public void addNoteList(double[] freqArray, double[] rhythmArray,
       int[] dynamic) {
-    this.addNoteList(freqArray, rhythmArray, dynamic, true);
+    addNoteList(freqArray, rhythmArray, dynamic, true);
   }
 
   /**
@@ -485,7 +482,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   public void addNoteList(int[] pitchArray, double[] rhythmArray,
       int[] dynamic, boolean append) {
     if (!append) {
-      this.noteList.removeAllElements();
+      this.noteList.clear();
     }
     for (int i = 0; i < pitchArray.length; i++) {
       try {
@@ -514,7 +511,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   public void addNoteList(double[] freqArray, double[] rhythmArray,
       int[] dynamic, boolean append) {
     if (!append) {
-      this.noteList.removeAllElements();
+      this.noteList.clear();
     }
     for (int i = 0; i < freqArray.length; i++) {
       try {
@@ -623,32 +620,26 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Deletes the specified note in the phrase
    *
-   * @param int noteNumb the index of the note to be deleted
+   * @param noteNumb noteNumb the index of the note to be deleted
    */
   public void removeNote(int noteNumb) {
-    Vector vct = this.noteList;
-    try {
-      vct.removeElement(vct.elementAt(noteNumb));
-    } catch (RuntimeException re) {
-      System.err.println("Note index to be deleted must be within the phrase.");
-    }
+    noteList.remove(noteNumb);
   }
 
-  /**
-   * Deletes the first occurence of the specified note in the phrase
-   *
-   * @param note the note object to be deleted.
-   */
-  public void removeNote(Note note) {
-    this.noteList.removeElement(note);
-  }
+//  /**
+//   * Deletes the first occurence of the specified note in the phrase
+//   *
+//   * @param note the note object to be deleted.
+//   */
+//  public void removeNote(Note note) {
+//    noteList.removeElement(note);
+//  }
 
   /**
    * Deletes the last note in the phrase
    */
   public void removeLastNote() {
-    Vector vct = this.noteList;
-    vct.removeElementAt(vct.size() - 1);
+    noteList.remove(noteList.size()-1);
   }
 
   /**
@@ -656,17 +647,17 @@ public class Phrase implements JMC, Cloneable, Serializable {
    *
    * @return Vector A vector containing all Note objects in this phrase
    */
-  public Vector getNoteList() {
-    return this.noteList;
+  public List<Note> getNoteList() {
+    return noteList;
   }
 
   /**
    * Replaces the entire note list with a new note list vector
    *
-   * @param Vector of notes
+   * @param newNoteList of notes
    */
-  public void setNoteList(Vector newNoteList) {
-    this.noteList = newNoteList;
+  public void setNoteList(List<Note> newNoteList) {
+    noteList = newNoteList;
   }
 
   /**
@@ -675,10 +666,10 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @return Note[] An array containing all Note objects in this phrase
    */
   public Note[] getNoteArray() {
-    Vector vct = this.noteList;
-    Note[] noteArray = new Note[vct.size()];
+    //Vector vct = this.noteList;
+    Note[] noteArray = new Note[noteList.size()];
     for (int i = 0; i < noteArray.length; i++) {
-      noteArray[i] = (Note) vct.elementAt(i);
+      noteArray[i] = noteList.get(i);
     }
     return noteArray;
   }
@@ -690,7 +681,6 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   public double getStartTime() {
     return position.getStartTime();
-    //		return this.startTime;
   }
 
 
@@ -703,7 +693,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * <p>To position this relative to another class use the
    * <code>anchor</code> method instead.
    *
-   * @param double the time at which to start the phrase
+   * @param startTime the time at which to start the phrase
    */
   public void setStartTime(double startTime) {
     if (startTime >= MIN_START_TIME) {
@@ -767,10 +757,8 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   public double getEndTime() {
     double endTime = (getStartTime() < MIN_START_TIME) ? MIN_START_TIME : getStartTime();
-    Enumeration enum1 = this.noteList.elements();
-    while (enum1.hasMoreElements()) {
-      Note nextNote = (Note) enum1.nextElement();
-      endTime += nextNote.getRhythm();
+    for (Note note: noteList ) {
+      endTime += note.getRhythm();
     }
     return endTime;
   }
@@ -782,10 +770,8 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   final double getTotalDuration() {
     double cumulativeLength = 0.0;
-    Enumeration enum1 = this.noteList.elements();
-    while (enum1.hasMoreElements()) {
-      Note nextNote = (Note) enum1.nextElement();
-      cumulativeLength += nextNote.getRhythm();
+    for (Note note: noteList ) {
+      cumulativeLength += note.getRhythm();
     }
     return cumulativeLength;
   }
@@ -802,7 +788,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Gives the Phrase a new title
    *
-   * @param phrases title
+   * @param title
    */
   public void setTitle(String title) {
     this.title = title;
@@ -820,7 +806,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Gives the Phrase a new append status
    *
-   * @param boolean the append status
+   * @param append the append status
    */
   public void setAppend(boolean append) {
     this.append = append;
@@ -838,7 +824,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Make a link from this phrase to another
    *
-   * @param Phrase the phrase to link to
+   * @param link the phrase to link to
    */
   public void setLinkedPhrase(Phrase link) {
     this.linkedPhrase = link;
@@ -856,13 +842,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Determine the pan position for all notes in this phrase.
    *
-   * @param double the phrase's pan setting
+   * @param pan the phrase's pan setting
    */
   public void setPan(double pan) {
     this.pan = pan;
-    Enumeration enum1 = noteList.elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       note.setPan(pan);
     }
   }
@@ -879,7 +863,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Determine the tempo in beats per minute for this phrase
    *
-   * @param double the phrase's tempo
+   * @param newTempo the phrase's tempo
    */
   public void setTempo(double newTempo) {
     this.tempo = newTempo;
@@ -888,14 +872,12 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Get an individual note object by its number
    *
-   * @param int number - the number of the Track to return
+   * @param number - the number of the Track to return
    * @return Note answer - the note object to return
    */
   public Note getNote(int number) {
-    Enumeration enum1 = noteList.elements();
     int counter = 0;
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       if (counter == number) {
         return note;
       }
@@ -945,7 +927,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Specifies the numerator of the Phrase's time signature
    *
-   * @param int time signature numerator
+   * @param num time signature numerator
    */
   public void setNumerator(int num) {
     this.numerator = num;
@@ -963,7 +945,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
   /**
    * Specifies the denominator of the Phrase's time signature
    *
-   * @param int time signature denominator
+   * @param dem time signature denominator
    */
   public void setDenominator(int dem) {
     this.denominator = dem;
@@ -991,9 +973,8 @@ public class Phrase implements JMC, Cloneable, Serializable {
   public Phrase copy() {
     Phrase phr = new Phrase();
     copyAttributes(phr);
-    Enumeration enum1 = this.noteList.elements();
-    while (enum1.hasMoreElements()) {
-      phr.addNote(((Note) enum1.nextElement()).copy());
+    for (Note note: noteList ) {
+      phr.addNote(note.copy());
     }
     return phr;
   }
@@ -1017,8 +998,8 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * pads beginning and end with shortedend notes and rests
    * if notes or phrase boundaries don't align with locations.
    *
-   * @param double start location
-   * @param double end location
+   * @param startLoc start location
+   * @param endLoc end location
    * @return Phrase a copy of the Phrase
    */
   public Phrase copy(double startLoc, double endLoc) {
@@ -1153,10 +1134,12 @@ public class Phrase implements JMC, Cloneable, Serializable {
     //is it before the phrase?
 
     //make beatCounter add up to the right amount before going though the segment
-    Enumeration noteEnum = this.getNoteList().elements();
-    while (startLoc > beatCounter && noteEnum.hasMoreElements()) {
-      Note n = (Note) noteEnum.nextElement();
-      beatCounter += n.getRhythm();
+
+    for (Note note: noteList) {
+      beatCounter += note.getRhythm();
+      if (!(startLoc > beatCounter)) {
+        break;
+      }
     }
 
     // now it is in the segment, should a rest be added in the begining because
@@ -1177,18 +1160,17 @@ public class Phrase implements JMC, Cloneable, Serializable {
     }
     double addedCounter = 0.0;
 
-    // go through the rest of the notes in the segment, until it equals the
-    // end or runs out of notes
-    while (noteEnum.hasMoreElements() && beatCounter < endLoc) {
-      Note n = ((Note) noteEnum.nextElement()).copy();
-      //if the note goes over the end
+    for (Note note: noteList) {
+      Note n = note.copy();
       if ((n.getRhythm() + beatCounter) > endLoc && trimmed) {
-        //trimm it back
         n.setRhythmValue(endLoc - beatCounter, truncated);
       }
       tempPhr.addNote(n);
       addedCounter += n.getRhythm();
       beatCounter += n.getRhythm();
+      if (!(beatCounter < endLoc)) {
+        break;
+      }
     }
 
     if (beatCounter < endLoc) {
@@ -1198,7 +1180,6 @@ public class Phrase implements JMC, Cloneable, Serializable {
       Note r = Note.newBuilder().rest().rhythm(endLoc - startLoc).build();
       tempPhr.addNote(r);
     }
-    // done!
     return tempPhr;
   }
 
@@ -1224,9 +1205,9 @@ public class Phrase implements JMC, Cloneable, Serializable {
     phr.setPan(this.pan);
     phr.setLinkedPhrase(this.linkedPhrase);
     phr.setMyPart(this.getMyPart());
-    Enumeration enum1 = this.noteList.elements();
-    while (enum1.hasMoreElements()) {
-      Note n = ((Note) enum1.nextElement()).copy();
+
+    for (Note note: noteList) {
+      Note n = note.copy();
       if (n.getPitch() > highestPitch && n.getPitch() < lowestPitch) {
         n.setPitch(REST);
       }
@@ -1246,10 +1227,8 @@ public class Phrase implements JMC, Cloneable, Serializable {
     if (this.tempo > 0) {
       phraseData.append("Phrase Tempo = ").append(this.tempo).append('\n');
     }
-    Enumeration enum1 = getNoteList().elements();
     int counter = 0;
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList) {
       phraseData.append(note.toString()).append('\n');
     }
     return phraseData.toString();
@@ -1259,7 +1238,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * Empty removes all elements in the note list vector
    */
   public void empty() {
-    noteList.removeAllElements();
+    noteList.clear();
   }
 
   /**
@@ -1277,14 +1256,14 @@ public class Phrase implements JMC, Cloneable, Serializable {
     return phr;
   }
 
+
+
   /**
    * Return the pitch value of the highest note in the phrase.
    */
   public int getHighestPitch() {
     int max = -1;
-    Enumeration enum1 = getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       if (note.getPitch() > max) {
         max = note.getPitch();
       }
@@ -1297,9 +1276,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   public int getLowestPitch() {
     int min = 128;
-    Enumeration enum1 = getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       if (note.getPitch() < min && note.getPitch() >= 0) {
         min = note.getPitch();
       }
@@ -1312,9 +1289,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   public double getLongestRhythmValue() {
     double max = 0.0;
-    Enumeration enum1 = getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       if (note.getRhythm() > max) {
         max = note.getRhythm();
       }
@@ -1327,9 +1302,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    */
   public double getShortestRhythmValue() {
     double min = 1000.0;
-    Enumeration enum1 = getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       if (note.getRhythm() < min) {
         min = note.getRhythm();
       }
@@ -1341,9 +1314,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * Change the dynamic value of each note in the phrase.
    */
   public void setDynamic(int dyn) {
-    Enumeration enum1 = getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       note.setDynamic(dyn);
     }
   }
@@ -1352,9 +1323,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * Change the pitch value of each note in the phrase.
    */
   public void setPitch(int val) {
-    Enumeration enum1 = getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       note.setPitch(val);
     }
   }
@@ -1363,9 +1332,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * Change the rhythm value of each note in the phrase.
    */
   public void setRhythmValue(double val) {
-    Enumeration enum1 = getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       note.setRhythm(val);
     }
   }
@@ -1374,9 +1341,7 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * Change the Duration value of each note in the phrase.
    */
   public void setDuration(double val) {
-    Enumeration enum1 = getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: noteList ) {
       note.setDuration(val);
     }
   }
@@ -1404,12 +1369,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @param index the phrase position to replace
    */
   public void setNote(Note n, int index) {
-    if (index >= this.getSize()) {
+    if (index >= getSize()) {
       System.out.println("jMusic error: Phrase setNote index is too large.");
       return;
     }
-    this.noteList.removeElementAt(index);
-    this.noteList.insertElementAt(n, index);
+    noteList.set(index, n);
   }
 
   /**

@@ -17,9 +17,6 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.music.data;
 
-import static jm.music.data.PitchType.FREQUENCY;
-import static jm.music.data.PitchType.MIDI_PITCH;
-
 import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -141,10 +138,6 @@ public class Note implements Cloneable, Serializable {
   /**
    * The largest value for a pitch.
    */
-  public static final double MAX_MIDI_PITCH = 127.0;
-  /**
-   * The largest value for a pitch.
-   */
   public static final int MAX_PITCH = 127;
   /**
    * The smallest value for a rhythmValue.
@@ -216,7 +209,7 @@ public class Note implements Cloneable, Serializable {
   /**
    * Pitch/frequency value of the note
    */
-  private double pitch;
+  private int pitch;
 
   private double frequency;
 
@@ -251,7 +244,7 @@ public class Note implements Cloneable, Serializable {
    */
   //private boolean pitchType;
 
-  private PitchType pitchType;
+  //private PitchType pitchType;
   /**
    * The phrase that this note has been added to.
    */
@@ -267,8 +260,8 @@ public class Note implements Cloneable, Serializable {
    */
   private Note() {
     this(DEFAULT_PITCH, DEFAULT_RHYTHM_VALUE);
-    this.pitch = DEFAULT_PITCH;
-    this.pitchType = MIDI_PITCH;
+    setPitch(DEFAULT_PITCH);
+    //this.pitchType = MIDI_PITCH;
     this.rhythmValue = DEFAULT_RHYTHM_VALUE;
     this.dynamic = DEFAULT_DYNAMIC;
     this.pan = DEFAULT_PAN;
@@ -323,8 +316,7 @@ public class Note implements Cloneable, Serializable {
           + " " + pitch + ", it must be no less than "
           + MIN_PITCH + " (REST = " + REST + ")");
     }
-    this.pitchType = MIDI_PITCH;
-    this.pitch = (double) pitch;
+    setPitch(pitch);
     this.rhythmValue = rhythmValue;
     this.dynamic = (dynamic < MIN_DYNAMIC)
         ? MIN_DYNAMIC
@@ -371,13 +363,7 @@ public class Note implements Cloneable, Serializable {
    */
   public Note(final double frequency, final double rhythmValue, final int dynamic,
       final double pan) {
-    if (frequency > MIN_FREQUENCY) {
-      this.pitch = frequency;
-    } else {
-      throw new IllegalArgumentException("jMusic Note constructor error: Frequency is " +
-          frequency + ", it must be greater than " + MIN_FREQUENCY + " hertz.");
-    }
-    this.pitchType = FREQUENCY;
+    setFrequency(frequency);
     this.rhythmValue = rhythmValue;
     this.dynamic =
         (dynamic < MIN_DYNAMIC) ? MIN_DYNAMIC : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
@@ -391,29 +377,13 @@ public class Note implements Cloneable, Serializable {
     setPitch(getPitchValue());
   }
 
-  public PitchType getPitchType() {
-    return pitchType;
-  }
-
-  public void setPitchType(final PitchType pitchType) {
-    this.pitchType = pitchType;
-  }
-
   /**
    * Retrieve the note's pitch as a frequency
    *
    * @return double note's pitch
    */
   public double getFrequency() {
-    double frq = this.pitch;
-    if (this.pitchType == MIDI_PITCH && this.pitch != (double) REST &&
-        this.pitch <= MAX_PITCH && this.pitch >= MIN_PITCH) {
-      frq = jm.JMC.FRQ[(int) this.pitch];
-    }
-    if (this.pitch == (double) REST) {
-      frq = (double) REST;
-    }
-    return frq;
+    return frequency < (REST+2) ? REST : frequency;
   }
 
   /**
@@ -423,8 +393,14 @@ public class Note implements Cloneable, Serializable {
    * @param freq note pitch as a frequency in hertz
    */
   public void setFrequency(final double freq) {
-    this.pitch = (pitch < MIN_FREQUENCY) ? MIN_FREQUENCY : freq;
-    pitchType = FREQUENCY;
+    if (freq == REST) {
+      this.frequency = REST;
+      this.pitch = REST;
+    } else {
+      this.frequency = (frequency < MIN_FREQUENCY) ? MIN_FREQUENCY : freq;
+      pitch = NoteUtils.frequencyToPitch(this.frequency);
+    }
+
   }
 
   /**
@@ -434,36 +410,25 @@ public class Note implements Cloneable, Serializable {
    * @return int note's pitch
    */
   public int getPitch() {
-    if (pitchType == FREQUENCY && this.pitch != (double) REST) {
-      throw new IllegalArgumentException(
-          "jMusic error getting Note pitch: Pitch is a frequency - " +
-              "getPitch() can't be used.");
-    }
-    int val;
-    if (this.pitch < (double) (REST + 2)) {
-      val = REST;
-    } else {
-      val = (int) this.pitch;
-    }
-    return val;
+    return pitch < (REST + 2) ? REST : pitch;
   }
 
   /**
    * Assign notes pitch.  If the parameter <CODE>pitch</CODE> is less than
    * {@link #MIN_PITCH} then the pitch of this note will be set to MIN_PITCH.
-   * Likewise, if <CODE>pitch</CODE> is greater than {@link #MAX_MIDI_PITCH},
+   * Likewise, if <CODE>pitch</CODE> is greater than {@link #MAX_PITCH},
    * pitch will be set to MAX_MIDI_PITCH.
    *
    * @param pitch notes pitch
    */
   public void setPitch(final int pitch) {
     if (pitch == REST) {
-      this.pitch = (double) REST;
+      this.pitch = REST;
+      this.frequency = REST;
     } else {
-      this.pitch =
-          (pitch < MIN_PITCH) ? MIN_PITCH : ((pitch > MAX_MIDI_PITCH) ? MAX_MIDI_PITCH : pitch);
+      this.pitch = (pitch < MIN_PITCH) ? MIN_PITCH : ((pitch > MAX_PITCH) ? MAX_PITCH : pitch);
+      frequency = NoteUtils.pitchToFrequency(this.pitch);
     }
-    pitchType = MIDI_PITCH;
   }
 
   /**
@@ -607,11 +572,7 @@ public class Note implements Cloneable, Serializable {
    */
   public Note copy() {
     Note note;
-    if (pitchType == MIDI_PITCH) {
-      note = new Note(this.getPitch(), this.rhythmValue, this.dynamic);
-    } else {
-      note = new Note(this.getFrequency(), this.rhythmValue, this.dynamic);
-    }
+    note = new Note(this.getPitch(), this.rhythmValue, this.dynamic);
     note.setPan(this.pan);
     note.setDuration(this.duration);
     note.setOffset(this.offset);
@@ -664,23 +625,13 @@ public class Note implements Cloneable, Serializable {
    * Collects a string of the notes attributes
    */
   public String toString() {
-    String noteDetails;
-    if (pitchType == MIDI_PITCH) {
-      noteDetails = "jMusic NOTE: " +
-          "[Pitch = " + (int) pitch +
-          "][RhythmValue = " + rhythmValue +
-          "][Dynamic = " + dynamic +
-          "][Duration = " + duration +
-          "][Pan = " + pan + "]";
-    } else {
-      noteDetails = "Note: " +
-          "[Frequency = " + pitch +
-          "][RhythmValue = " + rhythmValue +
-          "][Dynamic = " + dynamic +
-          "][Duration = " + duration +
-          "][Pan = " + pan + "]";
-    }
-    return noteDetails;
+    return "jMusic NOTE: " +
+        "[Frequency = " + frequency +
+        "[Pitch = " +  pitch +
+        "][RhythmValue = " + rhythmValue +
+        "][Dynamic = " + dynamic +
+        "][Duration = " + duration +
+        "][Pan = " + pan + "]";
   }
 
   /**

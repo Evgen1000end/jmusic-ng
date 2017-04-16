@@ -1061,44 +1061,32 @@ public class Phrase implements JMC, Cloneable, Serializable {
     // are there notes before the startLoc to pass up?
     for (int i = 0; i < this.size(); i++) {
 
-      if (beatCounter < startLoc) { // this note starts before the space
+      if (beatCounter < startLoc) {
         if ((beatCounter + this.getNote(i).getRhythmValue() > startLoc) &&
-            (beatCounter + this.getNote(i).getRhythmValue() <= endLoc)) { // ends within the space
+            (beatCounter + this.getNote(i).getRhythmValue() <= endLoc)) {
           if (requireNoteStart) {
             Note n = new Note(REST, beatCounter +
                 this.getNote(i).getRhythmValue() - startLoc);
             tempPhr.addNote(n);
           } else {
-            if (this.getNote(i).getPitchType() == PitchType.MIDI_PITCH) {
-              Note n = new Note(this.getNote(i).getPitch(), beatCounter +
-                  this.getNote(i).getRhythmValue() - startLoc,
-                  this.getNote(i).getDynamic()
-              );
-              tempPhr.addNote(n);
-            } else {
-              Note n = new Note(this.getNote(i).getFrequency(), beatCounter +
-                  this.getNote(i).getRhythmValue() - startLoc,
-                  this.getNote(i).getDynamic()
-              );
-              tempPhr.addNote(n);
-            }
+            Note n = new Note(this.getNote(i).getPitch(), beatCounter +
+                this.getNote(i).getRhythmValue() - startLoc,
+                this.getNote(i).getDynamic()
+            );
+            tempPhr.addNote(n);
           }
         }
-        if (beatCounter + this.getNote(i).getRhythmValue() > endLoc) { // ends after the space
+        if (beatCounter + this.getNote(i).getRhythmValue() > endLoc) {
           if (requireNoteStart) {
             Note n = new Note(REST, beatCounter +
                 this.getNote(i).getRhythmValue() - startLoc, this.getNote(i).getDynamic());
             tempPhr.addNote(n);
           } else {
-            if (this.getNote(i).getPitchType() == PitchType.MIDI_PITCH) {
+
               Note n = new Note(this.getNote(i).getPitch(), beatCounter +
                   endLoc - startLoc, this.getNote(i).getDynamic());
               tempPhr.addNote(n);
-            } else {
-              Note n = new Note(this.getNote(i).getPitch(), beatCounter +
-                  endLoc - startLoc, this.getNote(i).getDynamic());
-              tempPhr.addNote(n);
-            }
+
           }
         }
       }
@@ -1289,11 +1277,9 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Enumeration enum1 = getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-      if (note.getPitchType() == PitchType.MIDI_PITCH) {
         if (note.getPitch() > max) {
           max = note.getPitch();
         }
-      }
     }
     return max;
   }
@@ -1306,11 +1292,9 @@ public class Phrase implements JMC, Cloneable, Serializable {
     Enumeration enum1 = getNoteList().elements();
     while (enum1.hasMoreElements()) {
       Note note = (Note) enum1.nextElement();
-      if (note.getPitchType() == PitchType.MIDI_PITCH) {
         if (note.getPitch() < min && note.getPitch() >= 0) {
           min = note.getPitch();
         }
-      }
     }
     return min;
   }

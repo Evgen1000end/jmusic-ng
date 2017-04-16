@@ -26,7 +26,6 @@ import java.util.Enumeration;
 import java.util.Vector;
 import jm.JMC;
 import jm.music.data.Note;
-import jm.music.data.PitchType;
 import jm.music.rt.RTLine;
 
 /**
@@ -168,27 +167,17 @@ public abstract class Instrument extends Thread implements Runnable, jm.JMC {
     // continue onward
     this.numOfSamples = (int) ((float) pao.getSampleRate() * (float) note.getDuration());
     this.numOfChannels = pao.channels;
-    //System.out.println("Instrument: NumOfSamples = " + numOfSamples + " duration = " + note.getDuration());
 
-    //do any note specific initialization on the audio chain headers
-    //which will propogate the build(note) method through the chain
-    if (note.getFrequency() == (double) REST) {
+    if (note.isRest()) {
       restNote = true;
     } else {
       // calc frequency
-      double frequency = 0.0;
-      if (note.getPitchType() == PitchType.MIDI_PITCH && note.getPitch() != JMC.REST &&
-          note.getPitch() <= Note.MIN_PITCH && note.getPitch() >= Note.MAX_PITCH) {
-        frequency = jm.JMC.FRQ[note.getPitch()];
-      } else {
-        frequency = note.getFrequency();
-      }
-      //System.out.println("Instrument class: freq = " + frequency);
+      double frequency = note.getFrequency();
       if ((double) pao.getSampleRate() * 0.5 < frequency) {
-        System.out.println("jMusic Instrument error: Sorry, can't render " +
-            "a note above the Nyquist frequency.");
-        System.out.println("Sample rate = " + pao.getSampleRate() +
-            " Pitch frequency = " + note.getFrequency());
+        System.out.println("jMusic Instrument error: Sorry, can't render "
+            + "a note above the Nyquist frequency.");
+        System.out.println("Sample rate = " + pao.getSampleRate()
+            + " Pitch frequency = " + note.getFrequency());
         System.exit(1);
       }
 

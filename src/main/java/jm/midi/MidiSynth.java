@@ -39,7 +39,6 @@ import jm.music.data.Note;
 import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
-import jm.music.data.PitchType;
 import jm.music.data.Score;
 
 /**
@@ -441,12 +440,7 @@ public class MidiSynth implements JMC, MetaEventListener {
           offSetTime = (int) (note.getOffset() * m_ppqn * elementTempoRatio);
 
           //handle frequency pitch types
-          int pitch = -1;
-          if (note.getPitchType() == PitchType.MIDI_PITCH) {
-            pitch = note.getPitch();
-          } else {
-            pitch = NoteUtils.frequencyToPitch(note.getFrequency());
-          }
+          int pitch = note.getPitch();
 
           int dynamic = note.getDynamic();
 

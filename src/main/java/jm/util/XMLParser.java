@@ -28,7 +28,6 @@ import java.util.Vector;
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
-import jm.music.data.PitchType;
 import jm.music.data.Score;
 
 /**

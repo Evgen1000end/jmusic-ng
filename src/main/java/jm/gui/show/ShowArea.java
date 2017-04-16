@@ -39,7 +39,6 @@ import jm.music.data.Note;
 import jm.music.data.NoteUtils;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
-import jm.music.data.PitchType;
 
 //--------------
 //second class!!
@@ -123,10 +122,6 @@ public class ShowArea extends Canvas {
     }
     repaint();
   }
-
-  //public void update(Graphics g) {
-  //	paint(g);
-  //}
 
   public void paint(Graphics offScreenGraphics) {
     //Image offScreenImage = this.createImage(this.getSize().width, this.areaHeight);
@@ -213,12 +208,7 @@ public class ShowArea extends Canvas {
 
         while (enum3.hasMoreElements()) {
           Note aNote = (Note) enum3.nextElement();
-          int currNote = -1;
-          if (aNote.getPitchType() == PitchType.MIDI_PITCH) {
-            currNote = aNote.getPitch();
-          } else {
-            currNote = NoteUtils.frequencyToPitch(aNote.getFrequency());
-          }
+          int currNote = aNote.getPitch();
           if ((currNote <= 127) && (currNote >= 0)) {
             // 10 - numb of octaves, 12 notes in an octave, 21
             // (octavePixelheight) is the height of

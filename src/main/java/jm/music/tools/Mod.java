@@ -2206,9 +2206,8 @@ public class Mod implements JMC {
       if (tempPhrase == null) {
         break;
       }
-      Enumeration enum2 = tempPhrase.getNoteList().elements();
-      while (enum2.hasMoreElements()) {
-        Note note = (Note) enum2.nextElement();
+
+      for (Note note: tempPhrase.getNoteList()) {
         System.out.println("note was =" + note.getDynamic());
         curr = (int) (ave + ((note.getDynamic() - ave) * ratio));
         note.setDynamic(curr);
@@ -2511,11 +2510,9 @@ public class Mod implements JMC {
     Enumeration enum1 = cphrase.getPhraseList().elements();
     while (enum1.hasMoreElements()) {
       Phrase phrase = (Phrase) enum1.nextElement();
-      Enumeration enum2 = phrase.getNoteList().elements();
-      while (enum2.hasMoreElements()) {
-        Note n = (Note) enum2.nextElement();
-        if (n.getDynamic() > max) {
-          max = n.getDynamic();
+      for (Note note: phrase.getNoteList()) {
+        if (note.getDynamic() > max) {
+          max = note.getDynamic();
         }
       }
     }
@@ -2527,10 +2524,8 @@ public class Mod implements JMC {
     Enumeration enum3 = cphrase.getPhraseList().elements();
     while (enum3.hasMoreElements()) {
       Phrase phrase = (Phrase) enum3.nextElement();
-      Enumeration enum4 = phrase.getNoteList().elements();
-      while (enum4.hasMoreElements()) {
-        Note n = (Note) enum4.nextElement();
-        n.setDynamic(n.getDynamic() + diff);
+      for (Note note: phrase.getNoteList()) {
+        note.setDynamic(note.getDynamic() + diff);
       }
     }
   }
@@ -2992,10 +2987,8 @@ public class Mod implements JMC {
       if (tempPhrase == null) {
         break;
       }
-      Enumeration enum2 = tempPhrase.getNoteList().elements();
-      while (enum2.hasMoreElements()) {
-        Note note = (Note) enum2.nextElement();
-        if (note.getPitch() != REST) { // reject rests
+      for (Note note: tempPhrase.getNoteList()) {
+        if (note.getPitch() != REST) {
           curr = note.getDynamic();
           accum += curr;
           counter++;
@@ -3003,17 +2996,13 @@ public class Mod implements JMC {
       }
     }
     ave = (int) (accum / counter);
-
-    // compress the sucker
     enum1 = part.getPhraseList().elements();
     while (enum1.hasMoreElements()) {
       Phrase tempPhrase = (Phrase) enum1.nextElement();
       if (tempPhrase == null) {
         break;
       }
-      Enumeration enum2 = tempPhrase.getNoteList().elements();
-      while (enum2.hasMoreElements()) {
-        Note note = (Note) enum2.nextElement();
+      for (Note note: tempPhrase.getNoteList()) {
         System.out.println("note was =" + note.getDynamic());
         curr = (int) (ave + ((note.getDynamic() - ave) * ratio));
         note.setDynamic(curr);
@@ -3381,11 +3370,10 @@ public class Mod implements JMC {
     Enumeration enum1 = part.getPhraseList().elements();
     while (enum1.hasMoreElements()) {
       Phrase phrase = (Phrase) enum1.nextElement();
-      Enumeration enum2 = phrase.getNoteList().elements();
-      while (enum2.hasMoreElements()) {
-        Note n = (Note) enum2.nextElement();
-        if (n.getDynamic() > max) {
-          max = n.getDynamic();
+
+      for (Note note: phrase.getNoteList()) {
+        if (note.getDynamic() > max) {
+          max = note.getDynamic();
         }
       }
     }
@@ -3397,10 +3385,8 @@ public class Mod implements JMC {
     Enumeration enum3 = part.getPhraseList().elements();
     while (enum3.hasMoreElements()) {
       Phrase phrase = (Phrase) enum3.nextElement();
-      Enumeration enum4 = phrase.getNoteList().elements();
-      while (enum4.hasMoreElements()) {
-        Note n = (Note) enum4.nextElement();
-        n.setDynamic(n.getDynamic() + diff);
+      for (Note note: phrase.getNoteList()) {
+        note.setDynamic(note.getDynamic() + diff);
       }
     }
   }
@@ -4235,11 +4221,9 @@ public class Mod implements JMC {
       Enumeration enum1 = part.getPhraseList().elements();
       while (enum1.hasMoreElements()) {
         Phrase phrase = (Phrase) enum1.nextElement();
-        Enumeration enum2 = phrase.getNoteList().elements();
-        while (enum2.hasMoreElements()) {
-          Note n = (Note) enum2.nextElement();
-          if (n.getDynamic() > max) {
-            max = n.getDynamic();
+        for (Note note: phrase.getNoteList()) {
+          if (note.getDynamic() > max) {
+            max = note.getDynamic();
           }
         }
       }
@@ -4255,10 +4239,8 @@ public class Mod implements JMC {
       Enumeration enum3 = part.getPhraseList().elements();
       while (enum3.hasMoreElements()) {
         Phrase phrase = (Phrase) enum3.nextElement();
-        Enumeration enum2 = phrase.getNoteList().elements();
-        while (enum2.hasMoreElements()) {
-          Note n = (Note) enum2.nextElement();
-          n.setDynamic(n.getDynamic() + diff);
+        for (Note note: phrase.getNoteList()) {
+          note.setDynamic(note.getDynamic() + diff);
         }
       }
     }

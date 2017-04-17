@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Vector;
 import jm.JMC;
 import jm.music.data.Note;
 import jm.music.data.Phrase;
@@ -136,7 +137,8 @@ public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListe
           }
           Note n = Note.newBuilder().pitch(newPitch).rhythm(1.0).build();
           Phrase phr = theApp.getPhrase();
-          phr.getNoteList().insertElementAt(n, j / 2 + 1);
+
+          phr.getNoteList().set(j / 2 + 1, n);
           theApp.repaint();
           // play and update variables for dragging it
           selectedNote = j / 2 + 1;
@@ -328,9 +330,11 @@ public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListe
       return;
     }
     // delete note if necessary
+
+    Vector
     for (int i = 0; i < theApp.getPhrase().getNoteList().size(); i++) {
       if (theApp.getPhrase().getNote(i).getRhythm() == 0.0) {
-        theApp.getPhrase().getNoteList().removeElementAt(i);
+        theApp.getPhrase().getNoteList().remove(i);
       }
     }
     // unflag any note being selected

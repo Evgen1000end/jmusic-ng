@@ -167,10 +167,7 @@ public class Histogram extends Component implements JMC {
       Enumeration enum2 = part.getPhraseList().elements();
       while (enum2.hasMoreElements()) {
         Phrase phrase = (Phrase) enum2.nextElement();
-        Enumeration enum3 = phrase.getNoteList().elements();
-        while (enum3.hasMoreElements()) {
-          Note note = (Note) enum3.nextElement();
-          // ignore notes with frequency as a pitch
+        for (Note note: phrase.getNoteList()) {
           if (note.getPitch() != REST) {
             // pitch
             pitchValues[note.getPitch()]++;
@@ -200,7 +197,6 @@ public class Histogram extends Component implements JMC {
                   panValues[(int) (note.getPan() * 100)];
             }
           }
-
         }
       }
     }

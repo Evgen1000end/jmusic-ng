@@ -194,7 +194,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
           }
           Note n = Note.newBuilder().pitch(newPitch).rhythm(1.0).build();
           Phrase phr = theApp.getPhrase();
-          phr.getNoteList().insertElementAt(n, j / 2 + 1);
+          phr.getNoteList().set(j / 2 + 1, n);
           theApp.repaint();
           // play and update variables for dragging it
           selectedNote = j / 2 + 1;
@@ -406,7 +406,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
     // delete note if necessary
     for (int i = 0; i < theApp.getPhrase().getNoteList().size(); i++) {
       if (theApp.getPhrase().getNote(i).getRhythm() == 0.0) {
-        theApp.getPhrase().getNoteList().removeElementAt(i);
+        theApp.getPhrase().getNoteList().remove(i);
       }
     }
     // unflag any note being selected
@@ -431,14 +431,11 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
       noteEditor.editNote(note, 20, 20);
     } else if (e.getSource() == repeatNote) {
       Note newNote = note.copy();
-      phrase.getNoteList().insertElementAt(
-          newNote,
-          selectedNote
-      );
+      phrase.getNoteList().set(selectedNote, newNote);
     } else if (e.getSource() == makeRest) {
       note.setFrequency(Note.REST);
     } else if (e.getSource() == deleteNote) {
-      phrase.getNoteList().removeElementAt(selectedNote);
+      phrase.getNoteList().remove(selectedNote);
     }
     selectedNote = -1;
     theApp.repaint();

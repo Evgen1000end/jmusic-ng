@@ -39,6 +39,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import jm.music.data.Note;
 import jm.music.data.Phrase;
 
 // This class is a little editor to set the properties
@@ -381,7 +382,7 @@ public class ParmScreen extends Dialog
   }
 
   private void setVolume(int newVol) {
-    Vector noteList = phrase.getNoteList();
+    java.util.List<Note> noteList = phrase.getNoteList();
     for (int i = 0; i < noteList.size(); i++) {
       if (phrase.getNote(i).getDynamic() != 0) {
         phrase.getNote(i).setDynamic(newVol);
@@ -390,7 +391,7 @@ public class ParmScreen extends Dialog
   }
 
   private void multiplyTimesBy(double newFactor) {
-    Vector noteList = phrase.getNoteList();
+    java.util.List<Note> noteList = phrase.getNoteList();
     System.out.println(newFactor);
     for (int i = 0; i < noteList.size(); i++) {
     }

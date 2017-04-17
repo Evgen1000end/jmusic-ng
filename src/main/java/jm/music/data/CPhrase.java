@@ -624,10 +624,8 @@ public class CPhrase implements JMC, Cloneable, Serializable {
     while (enum1.hasMoreElements()) {
       double currOffset = offsetAmount * phraseCounter;
       Phrase phr = (Phrase) enum1.nextElement();
-      Enumeration enum2 = phr.getNoteList().elements();
-      while (enum2.hasMoreElements()) {
-        Note n = (Note) enum2.nextElement();
-        n.setOffset(currOffset);
+      for (Note note: phr.getNoteList()) {
+        note.setOffset(currOffset);
       }
       phraseCounter++;
     }

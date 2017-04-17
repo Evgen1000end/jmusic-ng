@@ -214,10 +214,8 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
       Enumeration enum2 = part.getPhraseList().elements();
       while (enum2.hasMoreElements()) {
         Phrase phrase = (Phrase) enum2.nextElement();
-        Enumeration enum3 = phrase.getNoteList().elements();
         maxWidth = (int) (phrase.getStartTime() * beatWidth);
-        while (enum3.hasMoreElements()) {
-          Note aNote = (Note) enum3.nextElement();
+        for (Note aNote: phrase.getNoteList()) {
           maxWidth = maxWidth + (int) (aNote.getRhythm() * beatWidth);
         }
       }

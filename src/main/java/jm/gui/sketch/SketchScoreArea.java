@@ -152,14 +152,11 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
       Enumeration enum2 = part.getPhraseList().elements();
       while (enum2.hasMoreElements()) {
         Phrase phrase = (Phrase) enum2.nextElement();
-        Enumeration enum3 = phrase.getNoteList().elements();
+
         double oldStartTime = phrase.getStartTime();
 
-        while (enum3.hasMoreElements()) {
-          Note aNote = (Note) enum3.nextElement();
-          // avoid rests and draw notes
+        for (Note aNote: phrase.getNoteList()) {
           int currNote = aNote.getPitch();
-
           if (currNote != REST) {
             int x = 127 - currNote;
             int y = (int) Math.round(aNote.getDuration() * beatWidth);
@@ -328,8 +325,8 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
       // avoid unnecessary repeat notes
       if (i > 0) {
         if (phr.size() > 0 && n.getPitch() ==
-            ((Note) (phr.getNoteList().lastElement())).getPitch()) {
-          Mod.append(((Note) (phr.getNoteList().lastElement())), n);
+            ( (phr.getNoteList().get(phr.getNoteList().size() - 1))).getPitch()) {
+          Mod.append(((phr.getNoteList().get(phr.getNoteList().size() - 1))), n);
         } else {
           phr.addNote(n);
         }

@@ -193,7 +193,7 @@ public class ShowArea extends Canvas {
       while (enum2.hasMoreElements()) {
         Phrase phrase = (Phrase) enum2.nextElement();
 
-        Enumeration enum3 = phrase.getNoteList().elements();
+
         double oldXBeat = phrase.getStartTime();
         oldX = (int) (Math.round(oldXBeat * beatWidth));
         // calc the phrase rectangles
@@ -202,8 +202,7 @@ public class ShowArea extends Canvas {
         rectRight = oldX;
         rectBot = 0;
 
-        while (enum3.hasMoreElements()) {
-          Note aNote = (Note) enum3.nextElement();
+        for (Note aNote: phrase.getNoteList() ) {
           int currNote = aNote.getPitch();
           if ((currNote <= 127) && (currNote >= 0)) {
             int octavePixelheight = noteHeight * 7;

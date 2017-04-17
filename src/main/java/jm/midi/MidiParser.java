@@ -300,7 +300,7 @@ public final class MidiParser implements JMC {
       int phraseCounter = 0;
       while (partEnum.hasMoreElements()) {
         Phrase phrase = (Phrase) partEnum.nextElement();
-        Enumeration phraseEnum = phrase.getNoteList().elements();
+
         startTime = phrase.getStartTime() * partTempoMultiplier;
         if (phrase.getInstrument() != NO_INSTRUMENT) {
           midiEvents.add(new EventPair(0,
@@ -318,8 +318,8 @@ public final class MidiParser implements JMC {
         // set a silly starting value to force and initial pan cc event
         double pan = -1.0;
         resetTicker(); // zero the ppqn error calculator
-        while (phraseEnum.hasMoreElements()) {
-          Note note = (Note) phraseEnum.nextElement();
+
+         for (Note note: phrase.getNoteList() ) {
           offsetValue = note.getOffset();
           // add a pan control change if required
           if (note.getPan() != pan) {

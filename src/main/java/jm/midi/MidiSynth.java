@@ -431,10 +431,8 @@ public class MidiSynth implements JMC, MetaEventListener {
 
         double lastPanPosition = -1.0;
         int offSetTime = 0;
-        /// Each note
-        Enumeration notes = phrase.getNoteList().elements();
-        while (notes.hasMoreElements()) {
-          Note note = (Note) notes.nextElement();
+
+        for (Note note: phrase.getNoteList() ) {
           // deal with offset
           offSetTime = (int) (note.getOffset() * m_ppqn * elementTempoRatio);
 
@@ -480,13 +478,12 @@ public class MidiSynth implements JMC, MetaEventListener {
 
         Float d = (Float) m_tempoHistory.pop();
         m_currentTempo = d.floatValue();
-
-      } // while(phrases.hasMoreElements())
+      }
 
       Float d = (Float) m_tempoHistory.pop();
       m_currentTempo = d.floatValue();
 
-    } // while(parts.hasMoreElements())
+    }
 
     // add a meta event to indicate the end of the sequence.
     if (longestTime > 0.0 && longestTrack != null) {

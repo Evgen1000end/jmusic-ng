@@ -344,13 +344,11 @@ public class Phrase implements JMC, Cloneable, Serializable {
    * @param noteVector the vector of notes to add
    * @param append do we append or not?
    */
-  public void addNoteList(Vector noteVector, boolean append) {
-    Enumeration enum1 = noteVector.elements();
+  public void addNoteList(List<Note> noteVector, boolean append) {
     if (!append) {
       this.noteList.clear();
     }
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note:  noteVector  ) {
       addNote(note);
     }
   }

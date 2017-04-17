@@ -141,15 +141,13 @@ public final class Audio implements jm.JMC {
         }
         double time = part_ratio * phr.getStartTime(); //start time of phrase
         double ntime = 0.0; //notes distance from phrases start time
-        Enumeration enum3 = phr.getNoteList().elements();
+        
         System.out.print("    Phrase " + phraseCounter++ + " '" + phr.getTitle() + "'" +
             " starting at beat " + phr.getStartTime() + ": ");
 
                 /* Enumerate through all notes */
         int phraseNoteCounter = 0;
-        while (enum3.hasMoreElements()) {
-
-          Note note = (Note) enum3.nextElement();
+        for (Note note: phr.getNoteList()  ) {
           if (note.getFrequency() == (double) REST) { //This a rest ???
             ntime += phrase_ratio * note.getRhythm();
             continue;
@@ -172,9 +170,7 @@ public final class Audio implements jm.JMC {
           currInst.iterateChain();
           ntime += phrase_ratio * note.getRhythm();
         }
-
         System.out.println();
-        // remove phrase instrument from stack
         if (phr.getInstrument() != NO_INSTRUMENT) {
           inst.pop();
         }

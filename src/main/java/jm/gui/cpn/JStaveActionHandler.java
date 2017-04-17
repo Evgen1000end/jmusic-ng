@@ -138,7 +138,7 @@ public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListe
           Note n = Note.newBuilder().pitch(newPitch).rhythm(1.0).build();
           Phrase phr = theApp.getPhrase();
 
-          phr.getNoteList().set(j / 2 + 1, n);
+          phr.getNoteList().add(j / 2 + 1, n);
           theApp.repaint();
           // play and update variables for dragging it
           selectedNote = j / 2 + 1;
@@ -330,8 +330,6 @@ public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListe
       return;
     }
     // delete note if necessary
-
-    Vector
     for (int i = 0; i < theApp.getPhrase().getNoteList().size(); i++) {
       if (theApp.getPhrase().getNote(i).getRhythm() == 0.0) {
         theApp.getPhrase().getNoteList().remove(i);

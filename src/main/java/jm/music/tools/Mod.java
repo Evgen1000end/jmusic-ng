@@ -22,6 +22,7 @@
 package jm.music.tools;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Vector;
 import jm.JMC;
 import jm.music.data.CPhrase;
@@ -177,9 +178,9 @@ public class Mod implements JMC {
       return;
     }
     double time = 0.0;
-    Vector v = phrase.getNoteList();
+    List<Note> v = phrase.getNoteList();
     for (int i = 0; i < v.size(); i++) {
-      Note n = (Note) v.elementAt(i);
+      Note n = v.get(i);
       if (time >= startTime) {
         n.setDynamic((int) ((time - startTime) / timeDiff
             * dynDiff + startDynamic));
@@ -225,10 +226,8 @@ public class Mod implements JMC {
       throw new IllegalArgumentException("Phrase should not be null");
     }
 
-    Vector noteList = phrase.getNoteList();
-    Enumeration enum1 = noteList.elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    List<Note> noteList = phrase.getNoteList();
+    for (Note note: noteList ) {
       if (note.getPitch() != Note.REST) {
         note.setPitch(note.getPitch() + transposition);
       }
@@ -264,10 +263,9 @@ public class Mod implements JMC {
 
     // make sure the root is in the first octave
     int rootNote = key % 12;
-    Vector noteList = phrase.getNoteList();
-    Enumeration enum1 = noteList.elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    List<Note> noteList = phrase.getNoteList();
+
+    for (Note note: noteList ) {
       Mod.transpose(note, transposition, mode, key);
     }
     phrase.setNoteList(noteList);
@@ -431,9 +429,7 @@ public class Mod implements JMC {
       throw new IllegalArgumentException("'phr' should not be null");
     }
 
-    Enumeration enum1 = phr.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
+    for (Note n: phr.getNoteList()) {
       n.setDynamic(n.getDynamic() + amount);
     }
   }
@@ -452,12 +448,11 @@ public class Mod implements JMC {
       return;
     }
     double rhythmValueCounter = 0.0;
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
+
+    for (Note nextNote:  phrase.getNoteList()) {
       if (rhythmValueCounter > fadeLength) {
         break;
       }
-      Note nextNote = (Note) enum1.nextElement();
       double fadeFactor = rhythmValueCounter / fadeLength;
       int dynamic = (int) ((double) nextNote.getDynamic() * fadeFactor);
       if (dynamic == 0) {
@@ -490,12 +485,11 @@ public class Mod implements JMC {
       return;
     }
     double rhythmValueCounter = phraseStartTime;
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
+
+    for (Note nextNote: phrase.getNoteList() ) {
       if (rhythmValueCounter >= fadeLength) {
         break;
       }
-      Note nextNote = (Note) enum1.nextElement();
       double fadeFactor = rhythmValueCounter / fadeLength;
       int dynamic = (int) ((double) nextNote.getDynamic() * fadeFactor);
       if (dynamic == 0) {
@@ -523,7 +517,7 @@ public class Mod implements JMC {
     double rhythmValueCounter = 0.0;
     int phraseLength = phrase.size() - 1;//-1 due to Vector elements starting at 0
     for (int i = 0; i <= phraseLength; i++) {
-      Note nextNote = (Note) phrase.getNoteList().elementAt(phraseLength - i);
+      Note nextNote = (Note) phrase.getNoteList().get(phraseLength - i);
       if (rhythmValueCounter > fadeLength) {
         break;
       }
@@ -562,7 +556,7 @@ public class Mod implements JMC {
     double rhythmValueCounter = phraseEndTime;
     int phraseLength = phrase.size() - 1; //-1 due to Vector elements starting at 0
     for (int i = 0; i <= phraseLength; i++) {
-      Note nextNote = (Note) phrase.getNoteList().elementAt(phraseLength - i);
+      Note nextNote = (Note) phrase.getNoteList().get(phraseLength - i);
       if (rhythmValueCounter >= fadeLength) {
         break;
       }
@@ -609,17 +603,13 @@ public class Mod implements JMC {
       return;
     }
 
-    // compress the velocities
-    Enumeration enum1 = phrase.getNoteList().elements();
-
     // find the max, min, and mean velocities
     int max = Note.MIN_DYNAMIC;
     int min = Note.MAX_DYNAMIC;
     int curr;
     int mean;
 
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: phrase.getNoteList()) {
       if (note.getPitch() != REST) { // reject rests
         curr = note.getDynamic();
         if (curr > max) {
@@ -632,10 +622,7 @@ public class Mod implements JMC {
     }
     mean = (min + max) / 2;
 
-    // compress the sucker
-    enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: phrase.getNoteList()) {
       curr = (int) (mean + ((note.getDynamic() - mean) * ratio));
       note.setDynamic(curr);
     }
@@ -654,9 +641,8 @@ public class Mod implements JMC {
     if (phrase1 == null || phrase2 == null) {
       return;
     }
-    Enumeration enum1 = phrase2.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      phrase1.addNote(((Note) enum1.nextElement()).copy());
+    for (Note note: phrase2.getNoteList()) {
+      phrase1.add(note.copy());
     }
   }
 
@@ -711,13 +697,10 @@ public class Mod implements JMC {
     if (phrase == null || qValue <= 0.0 || mode == null || key < 0) {
       return;
     }
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+
+    for (Note note: phrase.getNoteList())  {
       double rv = note.getRhythm();
-      //rhythm
       note.setRhythm((int) Math.round(rv / qValue) * qValue);
-      // pitch
       quantizePitch(note, mode, key);
     }
   }
@@ -748,19 +731,13 @@ public class Mod implements JMC {
     if (numNotes <= size) {
       return;
     }
-
     Phrase newPhr = new Phrase();
-
-    // add extra cycled notes
     for (int i = 0; i < numNotes; i++) {
       newPhr.addNote(phrase.getNote(i % size).copy());
     }
-
-    // update the phrase
     phrase.getNoteList().clear();
-    Enumeration enum1 = newPhr.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      phrase.getNoteList().addElement(enum1.nextElement());
+    for (Note note: newPhr.getNoteList()) {
+      phrase.getNoteList().add(note);
     }
   }
 
@@ -800,11 +777,9 @@ public class Mod implements JMC {
       newPhr.addNote(phrase.getNote(i % size).copy());
     }
 
-    // update the phrase
-    phrase.getNoteList().removeAllElements();
-    Enumeration enum1 = newPhr.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      phrase.getNoteList().addElement(enum1.nextElement());
+    phrase.getNoteList().clear();
+    for (Note note: newPhr.getNoteList()) {
+      phrase.getNoteList().add(note);
     }
   }
 
@@ -841,12 +816,10 @@ public class Mod implements JMC {
         i++;
       }
     }
+    phrase.getNoteList().clear();
 
-    // update the phrase
-    phrase.getNoteList().removeAllElements();
-    Enumeration enum1 = newPhr.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      phrase.getNoteList().addElement(enum1.nextElement());
+    for (Note note: newPhr.getNoteList()) {
+      phrase.getNoteList().add(note);
     }
   }
 
@@ -891,9 +864,9 @@ public class Mod implements JMC {
    *
    * @param phrase Phrase whose notes are to be rotated
    */
-  public static void rotate(Phrase phrase) {
-    rotate(phrase, 1);
-  }
+//  public static void rotate(Phrase phrase) {
+//    rotate(phrase, 1);
+//  }
 
   /**
    * Move the notes around a number of steps as specified by <CODE>numSteps
@@ -905,18 +878,17 @@ public class Mod implements JMC {
    * @param phrase Phrase whose notes are to be rotated
    * @param int number of steps
    */
-  public static void rotate(Phrase phrase, int numSteps) {
-    if (phrase == null) {
-      return;
-    }
-    Vector v = phrase.getNoteList();
-    for (int i = 0; i < numSteps; i++) {
-
-      //rotate
-      v.insertElementAt(v.lastElement(), 0);
-      v.removeElementAt(v.size() - 1);
-    }
-  }
+//  public static void rotate(Phrase phrase, int numSteps) {
+//    if (phrase == null) {
+//      return;
+//    }
+//    Vector v = phrase.getNoteList();
+//    for (int i = 0; i < numSteps; i++) {
+//
+//      v.insertElementAt(v.lastElement(), 0);
+//      v.removeElementAt(v.size() - 1);
+//    }
+//  }
 
   /**
    * Reverse the order of notes in the phrase.
@@ -935,10 +907,10 @@ public class Mod implements JMC {
     }
 
     // update the phrase
-    phrase.getNoteList().removeAllElements();
-    Enumeration enum1 = backwards.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      phrase.getNoteList().addElement(enum1.nextElement());
+    phrase.getNoteList().clear();
+
+    for (Note note: backwards.getNoteList() ) {
+      phrase.getNoteList().add(note);
     }
   }
 
@@ -1157,9 +1129,7 @@ public class Mod implements JMC {
       return;
     }
 
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note note = (Note) enum1.nextElement();
+    for (Note note: phrase.getNoteList()) {
       note.setRhythm(note.getRhythm() * scaleFactor);
       note.setDuration(note.getDuration() * scaleFactor);
     }
@@ -1310,12 +1280,10 @@ public class Mod implements JMC {
     double beatCounter = (phrase.getStartTime() < 0.0)
         ? 0.0
         : phrase.getStartTime();
-    Vector v = phrase.getNoteList();
+    List<Note> v = phrase.getNoteList();
     for (int i = 0; i < v.size(); i++) {
-      Note n = (Note) v.elementAt(i);
+      Note n = v.get(i);
 
-      // check to see if that note occurs on an accented beat
-      // and if so increase its dynamic level
       for (int j = 0; j < accentedBeats.length; j++) {
         if (beatCounter % meter == accentedBeats[j]) {
           int tempDyn = n.getDynamic();
@@ -1370,12 +1338,9 @@ public class Mod implements JMC {
     }
 
     double beatCounter = (phrase.getStartTime() < 0.0) ? 0.0 : phrase.getStartTime();
-    Vector v = phrase.getNoteList();
+   List<Note> v = phrase.getNoteList();
     for (int i = 0; i < v.size(); i++) {
-      Note n = (Note) v.elementAt(i);
-
-      // check to see if that note occurs on an accented beat
-      // and if so increase its dynamic level
+      Note n = v.get(i);
       for (int j = 0; j < accentedBeats.length; j++) {
         if (beatCounter % meter == accentedBeats[j]) {
           int tempDyn = n.getDynamic();
@@ -1403,9 +1368,7 @@ public class Mod implements JMC {
     }
     // get the curent max
     int max = 0;
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
+    for (Note n:phrase.getNoteList()) {
       if (n.getDynamic() > max) {
         max = n.getDynamic();
       }
@@ -1415,13 +1378,11 @@ public class Mod implements JMC {
       return;
     }
     int diff = Note.MAX_DYNAMIC - max;
-    Enumeration enum2 = phrase.getNoteList().elements();
-    while (enum2.hasMoreElements()) {
-      Note n = (Note) enum2.nextElement();
+
+    for (Note n:phrase.getNoteList() ) {
       n.setDynamic(n.getDynamic() + diff);
     }
   }
-
 
   /**
    * Randomly adjusts Note dynamic values to create uneven loudness.
@@ -1444,16 +1405,15 @@ public class Mod implements JMC {
    * this method does nothing.
    *
    * @param phrase The Phrase to be effected
-   * @param int The amount of effect - e.g., 5 will be +-5 from the current amount
+   * @param amount The amount of effect - e.g., 5 will be +-5 from the current amount
    */
   public static void shake(Phrase phrase, int amount) {
     if (phrase == null) {
       return;
     }
     int currentValue, newValue;
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
+
+    for (Note n: phrase.getNoteList()) {
       currentValue = n.getDynamic();
       // create new dynamic
       do {
@@ -1615,15 +1575,10 @@ public class Mod implements JMC {
     if (phrase == null) {
       return;
     }
-    int currentValue, newValue;
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
-      // create new pan value
+    for (Note n: phrase.getNoteList() ) {
       n.setPan(Math.random());
     }
   }
-
 
   /**
    * Adjusts all Note pan values to alternate between extreme left and right from note to note.
@@ -1638,10 +1593,8 @@ public class Mod implements JMC {
       return;
     }
     boolean left = true;
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
-      // create new pan value
+
+    for (Note n: phrase.getNoteList()) {
       if (left) {
         n.setPan(0.0);
       } else {
@@ -1657,16 +1610,14 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null then this method does nothing.
    *
    * @param phrase The Phrase to be effected
-   * @param minlength The shortest possible duration
-   * @param maxlength The longest possible duration
+   * @param minLength The shortest possible duration
+   * @param maxLength The longest possible duration
    */
   public static void varyLength(Phrase phrase, double minLength, double maxLength) {
     if (phrase == null || maxLength < minLength) {
       return;
     }
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
+    for (Note n: phrase.getNoteList()) {
       double dur = Math.random() * (maxLength - minLength) + minLength;
       n.setDuration(dur);
     }
@@ -1716,10 +1667,8 @@ public class Mod implements JMC {
       return;
     }
     boolean left = true;
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
-      // create new pitch value
+
+    for (Note n: phrase.getNoteList()) {
       if (pitchVariation > 0) {
         n.setPitch(n.getPitch() +
             (int) (Math.random() * (pitchVariation * 2) - pitchVariation));
@@ -1745,7 +1694,7 @@ public class Mod implements JMC {
    * series used by jMusic. Notes with durations longer than rhythm values
    * will produce unintended results.
    *
-   * @param Phrase The phrase to be modified.
+   * @param phrase The phrase to be modified.
    */
   public static void slurUp(Phrase phrase) {
     slurUp(phrase, 2);
@@ -1758,7 +1707,7 @@ public class Mod implements JMC {
    * series used by jMusic. Notes with durations longer than rhythm values
    * will produce unintended results.
    *
-   * @param Phrase The phrase to be modified.
+   * @param phrase The phrase to be modified.
    */
   public static void slurDown(Phrase phrase) {
     slurDown(phrase, 2);
@@ -1771,8 +1720,8 @@ public class Mod implements JMC {
    * series used by jMusic. Notes with durations longer than rhythm values
    * will produce unintended results.
    *
-   * @param Phrase The phrase to be modified.
-   * @param int The number of notes in a row to consitute a sequence
+   * @param phrase The phrase to be modified.
+   * @param numberOfNotes The number of notes in a row to consitute a sequence
    */
   public static void slurUp(Phrase phrase, int numberOfNotes) {
     if (phrase == null || phrase.size() < numberOfNotes || numberOfNotes < 2) {
@@ -1846,28 +1795,23 @@ public class Mod implements JMC {
   /**
    * Vary the duration of each note in the phrase by the multiplyer.
    *
-   * @param Phrase The phrase to be modified.
-   * @param double The amount to multiply the duration by.
+   * @param phrase The phrase to be modified.
+   * @param multiplyer The amount to multiply the duration by.
    */
   public static void increaseDuration(Phrase phrase, double multiplyer) {
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
+    for (Note n: phrase.getNoteList()) {
       n.setDuration(n.getDuration() * multiplyer);
     }
   }
 
-
   /**
    * Vary the duration of each note in the phrase by the specified amount.
    *
-   * @param Phrase The phrase to be modified.
-   * @param double The amount to add  to the duration.
+   * @param phrase The phrase to be modified.
+   * @param amount The amount to add  to the duration.
    */
   public static void addToDuration(Phrase phrase, double amount) {
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
+    for (Note n: phrase.getNoteList()) {
       n.setDuration(n.getDuration() + amount);
     }
   }
@@ -1875,13 +1819,11 @@ public class Mod implements JMC {
   /**
    * Vary the rhythm value of each note in the phrase by the specified amount.
    *
-   * @param Phrase The phrase to be modified.
-   * @param double The amount to add.
+   * @param phrase The phrase to be modified.
+   * @param amount The amount to add.
    */
   public static void addToRhythmValue(Phrase phrase, double amount) {
-    Enumeration enum1 = phrase.getNoteList().elements();
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
+    for (Note n: phrase.getNoteList()) {
       n.setRhythm(n.getRhythm() + amount);
     }
   }
@@ -1893,10 +1835,8 @@ public class Mod implements JMC {
    * @param amount The amount to add.
    */
   public static void addToLength(Phrase phrase, double amount) {
-    Enumeration enum1 = phrase.getNoteList().elements();
-    double articulation = 0.0;
-    while (enum1.hasMoreElements()) {
-      Note n = (Note) enum1.nextElement();
+    double articulation;
+    for (Note n: phrase.getNoteList()) {
       articulation = n.getRhythm() / n.getDuration();
       n.setRhythm(n.getRhythm() + amount);
       n.setDuration(n.getRhythm() * articulation);
@@ -2187,15 +2127,15 @@ public class Mod implements JMC {
       if (tempPhrase == null) {
         break;
       }
-      Enumeration enum2 = tempPhrase.getNoteList().elements();
-      while (enum2.hasMoreElements()) {
-        Note note = (Note) enum2.nextElement();
+
+      for (Note note: tempPhrase.getNoteList()) {
         if (note.getPitch() != REST) { // reject rests
           curr = note.getDynamic();
           accum += curr;
           counter++;
         }
       }
+
     }
     ave = (int) (accum / counter);
 

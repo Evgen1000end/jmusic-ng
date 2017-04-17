@@ -194,7 +194,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
           }
           Note n = Note.newBuilder().pitch(newPitch).rhythm(1.0).build();
           Phrase phr = theApp.getPhrase();
-          phr.getNoteList().set(j / 2 + 1, n);
+          phr.getNoteList().add(j / 2 + 1, n);
           theApp.repaint();
           // play and update variables for dragging it
           selectedNote = j / 2 + 1;
@@ -431,7 +431,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
       noteEditor.editNote(note, 20, 20);
     } else if (e.getSource() == repeatNote) {
       Note newNote = note.copy();
-      phrase.getNoteList().set(selectedNote, newNote);
+      phrase.getNoteList().add(selectedNote, newNote);
     } else if (e.getSource() == makeRest) {
       note.setFrequency(Note.REST);
     } else if (e.getSource() == deleteNote) {

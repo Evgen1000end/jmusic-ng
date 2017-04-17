@@ -29,6 +29,10 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.Panel;
 import java.awt.Scrollbar;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 import jm.music.data.Note;
 import jm.music.data.Phrase;
@@ -236,57 +240,58 @@ public class ComplexMutater extends Mutater {
       } else {
         n2change3 = (int) Math.floor(n2change2);
       }
-      Vector vector = (Vector) individual.getNoteList().clone();
+      List<Note> vector =  new ArrayList<>(individual.getNoteList());
       for (int j = 0; j < n2change3; j++) {
         int r1 = (int) (Math.random() * (n1 - 1));
-        Note note5 = (Note) vector.elementAt(initialSize + r1);
+        Note note5 = vector.get(initialSize + r1);
         int pitch5 = note5.getPitch();
         double rhythmValue5 = note5.getRhythm();
         if (rhythmValue5 >= 1.0 && rhythmValue5 % 1.0 == 0 &&
             rhythmValue5 * 2.0 == Math.ceil(rhythmValue5 * 2.0)) {
-          vector.removeElementAt(initialSize + r1);
-          vector.insertElementAt(Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build(),
-              initialSize + r1
+          vector.remove(initialSize + r1);
+          vector.set(initialSize + r1,Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
+
           );
-          vector.insertElementAt(Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build(),
-              initialSize + r1
+          vector.set(initialSize + r1,Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
+
           );
           n1++;
         } else {
           double rhythmValue6 = rhythmValue5 + ((Note)
-              vector.elementAt(initialSize + r1 + 1))
+              vector.get(initialSize + r1 + 1))
               .getRhythm();
           if (rhythmValue6 <= 2.0) {
-            vector.removeElementAt(initialSize + r1);
-            vector.removeElementAt(initialSize + r1);
-            vector.insertElementAt(Note.newBuilder()
+            vector.remove(initialSize + r1);
+            vector.remove(initialSize + r1);
+            vector.add(
+                initialSize + r1,Note.newBuilder()
                     .pitch(pitch5)
                     .rhythm(rhythmValue6)
-                    .build(),
-                initialSize + r1
+                    .build()
             );
             n1--;
           }
         }
       }
+
       individual.addNoteList(vector, false);
 
       // 4. Step interpolation
-      vector = (Vector) individual.getNoteList().clone();
+      vector = new ArrayList<>(individual.getNoteList());
       int currentPitch;
       double currentRV;
       int previousPitch = Note.REST;
       double previousRV = 0;
       int index1 = initialSize;
       while (index1 < vector.size() && previousPitch == Note.REST) {
-        previousPitch = ((Note) vector.elementAt(index1)).getPitch();
-        previousRV = ((Note) vector.elementAt(index1)).getRhythm();
+        previousPitch = ((Note) vector.get(index1)).getPitch();
+        previousRV = ((Note) vector.get(index1)).getRhythm();
         index1++;
       }
       int k = index1;
       while (k < vector.size()) {
-        currentPitch = ((Note) vector.elementAt(k)).getPitch();
-        currentRV = ((Note) vector.elementAt(k)).getRhythm();
+        currentPitch = ((Note) vector.get(k)).getPitch();
+        currentRV = ((Note) vector.get(k)).getRhythm();
         if (currentPitch != Note.REST) {
           int interval = currentPitch - previousPitch;
           if ((Math.abs(interval) == 4 || Math.abs(interval) == 3)
@@ -307,31 +312,31 @@ public class ComplexMutater extends Mutater {
               if (currentRV >= 0.5
                   && (int) Math.ceil(currentRV * 2)
                   == (int) (currentRV * 2)) {
-                vector.removeElementAt(k);
+                vector.remove(k);
 
-                vector.insertElementAt(Note.newBuilder()
+                vector.add(k, Note.newBuilder()
                     .pitch(currentPitch)
                     .rhythm(currentRV / 2.0)
-                    .build(), k);
-                vector.insertElementAt(Note.newBuilder()
+                    .build());
+                vector.add(k,Note.newBuilder()
                     .pitch(scalePitch)
                     .rhythm(currentRV / 2.0)
-                    .build(), k);
+                    .build());
                 k++;
               }
             } else {
               if (previousRV >= 0.5
                   && (int) Math.ceil(previousRV * 2)
                   == (int) (previousRV * 2)) {
-                vector.removeElementAt(k - 1);
-                vector.insertElementAt(Note.newBuilder()
+                vector.remove(k - 1);
+                vector.add(k - 1,Note.newBuilder()
                     .pitch(scalePitch)
                     .rhythm(previousRV / 2.0)
-                    .build(), k - 1);
-                vector.insertElementAt(Note.newBuilder()
+                    .build());
+                vector.add(k - 1,Note.newBuilder()
                     .pitch(previousPitch)
                     .rhythm(previousRV / 2.0)
-                    .build(), k - 1);
+                    .build());
                 k++;
               }
             }
@@ -347,10 +352,7 @@ public class ComplexMutater extends Mutater {
       // 5. Tonal Pauses (make well positioned primary pitches longer
       // by adding the value of two notes together)
 
-      individual.addNoteList(applyTonalPausesMutation(individual,
-          initialLength,
-          initialSize,
-          beatsPerBar),
+      individual.addNoteList(applyTonalPausesMutation(individual, initialLength, initialSize, beatsPerBar),
           false
       );
 
@@ -398,10 +400,11 @@ public class ComplexMutater extends Mutater {
     }
   }
 
-  private Vector applyTonalPausesMutation(final Phrase phrase,
+  private List<Note> applyTonalPausesMutation(final Phrase phrase,
       double initialLength,
       int initialSize, int beatsPerBar) {
-    Vector vector = (Vector) phrase.getNoteList().clone();
+
+    List<Note> vector = new ArrayList<>(phrase.getNoteList()); // phrase.getNoteList().clone();
     double rhythmValueCount = initialLength;
     int count = 0;
     for (int j = initialSize; j < phrase.size() - 1; j++) {
@@ -414,17 +417,15 @@ public class ComplexMutater extends Mutater {
           && (degree == 0 || degree == 7)
           && Math.random() < (2.0 / rhythmValue)
           * (MUTATE_PERCENTAGE[4] / 100.0)) {
-        vector.removeElementAt(j - count);
-        vector.removeElementAt(j - count);
-        vector.insertElementAt(Note.newBuilder().pitch(pitch).rhythm(rhythmValue).build(),
-            j - count);
+        vector.remove(j - count);
+        vector.remove(j - count);
+        vector.set(j - count,Note.newBuilder().pitch(pitch).rhythm(rhythmValue).build());
         rhythmValueCount += phrase.getNote(j).getRhythm();
         j++;
         count++;
       }
       rhythmValueCount += phrase.getNote(j).getRhythm();
     }
-//        System.exit(-1);
     return vector;
   }
 

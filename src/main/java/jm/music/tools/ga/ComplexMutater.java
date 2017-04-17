@@ -249,10 +249,10 @@ public class ComplexMutater extends Mutater {
         if (rhythmValue5 >= 1.0 && rhythmValue5 % 1.0 == 0 &&
             rhythmValue5 * 2.0 == Math.ceil(rhythmValue5 * 2.0)) {
           vector.remove(initialSize + r1);
-          vector.set(initialSize + r1,Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
+          vector.add(initialSize + r1,Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
 
           );
-          vector.set(initialSize + r1,Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
+          vector.add(initialSize + r1,Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
 
           );
           n1++;
@@ -419,7 +419,7 @@ public class ComplexMutater extends Mutater {
           * (MUTATE_PERCENTAGE[4] / 100.0)) {
         vector.remove(j - count);
         vector.remove(j - count);
-        vector.set(j - count,Note.newBuilder().pitch(pitch).rhythm(rhythmValue).build());
+        vector.add(j - count,Note.newBuilder().pitch(pitch).rhythm(rhythmValue).build());
         rhythmValueCount += phrase.getNote(j).getRhythm();
         j++;
         count++;

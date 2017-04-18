@@ -9,34 +9,31 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-// GPL code for jMusic CPN.   
+// GPL code for jMusic CPN.
 // Written by Al Christians (achrist@easystreet.com).
 // Copyright  2002, Trillium Resources Corporation, Oregon's
 // leading provider of unvarnished software.
 package jm.gui.cpn;
 
-import java.awt.BorderLayout;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.ScrollPane;
-import java.awt.TextArea;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.DecimalFormat;
+
 import jm.music.data.Note;
 import jm.music.data.Phrase;
 
 public class PhraseViewer extends Dialog
-    implements WindowListener {
+  implements WindowListener {
 
   private ScrollPane scrollPane = new ScrollPane();
   private TextArea textArea = new TextArea(20, 120);
@@ -44,14 +41,14 @@ public class PhraseViewer extends Dialog
   private Stave stave;
 
   private DecimalFormat decimalFormat
-      = new DecimalFormat("#####.######");
+    = new DecimalFormat("#####.######");
 
   public PhraseViewer(
-      Frame parentFrame) {
+    Frame parentFrame) {
     super(
-        parentFrame,
-        "Phrase Detail Display",
-        true);
+      parentFrame,
+      "Phrase Detail Display",
+      true);
     setSize(500, 400);
     placeControls();
     addWindowListener(this);
@@ -67,10 +64,10 @@ public class PhraseViewer extends Dialog
   }
 
   public void showPhrase(
-      Stave theStave,
-      Phrase thePhrase,
-      int locX,
-      int locY) {
+    Stave theStave,
+    Phrase thePhrase,
+    int locX,
+    int locY) {
     stave = theStave;
     phrase = thePhrase;
     getPhraseText();
@@ -81,16 +78,16 @@ public class PhraseViewer extends Dialog
   private void getPhraseText() {
     getStaveText();
     textArea.append(
-        "Phrase has " + phrase.size() + " notes.\n");
+      "Phrase has " + phrase.size() + " notes.\n");
 
     textArea.append(
-        "Tempo "
-            + decimalFormat.format(phrase.getTempo())
+      "Tempo "
+        + decimalFormat.format(phrase.getTempo())
     );
     textArea.append(
-        "    Numerator " + phrase.getNumerator());
+      "    Numerator " + phrase.getNumerator());
     textArea.append(
-        "    Denominator " + phrase.getDenominator());
+      "    Denominator " + phrase.getDenominator());
     textArea.append("\n");
 
     for (int i = 0; i < phrase.size(); ++i) {
@@ -100,34 +97,34 @@ public class PhraseViewer extends Dialog
 
   private void getStaveText() {
     textArea.append(
-        "Stave " + stave.getTitle() +
-            "   Metre " +
-            decimalFormat.format(stave.getMetre())
-            + "\n"
+      "Stave " + stave.getTitle() +
+        "   Metre " +
+        decimalFormat.format(stave.getMetre())
+        + "\n"
     );
   }
 
   private void getNoteText(Note n) {
     textArea.append(
-        "Pitch " + n.getPitch());
+      "Pitch " + n.getPitch());
     textArea.append(
-        "   Start " +
-            decimalFormat.format(n.getSampleStartTime())
+      "   Start " +
+        decimalFormat.format(n.getSampleStartTime())
     );
     textArea.append(
-        "   Rhythm " +
-            decimalFormat.format(n.getRhythm())
+      "   Rhythm " +
+        decimalFormat.format(n.getRhythm())
     );
     textArea.append(
-        "   Dur " +
-            decimalFormat.format(n.getDuration())
+      "   Dur " +
+        decimalFormat.format(n.getDuration())
     );
     textArea.append(
-        "   Offset " +
-            decimalFormat.format(n.getOffset())
+      "   Offset " +
+        decimalFormat.format(n.getOffset())
     );
     textArea.append(
-        "   Vol " + n.getDynamic());
+      "   Vol " + n.getDynamic());
     textArea.append("\n");
   }
 

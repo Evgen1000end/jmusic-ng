@@ -75,7 +75,7 @@ public final class SubtractiveSampleInst extends jm.audio.Instrument {
   }
 
   public SubtractiveSampleInst(String fileName, double baseFreq, int cutoff, int attack, int decay,
-      double sustain, int release) {
+                               double sustain, int release) {
     this.fileName = fileName;
     this.baseFreq = baseFreq;
     this.cutoff = cutoff;
@@ -122,11 +122,11 @@ public final class SubtractiveSampleInst extends jm.audio.Instrument {
     ReSample reSample = new ReSample(sin, this.baseFreq);
     // modulate filter cutoff
     Oscillator sineMod = new Oscillator(this, Oscillator.SINE_WAVE, sin.getSampleRate(),
-        sin.getChannels(), Oscillator.FREQUENCY, (float) modRate);
+      sin.getChannels(), Oscillator.FREQUENCY, (float) modRate);
     sineMod.setAmp((float) this.modAmount * this.cutoff);
     // sub
     Oscillator subOsc = new Oscillator(this, Oscillator.SQUARE_WAVE, sin.getSampleRate(),
-        sin.getChannels());
+      sin.getChannels());
     subOsc.setFrqRatio(0.5f);
     subOsc.setAmp((float) subAmp);
     Add adder = new Add(new AudioObject[]{reSample, subOsc});

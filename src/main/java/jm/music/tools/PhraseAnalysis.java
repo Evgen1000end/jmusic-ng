@@ -1,4 +1,4 @@
-/*               
+/*
  * PhraseAnalysis.java 0.2.1.0 9th March 2001
  *
  * Copyright (C) 2000 Adam Kirby
@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -24,6 +24,7 @@
 package jm.music.tools;
 
 import java.util.Hashtable;
+
 import jm.music.data.Note;
 import jm.music.data.Phrase;
 
@@ -112,32 +113,32 @@ public final class PhraseAnalysis {
    * getAllStatistics} methods.
    */
   public static final String[] featureNames = {
-      "01 - Pitch Variety",
-      "02 - Pitch Range",
-      "03 - Key Centeredness",
-      "04 - Tonal Deviation",
-      "05 - Dissonance",
-      "06 - Overall Pitch Direction",
-      "07 - Melodic Direction Stability",
-      "08 - Pitch Movement By Tonal Step",
-      "09 - Leap Compensation",
-      "10 - Climax Strength",
-      "11 - Climax Position",
-      "12 - Climax Tonality",
-      "13 - Note Density",
-      "14 - Rest Density",
-      "15 - Rhythmic Variety",
-      "16 - Rhythmic Range",
-      "17 - Syncopation",
-      "18 - Repeated Pitch Density",
-      "19 - Repeated Rhythmic Value Density",
-      "20 - Repeated Pitch Patterns Of Three",
-      "21 - Repeated Pitch Patterns Of Four",
-      "22 - Repeated Rhythm Patterns Of Three",
-      "23 - Repeated Rhythm Patterns Of Four"};
+    "01 - Pitch Variety",
+    "02 - Pitch Range",
+    "03 - Key Centeredness",
+    "04 - Tonal Deviation",
+    "05 - Dissonance",
+    "06 - Overall Pitch Direction",
+    "07 - Melodic Direction Stability",
+    "08 - Pitch Movement By Tonal Step",
+    "09 - Leap Compensation",
+    "10 - Climax Strength",
+    "11 - Climax Position",
+    "12 - Climax Tonality",
+    "13 - Note Density",
+    "14 - Rest Density",
+    "15 - Rhythmic Variety",
+    "16 - Rhythmic Range",
+    "17 - Syncopation",
+    "18 - Repeated Pitch Density",
+    "19 - Repeated Rhythmic Value Density",
+    "20 - Repeated Pitch Patterns Of Three",
+    "21 - Repeated Pitch Patterns Of Four",
+    "22 - Repeated Rhythm Patterns Of Three",
+    "23 - Repeated Rhythm Patterns Of Four"};
   public static final String NOTELIST_EXCEPTION_STRING = "NoteListException";
   public static final String QUANTISATION_EXCEPTION_STRING =
-      "QuantisationException";
+    "QuantisationException";
   public static final double NOTELIST_EXCEPTION_CONSTANT = -1.0;
   public static final double QUANTISATION_EXCEPTION_CONSTANT = -2.0;
   /**
@@ -238,7 +239,7 @@ public final class PhraseAnalysis {
    * extremely large lowering intervals with rests.
    */
   public static final int INTERVAL_WITH_REST =
-      (Note.MAX_PITCH - Note.MIN_PITCH) * 2 + 1;
+    (Note.MAX_PITCH - Note.MIN_PITCH) * 2 + 1;
   /**
    * Integer array containing the pitches that represent 'good' intervals.  A
    * 'good' interval is one that is generally considered acceptable when the
@@ -281,17 +282,17 @@ public final class PhraseAnalysis {
   }
 
   public static String[] getAllStatisticsAsStrings(final Phrase phrase,
-      final double duration,
-      final int tonic,
-      final int[] scale) {
+                                                   final double duration,
+                                                   final int tonic,
+                                                   final int[] scale) {
     return getAllStatisticsAsStrings(phrase.getNoteArray(), duration,
-        tonic, scale);
+      tonic, scale);
   }
 
   public static String[] getAllStatisticsAsStrings(final Note[] noteArray,
-      final double duration,
-      final int tonic,
-      final int[] scale) {
+                                                   final double duration,
+                                                   final int tonic,
+                                                   final int[] scale) {
     String[] statistics = new String[23];
     try {
       statistics[0] = Double.toString(pitchVariety(noteArray));
@@ -305,8 +306,8 @@ public final class PhraseAnalysis {
     }
     try {
       statistics[2] =
-          Double.toString(
-              keyCenteredness(noteArray, duration, tonic));
+        Double.toString(
+          keyCenteredness(noteArray, duration, tonic));
     } catch (NoteListException e) {
       statistics[2] = NOTELIST_EXCEPTION_STRING;
     } catch (QuantisationException e) {
@@ -314,8 +315,8 @@ public final class PhraseAnalysis {
     }
     try {
       statistics[3] =
-          Double.toString(
-              tonalDeviation(noteArray, duration, tonic, scale));
+        Double.toString(
+          tonalDeviation(noteArray, duration, tonic, scale));
     } catch (NoteListException e) {
       statistics[3] = NOTELIST_EXCEPTION_STRING;
     } catch (QuantisationException e) {
@@ -325,13 +326,13 @@ public final class PhraseAnalysis {
     statistics[5] = Double.toString(overallPitchDirection(noteArray));
     try {
       statistics[6] =
-          Double.toString(melodicDirectionStability(noteArray));
+        Double.toString(melodicDirectionStability(noteArray));
     } catch (NoteListException e) {
       statistics[6] = NOTELIST_EXCEPTION_STRING;
     }
     try {
       statistics[7] =
-          Double.toString(movementByStep(noteArray, tonic, scale));
+        Double.toString(movementByStep(noteArray, tonic, scale));
     } catch (NoteListException e) {
       statistics[7] = NOTELIST_EXCEPTION_STRING;
     }
@@ -348,7 +349,7 @@ public final class PhraseAnalysis {
     }
     try {
       statistics[11] =
-          Double.toString(climaxTonality(noteArray, tonic, scale));
+        Double.toString(climaxTonality(noteArray, tonic, scale));
     } catch (NoteListException e) {
       statistics[11] = NOTELIST_EXCEPTION_STRING;
     }
@@ -380,31 +381,31 @@ public final class PhraseAnalysis {
     }
     try {
       statistics[18] =
-          Double.toString(repeatedRhythmicValueDensity(noteArray));
+        Double.toString(repeatedRhythmicValueDensity(noteArray));
     } catch (NoteListException e) {
       statistics[18] = NOTELIST_EXCEPTION_STRING;
     }
     try {
       statistics[19] =
-          Double.toString(repeatedPitchPatterns(noteArray, 3));
+        Double.toString(repeatedPitchPatterns(noteArray, 3));
     } catch (NoteListException e) {
       statistics[19] = NOTELIST_EXCEPTION_STRING;
     }
     try {
       statistics[20] =
-          Double.toString(repeatedPitchPatterns(noteArray, 4));
+        Double.toString(repeatedPitchPatterns(noteArray, 4));
     } catch (NoteListException e) {
       statistics[20] = NOTELIST_EXCEPTION_STRING;
     }
     try {
       statistics[21] =
-          Double.toString(repeatedRhythmPatterns(noteArray, 3));
+        Double.toString(repeatedRhythmPatterns(noteArray, 3));
     } catch (NoteListException e) {
       statistics[21] = NOTELIST_EXCEPTION_STRING;
     }
     try {
       statistics[22] =
-          Double.toString(repeatedRhythmPatterns(noteArray, 4));
+        Double.toString(repeatedRhythmPatterns(noteArray, 4));
     } catch (NoteListException e) {
       statistics[22] = NOTELIST_EXCEPTION_STRING;
     }
@@ -412,17 +413,17 @@ public final class PhraseAnalysis {
   }
 
   public static double[] getAllStatisticsAsDoubles(final Phrase phrase,
-      final double duration,
-      final int tonic,
-      final int[] scale) {
+                                                   final double duration,
+                                                   final int tonic,
+                                                   final int[] scale) {
     return getAllStatisticsAsDoubles(phrase.getNoteArray(), duration,
-        tonic, scale);
+      tonic, scale);
   }
 
   public static double[] getAllStatisticsAsDoubles(final Note[] noteArray,
-      final double duration,
-      final int tonic,
-      final int[] scale) {
+                                                   final double duration,
+                                                   final int tonic,
+                                                   final int[] scale) {
     double[] statistics = new double[23];
     try {
       statistics[0] = pitchVariety(noteArray);
@@ -542,24 +543,25 @@ public final class PhraseAnalysis {
    * feature: either the double returned, or a description of the exception
    * thrown.
    *
-   * @param phrase the Phrase to be analysed
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param phrase   the Phrase to be analysed
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0.
+   * @param tonic    integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                 natural) to 11 (B flat).
+   * @param scale    array of integers describing the scale notes in the key of the melody.  If
+   *                 the key is major use the {@link #MAJOR_SCALE} constant of this class; if
+   *                 harmonic minor use {@link #MINOR_SCALE}.  Arrays representing other keys can
+   *                 also be created but they must fit the criteria outlined in the descriptions
+   *                 of those constants.
    * @return hashtable whose keys contain a String describing the feature statistics, and whose
    * corresponding values are the doubles returned by each statistic converted to a String.
    */
   public static Hashtable getAllStatistics(final Phrase phrase,
-      final double duration,
-      final int tonic,
-      final int[] scale) {
+                                           final double duration,
+                                           final int tonic,
+                                           final int[] scale) {
     return getAllStatistics(phrase.getNoteArray(), duration, tonic,
-        scale);
+      scale);
   }
 
   /**
@@ -574,23 +576,24 @@ public final class PhraseAnalysis {
    * thrown.
    *
    * @param noteList the Note array to be analysed
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0.
+   * @param tonic    integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                 natural) to 11 (B flat).
+   * @param scale    array of integers describing the scale notes in the key of the melody.  If
+   *                 the key is major use the {@link #MAJOR_SCALE} constant of this class; if
+   *                 harmonic minor use {@link #MINOR_SCALE}.  Arrays representing other keys can
+   *                 also be created but they must fit the criteria outlined in the descriptions
+   *                 of those constants.
    * @return hashtable whose keys contain a String describing the feature statistics, and whose
    * corresponding values are the doubles returned by each statistic converted to a String.
    */
   public static Hashtable getAllStatistics(final Note[] noteList,
-      final double duration,
-      final int tonic,
-      final int[] scale) {
+                                           final double duration,
+                                           final int tonic,
+                                           final int[] scale) {
     String[] statistics =
-        getAllStatisticsAsStrings(noteList, duration, tonic, scale);
+      getAllStatisticsAsStrings(noteList, duration, tonic, scale);
     Hashtable hashtable = new Hashtable();
     for (int i = 0; i < featureNames.length; i++) {
       hashtable.put(featureNames[i], statistics[i]);
@@ -603,17 +606,17 @@ public final class PhraseAnalysis {
    * HREF="#Quantum">quanta</A> in a {@link Phrase}. The number of notes
    * exludes rests.
    *
-   * @param phrase Phrase whose notes are to be counted
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
+   * @param phrase   Phrase whose notes are to be counted
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0.
    * @return double describing the fraction of notes per quantum in the Phrase
-   * @throws NoteListException if the number of quantum in the Phrase is zero
+   * @throws NoteListException     if the number of quantum in the Phrase is zero
    * @throws QuantisationException if the notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static double noteDensity(final Phrase phrase,
-      final double duration)
-      throws NoteListException, QuantisationException {
+                                   final double duration)
+    throws NoteListException, QuantisationException {
     return noteDensity(phrase.getNoteArray(), duration);
   }
 
@@ -623,22 +626,22 @@ public final class PhraseAnalysis {
    * exludes rests.
    *
    * @param noteArray array of Notes to be examined
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
+   * @param duration  double representing the length of a quantum, where 1 is a crotchet.  This
+   *                  must be greater than 0.
    * @return double describing the fraction of notes per quantum in the Note array
-   * @throws NoteListException if the number of quantum in the Note array is zero
+   * @throws NoteListException     if the number of quantum in the Note array is zero
    * @throws QuantisationException if the notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static double noteDensity(final Note[] noteArray,
-      final double duration)
-      throws NoteListException, QuantisationException {
+                                   final double duration)
+    throws NoteListException, QuantisationException {
     int quanta = quantumCount(noteArray, duration);
     if (quanta != 0) {
       return noteCount(noteArray) / (double) quanta;
     } else {
       throw new NoteListException("The length of the melody should be"
-          + " greater than 0.");
+        + " greater than 0.");
     }
   }
 
@@ -651,7 +654,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Phrase
    */
   public static double pitchVariety(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return pitchVariety(phrase.getNoteArray());
   }
 
@@ -665,13 +668,13 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Note array
    */
   public static double pitchVariety(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     int noteCount = noteCount(noteArray);
     if (noteCount != 0) {
       return distinctPitchCount(noteArray) / (double) noteCount;
     } else {
       throw new NoteListException("The melody should contain at least"
-          + " one note.");
+        + " one note.");
     }
   }
 
@@ -708,7 +711,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Phrase
    */
   public static double climaxStrength(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return climaxStrength(phrase.getNoteArray());
   }
 
@@ -721,7 +724,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Note array
    */
   public static double climaxStrength(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     int count = 0;
     int highestPitch = Note.MIN_PITCH;
     int currentPitch;
@@ -741,7 +744,7 @@ public final class PhraseAnalysis {
       return 1 / (double) count;
     } else {
       throw new NoteListException("The melody should contain at least"
-          + " one note.");
+        + " one note.");
     }
   }
 
@@ -750,17 +753,17 @@ public final class PhraseAnalysis {
    * <A HREF="#Quantum">quanta</A> and the number of quanta in a Phrase.
    * That is, the percentage of the time taken up by rests.
    *
-   * @param phrase Phrase to be examined
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
+   * @param phrase   Phrase to be examined
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0.
    * @return double describing the fraction of silent quanta per quantum in the Phrase
-   * @throws NoteListException if the length of the Phrase is zero
+   * @throws NoteListException     if the length of the Phrase is zero
    * @throws QuantisationException if the notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static double restDensity(final Phrase phrase,
-      final double duration)
-      throws NoteListException, QuantisationException {
+                                   final double duration)
+    throws NoteListException, QuantisationException {
     return restDensity(phrase.getNoteArray(), duration);
   }
 
@@ -770,22 +773,22 @@ public final class PhraseAnalysis {
    * That is, the percentage of the time taken up by rests.
    *
    * @param noteArray array of Note objects to be examined
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
+   * @param duration  double representing the length of a quantum, where 1 is a crotchet.  This
+   *                  must be greater than 0.
    * @return double describing the fraction of silent quanta per quantum in the Note array
-   * @throws NoteListException if the length of the melody is zero
+   * @throws NoteListException     if the length of the melody is zero
    * @throws QuantisationException if the notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static double restDensity(final Note[] noteArray,
-      final double duration)
-      throws NoteListException, QuantisationException {
+                                   final double duration)
+    throws NoteListException, QuantisationException {
     int quanta = quantumCount(noteArray, duration);
     if (quanta != 0) {
       return restQuantumCount(noteArray, duration) / (double) quanta;
     } else {
       throw new NoteListException("The length of the melody should be"
-          + " greater than 0.");
+        + " greater than 0.");
     }
   }
 
@@ -793,25 +796,26 @@ public final class PhraseAnalysis {
    * Returns a double expressing the total duration of all non-scale notes,
    * over the length of the melody.
    *
-   * @param phrase Phrase to be examined
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param phrase   Phrase to be examined
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0.
+   * @param tonic    integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                 natural) to 11 (B flat).
+   * @param scale    array of integers describing the scale notes in the key of the melody.  If
+   *                 the key is major use the {@link #MAJOR_SCALE} constant of this class; if
+   *                 harmonic minor use {@link #MINOR_SCALE}.  Arrays representing other keys can
+   *                 also be created but they must fit the criteria outlined in the descriptions
+   *                 of those constants.
    * @return double describing the fraction of non-scale quanta per quantum in the Phrase
-   * @throws NoteListException if the number of quanta in the Phrase is zero
+   * @throws NoteListException     if the number of quanta in the Phrase is zero
    * @throws QuantisationException if the notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static double tonalDeviation(final Phrase phrase,
-      final double duration, final int tonic,
-      final int[] scale)
-      throws NoteListException,
-      QuantisationException {
+                                      final double duration, final int tonic,
+                                      final int[] scale)
+    throws NoteListException,
+    QuantisationException {
     return tonalDeviation(phrase.getNoteArray(), duration, tonic, scale);
   }
 
@@ -820,31 +824,32 @@ public final class PhraseAnalysis {
    * over the length of the melody.
    *
    * @param noteArray array of Note objects to be examined
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param duration  double representing the length of a quantum, where 1 is a crotchet.  This
+   *                  must be greater than 0.
+   * @param tonic     integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                  natural) to 11 (B flat).
+   * @param scale     array of integers describing the scale notes in the key of the melody.  If
+   *                  the key is major use the {@link #MAJOR_SCALE} constant of this class; if
+   *                  harmonic minor use {@link #MINOR_SCALE}.  Arrays representing other keys can
+   *                  also be created but they must fit the criteria outlined in the descriptions
+   *                  of those constants.
    * @return double describing the fraction of non-scale quanta per quantum in the Note array
-   * @throws NoteListException if the number of quanta in the Phrase is zero
+   * @throws NoteListException     if the number of quanta in the Phrase is zero
    * @throws QuantisationException if the notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static double tonalDeviation(final Note[] noteArray,
-      final double duration, final int tonic,
-      final int[] scale)
-      throws NoteListException,
-      QuantisationException {
+                                      final double duration, final int tonic,
+                                      final int[] scale)
+    throws NoteListException,
+    QuantisationException {
     int quanta = quantumCount(noteArray, duration);
     if (quanta != 0) {
       return nonScaleQuantumCount(noteArray, duration, tonic, scale)
-          / (double) quanta;
+        / (double) quanta;
     } else {
       throw new NoteListException("The length of the melody should be"
-          + " greater than 0.");
+        + " greater than 0.");
     }
   }
 
@@ -853,21 +858,21 @@ public final class PhraseAnalysis {
    * over the length of the melody.  Primary notes are either tonic or
    * dominant.
    *
-   * @param phrase Phrase to be analysed
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
+   * @param phrase   Phrase to be analysed
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0.
+   * @param tonic    integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                 natural) to 11 (B flat).
    * @return double describing the fraction of primary quanta per quantum in the melody
-   * @throws NoteListException if the number of quanta in the Phrase is zero
+   * @throws NoteListException     if the number of quanta in the Phrase is zero
    * @throws QuantisationException if the notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static double keyCenteredness(final Phrase phrase,
-      final double duration,
-      final int tonic)
-      throws QuantisationException,
-      NoteListException {
+                                       final double duration,
+                                       final int tonic)
+    throws QuantisationException,
+    NoteListException {
     return keyCenteredness(phrase.getNoteArray(), duration, tonic);
   }
 
@@ -877,27 +882,27 @@ public final class PhraseAnalysis {
    * dominant.
    *
    * @param noteArray array of Notes to be analysed
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
+   * @param duration  double representing the length of a quantum, where 1 is a crotchet.  This
+   *                  must be greater than 0.
+   * @param tonic     integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                  natural) to 11 (B flat).
    * @return double describing the fraction of primary quanta per quantum in the melody
-   * @throws NoteListException if the number of quanta in the Phrase is zero
+   * @throws NoteListException     if the number of quanta in the Phrase is zero
    * @throws QuantisationException if the notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static double keyCenteredness(final Note[] noteArray,
-      final double duration,
-      final int tonic)
-      throws QuantisationException,
-      NoteListException {
+                                       final double duration,
+                                       final int tonic)
+    throws QuantisationException,
+    NoteListException {
     int quanta = quantumCount(noteArray, duration);
     if (quanta > 0) {
       return primaryQuantumCount(noteArray, duration, tonic)
-          / (double) quanta;
+        / (double) quanta;
     } else {
       throw new NoteListException("The length of the melody should be"
-          + " greater than 0.");
+        + " greater than 0.");
     }
   }
 
@@ -916,7 +921,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Phrase
    */
   public static double pitchRangePerSpan(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return pitchRangePerSpan(phrase.getNoteArray());
   }
 
@@ -935,7 +940,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Note array
    */
   public static double pitchRangePerSpan(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     double temp = pitchRange(noteArray) / (double) MAX_PITCH_RANGE;
     return (temp < 1) ? temp : 1;
   }
@@ -957,7 +962,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Phrase
    */
   public static double rhythmRangePerSpan(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return rhythmRangePerSpan(phrase.getNoteArray());
   }
 
@@ -978,7 +983,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Phrase
    */
   public static double rhythmRangePerSpan(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     double temp = rhythmRange(noteArray) / MAX_RHYTHM_RANGE;
     return (temp < 1) ? temp : 1;
   }
@@ -993,7 +998,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are less than two <A HREF="#Note">notes</A> in the Phrase
    */
   public static double repeatedPitchDensity(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return repeatedPitchDensity(phrase.getNoteArray());
   }
 
@@ -1005,17 +1010,17 @@ public final class PhraseAnalysis {
    * @param noteArray Note array to be analysed
    * @return double describing the repeated pitches per interval
    * @throws NoteListException if there are less than two <A HREF="#Note">notes</A> in the Note
-   * array
+   *                           array
    */
   public static double repeatedPitchDensity(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     int intervalCount = intervalCount(noteArray);
     if (intervalCount != 0) {
       return consecutiveIdenticalPitches(noteArray)
-          / (double) intervalCount;
+        / (double) intervalCount;
     } else {
       throw new NoteListException("The melody should contain at least"
-          + " two notes.");
+        + " two notes.");
     }
   }
 
@@ -1029,7 +1034,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are less than two <A HREF="#Note">notes</A> in the Phrase
    */
   public static double repeatedRhythmicValueDensity(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return repeatedRhythmicValueDensity(phrase.getNoteArray());
   }
 
@@ -1041,17 +1046,17 @@ public final class PhraseAnalysis {
    * @param noteArray Note array to be analysed
    * @return double describing the repeated rhythm values per interval
    * @throws NoteListException if there are less than two <A HREF="#Note">notes</A> in the Note
-   * array
+   *                           array
    */
   public static double repeatedRhythmicValueDensity(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     int intervalCount = intervalCount(noteArray);
     if (intervalCount != 0) {
       return consecutiveIdenticalRhythms(noteArray)
-          / (double) intervalCount;
+        / (double) intervalCount;
     } else {
       throw new NoteListException("The melody should contain at least"
-          + " two notes.");
+        + " two notes.");
     }
   }
 
@@ -1064,10 +1069,11 @@ public final class PhraseAnalysis {
    *
    * @param phrase Phrase to be analysed
    * @return double describing melodic direction stability
-   * @throws NoteListException if there are less than three <A HREF="#Note">notes</A> in the Phrase
+   * @throws NoteListException if there are less than three <A HREF="#Note">notes</A> in the
+   *                           Phrase
    */
   public static double melodicDirectionStability(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return melodicDirectionStability(phrase.getNoteArray());
   }
 
@@ -1082,17 +1088,17 @@ public final class PhraseAnalysis {
    * @param noteArray Note array to be analysed
    * @return double describing the melodic direction stability
    * @throws NoteListException if there are less than three <A HREF="#Note">notes</A> in the Note
-   * array
+   *                           array
    */
   public static double melodicDirectionStability(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     int intervalCount = intervalCount(noteArray);
     if (intervalCount - 1 != 0) {
       return sameDirectionIntervalCount(noteArray)
-          / (double) intervalCount;
+        / (double) intervalCount;
     } else {
       throw new NoteListException("The melody should contain at least"
-          + " three notes.");
+        + " three notes.");
     }
   }
 
@@ -1144,18 +1150,19 @@ public final class PhraseAnalysis {
    * semitones.
    *
    * @param phrase Phrase to be analysed
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param tonic  integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *               natural) to 11 (B flat).
+   * @param scale  array of integers describing the scale notes in the key of the melody.  If the
+   *               key is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic
+   *               minor use {@link #MINOR_SCALE}.  Arrays representing other keys can also be
+   *               created but they must fit the criteria outlined in the descriptions of those
+   *               constants.
    * @return double describing the movement by step
    * @throws NoteListException if there are less than two <A HREF="#Note">notes</A> in the Phrase
    */
   public static double movementByStep(final Phrase phrase, final int tonic,
-      final int[] scale)
-      throws NoteListException {
+                                      final int[] scale)
+    throws NoteListException {
     return movementByStep(phrase.getNoteArray(), tonic, scale);
   }
 
@@ -1168,26 +1175,27 @@ public final class PhraseAnalysis {
    * semitones.
    *
    * @param noteArray Note array to be analysed
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param tonic     integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                  natural) to 11 (B flat).
+   * @param scale     array of integers describing the scale notes in the key of the melody.  If
+   *                  the key is major use the {@link #MAJOR_SCALE} constant of this class; if
+   *                  harmonic minor use {@link #MINOR_SCALE}.  Arrays representing other keys can
+   *                  also be created but they must fit the criteria outlined in the descriptions
+   *                  of those constants.
    * @return double describing the movement by step
    * @throws NoteListException if there are less than two <A HREF="#Note">notes</A> in the Note
-   * array
+   *                           array
    */
   public static double movementByStep(final Note[] noteArray,
-      final int tonic, final int[] scale)
-      throws NoteListException {
+                                      final int tonic, final int[] scale)
+    throws NoteListException {
     int intervalCount = intervalCount(noteArray);
     if (intervalCount > 0) {
       return stepIntervalCount(noteArray, tonic, scale)
-          / (double) intervalCount;
+        / (double) intervalCount;
     } else {
       throw new NoteListException("The melody should contain at least"
-          + " two notes.");
+        + " two notes.");
     }
   }
 
@@ -1277,7 +1285,7 @@ public final class PhraseAnalysis {
     int bigJumpCount = bigJumpCount(noteArray);
     if (bigJumpCount != 0) {
       return (bigJumpCount - bigJumpFollowedByStepBackCount(noteArray))
-          / (double) bigJumpCount;
+        / (double) bigJumpCount;
     } else {
       return 0.0;
     }
@@ -1319,8 +1327,8 @@ public final class PhraseAnalysis {
     for (int i = 0; i < noteArray.length; i++) {
       rhythmValue = noteArray[i].getRhythm();
       if (rhythmValue >= 1.0
-          && noteArray[i].getPitch() != jm.JMC.REST
-          && position % 1.0 != 0.0) {
+        && noteArray[i].getPitch() != jm.JMC.REST
+        && position % 1.0 != 0.0) {
         count++;
       }
       position += rhythmValue;
@@ -1333,14 +1341,14 @@ public final class PhraseAnalysis {
    * patterns of a specified size, compared to the total possible number of
    * patterns in the specified Phrase.
    *
-   * @param phrase Phrase to be analysed.
+   * @param phrase    Phrase to be analysed.
    * @param chunkSize integer describing the size of patterns to count
-   * @throws NoteListException if the melody does not have more <A HREF="#Note"> notes</A> than the
-   * size of the patterns searched for
+   * @throws NoteListException if the melody does not have more <A HREF="#Note"> notes</A> than
+   *                           the size of the patterns searched for
    */
   public static double repeatedPitchPatterns(final Phrase phrase,
-      final int chunkSize)
-      throws NoteListException {
+                                             final int chunkSize)
+    throws NoteListException {
     return repeatedPitchPatterns(phrase.getNoteArray(), chunkSize);
   }
 
@@ -1351,20 +1359,20 @@ public final class PhraseAnalysis {
    *
    * @param noteArray Note array to be analysed.
    * @param chunkSize integer describing the size of patterns to count
-   * @throws NoteListException if the melody does not have more <A HREF="#Note"> notes</A> than the
-   * size of the patterns searched for
+   * @throws NoteListException if the melody does not have more <A HREF="#Note"> notes</A> than
+   *                           the size of the patterns searched for
    */
   public static double repeatedPitchPatterns(final Note[] noteArray,
-      final int chunkSize)
-      throws NoteListException {
+                                             final int chunkSize)
+    throws NoteListException {
     int possiblePatterns = intervalCount(noteArray) - chunkSize;
     if (possiblePatterns > 0) {
       return pitchPatternCount(noteArray, chunkSize)
-          / (double) possiblePatterns;
+        / (double) possiblePatterns;
     } else {
       throw new NoteListException("The melody must contain more intervals"
-          + " than the size of the pattern being"
-          + " searched for.");
+        + " than the size of the pattern being"
+        + " searched for.");
     }
   }
 
@@ -1373,14 +1381,14 @@ public final class PhraseAnalysis {
    * patterns of a specified size, compared to the total possible number of
    * patterns in the specified Phrase.
    *
-   * @param phrase Phrase to be analysed.
+   * @param phrase    Phrase to be analysed.
    * @param chunkSize integer describing the size of patterns to count
-   * @throws NoteListException if the melody does not have more <A HREF="#Note"> notes</A> than the
-   * size of the patterns searched for
+   * @throws NoteListException if the melody does not have more <A HREF="#Note"> notes</A> than
+   *                           the size of the patterns searched for
    */
   public static double repeatedRhythmPatterns(final Phrase phrase,
-      final int chunkSize)
-      throws NoteListException {
+                                              final int chunkSize)
+    throws NoteListException {
     return repeatedRhythmPatterns(phrase.getNoteArray(), chunkSize);
   }
 
@@ -1391,20 +1399,20 @@ public final class PhraseAnalysis {
    *
    * @param noteArray Note array to be analysed.
    * @param chunkSize integer describing the size of patterns to count
-   * @throws NoteListException if the melody does not have more <A HREF="#Note"> notes</A> than the
-   * size of the patterns searched for
+   * @throws NoteListException if the melody does not have more <A HREF="#Note"> notes</A> than
+   *                           the size of the patterns searched for
    */
   public static double repeatedRhythmPatterns(final Note[] noteArray,
-      final int chunkSize)
-      throws NoteListException {
+                                              final int chunkSize)
+    throws NoteListException {
     int possiblePatterns = intervalCount(noteArray) - chunkSize;
     if (possiblePatterns > 0) {
       return rhythmPatternCount(noteArray, chunkSize)
-          / (double) possiblePatterns;
+        / (double) possiblePatterns;
     } else {
       throw new NoteListException("The melody must contain more"
-          + " intervals than the size of the"
-          + " pattern being searched for.");
+        + " intervals than the size of the"
+        + " pattern being searched for.");
     }
   }
 
@@ -1420,7 +1428,7 @@ public final class PhraseAnalysis {
    * @return double describing the position of the climax
    */
   public static double climaxPosition(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return climaxPosition(phrase.getNoteArray());
   }
 
@@ -1436,7 +1444,7 @@ public final class PhraseAnalysis {
    * @return double describing the position of the climax
    */
   public static double climaxPosition(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     if (noteCount(noteArray) > 0) {
       double length = 0;
       int highestPitch = 0;
@@ -1459,7 +1467,7 @@ public final class PhraseAnalysis {
       return lengthToClimax / length;
     } else {
       throw new NoteListException("The melody should contain at least"
-          + " one note.");
+        + " one note.");
     }
 
   }
@@ -1481,16 +1489,17 @@ public final class PhraseAnalysis {
    * tonic, and a integer array describing the scale.
    *
    * @param phrase Phrase to be analysed
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param tonic  integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *               natural) to 11 (B flat).
+   * @param scale  array of integers describing the scale notes in the key of the melody.  If the
+   *               key is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic
+   *               minor use {@link #MINOR_SCALE}.  Arrays representing other keys can also be
+   *               created but they must fit the criteria outlined in the descriptions of those
+   *               constants.
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Phrase
    */
   public static double climaxTonality(Phrase phrase, int tonic, int[] scale)
-      throws NoteListException {
+    throws NoteListException {
     return climaxTonality(phrase.getNoteArray(), tonic, scale);
   }
 
@@ -1511,17 +1520,18 @@ public final class PhraseAnalysis {
    * tonic, and a integer array describing the scale.
    *
    * @param noteArray Note array to be analysed
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param tonic     integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                  natural) to 11 (B flat).
+   * @param scale     array of integers describing the scale notes in the key of the melody.  If
+   *                  the key is major use the {@link #MAJOR_SCALE} constant of this class; if
+   *                  harmonic minor use {@link #MINOR_SCALE}.  Arrays representing other keys can
+   *                  also be created but they must fit the criteria outlined in the descriptions
+   *                  of those constants.
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Note array
    */
   public static double climaxTonality(Note[] noteArray, int tonic,
-      int[] scale)
-      throws NoteListException {
+                                      int[] scale)
+    throws NoteListException {
     if (noteCount(noteArray) > 0) {
       int highestPitch = Note.MIN_PITCH;
       int currentPitch;
@@ -1546,7 +1556,7 @@ public final class PhraseAnalysis {
       }
     } else {
       throw new NoteListException("The melody should contain at least"
-          + " one note.");
+        + " one note.");
     }
   }
 
@@ -1582,15 +1592,16 @@ public final class PhraseAnalysis {
    * Returns the number of <A HREF="#Quantum">quanta</A> in a specified {@link
    * Phrase}.
    *
-   * @param phrase Phrase whose quanta are to be counted
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This value
-   * must be greater than 0.
+   * @param phrase   Phrase whose quanta are to be counted
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 value must be greater than 0.
    * @return integer describing the length of the Phrase measured in quanta.
    * @throws QuantisationException if the Notes' rhythm values are not multiples of the specified
-   * quantum duration, or if quantum duration is less than or equal to zero
+   *                               quantum duration, or if quantum duration is less than or equal
+   *                               to zero
    */
   public static int quantumCount(final Phrase phrase, final double duration)
-      throws QuantisationException {
+    throws QuantisationException {
     return quantumCount(phrase.getNoteArray(), duration);
   }
 
@@ -1599,15 +1610,16 @@ public final class PhraseAnalysis {
    * Note} array.
    *
    * @param noteArray Note array whose quanta are to be counted
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This value
-   * must be greater than 0.
+   * @param duration  double representing the length of a quantum, where 1 is a crotchet.  This
+   *                  value must be greater than 0.
    * @return integer describing the length of the Note array measured in quanta.
    * @throws QuantisationException if the Notes' rhythm values are not multiples of the specified
-   * quantum duration, or if quantum duration is less than or equal to zero
+   *                               quantum duration, or if quantum duration is less than or equal
+   *                               to zero
    */
   public static int quantumCount(final Note[] noteArray,
-      final double duration)
-      throws QuantisationException {
+                                 final double duration)
+    throws QuantisationException {
     if (isQuantised(noteArray, duration)) {
       int count = 0;
       for (int i = 0; i < noteArray.length; i++) {
@@ -1616,8 +1628,8 @@ public final class PhraseAnalysis {
       return count;
     } else {
       throw new QuantisationException("Every rhythm value must be a"
-          + " multiple of the quantum"
-          + " duration.");
+        + " multiple of the quantum"
+        + " duration.");
     }
   }
 
@@ -1696,16 +1708,16 @@ public final class PhraseAnalysis {
    * Silent quanta do not include the quanta representing notes with a
    * dynamic, or volume, of zero.
    *
-   * @param phrase Phrase whose silent quanta are to be measured
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
+   * @param phrase   Phrase whose silent quanta are to be measured
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0.
    * @return integer describing the number of silent quanta in phrase
    * @throws QuantisationException if the Notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static int restQuantumCount(final Phrase phrase,
-      final double duration)
-      throws QuantisationException {
+                                     final double duration)
+    throws QuantisationException {
     return restQuantumCount(phrase.getNoteArray(), duration);
   }
 
@@ -1716,15 +1728,15 @@ public final class PhraseAnalysis {
    * a dynamic, or volume, of zero.
    *
    * @param noteArray Note array whose silent quanta are to be measured
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
+   * @param duration  double representing the length of a quantum, where 1 is a crotchet.  This
+   *                  must be greater than 0.
    * @return integer describing the number of silent quanta in phrase
    * @throws QuantisationException if the Notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static int restQuantumCount(final Note[] noteArray,
-      final double duration)
-      throws QuantisationException {
+                                     final double duration)
+    throws QuantisationException {
     if (isQuantised(noteArray, duration)) {
       int count = 0;
       for (int i = 0; i < noteArray.length; i++) {
@@ -1735,8 +1747,8 @@ public final class PhraseAnalysis {
       return count;
     } else {
       throw new QuantisationException("Every rhythm value must be a"
-          + " multiple of the quantum"
-          + " duration.");
+        + " multiple of the quantum"
+        + " duration.");
     }
   }
 
@@ -1748,23 +1760,24 @@ public final class PhraseAnalysis {
    * this method, namely an integer describing the tonic, and a integer array
    * describing the scale.
    *
-   * @param phrase Phrase to be analysed
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param phrase   Phrase to be analysed
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0.
+   * @param tonic    integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                 natural) to 11 (B flat).
+   * @param scale    array of integers describing the scale notes in the key of the melody.  If
+   *                 the key is major use the {@link #MAJOR_SCALE} constant of this class; if
+   *                 harmonic minor use {@link #MINOR_SCALE}.  Arrays representing other keys can
+   *                 also be created but they must fit the criteria outlined in the descriptions
+   *                 of those constants.
    * @return integer describing the number of non-scale notes in the specified Phrase
    */
   public static int nonScaleQuantumCount(final Phrase phrase,
-      final double duration,
-      final int tonic, final int[] scale)
-      throws QuantisationException {
+                                         final double duration,
+                                         final int tonic, final int[] scale)
+    throws QuantisationException {
     return nonScaleQuantumCount(phrase.getNoteArray(), duration, tonic,
-        scale);
+      scale);
   }
 
   /**
@@ -1776,37 +1789,38 @@ public final class PhraseAnalysis {
    * describing the scale.
    *
    * @param noteArray Note array to be analysed
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param duration  double representing the length of a quantum, where 1 is a crotchet.  This
+   *                  must be greater than 0.
+   * @param tonic     integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                  natural) to 11 (B flat).
+   * @param scale     array of integers describing the scale notes in the key of the melody.  If
+   *                  the key is major use the {@link #MAJOR_SCALE} constant of this class; if
+   *                  harmonic minor use {@link #MINOR_SCALE}.  Arrays representing other keys can
+   *                  also be created but they must fit the criteria outlined in the descriptions
+   *                  of those constants.
    * @return integer describing the number of non-scale notes in the specified Note array
    */
   public static int nonScaleQuantumCount(final Note[] noteArray,
-      final double duration,
-      final int tonic, final int[] scale)
-      throws QuantisationException {
+                                         final double duration,
+                                         final int tonic, final int[] scale)
+    throws QuantisationException {
     if (isQuantised(noteArray, duration)) {
       int count = 0;
       int pitch;
       for (int i = 0; i < noteArray.length; i++) {
         pitch = noteArray[i].getPitch();
         if (pitch != jm.JMC.REST
-            && !isElementOf(pitchToDegree(pitch, tonic),
-            scale)) {
+          && !isElementOf(pitchToDegree(pitch, tonic),
+          scale)) {
           count += (int) (noteArray[i].getRhythm()
-              / duration);
+            / duration);
         }
       }
       return count;
     } else {
       throw new QuantisationException("Every rhythm value must be a"
-          + " multiple of the quantum"
-          + " duration.");
+        + " multiple of the quantum"
+        + " duration.");
     }
 
   }
@@ -1821,19 +1835,19 @@ public final class PhraseAnalysis {
    * this method, namely an integer describing the tonic, and a integer array
    * describing the scale.
    *
-   * @param phrase Phrase to be analysed
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
+   * @param phrase   Phrase to be analysed
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0.
+   * @param tonic    integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                 natural) to 11 (B flat).
    * @return integer describing the number of 'primary notes' in the specified Phrase
    * @throws QuantisationException if the Notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static int primaryQuantumCount(final Phrase phrase,
-      final double duration,
-      final int tonic)
-      throws QuantisationException {
+                                        final double duration,
+                                        final int tonic)
+    throws QuantisationException {
     return primaryQuantumCount(phrase.getNoteArray(), duration, tonic);
   }
 
@@ -1848,18 +1862,18 @@ public final class PhraseAnalysis {
    * describing the scale.
    *
    * @param noteArray Note array to be analysed
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0.
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
+   * @param duration  double representing the length of a quantum, where 1 is a crotchet.  This
+   *                  must be greater than 0.
+   * @param tonic     integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                  natural) to 11 (B flat).
    * @return integer describing the number of 'primary notes' in the specified Note array
    * @throws QuantisationException if the Notes' rhythm values are not multiples of quantum
-   * duration, or if quantum duration is less than or equal to zero
+   *                               duration, or if quantum duration is less than or equal to zero
    */
   public static int primaryQuantumCount(final Note[] noteArray,
-      final double duration,
-      final int tonic)
-      throws QuantisationException {
+                                        final double duration,
+                                        final int tonic)
+    throws QuantisationException {
     if (isQuantised(noteArray, duration)) {
       int count = 0;
       int pitch;
@@ -1867,17 +1881,17 @@ public final class PhraseAnalysis {
       for (int i = 0; i < noteArray.length; i++) {
         pitch = noteArray[i].getPitch();
         if (pitch == jm.JMC.REST
-            || isElementOf(pitchToDegree(pitch, tonic),
-            PRIMARY_NOTES)) {
+          || isElementOf(pitchToDegree(pitch, tonic),
+          PRIMARY_NOTES)) {
           count += (int) (noteArray[i].getRhythm()
-              / duration);
+            / duration);
         }
       }
       return count;
     } else {
       throw new QuantisationException("Every rhythm value must be a"
-          + " multiple of the quantum"
-          + " duration.");
+        + " multiple of the quantum"
+        + " duration.");
     }
   }
 
@@ -1890,7 +1904,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Phrase
    */
   public static int pitchRange(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return pitchRange(phrase.getNoteArray());
   }
 
@@ -1903,7 +1917,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Note array
    */
   public static int pitchRange(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     int highestPitch = Note.MIN_PITCH;
     int lowestPitch = Note.MAX_PITCH;
     int currentPitch;
@@ -1934,7 +1948,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Phrase
    */
   public static double rhythmRange(final Phrase phrase)
-      throws NoteListException {
+    throws NoteListException {
     return rhythmRange(phrase.getNoteArray());
   }
 
@@ -1947,7 +1961,7 @@ public final class PhraseAnalysis {
    * @throws NoteListException if there are no <A HREF="#Note">notes</A> in the Note array
    */
   public static double rhythmRange(final Note[] noteArray)
-      throws NoteListException {
+    throws NoteListException {
     double longestRhythm = Note.MIN_RHYTHM;
     double shortestRhythm = Note.MAX_RHYTHM;
     double currentRhythm;
@@ -1963,7 +1977,7 @@ public final class PhraseAnalysis {
       }
     }
     if (longestRhythm != Note.MIN_RHYTHM
-        && shortestRhythm != Note.MAX_RHYTHM) {
+      && shortestRhythm != Note.MAX_RHYTHM) {
       return longestRhythm / shortestRhythm;
     } else {
       throw new NoteListException("There are no notes in the melody.");
@@ -2037,7 +2051,7 @@ public final class PhraseAnalysis {
     int count = 0;
     for (int i = 0; i < intervals.length - 1; i++) {
       if (intervals[i] == 1 && intervals[i + 1] > 0
-          || intervals[i] == -1 && intervals[i + 1] < 0) {
+        || intervals[i] == -1 && intervals[i + 1] < 0) {
         count++;
 
       }
@@ -2089,8 +2103,8 @@ public final class PhraseAnalysis {
         }
 
         if ((intervalArray[i] > 0 && intervalArray[i - 1] > 0)
-            || (intervalArray[i] == 0 && intervalArray[i - 1] == 0)
-            || (intervalArray[i] < 0 && intervalArray[i - 1] < 0)) {
+          || (intervalArray[i] == 0 && intervalArray[i - 1] == 0)
+          || (intervalArray[i] < 0 && intervalArray[i - 1] < 0)) {
           count++;
         }
       }
@@ -2242,8 +2256,8 @@ public final class PhraseAnalysis {
 
     // Trailing rests do not count towards intervals
     for (int i = noteArray.length - 1;
-        noteArray[i].getPitch() == jm.JMC.REST && i > -1;
-        i--) {
+         noteArray[i].getPitch() == jm.JMC.REST && i > -1;
+         i--) {
       intervalCount--;
     }
 
@@ -2251,7 +2265,7 @@ public final class PhraseAnalysis {
       double[] intervalArray = new double[intervalCount];
       for (int i = 0; i < intervalArray.length; i++) {
         intervalArray[i] = noteArray[i + 1].getRhythm()
-            / noteArray[i].getRhythm();
+          / noteArray[i].getRhythm();
 
         // Indicate a rest with a negative sign
         if (noteArray[i].getPitch() == jm.JMC.REST) {
@@ -2331,16 +2345,17 @@ public final class PhraseAnalysis {
    * describing the scale.
    *
    * @param phrase Phrase to be analysed
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param tonic  integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *               natural) to 11 (B flat).
+   * @param scale  array of integers describing the scale notes in the key of the melody.  If the
+   *               key is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic
+   *               minor use {@link #MINOR_SCALE}.  Arrays representing other keys can also be
+   *               created but they must fit the criteria outlined in the descriptions of those
+   *               constants.
    * @return double describing the movement by step
    */
   public static int stepIntervalCount(final Phrase phrase, final int tonic,
-      final int[] scale) {
+                                      final int[] scale) {
     return stepIntervalCount(phrase.getNoteArray(), tonic, scale);
   }
 
@@ -2354,16 +2369,17 @@ public final class PhraseAnalysis {
    * describing the scale.
    *
    * @param noteArray Note array to be analysed
-   * @param tonic integer representing the pitch of the tonic in semitones, ranging from 0 (C
-   * natural) to 11 (B flat).
-   * @param scale array of integers describing the scale notes in the key of the melody.  If the key
-   * is major use the {@link #MAJOR_SCALE} constant of this class; if harmonic minor use {@link
-   * #MINOR_SCALE}.  Arrays representing other keys can also be created but they must fit the
-   * criteria outlined in the descriptions of those constants.
+   * @param tonic     integer representing the pitch of the tonic in semitones, ranging from 0 (C
+   *                  natural) to 11 (B flat).
+   * @param scale     array of integers describing the scale notes in the key of the melody.  If
+   *                  the key is major use the {@link #MAJOR_SCALE} constant of this class; if
+   *                  harmonic minor use {@link #MINOR_SCALE}.  Arrays representing other keys can
+   *                  also be created but they must fit the criteria outlined in the descriptions
+   *                  of those constants.
    * @return double describing the movement by step
    */
   public static int stepIntervalCount(final Note[] noteArray, final int tonic,
-      final int[] scale) {
+                                      final int[] scale) {
     int intervalCount = intervalCount(noteArray);
     if (intervalCount > 0) {
       int index = -1;
@@ -2381,10 +2397,10 @@ public final class PhraseAnalysis {
         currentPitch = noteArray[index].getPitch();
 
         if (Math.abs(currentPitch - previousPitch) < 3
-            && isElementOf(pitchToDegree(currentPitch, tonic),
-            scale)
-            && isElementOf(pitchToDegree(previousPitch, tonic),
-            scale)) {
+          && isElementOf(pitchToDegree(currentPitch, tonic),
+          scale)
+          && isElementOf(pitchToDegree(previousPitch, tonic),
+          scale)) {
           count++;
         }
         previousPitch = currentPitch;
@@ -2427,11 +2443,11 @@ public final class PhraseAnalysis {
       for (int i = 1; i < intervalArray.length - 1; i++) {
         intervalArray[i] = removeRestMarker(intervalArray[i]);
         if ((intervalArray[i - 1] >= BIG_JUMP_INTERVAL
-            && intervalArray[i] < 0
-            && intervalArray[i] >= 0 - BIG_JUMP_INTERVAL)
-            || (intervalArray[i - 1] <= 0 - BIG_JUMP_INTERVAL
-            && intervalArray[i] > 0
-            && intervalArray[i] <= BIG_JUMP_INTERVAL)) {
+          && intervalArray[i] < 0
+          && intervalArray[i] >= 0 - BIG_JUMP_INTERVAL)
+          || (intervalArray[i - 1] <= 0 - BIG_JUMP_INTERVAL
+          && intervalArray[i] > 0
+          && intervalArray[i] <= BIG_JUMP_INTERVAL)) {
           count++;
         }
       }
@@ -2483,12 +2499,12 @@ public final class PhraseAnalysis {
    * distinction between intervals with no rests and intervals with one or
    * more rests in between the two notes of the interval.
    *
-   * @param phrase Phrase to be searched
+   * @param phrase    Phrase to be searched
    * @param chunksize The size of the pattern to search for
    * @return integer describing the number of 'pitch interval' patterns
    */
   public static int pitchPatternCount(final Phrase phrase,
-      final int chunkSize) {
+                                      final int chunkSize) {
     return pitchPatternCount(phrase.getNoteArray(), chunkSize);
   }
 
@@ -2504,13 +2520,13 @@ public final class PhraseAnalysis {
    * @return integer describing the number of 'pitch interval' patterns
    */
   public static int pitchPatternCount(final Note[] noteArray,
-      final int chunkSize) {
+                                      final int chunkSize) {
     int count = 0;
     int[] intervalArray = pitchIntervals(noteArray);
 
     if (intervalArray.length > chunkSize) {
       int[][] patterns =
-          new int[intervalArray.length - chunkSize][chunkSize];
+        new int[intervalArray.length - chunkSize][chunkSize];
       int index = 0;
 
       for (int i = 0; i < intervalArray.length - chunkSize; i++) {
@@ -2518,8 +2534,8 @@ public final class PhraseAnalysis {
         System.arraycopy(intervalArray, i, match, 0, chunkSize);
         if (!isAlreadyMatched(patterns, match, index)) {
           for (int j = i + 1;
-              j < intervalArray.length - chunkSize + 1;
-              j++) {
+               j < intervalArray.length - chunkSize + 1;
+               j++) {
             if (matchPattern(intervalArray, i, j, chunkSize)) {
               if (index == 0 || patterns[index - 1] != match) {
                 patterns[index++] = match;
@@ -2541,12 +2557,12 @@ public final class PhraseAnalysis {
    * value of the first.  Additionally, if the interval has one or more rests
    * in between the notes, the sign of the value is negative.
    *
-   * @param phrase Phrase to be searched
+   * @param phrase    Phrase to be searched
    * @param chunksize The size of the pattern to search for
    * @return integer describing the number of 'rhythm interval' patterns
    */
   public static int rhythmPatternCount(final Phrase phrase,
-      final int chunksize) {
+                                       final int chunksize) {
     return rhythmPatternCount(phrase.getNoteArray(), chunksize);
   }
 
@@ -2564,13 +2580,13 @@ public final class PhraseAnalysis {
    */
 
   public static int rhythmPatternCount(final Note[] noteArray,
-      final int chunkSize) {
+                                       final int chunkSize) {
     int count = 0;
     double[] intervalArray = rhythmIntervals(noteArray);
 
     if (intervalArray.length > chunkSize) {
       double[][] patterns =
-          new double[intervalArray.length - chunkSize][chunkSize];
+        new double[intervalArray.length - chunkSize][chunkSize];
       int index = 0;
 
       for (int i = 0; i < intervalArray.length - chunkSize; i++) {
@@ -2579,8 +2595,8 @@ public final class PhraseAnalysis {
         System.arraycopy(intervalArray, i, match, 0, chunkSize);
         if (!isAlreadyMatched(patterns, match, index)) {
           for (int j = i + 1;
-              j < intervalArray.length - chunkSize + 1;
-              j++) {
+               j < intervalArray.length - chunkSize + 1;
+               j++) {
             if (matchPattern(intervalArray, i, j, chunkSize)) {
               if (index == 0 || patterns[index - 1] != match) {
                 patterns[index++] = match;
@@ -2627,8 +2643,8 @@ public final class PhraseAnalysis {
    */
   public static int removeRestMarker(final int interval) {
     return (interval > Note.MAX_PITCH - Note.MIN_PITCH)
-        ? interval - INTERVAL_WITH_REST
-        : interval;
+      ? interval - INTERVAL_WITH_REST
+      : interval;
   }
 
   /**
@@ -2636,17 +2652,17 @@ public final class PhraseAnalysis {
    * of any Note within the Phrase is not a multiple of <CODE>duration</CODE>
    * then false is returned.
    *
-   * @param phrase Phrase to be tested.
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0, otherwise an exception is thrown.
+   * @param phrase   Phrase to be tested.
+   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This
+   *                 must be greater than 0, otherwise an exception is thrown.
    * @return true if length of notes are all multiples of <CODE>duration</CODE>; otherwise false
    * @throws QuantisationException if the quantum duration is less than or equal to zero.
    * @see Note
    * @see Phrase
    */
   public static boolean isQuantised(final Phrase phrase,
-      final double duration)
-      throws QuantisationException {
+                                    final double duration)
+    throws QuantisationException {
     return isQuantised(phrase.getNoteArray(), duration);
   }
 
@@ -2656,16 +2672,16 @@ public final class PhraseAnalysis {
    * <CODE>duration</CODE> then false is returned.
    *
    * @param noteArray array of Notes to be tested.
-   * @param duration double representing the length of a quantum, where 1 is a crotchet.  This must
-   * be greater than 0, otherwise an exception is thrown.
+   * @param duration  double representing the length of a quantum, where 1 is a crotchet.  This
+   *                  must be greater than 0, otherwise an exception is thrown.
    * @return true if length of notes are all multiples of <CODE>duration</CODE>; otherwise false
    * @throws QuantisationException if the quantum duration is less than or equal to zero.
    * @see Note
    * @see Phrase
    */
   public static boolean isQuantised(final Note[] noteArray,
-      final double duration)
-      throws QuantisationException {
+                                    final double duration)
+    throws QuantisationException {
     if (duration > 0) {
       for (int i = 0; i < noteArray.length; i++) {
         if (noteArray[i].getRhythm() % duration != 0.0) {
@@ -2675,7 +2691,7 @@ public final class PhraseAnalysis {
       return true;
     } else {
       throw new QuantisationException("The quantum duration must be"
-          + " greater than zero.");
+        + " greater than zero.");
     }
   }
 
@@ -2684,15 +2700,15 @@ public final class PhraseAnalysis {
    * array[firstIndex]</CODE>, match the first <CODE>n</CODE> elements after
    * <CODE>array[secondIndex]</CODE>.
    *
-   * @param array double array whose elements contain the potential pattern
-   * @param firstIndex index to the start of the first pattern
+   * @param array       double array whose elements contain the potential pattern
+   * @param firstIndex  index to the start of the first pattern
    * @param secondIndex index to the start of the second pattern
-   * @param n the number of element to match
+   * @param n           the number of element to match
    * @return true if the first pattern is the same as the second; false otherwise
    */
   private static boolean matchPattern(final int[] array,
-      final int firstIndex,
-      final int secondIndex, final int n) {
+                                      final int firstIndex,
+                                      final int secondIndex, final int n) {
     boolean flag = true;
     for (int i = 0; i < n; i++) {
       if (array[firstIndex + i] != array[secondIndex + i]) {
@@ -2707,15 +2723,15 @@ public final class PhraseAnalysis {
    * array[firstIndex]</CODE>, match the first <CODE>n</CODE> elements after
    * <CODE>array[secondIndex]</CODE>.
    *
-   * @param array double array whose elements contain the potential pattern
-   * @param firstIndex index to the start of the first pattern
+   * @param array       double array whose elements contain the potential pattern
+   * @param firstIndex  index to the start of the first pattern
    * @param secondIndex index to the start of the second pattern
-   * @param n the number of element to match
+   * @param n           the number of element to match
    * @return true if the first pattern is the same as the second; false otherwise
    */
   private static boolean matchPattern(final double[] array,
-      final int firstIndex,
-      final int secondIndex, final int n) {
+                                      final int firstIndex,
+                                      final int secondIndex, final int n) {
     boolean flag = true;
     for (int i = 0; i < n; i++) {
       if (array[firstIndex + i] != array[secondIndex + i]) {
@@ -2730,13 +2746,13 @@ public final class PhraseAnalysis {
    * n</CODE> elements of <CODE>patterns</CODE>.
    *
    * @param patterns array of integer arrays storing the patterns
-   * @param match integer array to search for
-   * @param n the number of elements of <CODE>patterns</CODE> to search
+   * @param match    integer array to search for
+   * @param n        the number of elements of <CODE>patterns</CODE> to search
    * @return true if pattern is found; false otherwise
    */
   private static boolean isAlreadyMatched(final int[][] patterns,
-      final int[] match,
-      final int n) {
+                                          final int[] match,
+                                          final int n) {
     search:
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < match.length; j++) {
@@ -2754,13 +2770,13 @@ public final class PhraseAnalysis {
    * n</CODE> elements of <CODE>patterns</CODE>.
    *
    * @param patterns array of double arrays storing the patterns
-   * @param match double array to search for
-   * @param n the number of elements of <CODE>patterns</CODE> to search
+   * @param match    double array to search for
+   * @param n        the number of elements of <CODE>patterns</CODE> to search
    * @return true if pattern is found; false otherwise
    */
   private static boolean isAlreadyMatched(final double[][] patterns,
-      final double[] match,
-      final int n) {
+                                          final double[] match,
+                                          final int n) {
     search:
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < match.length; j++) {
@@ -2802,7 +2818,7 @@ public final class PhraseAnalysis {
    * Returns true if <CODE>element</CODE> is an element of <CODE>array</CODE>
    *
    * @param element integer to search for
-   * @param array integer array to be searched
+   * @param array   integer array to be searched
    * @return true if element exists in array
    */
   private static boolean isElementOf(final int element, final int[] array) {
@@ -2818,13 +2834,13 @@ public final class PhraseAnalysis {
    * Returns true if <CODE>element</CODE> is one of the first <CODE>n</CODE>
    * elements of <CODE>array</CODE>
    *
-   * @param array array of integers to be searched for match
+   * @param array   array of integers to be searched for match
    * @param element integer to search for
-   * @param n integer indicating where to/ stop the search in the array
+   * @param n       integer indicating where to/ stop the search in the array
    * @return true if found; false otherwise
    */
   private static boolean isElementOf(final int element, final int[] array,
-      final int n) {
+                                     final int n) {
     for (int i = 0; i < n; i++) {
       if (array[i] == element) {
         return true;
@@ -2838,12 +2854,12 @@ public final class PhraseAnalysis {
    * elements of <CODE>array</CODE>
    *
    * @param element double to search forinteger to search for
-   * @param array array of doubles to be searched for match
-   * @param n integer indicating where to stop the search in the array
+   * @param array   array of doubles to be searched for match
+   * @param n       integer indicating where to stop the search in the array
    * @return true if found; false otherwise
    */
   private static boolean isElementOf(final double element,
-      final double[] array, final int n) {
+                                     final double[] array, final int n) {
     for (int i = 0; i < n; i++) {
       if (array[i] == element) {
         return true;
@@ -2862,7 +2878,7 @@ public final class PhraseAnalysis {
       // Give pitch a positive value with an equivalent degree of the
       // scale
       pitch += ((-pitch / SEMITONES_PER_OCTAVE) + 1)
-          * SEMITONES_PER_OCTAVE;
+        * SEMITONES_PER_OCTAVE;
     }
 
     return pitch % SEMITONES_PER_OCTAVE;

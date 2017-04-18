@@ -88,7 +88,7 @@ public final class Volume extends AudioObject {
    * which will adjust all samples passing through
    * this object.
    *
-   * @param ao The single AudioObject taken as input.
+   * @param ao     The single AudioObject taken as input.
    * @param volume The default volume for all samples.
    */
   public Volume(AudioObject ao, double volume) {
@@ -105,7 +105,7 @@ public final class Volume extends AudioObject {
    * which will adjust all samples passing through
    * this object.
    *
-   * @param ao the single AudioObject taken as input.
+   * @param ao     the single AudioObject taken as input.
    * @param volume the default volume for all samples.
    */
   public Volume(AudioObject ao, float volume) {
@@ -118,7 +118,7 @@ public final class Volume extends AudioObject {
   public void build() {
     this.linearVolumeValue = (double) currentNote.getDynamic() / 127.0;
     this.volume = (float) ((1.0 - (Math.log(128.0 -
-        (double) currentNote.getDynamic())) * 0.2)) * mainVolume;
+      (double) currentNote.getDynamic())) * 0.2)) * mainVolume;
   }
 
   public int work(float[] buffer) throws AOException {

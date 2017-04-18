@@ -101,7 +101,7 @@ public class DSServer extends Thread {
     Enumeration enum1 = clientConnections.elements();
     while (enum1.hasMoreElements()) {
       DSServerConnector con =
-          (DSServerConnector) enum1.nextElement();
+        (DSServerConnector) enum1.nextElement();
       if (con != conin) {
         con.sendObject(obj);
       }

@@ -33,9 +33,9 @@ import jm.music.data.Note;
 public interface Noises {
 
   int
-      WHITE_NOISE = 0,
-      STEP_NOISE = 1,
-      SMOOTH_NOISE = 2,
-      BROWN_NOISE = 3,
-      FRACTAL_NOISE = 4;
+    WHITE_NOISE = 0,
+    STEP_NOISE = 1,
+    SMOOTH_NOISE = 2,
+    BROWN_NOISE = 3,
+    FRACTAL_NOISE = 4;
 }

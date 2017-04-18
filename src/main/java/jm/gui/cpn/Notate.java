@@ -22,25 +22,13 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.cpn;
 
-import java.awt.Cursor;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.FileDialog;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.MenuShortcut;
-import java.awt.Panel;
-import java.awt.ScrollPane;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import jm.JMC;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
@@ -62,8 +50,8 @@ import jm.util.Write;
  */
 
 public class Notate extends Frame implements
-    ActionListener,
-    WindowListener, JMC {
+  ActionListener,
+  WindowListener, JMC {
 
   public boolean timeToStop;
   private Score score;
@@ -74,22 +62,22 @@ public class Notate extends Frame implements
   private int scrollHeight = 130, locationX = 0, locationY = 0;
   private Dialog keyDialog, timeDialog;
   private MenuItem keySig, open, openJmXml, openjm, play, stop, delete, clear,
-      newStave, close, timeSig, saveJmXml, saveJM, saveMidi, quit,
-      trebleStave, bassStave, pianoStave, grandStave, automaticStave,
+    newStave, close, timeSig, saveJmXml, saveJM, saveMidi, quit,
+    trebleStave, bassStave, pianoStave, grandStave, automaticStave,
 
   // Some menu options added
   appendMidiFile,
-      insertMidiFile,
-      setParameters,
-      playAll,
-      playMeasure,
-      repeatAll,
-      repeatMeasure,
-      stopPlay,
-      earTrain,
-      addNotes,
-      adjustTiming, viewDetails, viewTitle,
-      viewZoom, barNumbers;
+    insertMidiFile,
+    setParameters,
+    playAll,
+    playMeasure,
+    repeatAll,
+    repeatMeasure,
+    stopPlay,
+    earTrain,
+    addNotes,
+    adjustTiming, viewDetails, viewTitle,
+    viewZoom, barNumbers;
   // the panel for all the stave panels to go in to
   private Panel scoreBG;
   // the constraints for the scoreBG layout
@@ -144,8 +132,8 @@ public class Notate extends Frame implements
   }
 
   private static double getRhythmAdjustment(
-      double beats,
-      double beatIncrement) {
+    double beats,
+    double beatIncrement) {
     double increments;
     increments = beats / beatIncrement;
     double tolerance;
@@ -155,7 +143,7 @@ public class Notate extends Frame implements
     double n;
     n = Math.floor(increments);
     while ((Math.floor(increments + tolerance) > n)
-        && (tolerance > 0.00000000000001)) {
+      && (tolerance > 0.00000000000001)) {
       answer = tolerance;
       tolerance = tolerance / 2;
     }
@@ -426,13 +414,13 @@ public class Notate extends Frame implements
       Phrase currentPhrase = score.getPart(i).getPhrase(0);
       tempStaveArray[i] = new PianoStave();
       if (currentPhrase.getHighestPitch() < A6 &&
-          currentPhrase.getLowestPitch() > FS3) {
+        currentPhrase.getLowestPitch() > FS3) {
         tempStaveArray[i] = new TrebleStave();
       } else if (currentPhrase.getHighestPitch() < F4 &&
-          currentPhrase.getLowestPitch() > B1) {
+        currentPhrase.getLowestPitch() > B1) {
         tempStaveArray[i] = new BassStave();
       } else if (currentPhrase.getHighestPitch() > A6 ||
-          currentPhrase.getLowestPitch() < B1) {
+        currentPhrase.getLowestPitch() < B1) {
         tempStaveArray[i] = new GrandStave();
       }
     }
@@ -484,7 +472,7 @@ public class Notate extends Frame implements
       // set and add constraints
       constraints.gridy = gridyVal;
       if (staveArray[i].getClass().isInstance(new TrebleStave()) ||
-          staveArray[i].getClass().isInstance(new BassStave())) {
+        staveArray[i].getClass().isInstance(new BassStave())) {
         gridheightVal = 1;
       } else if (staveArray[i].getClass().isInstance(new PianoStave())) {
         gridheightVal = 2;
@@ -506,7 +494,7 @@ public class Notate extends Frame implements
     //this.setResizable(true);
     this.pack();
   }
-    
+
     /*
             // store current phrase
             phrase = stave.getPhrase().copy();
@@ -524,7 +512,7 @@ public class Notate extends Frame implements
             stave.setKeySignature(tempKey);
             stave.setMetre(tempTime);
             stave.setBarNumbers(tempBarNumbers);
-    }    
+    }
     */
 
   private void makeBassStave() {
@@ -534,7 +522,7 @@ public class Notate extends Frame implements
     }
     updateAllStaves(tempStaveArray);
   }
-    
+
     /*
             // store current phrase
             phrase = stave.getPhrase().copy();
@@ -552,7 +540,7 @@ public class Notate extends Frame implements
             stave.setKeySignature(tempKey);
             stave.setMetre(tempTime);
             stave.setBarNumbers(tempBarNumbers);
-    }       
+    }
     */
 
   private void makePianoStave() {
@@ -707,7 +695,7 @@ public class Notate extends Frame implements
       Play.midi(getLastMeasure(), false);
     } else if (e.getSource() == addNotes) { // only works on the top stave
       LetterNotesEditor notesScreen
-          = new LetterNotesEditor(this);
+        = new LetterNotesEditor(this);
       notesScreen.getNotes(staveArray[0]);
       staveArray[0].repaint();
     } else if (e.getSource() == adjustTiming) { // only works on the top stave
@@ -715,34 +703,34 @@ public class Notate extends Frame implements
       staveArray[0].repaint();
     } else if (e.getSource() == viewDetails) { // only works on the top stave
       PhraseViewer phraseViewer
-          = new PhraseViewer(this);
+        = new PhraseViewer(this);
       phraseViewer.showPhrase(
-          staveArray[0],
-          staveArray[0].getPhrase(),
-          15, 15);
+        staveArray[0],
+        staveArray[0].getPhrase(),
+        15, 15);
     } else if (e.getSource() == viewZoom) { // only works on the top stave
       if (!zoomed) {
         CpnZoomScreen zoomSelector
-            = new CpnZoomScreen(this);
+          = new CpnZoomScreen(this);
         beforeZoom = staveArray[0].getPhrase().copy();
         afterZoom = staveArray[0].getPhrase().copy();
         beforeZoom.empty();
         afterZoom.empty();
         zoomSelector.zoomIn(
-            beforeZoom,
-            staveArray[0].getPhrase(),
-            afterZoom);
+          beforeZoom,
+          staveArray[0].getPhrase(),
+          afterZoom);
         if (beforeZoom.size() +
-            afterZoom.size() > 0) {
+          afterZoom.size() > 0) {
           zoomed = true;
           viewZoom.setLabel("View complete phrase");
           repaint();
         }
       } else {
         CpnZoomScreen.zoomOut(
-            beforeZoom,
-            staveArray[0].getPhrase(),
-            afterZoom);
+          beforeZoom,
+          staveArray[0].getPhrase(),
+          afterZoom);
         zoomed = false;
         viewZoom.setLabel("View phrase section");
         repaint();
@@ -980,9 +968,9 @@ public class Notate extends Frame implements
     Notate n;
 
     public PlayRepeater(
-        String str,
-        Notate nParm,
-        JmMidiPlayer midiPlayerParm) {
+      String str,
+      Notate nParm,
+      JmMidiPlayer midiPlayerParm) {
       super(str);
       n = nParm;
       midiPlayer = midiPlayerParm;

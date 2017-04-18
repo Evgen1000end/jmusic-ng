@@ -43,8 +43,8 @@ public final class SimpleFMInst extends jm.audio.Instrument {
    * Basic default constructor to set basic values
    *
    * @param sampleRate The instrument's audio resolution
-   * @param modIndex The modulation index, greater = more overtones
-   * @param ratio The carrier/modulator pitch ratio = harmonicity of spectrum
+   * @param modIndex   The modulation index, greater = more overtones
+   * @param ratio      The carrier/modulator pitch ratio = harmonicity of spectrum
    */
   public SimpleFMInst(int sampleRate, int modIndex, double ratio) {
     this(sampleRate, modIndex, ratio, 1);
@@ -54,9 +54,9 @@ public final class SimpleFMInst extends jm.audio.Instrument {
    * A constructor to set all values
    *
    * @param sampleRate The instrument's audio resolution
-   * @param modIndex The modulation index, greater = more overtones
-   * @param ratio The carrier/modulator pitch ratio = harmonicity of spectrum
-   * @param channels The number of channels
+   * @param modIndex   The modulation index, greater = more overtones
+   * @param ratio      The carrier/modulator pitch ratio = harmonicity of spectrum
+   * @param channels   The number of channels
    */
   public SimpleFMInst(int sampleRate, int modIndex, double ratio, int channels) {
     this.sampleRate = sampleRate;
@@ -76,7 +76,7 @@ public final class SimpleFMInst extends jm.audio.Instrument {
   public void createChain() throws AOException {
     // modulator
     Oscillator modulator = new Oscillator(this, Oscillator.SINE_WAVE, this.sampleRate,
-        this.channels);
+      this.channels);
     modulator.setFrqRatio(frqRatio);
     modulator.setAmp((float) modIndex);
     Envelope env = new Envelope(modulator, new double[]{0.0, 1.0, 1.0, 0.0});

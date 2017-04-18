@@ -1,8 +1,8 @@
 /*
  <This Java Class is part of the jMusic API version 1.5, March 2004.>
- 
+
  Copyright (C) 2000 Andrew Sorensen & Andrew Brown
- 
+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or any
@@ -18,18 +18,11 @@
 
 package jm.gui.helper;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Dimension;
-import java.awt.FileDialog;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.Scrollbar;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentListener;
+
 import jm.JMC;
 import jm.audio.Instrument;
 import jm.midi.MidiSynth;
@@ -71,7 +64,7 @@ import jm.util.Write;
 
 // To make this class use swing composents replace the GUI attributes (Button etc.)
 // with ones starting with the letter J (JButton etc.) add a
-// javax.swing import statement and use the commented 
+// javax.swing import statement and use the commented
 // getContentPane().add(controls) statement below.
 
 public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentListener {
@@ -85,16 +78,16 @@ public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentL
   protected String audioFileName;
   protected Panel sliders;
   private Button composeBtn, playBtn, stopBtn, showBtn, sketchBtn,
-      histogramBtn, printBtn, saveBtn, renderBtn, notateBtn, readMidiBtn,
-      audioViewBtn, audioPlayBtn, audioStopBtn, xmlOpenBtn, xmlSaveBtn;
+    histogramBtn, printBtn, saveBtn, renderBtn, notateBtn, readMidiBtn,
+    audioViewBtn, audioPlayBtn, audioStopBtn, xmlOpenBtn, xmlSaveBtn;
   private Scrollbar sliderA, sliderB, sliderC, sliderD, sliderE;
   private Label labelA, labelB, labelC, labelD, labelE;
   private Label commentLabA, commentLabB, commentLabC,
-      commentLabD, commentLabE;
+    commentLabD, commentLabE;
   private MidiSynth ms = new MidiSynth();
   // Is there are open JavaSound synth?
   private boolean playing = false;
-    
+
     /*
      // for testing only
      public static void main(String[] args) {
@@ -524,9 +517,9 @@ public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentL
     Phrase phrase = new Phrase();
     Score s = new Score(new Part(phrase));
     Note n = Note.newBuilder()
-        .pitch(48 + (int) (Math.random() * variableA))
-        .rhythm(0.5 + variableB * 0.25)
-        .build();
+      .pitch(48 + (int) (Math.random() * variableA))
+      .rhythm(0.5 + variableB * 0.25)
+      .build();
     phrase.addNote(n);
     return s;
   }
@@ -610,8 +603,8 @@ public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentL
    */
   public void openMidi() {
     FileDialog fd = new FileDialog(new Frame(),
-        "Select a MIDI file to import...",
-        FileDialog.LOAD);
+      "Select a MIDI file to import...",
+      FileDialog.LOAD);
     fd.show();
     String fileName = fd.getFile();
     if (fileName != null) {
@@ -688,8 +681,8 @@ public class HelperGUI extends Frame implements JMC, ActionListener, AdjustmentL
    */
   private void xmlSave() {
     FileDialog fd = new FileDialog(new Frame(),
-        "Save as a jMusic XML file...",
-        FileDialog.SAVE);
+      "Save as a jMusic XML file...",
+      FileDialog.SAVE);
     fd.show();
     if (fd.getFile() != null) {
       jm.util.Write.xml(score, fd.getDirectory() + fd.getFile(), true);

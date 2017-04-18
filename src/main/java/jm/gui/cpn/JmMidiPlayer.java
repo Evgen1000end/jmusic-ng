@@ -9,16 +9,16 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-// GPL code for jMusic CPN.   
+// GPL code for jMusic CPN.
 // Written by Al Christians (achrist@easystreet.com).
 // Copyright  2002, Trillium Resources Corporation, Oregon's
 // leading provider of unvarnished software.
@@ -29,6 +29,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiSystem;
@@ -40,7 +41,7 @@ import javax.sound.midi.Transmitter;
 
 // This class prints quite a few diagnostics.
 // This is because the true nature of Midi devices
-// is a deep mystery. 
+// is a deep mystery.
 
 public class JmMidiPlayer extends OutputStream {
 
@@ -82,7 +83,7 @@ public class JmMidiPlayer extends OutputStream {
     // );
 
     MidiDevice.Info[] devsInfo
-        = MidiSystem.getMidiDeviceInfo();
+      = MidiSystem.getMidiDeviceInfo();
     MidiDevice.Info devInfo;
     MidiDevice dev;
     for (int i = 0; i < devsInfo.length; ++i) {
@@ -103,10 +104,10 @@ public class JmMidiPlayer extends OutputStream {
   }
 
   private static MidiDevice getSynthesizer()
-      throws MidiUnavailableException {
+    throws MidiUnavailableException {
 
     MidiDevice.Info[] devsInfo
-        = MidiSystem.getMidiDeviceInfo();
+      = MidiSystem.getMidiDeviceInfo();
     MidiDevice.Info devInfo;
     MidiDevice dev;
     dev = null;
@@ -125,11 +126,11 @@ public class JmMidiPlayer extends OutputStream {
             System.out.println(" Opened");
           } else {
             System.out.println(
-                " Not a Sequencer");
+              " Not a Sequencer");
           }
         } catch (Exception e) {
           System.out.println(
-              " Exception " + e.getMessage());
+            " Exception " + e.getMessage());
         }
       }
     }
@@ -137,9 +138,9 @@ public class JmMidiPlayer extends OutputStream {
       return dev;
     } else {
       System.out.println(
-          "No Synthesizer Device Found");
+        "No Synthesizer Device Found");
       throw new MidiUnavailableException(
-          "No Synthesizer Device Found");
+        "No Synthesizer Device Found");
     }
   }
 
@@ -156,7 +157,7 @@ public class JmMidiPlayer extends OutputStream {
   public void play() {
     try {
       ByteArrayInputStream is
-          = new ByteArrayInputStream(os.toByteArray());
+        = new ByteArrayInputStream(os.toByteArray());
       //System.out.println("Creating Sequence");
       Sequence midiSeq = MidiSystem.getSequence(is);
       //System.out.println("Setting Sequence");
@@ -181,15 +182,15 @@ public class JmMidiPlayer extends OutputStream {
       //System.out.println("Sequencer Stopped");
     } catch (InvalidMidiDataException e) {
       System.out.println(
-          "Bad Midi Data " + e.getMessage());
+        "Bad Midi Data " + e.getMessage());
     } catch (MidiUnavailableException e) {
       System.out.println(
-          "Unable to Re-Open Sequencer " +
-              e.getMessage()
+        "Unable to Re-Open Sequencer " +
+          e.getMessage()
       );
     } catch (IOException e) {
       System.out.println(
-          "IO Exception in Midi " + e.getMessage());
+        "IO Exception in Midi " + e.getMessage());
     }
     //System.out.println("End of Play");
   }

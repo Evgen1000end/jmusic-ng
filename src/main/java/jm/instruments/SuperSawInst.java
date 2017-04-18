@@ -53,11 +53,11 @@ public final class SuperSawInst extends Instrument {
     this.sampleRate = sampleRate;
     this.detune = detune;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.02, (float) 1.0),
-        new EnvPoint((float) 0.15, (float) 0.6),
-        new EnvPoint((float) 0.9, (float) 0.3),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.02, (float) 1.0),
+      new EnvPoint((float) 0.15, (float) 0.6),
+      new EnvPoint((float) 0.9, (float) 0.3),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
   }

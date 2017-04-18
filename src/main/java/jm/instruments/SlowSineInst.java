@@ -51,9 +51,9 @@ public final class SlowSineInst extends jm.audio.Instrument {
     this.sampleRate = sampleRate;
     this.channels = channels;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.5, (float) 1.0),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.5, (float) 1.0),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
   }
@@ -68,7 +68,7 @@ public final class SlowSineInst extends jm.audio.Instrument {
    */
   public void createChain() {
     Oscillator wt = new Oscillator(this, Oscillator.SINE_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
     Envelope env = new Envelope(wt, pointArray);
     Volume vol = new Volume(env);
     StereoPan span = new StereoPan(vol);

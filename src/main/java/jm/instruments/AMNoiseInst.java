@@ -61,7 +61,7 @@ public final class AMNoiseInst extends jm.audio.Instrument {
     // modulator
     Noise noise = new Noise(this, Noise.FRACTAL_NOISE, this.sampleRate, this.channels);
     Envelope modEnv = new Envelope(noise,
-        new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 1.0});
+      new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 1.0});
     Volume modVol = new Volume(modEnv, this.depth); // respond to note dynamic
     // constant
     Value offsetAmp = new Value(this, this.sampleRate, this.channels, (float) 0.5);
@@ -69,9 +69,9 @@ public final class AMNoiseInst extends jm.audio.Instrument {
     Add add = new Add(grp1);
     // carrier
     Oscillator carrier = new Oscillator(add,
-        Oscillator.SINE_WAVE, WaveTable.AMPLITUDE);
+      Oscillator.SINE_WAVE, WaveTable.AMPLITUDE);
     Envelope env = new Envelope(carrier,
-        new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
     Volume vol = new Volume(env, (float) 1.0);
     StereoPan span = new StereoPan(vol);
     SampleOut sout = new SampleOut(span);

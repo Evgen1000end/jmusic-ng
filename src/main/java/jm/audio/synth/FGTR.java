@@ -1,4 +1,4 @@
-/* 
+/*
 
 <This Java Class is part of the jMusic API version 1.5, March 2004.>
 
@@ -73,9 +73,9 @@ public final class FGTR extends AudioObject {
       for (int dCounter = 0; dCounter < grainDuration; dCounter++) {
         // This following short equation creates a sine wave and envelopes it at the correct duration
         buffer[bCounter] = buffer[bCounter] + (float) (
-            (Math.sin(
-                2 * Math.PI * dCounter * ((frequency * buffer.length) / (sampleRate * channels))) *
-                (Math.sin(Math.PI * (dCounter / grainDuration)) * highestAmp)));
+          (Math.sin(
+            2 * Math.PI * dCounter * ((frequency * buffer.length) / (sampleRate * channels))) *
+            (Math.sin(Math.PI * (dCounter / grainDuration)) * highestAmp)));
         // Or there is this method which generates a noise band between the specified top and bottom frequency range
         // and then envelopes it just like the previous equation.
 

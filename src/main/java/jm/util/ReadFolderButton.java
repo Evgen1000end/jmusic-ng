@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -23,11 +23,10 @@
 
 package jm.util;
 
-import java.awt.Button;
-import java.awt.FileDialog;
-import java.awt.Frame;
+import java.awt.*;
 import java.io.File;
 import java.io.FilenameFilter;
+
 import jm.music.data.Score;
 
 /**
@@ -53,38 +52,38 @@ public class ReadFolderButton extends Button {
    * Constructs a button for reading in a folder of MIDI and jMusic files.
    *
    * @param owner {@link Frame} which is the owner of this button.  Access to this
-   * <CODE>Frame</CODE> will be suspended when the user is selecting a music file and when error
-   * messages are displayed.
+   *              <CODE>Frame</CODE> will be suspended when the user is selecting a music file and
+   *              when error messages are displayed.
    */
   public ReadFolderButton(final Frame owner) {
     super("Read Folder");
     final FileDialog load = new FileDialog(owner,
-        "Select a file to read all Midi and JMusic within that"
-            + " file's folder", FileDialog.LOAD
+      "Select a file to read all Midi and JMusic within that"
+        + " file's folder", FileDialog.LOAD
     );
     final FilenameFilter filter = new ReadFilenameFilter();
     load.setFilenameFilter(filter);
 
     addActionListener(evt -> {
-          load.show();
+        load.show();
 
-          String directoryName = load.getDirectory();
-          if (directoryName == null) {
-            return;
-          }
-          String[] filenames = new File(directoryName).list(filter);
-          for (int i = 0; i < filenames.length; i++) {
-            Score score = Read.midiOrJmWithAWTMessaging(directoryName,
-                filenames[i],
-                owner);
-            if (score != null && readListenerList != null) {
-              readListenerList.scoreRead(score);
-            }
-          }
-          if (readListenerList != null) {
-            readListenerList.finishedReading();
+        String directoryName = load.getDirectory();
+        if (directoryName == null) {
+          return;
+        }
+        String[] filenames = new File(directoryName).list(filter);
+        for (int i = 0; i < filenames.length; i++) {
+          Score score = Read.midiOrJmWithAWTMessaging(directoryName,
+            filenames[i],
+            owner);
+          if (score != null && readListenerList != null) {
+            readListenerList.scoreRead(score);
           }
         }
+        if (readListenerList != null) {
+          readListenerList.finishedReading();
+        }
+      }
     );
   }
 

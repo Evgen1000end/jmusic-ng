@@ -47,7 +47,7 @@ public final class SimpleTremoloInst extends jm.audio.Instrument {
   public void createChain() {
     Value modFreq = new Value(this, this.sampleRate, this.channels, (float) 5.0);
     Oscillator modulator = new Oscillator(modFreq, Oscillator.SINE_WAVE,
-        Oscillator.FREQUENCY);
+      Oscillator.FREQUENCY);
     Volume amp = new Volume(modulator, (float) 0.4);
     Oscillator carrier = new Oscillator(amp, Oscillator.SINE_WAVE, Oscillator.AMPLITUDE);
     SampleOut sout = new SampleOut(carrier);

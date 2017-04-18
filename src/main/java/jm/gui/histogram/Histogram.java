@@ -21,16 +21,11 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 package jm.gui.histogram;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.FileDialog;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Frame;
-import java.awt.Graphics;
+import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
+
 import jm.JMC;
 import jm.music.data.Note;
 import jm.music.data.Part;
@@ -105,7 +100,7 @@ public class Histogram extends Component implements JMC {
    * data to be displayed.
    *
    * @param score the score to be displayed
-   * @param type the note attribute to be displayed, 0 = pitch etc.
+   * @param type  the note attribute to be displayed, 0 = pitch etc.
    */
   public Histogram(Score score, int type) {
     this(score, type, 0, 0);
@@ -115,9 +110,9 @@ public class Histogram extends Component implements JMC {
    * Histogram constructor with all elements.
    *
    * @param score the score to be displayed
-   * @param type the note attribute to be displayed, 0 = pitch etc.
-   * @param xPos the horizonal position for the window to be displayed
-   * @param yPos the vertical position for the window to be displayed
+   * @param type  the note attribute to be displayed, 0 = pitch etc.
+   * @param xPos  the horizonal position for the window to be displayed
+   * @param yPos  the vertical position for the window to be displayed
    */
   public Histogram(Score score, int type, int xPos, int yPos) {
     this(score, type, xPos, yPos, 200);
@@ -127,9 +122,9 @@ public class Histogram extends Component implements JMC {
    * Histogram constructor with all elements.
    *
    * @param score the score to be displayed
-   * @param type the note attribute to be displayed, 0 = pitch etc.
-   * @param xPos the horizonal position for the window to be displayed
-   * @param yPos the vertical position for the window to be displayed
+   * @param type  the note attribute to be displayed, 0 = pitch etc.
+   * @param xPos  the horizonal position for the window to be displayed
+   * @param yPos  the vertical position for the window to be displayed
    */
   public Histogram(Score score, int type, int xPos, int yPos, int width) {
     this.score = score;
@@ -167,13 +162,13 @@ public class Histogram extends Component implements JMC {
       Enumeration enum2 = part.getPhraseList().elements();
       while (enum2.hasMoreElements()) {
         Phrase phrase = (Phrase) enum2.nextElement();
-        for (Note note: phrase.getNoteList()) {
+        for (Note note : phrase.getNoteList()) {
           if (note.getPitch() != REST) {
             // pitch
             pitchValues[note.getPitch()]++;
             if (pitchValues[note.getPitch()] > maxPitchValue) {
               maxPitchValue =
-                  pitchValues[note.getPitch()];
+                pitchValues[note.getPitch()];
             }
             // rhythm
             int val = (int) (note.getRhythm() / 0.125);
@@ -188,13 +183,13 @@ public class Histogram extends Component implements JMC {
             dynamicValues[note.getDynamic()]++;
             if (dynamicValues[note.getDynamic()] > maxDynamicValue) {
               maxDynamicValue =
-                  dynamicValues[note.getDynamic()];
+                dynamicValues[note.getDynamic()];
             }
             // pan
             panValues[(int) (note.getPan() * 100)]++;
             if (panValues[(int) (note.getPan() * 100)] > maxPanValue) {
               maxPanValue =
-                  panValues[(int) (note.getPan() * 100)];
+                panValues[(int) (note.getPan() * 100)];
             }
           }
         }
@@ -246,7 +241,7 @@ public class Histogram extends Component implements JMC {
    */
   public void saveData() {
     FileDialog fd = new FileDialog(new Frame(),
-        "Save histogram data as...", FileDialog.SAVE);
+      "Save histogram data as...", FileDialog.SAVE);
     fd.show();
     String fileName = fd.getFile();
     if (fileName != null) {
@@ -264,24 +259,24 @@ public class Histogram extends Component implements JMC {
     try {
       FileOutputStream out = new FileOutputStream(fileName);
       String headerText = "Pitch value" + "\t" + "Pitch data" +
-          "\t" + "Rhythm value" + "\t" + "Rhythm data" +
-          "\t" + "Dynamic value" + "\t" + "Dynamic data" +
-          "\t" + "Pan value" + "\t" + "Pan data" +
-          "\n";
+        "\t" + "Rhythm value" + "\t" + "Rhythm data" +
+        "\t" + "Dynamic value" + "\t" + "Dynamic data" +
+        "\t" + "Pan value" + "\t" + "Pan data" +
+        "\n";
       out.write(headerText.getBytes());
       for (int i = 0; i < pitchValues.length; i++) {
         String data = String.valueOf(i) + String.valueOf("\t") + String.valueOf(pitchValues[i]);
         if (i < rhythmValues.length) {
           data += String.valueOf("\t") + String.valueOf(i * 0.125) +
-              String.valueOf("\t") + String.valueOf(rhythmValues[i]);
+            String.valueOf("\t") + String.valueOf(rhythmValues[i]);
         }
         if (i < dynamicValues.length) {
           data += String.valueOf("\t") + String.valueOf(i) +
-              String.valueOf("\t") + String.valueOf(dynamicValues[i]);
+            String.valueOf("\t") + String.valueOf(dynamicValues[i]);
         }
         if (i < panValues.length) {
           data += String.valueOf("\t") + String.valueOf(i / 100.0) +
-              String.valueOf("\t") + String.valueOf(panValues[i]);
+            String.valueOf("\t") + String.valueOf(panValues[i]);
         }
         data += String.valueOf("\n");
         out.write(data.getBytes());
@@ -311,10 +306,10 @@ public class Histogram extends Component implements JMC {
       g.setColor(Color.green);
       String lString = "" + maxValue / 4 * i;
       g.drawString(lString, this.getSize().width / 5 * i + lableSpace -
-          fm.stringWidth(lString) / 2, lableSpace - fm.getAscent() / 2);
+        fm.stringWidth(lString) / 2, lableSpace - fm.getAscent() / 2);
       g.setColor(Color.gray);
       g.drawLine(this.getSize().width / 5 * i + lableSpace, lableSpace,
-          this.getSize().width / 5 * i + lableSpace, this.getSize().height);
+        this.getSize().width / 5 * i + lableSpace, this.getSize().height);
     }
 
     // paint
@@ -354,8 +349,8 @@ public class Histogram extends Component implements JMC {
         g.setColor(Color.black);
       }
       g.fillRect(lableSpace, i * barWidth + lableSpace,
-          (int) ((double) pitchValues[i] / (double) maxPitchValue *
-              ((double) this.getSize().width - lableSpace)), barWidth - 1
+        (int) ((double) pitchValues[i] / (double) maxPitchValue *
+          ((double) this.getSize().width - lableSpace)), barWidth - 1
       );
       if (i % 12 == 0) {
         g.setColor(Color.red);
@@ -388,8 +383,8 @@ public class Histogram extends Component implements JMC {
         g.setColor(Color.black);
       }
       g.fillRect(lableSpace, i * barWidth * 2 + lableSpace,
-          (int) ((double) rhythmValues[i] / (double) maxRhythmValue *
-              ((double) this.getSize().width - lableSpace)), barWidth * 2 - 1
+        (int) ((double) rhythmValues[i] / (double) maxRhythmValue *
+          ((double) this.getSize().width - lableSpace)), barWidth * 2 - 1
       );
       if (i % 8 == 0) {
         g.setColor(Color.red);
@@ -420,8 +415,8 @@ public class Histogram extends Component implements JMC {
         g.setColor(Color.black);
       }
       g.fillRect(lableSpace, i * barWidth + lableSpace,
-          (int) ((double) dynamicValues[i] / (double) maxDynamicValue *
-              ((double) this.getSize().width - lableSpace)), barWidth - 1
+        (int) ((double) dynamicValues[i] / (double) maxDynamicValue *
+          ((double) this.getSize().width - lableSpace)), barWidth - 1
       );
       if (i % 10 == 0) {
         g.setColor(Color.red);
@@ -450,8 +445,8 @@ public class Histogram extends Component implements JMC {
         g.setColor(Color.black);
       }
       g.fillRect(lableSpace, i * barWidth + lableSpace,
-          (int) ((double) panValues[i] / (double) maxPanValue *
-              ((double) this.getSize().width - lableSpace)), barWidth - 1
+        (int) ((double) panValues[i] / (double) maxPanValue *
+          ((double) this.getSize().width - lableSpace)), barWidth - 1
       );
       if (i % 10 == 0 && i != 50) {
         g.setColor(Color.red);

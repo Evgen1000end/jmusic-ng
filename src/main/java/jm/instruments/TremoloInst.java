@@ -46,12 +46,12 @@ public final class TremoloInst extends jm.audio.Instrument {
    */
   public void createChain() {
     Oscillator modulator = new Oscillator(this, Oscillator.SINE_WAVE, this.sampleRate,
-        this.channels, Oscillator.FREQUENCY, (float) 5.0);
+      this.channels, Oscillator.FREQUENCY, (float) 5.0);
     Volume vol = new Volume(modulator, 10.0f);
     Oscillator carrier = new Oscillator(vol,
-        Oscillator.SINE_WAVE, Oscillator.AMPLITUDE);
+      Oscillator.SINE_WAVE, Oscillator.AMPLITUDE);
     Envelope env2 = new Envelope(carrier,
-        new double[]{0.0, 0.0, 0.1, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.1, 1.0, 1.0, 0.0});
     SampleOut sout = new SampleOut(env2);
   }
 }

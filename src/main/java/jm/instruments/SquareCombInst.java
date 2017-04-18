@@ -32,7 +32,7 @@ public final class SquareCombInst extends jm.audio.Instrument {
    */
   public void createChain() {
     Oscillator osc = new Oscillator(this, Oscillator.SQUARE_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
     Envelope env = new Envelope(osc, new double[]{0.0, 0.0, 0.1, 1.0, 0.3, 0.0});
     Comb comb = new Comb(env, delay, decay);
     SampleOut sout = new SampleOut(comb);

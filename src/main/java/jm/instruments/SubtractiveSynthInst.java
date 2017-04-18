@@ -77,7 +77,7 @@ public final class SubtractiveSynthInst extends Instrument {
    * See the jm.audio.synth.Oscillator class for valid waveform values.
    *
    * @param sampleRate The number of samples per second (quality)
-   * @param waveform The oscillator shape to use.
+   * @param waveform   The oscillator shape to use.
    */
   public SubtractiveSynthInst(int sampleRate, int waveform) {
     this(sampleRate, waveform, 500);
@@ -86,8 +86,8 @@ public final class SubtractiveSynthInst extends Instrument {
   /**
    * Constructor that sets sample rate, waveform, and low pass filter cutoff.
    *
-   * @param sampleRate The number of samples per second (quality)
-   * @param waveform The oscillator shape to use
+   * @param sampleRate   The number of samples per second (quality)
+   * @param waveform     The oscillator shape to use
    * @param filterCutoff The frequency above which overtones are cut
    */
   public SubtractiveSynthInst(int sampleRate, int waveform, int filterCutoff) {
@@ -97,51 +97,51 @@ public final class SubtractiveSynthInst extends Instrument {
   /**
    * Constructor that sets sample rate, waveform, filter cutoff, and envelope.
    *
-   * @param sampleRate The number of samples per second (quality).
-   * @param waveform The oscillator shape to use
+   * @param sampleRate   The number of samples per second (quality).
+   * @param waveform     The oscillator shape to use
    * @param filterCutoff The frequency above which overtones are cut.
-   * @param attack An envelope value in milliseconds.
-   * @param decay An envelope value in milliseconds.
-   * @param sustain An envelope value for volume, from 0.0 - 1.0.
-   * @param release An envelope value in milliseconds.
+   * @param attack       An envelope value in milliseconds.
+   * @param decay        An envelope value in milliseconds.
+   * @param sustain      An envelope value for volume, from 0.0 - 1.0.
+   * @param release      An envelope value in milliseconds.
    */
   public SubtractiveSynthInst(int sampleRate, int waveform, int filterCutoff,
-      int attack, int decay, double sustain, int release) {
+                              int attack, int decay, double sustain, int release) {
     this(sampleRate, waveform, filterCutoff, attack, decay, sustain, release, 1);
   }
 
   /**
    * Constructor that sets sample rate, waveform, filter cutoff, and envelope.
    *
-   * @param sampleRate The number of samples per second (quality).
-   * @param waveform The oscillator shape to use
+   * @param sampleRate   The number of samples per second (quality).
+   * @param waveform     The oscillator shape to use
    * @param filterCutoff The frequency above which overtones are cut.
-   * @param attack An envelope value in milliseconds.
-   * @param decay An envelope value in milliseconds.
-   * @param sustain An envelope value for volume, from 0.0 - 1.0.
-   * @param release An envelope value in milliseconds.
-   * @param numbOfOsc The number of parallel oscillators to use.
+   * @param attack       An envelope value in milliseconds.
+   * @param decay        An envelope value in milliseconds.
+   * @param sustain      An envelope value for volume, from 0.0 - 1.0.
+   * @param release      An envelope value in milliseconds.
+   * @param numbOfOsc    The number of parallel oscillators to use.
    */
   public SubtractiveSynthInst(int sampleRate, int waveform, int filterCutoff,
-      int attack, int decay, double sustain, int release, int numbOfOsc) {
+                              int attack, int decay, double sustain, int release, int numbOfOsc) {
     this(sampleRate, waveform, filterCutoff, attack, decay, sustain, release, numbOfOsc, false);
   }
 
   /**
    * Constructor that sets sample rate, waveform, filter cutoff, and envelope.
    *
-   * @param sampleRate The number of samples per second (quality).
-   * @param waveform The oscillator shape to use
+   * @param sampleRate   The number of samples per second (quality).
+   * @param waveform     The oscillator shape to use
    * @param filterCutoff The frequency above which overtones are cut.
-   * @param attack An envelope value in milliseconds.
-   * @param decay An envelope value in milliseconds.
-   * @param sustain An envelope value for volume, from 0.0 - 1.0.
-   * @param release An envelope value in milliseconds.
-   * @param numbOfOsc The number of parallel oscillators to use.
-   * @param subOsc A choice about lowering the second osc one octave.
+   * @param attack       An envelope value in milliseconds.
+   * @param decay        An envelope value in milliseconds.
+   * @param sustain      An envelope value for volume, from 0.0 - 1.0.
+   * @param release      An envelope value in milliseconds.
+   * @param numbOfOsc    The number of parallel oscillators to use.
+   * @param subOsc       A choice about lowering the second osc one octave.
    */
   public SubtractiveSynthInst(int sampleRate, int waveform, int filterCutoff,
-      int attack, int decay, double sustain, int release, int numbOfOsc, boolean subOsc) {
+                              int attack, int decay, double sustain, int release, int numbOfOsc, boolean subOsc) {
     this.sampleRate = sampleRate;
     this.waveform = waveform;
     this.filterCutoff = filterCutoff;
@@ -175,7 +175,7 @@ public final class SubtractiveSynthInst extends Instrument {
     for (int i = 0; i < numbOfOsc; i++) {
       // modulator
       modFrequency[i] = new Value(this, this.sampleRate, this.channels,
-          (float) (Math.random() * 0.2));
+        (float) (Math.random() * 0.2));
       modulator[i] = new Oscillator(modFrequency[i], Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
       modulator[i].setAmp((float) 0.3);
       // constant

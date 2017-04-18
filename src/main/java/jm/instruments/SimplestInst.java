@@ -18,7 +18,7 @@ public final class SimplestInst extends jm.audio.Instrument {
 
   public void createChain() throws AOException {
     Oscillator modulator = new Oscillator(this, Oscillator.TRIANGLE_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
     //SampleOut so = new SampleOut(modulator,"jmusic.tmp");
   }
 }

@@ -40,16 +40,16 @@ public final class SabersawInst extends Instrument {
    * the instrument
    *
    * @param frequencies the relative freqencies to use
-   * @param volumes the volumes to use for the frequencies
+   * @param volumes     the volumes to use for the frequencies
    */
   public SabersawInst(int sampleRate) {
     this.sampleRate = sampleRate;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.02, (float) 1.0),
-        new EnvPoint((float) 0.15, (float) 0.6),
-        new EnvPoint((float) 0.95, (float) 0.3),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.02, (float) 1.0),
+      new EnvPoint((float) 0.15, (float) 0.6),
+      new EnvPoint((float) 0.95, (float) 0.3),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
   }
@@ -64,7 +64,7 @@ public final class SabersawInst extends Instrument {
    */
   public void createChain() {
     Oscillator wt = new Oscillator(this, Oscillator.SABERSAW_WAVE,
-        this.sampleRate, 2);
+      this.sampleRate, 2);
     Envelope env = new Envelope(wt, pointArray);
     Volume vol = new Volume(env, (float) 1.0);
     StereoPan span = new StereoPan(vol);

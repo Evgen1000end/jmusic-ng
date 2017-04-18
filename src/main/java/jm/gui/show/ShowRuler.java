@@ -1,17 +1,13 @@
 /* --------------------
 * A jMusic tool which displays a score as a
 * Common Practice Notation in a window.
-* @author Andrew Brown 
+* @author Andrew Brown
  * @version 1.0,Sun Feb 25 18:43
 * ---------------------
 */
 package jm.gui.show;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;

@@ -64,10 +64,10 @@ public final class SineInst extends jm.audio.Instrument {
    */
   public SineInst(int sampleRate, int channels) {
     this(sampleRate, channels, new double[]{
-        0.0, 0.0,
-        0.15, 1.0,
-        0.3, 0.5,
-        1.0, 0.0});
+      0.0, 0.0,
+      0.15, 1.0,
+      0.3, 0.5,
+      1.0, 0.0});
   }
 
   /**
@@ -75,7 +75,7 @@ public final class SineInst extends jm.audio.Instrument {
    * the pitch of the sine wave in hertz.
    *
    * @param channels the number of channels in the sound 1 = mono, 2 = stereo, etc
-   * @param points The bereak point values fo the amplitude envelope
+   * @param points   The bereak point values fo the amplitude envelope
    */
   public SineInst(int sampleRate, int channels, double[] points) {
     this(sampleRate, channels, points, -1.0f);
@@ -85,8 +85,8 @@ public final class SineInst extends jm.audio.Instrument {
    * A constructor to set sampleRate, channels, and
    * the pitch of the sine wave in hertz.
    *
-   * @param channels the number of channels in the sound 1 = mono, 2 = stereo, etc
-   * @param points The bereak point values fo the amplitude envelope
+   * @param channels  the number of channels in the sound 1 = mono, 2 = stereo, etc
+   * @param points    The bereak point values fo the amplitude envelope
    * @param frequency a positive float value specifying a fixed pitch
    */
   public SineInst(int sampleRate, int channels, double[] points, float frequency) {

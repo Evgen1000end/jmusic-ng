@@ -40,11 +40,11 @@ public final class PulseFifthsInst extends Instrument {
   public PulseFifthsInst(int sampleRate) {
     this.sampleRate = sampleRate;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.02, (float) 1.0),
-        new EnvPoint((float) 0.15, (float) 0.6),
-        new EnvPoint((float) 0.9, (float) 0.4),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.02, (float) 1.0),
+      new EnvPoint((float) 0.15, (float) 0.6),
+      new EnvPoint((float) 0.9, (float) 0.4),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
   }
@@ -60,12 +60,12 @@ public final class PulseFifthsInst extends Instrument {
   public void createChain() {
     // tonic
     Oscillator wt = new Oscillator(this, Oscillator.PULSE_WAVE,
-        this.sampleRate, 2);
+      this.sampleRate, 2);
     wt.setPulseWidth(0.15);
     StereoPan span = new StereoPan(wt, (float) 0.2);
     // fifth
     Oscillator wt2 = new Oscillator(this, Oscillator.PULSE_WAVE,
-        this.sampleRate, 2);
+      this.sampleRate, 2);
     wt2.setPulseWidth(0.15);
     wt2.setFrqRatio((float) (3.0 / 2.0));
     StereoPan span2 = new StereoPan(wt2, (float) 0.8);

@@ -23,8 +23,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.util;
 
-import java.awt.FileDialog;
-import java.awt.Frame;
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -33,6 +32,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+
 import jm.JMC;
 import jm.audio.Audio;
 import jm.audio.Instrument;
@@ -56,8 +56,8 @@ public class Write implements JMC {
    */
   public static void midi(Score score) {
     FileDialog fd = new FileDialog(new Frame(),
-        "Save as a MIDI file ...",
-        FileDialog.SAVE);
+      "Save as a MIDI file ...",
+      FileDialog.SAVE);
     fd.setFile("jMusic_composition.mid");
     fd.show();
     if (fd.getFile() != null) {
@@ -94,16 +94,16 @@ public class Write implements JMC {
     try {
       double time1 = System.currentTimeMillis();
       System.out.println(
-          "----------------------------- Writing MIDI File ------------------------------");
+        "----------------------------- Writing MIDI File ------------------------------");
       smf.clearTracks();
       jm.midi.MidiParser.scoreToSMF(scr, smf);
       OutputStream os = new FileOutputStream(fileName);
       smf.write(os);
       double time2 = System.currentTimeMillis();
       System.out.println("MIDI file '" + fileName + "' written from score '" +
-          scr.getTitle() + "' in " + ((time2 - time1) / 1000) + " seconds.");
+        scr.getTitle() + "' in " + ((time2 - time1) / 1000) + " seconds.");
       System.out.println(
-          "------------------------------------------------------------------------------");
+        "------------------------------------------------------------------------------");
     } catch (IOException e) {
       System.err.println(e);
     }
@@ -187,7 +187,7 @@ public class Write implements JMC {
   /**
    * Save the jMusic note as a standard MIDI file
    *
-   * @param Note The note to be saved.
+   * @param Note   The note to be saved.
    * @param String filename The name of the written file.
    */
   public static void midi(Note n, String fileName) {
@@ -308,7 +308,7 @@ public class Write implements JMC {
    * Save the jMusic Phrase to an audio file in Sun's .au format.
    *
    * @param phrase The jMusic phrase object to be rendered
-   * @param inst - the jMusic instrument to use
+   * @param inst   - the jMusic instrument to use
    */
   public static void au(Phrase phrase, Instrument inst) {
     au(new Part(phrase), inst);
@@ -317,7 +317,7 @@ public class Write implements JMC {
   /**
    * Save the jMusic Part to an audio file in Sun's .au format.
    *
-   * @param part The jMusic part object to be rendered
+   * @param part       The jMusic part object to be rendered
    * @param Instrument - the jMusic instrument to use
    */
   public static void au(Part part, Instrument inst) {
@@ -346,7 +346,7 @@ public class Write implements JMC {
   /**
    * Save the jMusic Score to an audio file
    *
-   * @param String - the file name to write to
+   * @param String     - the file name to write to
    * @param Instrument - the jMusic instrument to use
    */
   public static void au(Score s, String fileName, Instrument inst) {
@@ -357,13 +357,13 @@ public class Write implements JMC {
   /**
    * Save the jMusic Score to an audio file
    *
-   * @param String - the file name to write to
+   * @param String       - the file name to write to
    * @param Instrument[] - the list of jMusic instruments to use
    */
   public static void au(Score s, String fileName, Instrument[] instList) {
     double time1 = System.currentTimeMillis();
     System.out
-        .println("------------------------------ Writing AU File --------------------------------");
+      .println("------------------------------ Writing AU File --------------------------------");
     String jpfFile = fileName + ".jpf";
     String tmpFile = "jmusic.tmp";
     File f = new File(tmpFile);
@@ -375,10 +375,10 @@ public class Write implements JMC {
     Audio.combine(jpfFile, tmpFile, fileName, true, true);
     double time2 = System.currentTimeMillis();
     System.out.println(
-        "AU file '" + fileName + "' written from score '" + s.getTitle() + "' in " + (
-            (time2 - time1) / 1000) + " seconds.");
+      "AU file '" + fileName + "' written from score '" + s.getTitle() + "' in " + (
+        (time2 - time1) / 1000) + " seconds.");
     System.out
-        .println("-------------------------------------------------------------------------------");
+      .println("-------------------------------------------------------------------------------");
   }
 
   /**
@@ -395,7 +395,7 @@ public class Write implements JMC {
   /**
    * Save the jMusic Part to an audio file
    *
-   * @param String - the file name to write to
+   * @param String     - the file name to write to
    * @param Instrument - the jMusic instruments to use
    */
   public static void au(Part p, String fileName, Instrument inst) {
@@ -408,7 +408,7 @@ public class Write implements JMC {
   /**
    * Save the jMusic Part to an audio file
    *
-   * @param String - the file name to write to
+   * @param String       - the file name to write to
    * @param Instrument[] - the list of jMusic instruments to use
    */
   public static void au(Part p, String fileName, Instrument[] instList) {
@@ -433,7 +433,7 @@ public class Write implements JMC {
   /**
    * Save the jMusic Phrase to an audio file
    *
-   * @param String - the file name to write to
+   * @param String       - the file name to write to
    * @param Instrument[] - the list of jMusic instruments to use
    */
   public static void au(Phrase phr, String fileName, Instrument[] instList) {
@@ -447,7 +447,7 @@ public class Write implements JMC {
   /**
    * Save the jMusic Phrase to an audio file
    *
-   * @param String - the file name to write to
+   * @param String     - the file name to write to
    * @param Instrument - the jMusic instruments to use
    */
   public static void au(Phrase phr, String fileName, Instrument inst) {
@@ -475,7 +475,7 @@ public class Write implements JMC {
   /**
    * Save the jMusic CPhrase to an audio file
    *
-   * @param String - the file name to write to
+   * @param String       - the file name to write to
    * @param Instrument[] - the list of jMusic instruments to use
    */
   public static void au(CPhrase cphr, String fileName, Instrument[] instList) {
@@ -496,7 +496,7 @@ public class Write implements JMC {
    * This method will create a mono, 16 bit file with a sample rate of 44100.
    *
    * @param sampleData - The array of floating point sample values
-   * @param fileName - The name of the file to write, with suffix.
+   * @param fileName   - The name of the file to write, with suffix.
    */
   public static void audio(float[] sampleData, String fileName) {
     audio(sampleData, fileName, 1, 44100, 16);
@@ -506,27 +506,28 @@ public class Write implements JMC {
    * Save the floating point data array as an audio file.
    * The type of file is determined by the fileName suffix: .wav, .aif, or .au
    *
-   * @param sampleData - The array of floating point sample values
-   * @param fileName - The name of the file to write, with suffix.
-   * @param channels - The number of channels in the data, 1 = mono, 2 - stereo, and so on.
-   * @param sampleRate - The number of samples per second, for example 44100
+   * @param sampleData       - The array of floating point sample values
+   * @param fileName         - The name of the file to write, with suffix.
+   * @param channels         - The number of channels in the data, 1 = mono, 2 - stereo, and so
+   *                         on.
+   * @param sampleRate       - The number of samples per second, for example 44100
    * @param sampleSizeInBits - The sample resolution, for example 8, 16, 24, or 32 bit.
    */
   public static void audio(float[] sampleData, String fileName, int channels,
-      int sampleRate, int sampleSizeInBits) {
+                           int sampleRate, int sampleSizeInBits) {
     double time1 = System.currentTimeMillis();
     System.out
-        .println("---------------------------- Writing Audio File -------------------------------");
+      .println("---------------------------- Writing Audio File -------------------------------");
     AudioFileOut afo = new AudioFileOut(sampleData, fileName, channels,
-        sampleRate, sampleSizeInBits);
+      sampleRate, sampleSizeInBits);
     double time2 = System.currentTimeMillis();
     System.out.println(
-        "Audio file '" + fileName + "' written in " + ((time2 - time1) / 1000) + " seconds.");
+      "Audio file '" + fileName + "' written in " + ((time2 - time1) / 1000) + " seconds.");
     System.out.println("Channels = " + channels
-        + " Sample rate = " + sampleRate
-        + " Bit depth = " + sampleSizeInBits);
+      + " Sample rate = " + sampleRate
+      + " Bit depth = " + sampleSizeInBits);
     System.out
-        .println("-------------------------------------------------------------------------------");
+      .println("-------------------------------------------------------------------------------");
   }
 
   //----------------------------------------------
@@ -648,7 +649,7 @@ public class Write implements JMC {
       Enumeration enumPhrases = part.getPhraseList().elements();
       while (enumPhrases.hasMoreElements()) {
         Phrase phrase = (Phrase) enumPhrases.nextElement();
-        for (Note note: phrase.getNoteList() ) {
+        for (Note note : phrase.getNoteList()) {
           note.setRhythm(note.getRhythm() * partTempo);
           note.setDuration(note.getDuration() * partTempo);
         }

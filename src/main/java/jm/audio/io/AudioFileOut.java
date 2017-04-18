@@ -25,6 +25,7 @@ package jm.audio.io;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -71,7 +72,7 @@ public class AudioFileOut {
   }
 
   public AudioFileOut(float[] sampleData, String fileName, int channels,
-      int sampleRate, int sampleSizeInBits) {
+                      int sampleRate, int sampleSizeInBits) {
     this.sampleData = sampleData;
     this.duration = sampleData.length;
     this.fileName = fileName;
@@ -140,15 +141,15 @@ public class AudioFileOut {
           break;
         default:
           System.err.println("jMusic AudioFileOut error: " +
-              sampleSizeInBits +
-              " bit audio output file format not supported, sorry :(");
+            sampleSizeInBits +
+            " bit audio output file format not supported, sorry :(");
           System.exit(0); // ugly but necessary.
       }
     }
     ByteArrayInputStream bis = new ByteArrayInputStream(tmp);
     // specify file format
     this.format = new AudioFormat(this.sampleRate, sampleSizeInBits, this.channels, true,
-        this.bigEndian);
+      this.bigEndian);
     AudioInputStream ais = new AudioInputStream(bis, this.format, this.duration / this.channels);
     // writing
     try {

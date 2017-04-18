@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Vector;
+
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -91,7 +92,7 @@ public class AudioFileIn {
       this.sampleSize = (format.getSampleSizeInBits()) / 8;
     } catch (UnsupportedAudioFileException uafe) {
       System.err.println("jMusic AudioFileIn warning: '" + fileName
-          + "' may not be an audio file.");
+        + "' may not be an audio file.");
       System.err.println("Reading it in as raw data...");
       this.audioFileSpecified = false;
       this.channels = 1;

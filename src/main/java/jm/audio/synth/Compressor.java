@@ -79,7 +79,7 @@ public final class Compressor extends AudioObject {
    * Audio Object and threshold value as input and
    * sets a default ratio.
    *
-   * @param ao The single AudioObject taken as input.
+   * @param ao     The single AudioObject taken as input.
    * @param thresh The value above which to compress.
    */
   public Compressor(AudioObject ao, double thresh) {
@@ -90,9 +90,9 @@ public final class Compressor extends AudioObject {
    * The standard Compressor constructor takes a Single
    * Audio Object, threshold and ratio as inputs.
    *
-   * @param ao The single AudioObject taken as input.
+   * @param ao     The single AudioObject taken as input.
    * @param thresh The value above which to compress.
-   * @param ratio The attenuation divisor value.
+   * @param ratio  The attenuation divisor value.
    */
   public Compressor(AudioObject ao, double thresh, double ratio) {
     this(ao, thresh, ratio, 1.5);
@@ -102,9 +102,9 @@ public final class Compressor extends AudioObject {
    * The standard Compressor constructor takes a Single
    * Audio Object, threshold and ratio as inputs.
    *
-   * @param ao The single AudioObject taken as input.
+   * @param ao     The single AudioObject taken as input.
    * @param thresh The value above which to compress.
-   * @param ratio The attenuation divisor value.
+   * @param ratio  The attenuation divisor value.
    */
   public Compressor(AudioObject ao, double thresh, double ratio, double gain) {
 

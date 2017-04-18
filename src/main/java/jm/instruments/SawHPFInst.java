@@ -53,7 +53,7 @@ public final class SawHPFInst extends Instrument {
   /**
    * Constructor that sets sample rate and the filter cutoff frequency.
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
 
@@ -82,13 +82,13 @@ public final class SawHPFInst extends Instrument {
   public void createChain() {
 
     Oscillator wt = new Oscillator(this, Oscillator.SAWTOOTH_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
 
     Filter filt = new Filter(wt, this.filterCutoff, Filter.HIGH_PASS);
 
     Envelope env = new Envelope(filt,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.2,
-            0.4, 0.8, 0.3, 1.0, 0.0}
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.2,
+        0.4, 0.8, 0.3, 1.0, 0.0}
     );
 
     Volume vol = new Volume(env);

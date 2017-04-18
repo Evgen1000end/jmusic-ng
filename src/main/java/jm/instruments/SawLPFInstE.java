@@ -46,7 +46,7 @@ public class SawLPFInstE extends Instrument {
   /**
    * Constructor that sets sample rate and the number of channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
   public SawLPFInstE(int sampleRate, int filterCutoff) {
@@ -56,9 +56,9 @@ public class SawLPFInstE extends Instrument {
   /**
    * Constructor that sets sample rate and the number of channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param channels 1 for Mono or 2 for Stereo
+   * @param channels     1 for Mono or 2 for Stereo
    */
   public SawLPFInstE(int sampleRate, int filterCutoff, int channels) {
     this.sampleRate = sampleRate;
@@ -76,14 +76,14 @@ public class SawLPFInstE extends Instrument {
    */
   public void createChain() {
     Envelope filtEnv = new Envelope(this, this.sampleRate, this.channels,
-        new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
     Value scalefactor = new Value(this, this.sampleRate, this.channels, (float) 2000.0);
     Multiply mult = new Multiply(new AudioObject[]{filtEnv, scalefactor});
     Oscillator wave = new Oscillator(this, Oscillator.SAWTOOTH_WAVE, this.sampleRate,
-        this.channels);
+      this.channels);
     Filter filt = new Filter(new AudioObject[]{wave, mult}, this.filterCutoff, Filter.LOW_PASS);
     Envelope env = new Envelope(filt,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
     Volume vol = new Volume(env);
     SampleOut sout = new SampleOut(vol);
   }

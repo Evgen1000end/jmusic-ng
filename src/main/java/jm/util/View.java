@@ -22,8 +22,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.util;
 
-import java.awt.FileDialog;
-import java.awt.Frame;
+import java.awt.*;
+
 import jm.JMC;
 import jm.gui.cpn.Notate;
 import jm.gui.histogram.HistogramFrame;
@@ -483,7 +483,7 @@ public class View implements JMC {
    * Display a histogram of the score.
    *
    * @param score the score to be displayed
-   * @param type the note attribute to be displayed, 0 = pitch etc.
+   * @param type  the note attribute to be displayed, 0 = pitch etc.
    */
   public static void histogram(Score score, int dataType) {
     histogram(score, dataType, 0, 0);
@@ -493,9 +493,9 @@ public class View implements JMC {
    * Display a histogram of the score.
    *
    * @param score the score to be displayed
-   * @param type the note attribute to be displayed, 0 = pitch etc.
-   * @param xPos the horizonal position for the window to be displayed
-   * @param yPos the vertical position for the window to be displayed
+   * @param type  the note attribute to be displayed, 0 = pitch etc.
+   * @param xPos  the horizonal position for the window to be displayed
+   * @param yPos  the vertical position for the window to be displayed
    */
   public static void histogram(Score score, int dataType, int xPos, int yPos) {
     new HistogramFrame(score, dataType, xPos, yPos);
@@ -522,8 +522,8 @@ public class View implements JMC {
    * Display an au file stored on the disk at a specified location on screen.
    *
    * @param filename The name (and directory path) of the file.
-   * @param xLoc The horizontal position for the display.
-   * @param yLoc The vertical position for the display.
+   * @param xLoc     The horizontal position for the display.
+   * @param yLoc     The vertical position for the display.
    */
   public static void au(String filename, int xLoc, int yLoc) {
     new WaveView(filename, xLoc, yLoc);

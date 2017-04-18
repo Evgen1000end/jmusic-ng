@@ -43,7 +43,7 @@ public final class LFOFilteredSquareInst extends Instrument {
   /**
    * Constructor that sets sample rate and filter cutoff frequency
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency in hertz above which overtones are cut
    */
   public LFOFilteredSquareInst(int sampleRate, int filterCutoff) {
@@ -53,9 +53,9 @@ public final class LFOFilteredSquareInst extends Instrument {
   /**
    * Constructor that sets sample rate, filter cutoff, and modulation amount
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param modAmount The filter devation above and below the cutoff
+   * @param modAmount    The filter devation above and below the cutoff
    */
   public LFOFilteredSquareInst(int sampleRate, int filterCutoff, int modAmount) {
     this(sampleRate, filterCutoff, modAmount, 1);
@@ -64,10 +64,10 @@ public final class LFOFilteredSquareInst extends Instrument {
   /**
    * Constructor that sets all attributes
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param modAmount The filter devation above and below the cutoff
-   * @param channels 1 for Mono or 2 for Stereo
+   * @param modAmount    The filter devation above and below the cutoff
+   * @param channels     1 for Mono or 2 for Stereo
    */
   public LFOFilteredSquareInst(int sampleRate, int filterCutoff, int modAmount, int channels) {
     this.sampleRate = sampleRate;
@@ -99,7 +99,7 @@ public final class LFOFilteredSquareInst extends Instrument {
     // Filter - try changing this to a high pass filter
     Filter filt = new Filter(new AudioObject[]{add, sineMod}, this.filterCutoff, Filter.LOW_PASS);
     Envelope env = new Envelope(filt,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.3, 0.8, 0.2, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.3, 0.8, 0.2, 1.0, 0.0});
     Volume vol = new Volume(env);
     SampleOut sout = new SampleOut(vol);
   }

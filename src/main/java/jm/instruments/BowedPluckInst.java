@@ -49,7 +49,7 @@ public final class BowedPluckInst extends jm.audio.Instrument {
     Pluck plk = new Pluck(this, sampleRate, this.channels);
     Filter filt = new Filter(plk, this.cutoff, Filter.LOW_PASS);
     Envelope env = new Envelope(filt,
-        new double[]{0.0, 0.0, 0.1, 0.5, 0.3, 1.0, 0.4, 0.5, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.1, 0.5, 0.3, 1.0, 0.4, 0.5, 1.0, 0.0});
     Volume vol = new Volume(env);
     SampleOut sout = new SampleOut(vol);
   }

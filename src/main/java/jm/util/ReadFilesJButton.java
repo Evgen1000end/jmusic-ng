@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -23,10 +23,11 @@
 
 package jm.util;
 
-import java.awt.Component;
+import java.awt.*;
 import java.io.File;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
+
+import javax.swing.*;
+
 import jm.music.data.Score;
 
 /**
@@ -86,7 +87,8 @@ public class ReadFilesJButton extends JButton {
    * for a selection of files to be imported
    *
    * @param owner Component which is the owner of this button.  Access to this Component will be
-   * suspended when the user is selecting a music file and when error messages are displayed.
+   *              suspended when the user is selecting a music file and when error messages are
+   *              displayed.
    */
   public ReadFilesJButton(final Component owner) {
     this(owner, MULTIPLE_FILES_MODE);
@@ -95,8 +97,9 @@ public class ReadFilesJButton extends JButton {
   /**
    * Constructs a JButton for reading in music files using the specified mode
    *
-   * @param owner Component which is the owner of this button.  Access to this Component will be
-   * suspended when the user is selecting a music file and when error messages are displayed.
+   * @param owner    Component which is the owner of this button.  Access to this Component will
+   *                 be suspended when the user is selecting a music file and when error messages
+   *                 are displayed.
    * @param readMode Mode specified the file/folder selection mode
    */
   public ReadFilesJButton(final Component owner, final Mode mode) {
@@ -127,10 +130,10 @@ public class ReadFilesJButton extends JButton {
                              *         new ReadFilenameFilter()));
                              */
             String[] filenames = file.list(
-                new ReadFilenameFilter());
+              new ReadFilenameFilter());
             for (int i = 0; i < filenames.length; i++) {
               processFile(new File(file.getAbsolutePath(),
-                  filenames[i]));
+                filenames[i]));
             }
           }
         }
@@ -213,7 +216,7 @@ public class ReadFilesJButton extends JButton {
     } else if (mode == FOLDER_MODE) {
       setText("Read Folder");
       chooser.setDialogTitle("Select a folder of MIDI or jMusic files to "
-          + "import");
+        + "import");
       chooser.setMultiSelectionEnabled(false);
       chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     }

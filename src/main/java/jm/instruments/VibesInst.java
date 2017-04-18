@@ -83,25 +83,25 @@ public final class VibesInst extends Instrument {
     int overtones = 3;
     // create an envelope for each partial
     EnvPoint[] pointArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.002, (float) 1.0),
-        new EnvPoint((float) 0.3, (float) 0.3),
-        new EnvPoint((float) 0.9, (float) 0.1),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.002, (float) 1.0),
+      new EnvPoint((float) 0.3, (float) 0.3),
+      new EnvPoint((float) 0.9, (float) 0.1),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
 
     EnvPoint[] pointArray2 = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.02, (float) 1.0),
-        new EnvPoint((float) 0.2, (float) 0.2),
-        new EnvPoint((float) 0.9, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.02, (float) 1.0),
+      new EnvPoint((float) 0.2, (float) 0.2),
+      new EnvPoint((float) 0.9, (float) 0.0)
     };
 
     EnvPoint[] pointArray3 = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.02, (float) 1.0),
-        new EnvPoint((float) 0.4, (float) 0.3),
-        new EnvPoint((float) 0.8, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.02, (float) 1.0),
+      new EnvPoint((float) 0.4, (float) 0.3),
+      new EnvPoint((float) 0.8, (float) 0.0)
     };
 
     this.points = new EnvPoint[overtones][4];
@@ -127,10 +127,10 @@ public final class VibesInst extends Instrument {
    * the instrument
    *
    * @param frequencies the relative freqencies to use
-   * @param volumes the volumes to use for the frequencies
+   * @param volumes     the volumes to use for the frequencies
    */
   public VibesInst(int sampleRate, float[] frequencies,
-      float[] volumes, EnvPoint[][] points) {
+                   float[] volumes, EnvPoint[][] points) {
     this.frequencies = frequencies;
     this.volumes = volumes;
     this.points = points;
@@ -153,7 +153,7 @@ public final class VibesInst extends Instrument {
     wt = new Oscillator[frequencies.length];
     for (int i = 0; i < frequencies.length; i++) {
       wt[i] = new Oscillator(this, Oscillator.SINE_WAVE,
-          this.sampleRate, 2);
+        this.sampleRate, 2);
       wt[i].setFrqRatio(frequencies[i]);
       env[i] = new Envelope(wt[i], points[i]);
       vol[i] = new Volume(env[i], volumes[i]);

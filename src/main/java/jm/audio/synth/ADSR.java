@@ -92,16 +92,16 @@ public class ADSR extends AudioObject implements JMC {
    * An ADSR object can be used as a generator. This
    * is a method to call to do this.
    *
-   * @param The instrumt to use - Usually put 'this' here.
+   * @param The        instrumt to use - Usually put 'this' here.
    * @param sampleRate the sampleRate for this AudioObject.
-   * @param channels The number of tracks for this file (1 = mono , 2 = stereo)
-   * @param attack The number of milliseconds for the attack portion of the envelope
-   * @param decay The number of milliseconds for the decay portion of the envelope
-   * @param sustain The percentage lavel for the sustain portion of the envelope (0.0 - 1.0)
-   * @param release The number of milliseconds for the release portion of the envelope
+   * @param channels   The number of tracks for this file (1 = mono , 2 = stereo)
+   * @param attack     The number of milliseconds for the attack portion of the envelope
+   * @param decay      The number of milliseconds for the decay portion of the envelope
+   * @param sustain    The percentage lavel for the sustain portion of the envelope (0.0 - 1.0)
+   * @param release    The number of milliseconds for the release portion of the envelope
    */
   public ADSR(Instrument inst, int sampleRate, int channels,
-      int attack, int decay, double sustain, int release) {
+              int attack, int decay, double sustain, int release) {
     super(inst, sampleRate, "[ADSR]");
     this.channels = channels;
     this.attack = attack;
@@ -119,13 +119,13 @@ public class ADSR extends AudioObject implements JMC {
    * changes the amplitude of incoming samples based on
    * the envelope.
    *
-   * @param The instrumt to use - Usually put 'this' here.
+   * @param The        instrumt to use - Usually put 'this' here.
    * @param sampleRate the sampleRate for this AudioObject.
-   * @param channels The number of tracks for this file (1 = mono , 2 = stereo)
-   * @param attack The number of milliseconds for the attack portion of the envelope
-   * @param decay The number of milliseconds for the decay portion of the envelope
-   * @param sustain The percentage lavel for the sustain portion of the envelope (0.0 - 1.0)
-   * @param release The number of milliseconds for the release portion of the envelope
+   * @param channels   The number of tracks for this file (1 = mono , 2 = stereo)
+   * @param attack     The number of milliseconds for the attack portion of the envelope
+   * @param decay      The number of milliseconds for the decay portion of the envelope
+   * @param sustain    The percentage lavel for the sustain portion of the envelope (0.0 - 1.0)
+   * @param release    The number of milliseconds for the release portion of the envelope
    */
   public ADSR(AudioObject ao, int attack, int decay, double sustain, int release) {
     super(ao, "[ADSR]");
@@ -188,14 +188,14 @@ public class ADSR extends AudioObject implements JMC {
             } else if (sampleCounter < maxDecayCount + maxAttackCount) //decay
             {
               buffer[i + j] = buffer[i + j] * (float) (1.0
-                  - (sampleCounter - maxAttackCount) * (1.0 - sustain) / maxDecayCount);
+                - (sampleCounter - maxAttackCount) * (1.0 - sustain) / maxDecayCount);
             } else if (sampleCounter < this.numOfSamples) //sustain
             {
               buffer[i + j] = buffer[i + j] * (float) sustain;
             } else if (sampleCounter < totalSamples) // release
             {
               buffer[i + j] = buffer[i + j] * (float) (sustain
-                  - (sampleCounter - numOfSamples) * sustain / releaseSamps);
+                - (sampleCounter - numOfSamples) * sustain / releaseSamps);
             } else {
               buffer[i + j] = 0.0f;
             }

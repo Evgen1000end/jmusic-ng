@@ -45,7 +45,7 @@ public final class ResSawInst extends Instrument {
   /**
    * Constructor that sets sample rate and filter cutoff
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
   public ResSawInst(int sampleRate, int filterCutoff) {
@@ -55,9 +55,9 @@ public final class ResSawInst extends Instrument {
   /**
    * Constructor that sets sample rate , cutoff and channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param channels 1 for Mono or 2 for Stereo
+   * @param channels     1 for Mono or 2 for Stereo
    */
   public ResSawInst(int sampleRate, int filterCutoff, int channels) {
     this.sampleRate = sampleRate;
@@ -91,7 +91,7 @@ public final class ResSawInst extends Instrument {
     // add and pocess everythning
     Add add = new Add(new AudioObject[]{vol2, vol3});
     Envelope env = new Envelope(add,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
     StereoPan span = new StereoPan(env);
     SampleOut sout = new SampleOut(span);
   }

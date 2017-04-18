@@ -68,18 +68,18 @@ public final class VibratoInst extends jm.audio.Instrument {
   public void createChain() throws AOException {
     // modulator
     Oscillator modulator = new Oscillator(this, Oscillator.SINE_WAVE,
-        sampleRate, channels,
-        Oscillator.FREQUENCY, 5.0);
+      sampleRate, channels,
+      Oscillator.FREQUENCY, 5.0);
     modulator.setAmp((float) 8.0);
     // constant
     Value constFreq = new Value(this, this.sampleRate,
-        this.channels, Value.NOTE_PITCH);
+      this.channels, Value.NOTE_PITCH);
     Add add = new Add(new AudioObject[]{constFreq, modulator});
     // carrier
     Oscillator carrier = new Oscillator(add,
-        Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
+      Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
     Envelope env2 = new Envelope(carrier,
-        new double[]{0.0, 0.0, 0.1, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.1, 1.0, 1.0, 0.0});
     Volume amp = new Volume(env2);
     SampleOut sout = new SampleOut(amp);
   }

@@ -111,7 +111,7 @@ public abstract class AudioObject implements jm.JMC {
    * that need to accept input from a single stream (ie Audio Object).
    *
    * @param previous The AudioObject previous to this one
-   * @param name A name to associate with this Audio Object
+   * @param name     A name to associate with this Audio Object
    */
   protected AudioObject(AudioObject previous, String name) {
     AudioObject[] tmp = {previous};
@@ -126,7 +126,7 @@ public abstract class AudioObject implements jm.JMC {
    * that need to accept input from multiple streams (ie Audio Objects).
    *
    * @param previous The AudioObjects previous to this one
-   * @param name A name to associate with this Audio Object.
+   * @param name     A name to associate with this Audio Object.
    */
   protected AudioObject(AudioObject[] previous, String name) {
     this.name = name;
@@ -147,7 +147,7 @@ public abstract class AudioObject implements jm.JMC {
    * objects in the Instrument createChain() method.
    *
    * @param sampleRate the sample rate to use for all objects
-   * @param name A name to associate with this Audio Object
+   * @param name       A name to associate with this Audio Object
    */
   protected AudioObject(Instrument inst, int sampleRate, String name) {
     this.inst = inst;
@@ -225,9 +225,9 @@ public abstract class AudioObject implements jm.JMC {
    * first audio object in the audio chain to initialise
    * all following audio objects.
    *
-   * @param Note The note this chain is currently processing.
+   * @param Note      The note this chain is currently processing.
    * @param startTime The startTime of the note.
-   * @param int The number of samples which need to be processed.
+   * @param int       The number of samples which need to be processed.
    */
   protected void buildNext(final Note note, final double startTime, final int numOfSamples) {
     if (next != null) {
@@ -270,8 +270,8 @@ public abstract class AudioObject implements jm.JMC {
    * AudioObject.  newNote sets a number of AudioObject parameters which
    * are produced based on the new note information.
    *
-   * @param note sets the parameter currentNote
-   * @param startTime sets the parameter currentNoteStartTime
+   * @param note         sets the parameter currentNote
+   * @param startTime    sets the parameter currentNoteStartTime
    * @param numOfSamples sets the parameter numOfSamples
    */
   public void newNote(Note note, double startTime, int numOfSamples) {
@@ -280,7 +280,7 @@ public abstract class AudioObject implements jm.JMC {
     this.numOfSamples = numOfSamples;
     this.build();
     this.buildNext(this.currentNote, this.currentNoteStartTime,
-        this.numOfSamples);
+      this.numOfSamples);
   }
 
   /**

@@ -9,66 +9,60 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-// GPL code for jMusic CPN.   
+// GPL code for jMusic CPN.
 // Written by Al Christians (achrist@easystreet.com).
 // Copyright  2002, Trillium Resources Corporation, Oregon's
 // leading provider of unvarnished software.
 
 package jm.gui.cpn;
 
-import java.awt.Button;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Label;
-import java.awt.List;
-import java.awt.TextField;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.DecimalFormat;
 import java.util.StringTokenizer;
+
 import jm.music.data.Note;
 
 // This class is a little editor to change the properties of a note
 // Added as a right-click option to CPN
 
 public class NoteEditor extends Dialog
-    implements ActionListener, WindowListener {
+  implements ActionListener, WindowListener {
 
   private static DecimalFormat decimalFormat
-      = new DecimalFormat("###.###########");
+    = new DecimalFormat("###.###########");
   private Button
-      okButton = new Button("Apply"),
-      cancelButton = new Button("Cancel");
+    okButton = new Button("Apply"),
+    cancelButton = new Button("Cancel");
   private Note note;
   private List noteList,
-      octaveList;
+    octaveList;
   private TextField
-      durationEdit = new TextField(15),
-      dynamicEdit = new TextField(15),
-      rhythmEdit = new TextField(15),
-      panEdit = new TextField(15),
-      offsetEdit = new TextField(15);
+    durationEdit = new TextField(15),
+    dynamicEdit = new TextField(15),
+    rhythmEdit = new TextField(15),
+    panEdit = new TextField(15),
+    offsetEdit = new TextField(15);
   private Label
-      noteLabel = new Label("Note"),
-      dynamicLabel = new Label("Volume (1-127)"),
-      rhythmLabel = new Label("Rhythm Value"),
-      durationLabel = new Label("Duration Factor"),
-      panLabel = new Label("Pan"),
-      offsetLabel = new Label("Offset"),
-      octaveLabel = new Label("Octave");
+    noteLabel = new Label("Note"),
+    dynamicLabel = new Label("Volume (1-127)"),
+    rhythmLabel = new Label("Rhythm Value"),
+    durationLabel = new Label("Duration Factor"),
+    panLabel = new Label("Pan"),
+    offsetLabel = new Label("Offset"),
+    octaveLabel = new Label("Octave");
 
   public NoteEditor(Frame parentFrame) {
     super(parentFrame, "Edit Note", true);
@@ -93,7 +87,7 @@ public class NoteEditor extends Dialog
   }
 
   private static String getPitchStringValue(
-      int pitch) {
+    int pitch) {
     if (pitch == Note.REST) {
       return "Rest";
     } else {
@@ -134,8 +128,8 @@ public class NoteEditor extends Dialog
   }
 
   private static void setListToMatch(
-      List list,
-      String valueWanted
+    List list,
+    String valueWanted
   ) {
     for (int i = list.getItemCount() - 1; i >= 0; --i) {
       if (list.getItem(i).equals(valueWanted)) {
@@ -145,29 +139,29 @@ public class NoteEditor extends Dialog
   }
 
   private static void initializeDoubleEdit(
-      final TextField theEdit,
-      final double theValue) {
+    final TextField theEdit,
+    final double theValue) {
     theEdit.setText(decimalFormat.format(theValue));
   }
 
   private static void initializeIntEdit(
-      final TextField theEdit,
-      final int theValue) {
+    final TextField theEdit,
+    final int theValue) {
     theEdit.setText(Integer.toString(theValue));
   }
 
   private static boolean validateFloatEdit(
-      final TextField theField,
-      final double minValue,
-      final double maxValue) {
+    final TextField theField,
+    final double minValue,
+    final double maxValue) {
     StringTokenizer fieldTokenizer
-        = new StringTokenizer(theField.getText());
+      = new StringTokenizer(theField.getText());
     if (!fieldTokenizer.hasMoreElements()) {
       theField.setText("Error--No Data");
       return false;
     } else {
       String fieldString =
-          fieldTokenizer.nextToken();
+        fieldTokenizer.nextToken();
       try {
         double fieldValue = Double.valueOf(fieldString);
         if (fieldValue < minValue) {
@@ -191,27 +185,27 @@ public class NoteEditor extends Dialog
   }
 
   private static double getFieldDouble(
-      final TextField theField
+    final TextField theField
   ) {
     StringTokenizer fieldTokenizer
-        = new StringTokenizer(theField.getText());
+      = new StringTokenizer(theField.getText());
     String fieldString =
-        fieldTokenizer.nextToken();
+      fieldTokenizer.nextToken();
     return Double.valueOf(fieldString);
   }
 
   private static boolean validateIntegerEdit(
-      final TextField theField,
-      final int minValue,
-      final int maxValue) {
+    final TextField theField,
+    final int minValue,
+    final int maxValue) {
     StringTokenizer fieldTokenizer
-        = new StringTokenizer(theField.getText());
+      = new StringTokenizer(theField.getText());
     if (!fieldTokenizer.hasMoreElements()) {
       theField.setText("Error--No Data");
       return false;
     } else {
       String fieldString =
-          fieldTokenizer.nextToken();
+        fieldTokenizer.nextToken();
       try {
         int fieldValue = Integer.valueOf(fieldString);
         if (fieldValue < minValue) {
@@ -235,26 +229,26 @@ public class NoteEditor extends Dialog
   }
 
   private static int getFieldInt(
-      final TextField theField
+    final TextField theField
   ) {
     StringTokenizer fieldTokenizer
-        = new StringTokenizer(theField.getText());
+      = new StringTokenizer(theField.getText());
     String fieldString =
-        fieldTokenizer.nextToken();
+      fieldTokenizer.nextToken();
     return (new Integer(fieldString)).intValue();
   }
 
   private void initializeNoteListValue(final int pitch) {
     setListToMatch(
-        noteList,
-        getPitchStringValue(pitch)
+      noteList,
+      getPitchStringValue(pitch)
     );
   }
 
   private void initializeOctaveListValue(final int pitch) {
     setListToMatch(
-        octaveList,
-        getOctaveStringValue(pitch)
+      octaveList,
+      getOctaveStringValue(pitch)
     );
   }
 
@@ -264,31 +258,31 @@ public class NoteEditor extends Dialog
     initializeOctaveListValue(note.getPitch());
 
     initializeDoubleEdit(
-        durationEdit,
-        note.getDuration() / note.getRhythm()
+      durationEdit,
+      note.getDuration() / note.getRhythm()
     );
 
     initializeDoubleEdit(
-        rhythmEdit, note.getRhythm()
+      rhythmEdit, note.getRhythm()
     );
 
     initializeDoubleEdit(
-        offsetEdit, note.getOffset()
+      offsetEdit, note.getOffset()
     );
 
     initializeDoubleEdit(
-        panEdit, note.getPan()
+      panEdit, note.getPan()
     );
 
     initializeIntEdit(
-        dynamicEdit, note.getDynamic()
+      dynamicEdit, note.getDynamic()
     );
   }
 
   public void editNote(
-      final Note theNote,
-      final int locX,
-      final int locY) {
+    final Note theNote,
+    final int locX,
+    final int locY) {
     note = theNote;
     setLocation(locX, locY);
     initializeData();
@@ -327,25 +321,25 @@ public class NoteEditor extends Dialog
 
   private boolean inputIsValid() {
     return
+      validateFloatEdit(
+        durationEdit,
+        0.0000,
+        1.0000) &&
+        validateIntegerEdit(
+          dynamicEdit,
+          0,
+          127) &&
         validateFloatEdit(
-            durationEdit,
-            0.0000,
-            1.0000) &&
-            validateIntegerEdit(
-                dynamicEdit,
-                0,
-                127) &&
-            validateFloatEdit(
-                rhythmEdit,
-                0.00001,
-                64.0000) &&
-            validateFloatEdit(
-                panEdit,
-                0.0,
-                1.0) &&
-            validateFloatEdit(
-                offsetEdit,
-                -999.999, 999.999);
+          rhythmEdit,
+          0.00001,
+          64.0000) &&
+        validateFloatEdit(
+          panEdit,
+          0.0,
+          1.0) &&
+        validateFloatEdit(
+          offsetEdit,
+          -999.999, 999.999);
   }
 
 
@@ -480,8 +474,8 @@ public class NoteEditor extends Dialog
         answer = 0;
       }
       int octave
-          = new Integer(
-          octaveList.getSelectedItem());
+        = new Integer(
+        octaveList.getSelectedItem());
       while (octave > -1) {
         answer += 12;
         --octave;
@@ -494,7 +488,7 @@ public class NoteEditor extends Dialog
     note.setPitch(getSelectedPitch());
     note.setRhythm(getFieldDouble(rhythmEdit));
     note.setDuration(note.getRhythm() *
-        getFieldDouble(durationEdit));
+      getFieldDouble(durationEdit));
     note.setDynamic(getFieldInt(dynamicEdit));
     note.setPan(getFieldDouble(panEdit));
     note.setOffset(getFieldDouble(offsetEdit));

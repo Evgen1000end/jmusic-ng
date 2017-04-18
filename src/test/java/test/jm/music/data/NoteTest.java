@@ -1,10 +1,24 @@
 package test.jm.music.data;
 
-import static jm.JMC.*;
-import static org.testng.Assert.*;
+import org.testng.annotations.Test;
 
 import jm.music.data.Note;
-import org.testng.annotations.Test;
+
+import static jm.JMC.A4;
+import static jm.JMC.AF4;
+import static jm.JMC.B4;
+import static jm.JMC.BF4;
+import static jm.JMC.C4;
+import static jm.JMC.CS4;
+import static jm.JMC.D4;
+import static jm.JMC.E4;
+import static jm.JMC.EF4;
+import static jm.JMC.F4;
+import static jm.JMC.FS4;
+import static jm.JMC.G4;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:evgen1000end@gmail.com">demkinev</a>
@@ -15,157 +29,157 @@ public class NoteTest {
   public void defaultNoteInitTest() {
     Note note = Note.defaultNote();
     assertEquals(note.getDuration(), Note.DEFAULT_DURATION);
-    assertEquals(note.getDynamic(),Note.DEFAULT_DYNAMIC);
-    assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
+    assertEquals(note.getDynamic(), Note.DEFAULT_DYNAMIC);
+    assertEquals(note.getPitch(), Note.DEFAULT_PITCH);
     assertEquals(note.getRhythm(), Note.DEFAULT_RHYTHM);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), Note.DEFAULT_PAN);
     assertEquals(note.getOffset(), Note.DEFAULT_OFFSET);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getPhrase(),null);
+    assertEquals(note.getPhrase(), null);
   }
 
   @Test
   public void createNoteWithOffsetTest() {
     Note note = Note.newBuilder()
-        .offset(12.0)
-        .build();
+      .offset(12.0)
+      .build();
     assertEquals(note.getDuration(), Note.DEFAULT_DURATION);
-    assertEquals(note.getDynamic(),Note.DEFAULT_DYNAMIC);
-    assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
+    assertEquals(note.getDynamic(), Note.DEFAULT_DYNAMIC);
+    assertEquals(note.getPitch(), Note.DEFAULT_PITCH);
     assertEquals(note.getRhythm(), Note.DEFAULT_RHYTHM);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), Note.DEFAULT_PAN);
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getPhrase(),null);
+    assertEquals(note.getPhrase(), null);
   }
 
   @Test
   public void createNoteWithOffsetAndPanTest() {
     Note note = Note.newBuilder()
-        .offset(12.0)
-        .pan(2.0)
-        .build();
+      .offset(12.0)
+      .pan(2.0)
+      .build();
     assertEquals(note.getDuration(), Note.DEFAULT_DURATION);
-    assertEquals(note.getDynamic(),Note.DEFAULT_DYNAMIC);
-    assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
+    assertEquals(note.getDynamic(), Note.DEFAULT_DYNAMIC);
+    assertEquals(note.getPitch(), Note.DEFAULT_PITCH);
     assertEquals(note.getRhythm(), Note.DEFAULT_RHYTHM);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getPhrase(),null);
+    assertEquals(note.getPhrase(), null);
   }
 
   @Test
   public void createNoteWithDynamicTest() {
     Note note = Note.newBuilder()
-        .offset(12.0)
-        .pan(2.0)
-        .dynamic(90)
-        .build();
+      .offset(12.0)
+      .pan(2.0)
+      .dynamic(90)
+      .build();
     assertEquals(note.getDuration(), Note.DEFAULT_DURATION);
-    assertEquals(note.getDynamic(),90);
-    assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
+    assertEquals(note.getDynamic(), 90);
+    assertEquals(note.getPitch(), Note.DEFAULT_PITCH);
     assertEquals(note.getRhythm(), Note.DEFAULT_RHYTHM);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getPhrase(),null);
+    assertEquals(note.getPhrase(), null);
   }
 
   @Test
   public void createNoteDurationAndRhythmTest() {
     Note note = Note.newBuilder()
-        .offset(12.0)
-        .pan(2.0)
-        .dynamic(90)
-        .duration(2.0)
-        .rhythm(2.6)
-        .build();
+      .offset(12.0)
+      .pan(2.0)
+      .dynamic(90)
+      .duration(2.0)
+      .rhythm(2.6)
+      .build();
     assertEquals(note.getDuration(), 2.0);
-    assertEquals(note.getDynamic(),90);
-    assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
+    assertEquals(note.getDynamic(), 90);
+    assertEquals(note.getPitch(), Note.DEFAULT_PITCH);
     assertEquals(note.getRhythm(), 2.6);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getPhrase(),null);
+    assertEquals(note.getPhrase(), null);
   }
 
   @Test
   public void createFactorDurationTest() {
     Note note = Note.newBuilder()
-        .offset(12.0)
-        .pan(2.0)
-        .dynamic(90)
-        .duration(2.0)
-        .rhythm(3.0)
-        .factorDuration(true)
-        .build();
+      .offset(12.0)
+      .pan(2.0)
+      .dynamic(90)
+      .duration(2.0)
+      .rhythm(3.0)
+      .factorDuration(true)
+      .build();
     assertEquals(note.getDuration(), 2.7);
-    assertEquals(note.getDynamic(),90);
-    assertEquals(note.getPitch(),Note.DEFAULT_PITCH);
+    assertEquals(note.getDynamic(), 90);
+    assertEquals(note.getPitch(), Note.DEFAULT_PITCH);
     assertEquals(note.getRhythm(), 3.0);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "C");
     assertEquals(note.getFrequency(), 261.6255653006);
-    assertEquals(note.getPhrase(),null);
+    assertEquals(note.getPhrase(), null);
   }
 
 
   @Test
   public void createPitchTest() {
     Note note = Note.newBuilder()
-        .offset(12.0)
-        .pan(2.0)
-        .dynamic(90)
-        .duration(2.0)
-        .rhythm(2.6)
-        .pitch(22)
-        .build();
+      .offset(12.0)
+      .pan(2.0)
+      .dynamic(90)
+      .duration(2.0)
+      .rhythm(2.6)
+      .pitch(22)
+      .build();
     assertEquals(note.getDuration(), 2.0);
-    assertEquals(note.getDynamic(),90);
-    assertEquals(note.getPitch(),22);
+    assertEquals(note.getDynamic(), 90);
+    assertEquals(note.getPitch(), 22);
     assertEquals(note.getRhythm(), 2.6);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "Bb");
     assertEquals(note.getFrequency(), 29.1352350949);
-    assertEquals(note.getPhrase(),null);
+    assertEquals(note.getPhrase(), null);
   }
 
   @Test
   public void createFrequencyTest() {
     Note note = Note.newBuilder()
-        .offset(12.0)
-        .pan(2.0)
-        .dynamic(90)
-        .duration(2.0)
-        .rhythm(2.6)
-        .frequency(415.3046975799)
-        .build();
+      .offset(12.0)
+      .pan(2.0)
+      .dynamic(90)
+      .duration(2.0)
+      .rhythm(2.6)
+      .frequency(415.3046975799)
+      .build();
     assertEquals(note.getDuration(), 2.0);
-    assertEquals(note.getDynamic(),90);
-    assertEquals(note.getPitch(),68);
+    assertEquals(note.getDynamic(), 90);
+    assertEquals(note.getPitch(), 68);
     assertEquals(note.getRhythm(), 2.6);
     assertEquals(note.getSampleStartTime(), Note.DEFAULT_SAMPLE_START_TIME);
     assertEquals(note.getPan(), 2.0);
     assertEquals(note.getOffset(), 12.0);
     assertEquals(note.getNote(), "Ab");
     assertEquals(note.getFrequency(), 415.3046975799);
-    assertEquals(note.getPhrase(),null);
+    assertEquals(note.getPhrase(), null);
   }
 
   @Test
@@ -217,6 +231,7 @@ public class NoteTest {
     assertTrue(Note.newBuilder().pitch(AF4).build().isFlat());
   }
 
+  @Test
   public void isNaturalTest() {
     assertTrue(Note.newBuilder().pitch(A4).build().isNatural());
     assertTrue(Note.newBuilder().pitch(B4).build().isNatural());
@@ -225,5 +240,31 @@ public class NoteTest {
     assertTrue(Note.newBuilder().pitch(F4).build().isNatural());
     assertTrue(Note.newBuilder().pitch(G4).build().isNatural());
     assertTrue(Note.newBuilder().pitch(D4).build().isNatural());
+  }
+
+  @Test
+  public void copyTest() {
+    Note note = Note.defaultNote();
+    Note noteRef = note;
+    note.setPitch(100);
+    assertEquals(note.getPitch(), noteRef.getPitch());
+
+    Note copy = note.copy();
+    note.setPitch(10);
+    assertEquals(note.getPitch(), 10);
+    assertEquals(copy.getPitch(), 100);
+  }
+
+  @Test
+  public void nextNoteTest() {
+    Note note = Note.defaultNote();
+    Note nextNote = note.nextNote();
+    assertEquals(nextNote.getPitch(), 61);
+  }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void nextNoteOnRestTest() {
+    Note note = Note.newBuilder().rest().build();
+    note.nextNote();
   }
 }

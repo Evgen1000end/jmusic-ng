@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -60,14 +60,14 @@ public class PhrGeneticAlgorithm {
   protected boolean finished;
 
   public PhrGeneticAlgorithm(Phrase phrase,
-      int beatsPerBar,
-      PopulationInitialiser populationInitialiser,
-      FitnessEvaluater fitnessEvaluater,
-      TerminationCriteria terminationCriteria,
-      ParentSelector parentSelector,
-      Recombiner recombiner,
-      Mutater mutater,
-      SurvivorSelector survivorSelector) {
+                             int beatsPerBar,
+                             PopulationInitialiser populationInitialiser,
+                             FitnessEvaluater fitnessEvaluater,
+                             TerminationCriteria terminationCriteria,
+                             ParentSelector parentSelector,
+                             Recombiner recombiner,
+                             Mutater mutater,
+                             SurvivorSelector survivorSelector) {
 
     this.beatsPerBar = beatsPerBar;
     initialLength = phrase.getEndTime();
@@ -123,13 +123,13 @@ public class PhrGeneticAlgorithm {
 
       Phrase[] parents = parentSelector.selectParents(population, fitness);
       Phrase[] recombined = recombiner.recombine(
-          parents, fitness, initialLength, initialSize, beatsPerBar);
+        parents, fitness, initialLength, initialSize, beatsPerBar);
       Phrase[] children = mutater.mutate(recombined, initialLength, initialSize, beatsPerBar);
 
       double[] parentsFitness = fitnessEvaluater.evaluate(children);
       population = survivorSelector.selectSurvivors(
-          population, fitness, children,
-          parentsFitness);
+        population, fitness, children,
+        parentsFitness);
       fitness = fitnessEvaluater.evaluate(population);
 
       return true;
@@ -246,5 +246,5 @@ public class PhrGeneticAlgorithm {
   public Mutater getMutater() {
     return mutater;
   }
-}    
+}
 

@@ -44,7 +44,7 @@ public final class SawCombInst extends Instrument {
    * Constructor that sets sample rate and the number of channels
    *
    * @param sampleRate The number of samples per second (quality)
-   * @param delay The duration of combing in milliseconds
+   * @param delay      The duration of combing in milliseconds
    */
   public SawCombInst(int sampleRate, int delay) {
     this(sampleRate, delay, 0.5);
@@ -54,8 +54,8 @@ public final class SawCombInst extends Instrument {
    * Constructor that sets sample rate and the number of channels
    *
    * @param sampleRate The number of samples per second (quality)
-   * @param delay The duration of combing in milliseconds
-   * @param decay The rate of feedback for the comb filter
+   * @param delay      The duration of combing in milliseconds
+   * @param decay      The rate of feedback for the comb filter
    */
   public SawCombInst(int sampleRate, int delay, double decay) {
     this(sampleRate, delay, decay, 2);
@@ -65,9 +65,9 @@ public final class SawCombInst extends Instrument {
    * Constructor that sets sample rate and the number of channels
    *
    * @param sampleRate The number of samples per second (quality)
-   * @param delay The duration of combing in milliseconds
-   * @param decay The rate of feedback for the comb filter
-   * @param channels 1 for Mono or 2 for Stereo
+   * @param delay      The duration of combing in milliseconds
+   * @param decay      The rate of feedback for the comb filter
+   * @param channels   1 for Mono or 2 for Stereo
    */
   public SawCombInst(int sampleRate, int delay, double decay, int channels) {
     this.sampleRate = sampleRate;
@@ -86,10 +86,10 @@ public final class SawCombInst extends Instrument {
    */
   public void createChain() {
     Oscillator wt = new Oscillator(this, Oscillator.SAWTOOTH_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
     Comb filt = new Comb(wt, delay, decay);
     Envelope env = new Envelope(filt,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
     Volume vol = new Volume(env);
     StereoPan span = new StereoPan(vol);
     SampleOut sout = new SampleOut(span);

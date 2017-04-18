@@ -1,8 +1,8 @@
 /*
  <This Java Class is part of the jMusic API version 1.5, March 2004.>
- 
+
  Copyright (C) 2000 Andrew Sorensen & Andrew Brown
- 
+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or any
@@ -17,13 +17,11 @@
  */
 package jm.midi;
 
-import java.awt.Frame;
-import java.awt.List;
-import java.awt.ScrollPane;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiDevice;
@@ -92,7 +90,7 @@ public abstract class MidiCommunication implements Receiver {
    * Warning: Attempting to assigning unavailible devicePortID's will cause
    * a NullPointerException.
    *
-   * @param inputDeviceID The MIDI port number to use for input to Java.
+   * @param inputDeviceID  The MIDI port number to use for input to Java.
    * @param outputDeviceID The MIDI port number to use for output from Java.
    */
   public MidiCommunication(int inputDeviceID, int outputDeviceID) {
@@ -114,21 +112,21 @@ public abstract class MidiCommunication implements Receiver {
    * overridden in the class that implements this interface, and the messages
    * handled as appropriate.
    *
-   * @param status The MIDI status type. 11 = Controller, ? = Note on, etc.
+   * @param status  The MIDI status type. 11 = Controller, ? = Note on, etc.
    * @param channel The MIDi channel this message is sent on.
-   * @param data1 The first byte of data in the message. Often controller number of Note pitch.
-   * @param data2 The second byte of data. Usually the controller value or Note velocity.
+   * @param data1   The first byte of data in the message. Often controller number of Note pitch.
+   * @param data2   The second byte of data. Usually the controller value or Note velocity.
    */
   public abstract void handleMidiInput(int status, int channel, int data1, int data2);
 
   /**
    * Construct a MIDI message and pass to the designated MIDi output.
    *
-   * @param status The MIDI status type. 11 = Controller, 144 = Note on, 128 = Note Off, 192 =
-   * Program Change, etc.
+   * @param status  The MIDI status type. 11 = Controller, 144 = Note on, 128 = Note Off, 192 =
+   *                Program Change, etc.
    * @param channel The MIDi channel this message is sent on.
-   * @param data1 The first byte of data in the message. Often controller number of Note pitch.
-   * @param data2 The second byte of data. Usually the controller value or Note velocity.
+   * @param data1   The first byte of data in the message. Often controller number of Note pitch.
+   * @param data2   The second byte of data. Usually the controller value or Note velocity.
    */
   public void sendMidiOutput(int status, int channel, int data1, int data2) {
     try {
@@ -275,7 +273,7 @@ public abstract class MidiCommunication implements Receiver {
     try {
       f.setSize(340, 200);
       f.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - 170,
-          Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 100);
+        Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 100);
       String[] data = new String[info.length];
       data[0] = "" + info[0];
       data[1] = "" + info[1];

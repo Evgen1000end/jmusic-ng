@@ -60,11 +60,11 @@ public final class HarmonicsInst extends Instrument {
    * the envelope data
    */
   private EnvPoint[] pointArray = {
-      new EnvPoint((float) 0.0, (float) 0.0),
-      new EnvPoint((float) 0.05, (float) 1.0),
-      new EnvPoint((float) 0.15, (float) 0.4),
-      new EnvPoint((float) 0.9, (float) 0.3),
-      new EnvPoint((float) 1.0, (float) 0.0)
+    new EnvPoint((float) 0.0, (float) 0.0),
+    new EnvPoint((float) 0.05, (float) 1.0),
+    new EnvPoint((float) 0.15, (float) 0.4),
+    new EnvPoint((float) 0.9, (float) 0.3),
+    new EnvPoint((float) 1.0, (float) 0.0)
   };
 
   //----------------------------------------------

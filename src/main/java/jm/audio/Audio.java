@@ -35,6 +35,7 @@ import java.io.RandomAccessFile;
 import java.io.StreamTokenizer;
 import java.util.Enumeration;
 import java.util.Stack;
+
 import jm.audio.io.SampleOut;
 import jm.music.data.Note;
 import jm.music.data.Part;
@@ -110,8 +111,8 @@ public final class Audio implements jm.JMC {
           inst.push(instList[part.getInstrument()]);
         } catch (ArrayIndexOutOfBoundsException npe) {
           System.out.println("jMusic Audio warning: Can't find the instrument number " +
-              part.getInstrument() + " that you have specified for " +
-              "the part named " + part.getTitle() + ".");
+            part.getInstrument() + " that you have specified for " +
+            "the part named " + part.getTitle() + ".");
         }
       }
       System.out.println("Part " + partCounter++ + " '" + part.getTitle() + "'. ");
@@ -135,19 +136,19 @@ public final class Audio implements jm.JMC {
             inst.push(instList[phr.getInstrument()]);
           } catch (ArrayIndexOutOfBoundsException npe) {
             System.out.println("jMusic Audio warning: Can't find the instrument number " +
-                phr.getInstrument() + " that you have specified for" +
-                " the phrase named " + phr.getTitle() + ".");
+              phr.getInstrument() + " that you have specified for" +
+              " the phrase named " + phr.getTitle() + ".");
           }
         }
         double time = part_ratio * phr.getStartTime(); //start time of phrase
         double ntime = 0.0; //notes distance from phrases start time
-        
+
         System.out.print("    Phrase " + phraseCounter++ + " '" + phr.getTitle() + "'" +
-            " starting at beat " + phr.getStartTime() + ": ");
+          " starting at beat " + phr.getStartTime() + ": ");
 
                 /* Enumerate through all notes */
         int phraseNoteCounter = 0;
-        for (Note note: phr.getNoteList()  ) {
+        for (Note note : phr.getNoteList()) {
           if (note.getFrequency() == (double) REST) { //This a rest ???
             ntime += phrase_ratio * note.getRhythm();
             continue;
@@ -183,12 +184,12 @@ public final class Audio implements jm.JMC {
    * Combine converts the floating point audio file and combines them into an integer file.
    */
   public static void combine(String fileJmp, String tmpFile, String fileOut,
-      boolean deleteFiles, boolean multi) {
+                             boolean deleteFiles, boolean multi) {
     if (multi) {
       Audio.sampleRate = SampleOut.samprate;
       Audio.channels = SampleOut.numofchan;
       System.out.println("Bit Depth: 16" + " Sample rate: " + SampleOut.samprate +
-          " Channels: " + SampleOut.numofchan);
+        " Channels: " + SampleOut.numofchan);
       Audio.addEmUp(tmpFile, fileOut, SampleOut.max);
     } else {
       int numofdot = 1; //For print outs only
@@ -272,7 +273,7 @@ public final class Audio implements jm.JMC {
   }
 
   private static float getAudio(String fileName, long position, int length,
-      float max, RandomAccessFile raf) {
+                                float max, RandomAccessFile raf) {
     FileInputStream fis = null;
     BufferedInputStream bis = null;
     DataInputStream dis = null;
@@ -386,8 +387,8 @@ public final class Audio implements jm.JMC {
           float outgoing = samp / max;
           if (outgoing < (float) -1.0 || outgoing > (float) 1.0) {
             System.out.println("Outgoing= " + outgoing +
-                "  SAMPLE: " + samp + "  MAX: " + max +
-                "  SampleOut.max: " + SampleOut.max);
+              "  SAMPLE: " + samp + "  MAX: " + max +
+              "  SampleOut.max: " + SampleOut.max);
           }
           //dos.writeFloat(outgoing);
           dos.writeShort((short) (outgoing * 32767));
@@ -398,7 +399,7 @@ public final class Audio implements jm.JMC {
         //expected
         double ttt = System.currentTimeMillis();
         System.out
-            .println("Finished writing the audio file in " + (((ttt - tt)) / 1000.0) + " seconds");
+          .println("Finished writing the audio file in " + (((ttt - tt)) / 1000.0) + " seconds");
         dos.flush();
         fos.flush();
         bos.flush();

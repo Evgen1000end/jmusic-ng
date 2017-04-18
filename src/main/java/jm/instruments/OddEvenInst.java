@@ -60,25 +60,25 @@ public final class OddEvenInst extends Instrument {
    * the envelope data
    */
   private EnvPoint[] pointArray0 = {
-      new EnvPoint((float) 0.0, (float) 0.0),
-      new EnvPoint((float) 0.1, (float) 1.0),
-      new EnvPoint((float) 0.4, (float) 0.6),
-      new EnvPoint((float) 0.9, (float) 0.3),
-      new EnvPoint((float) 1.0, (float) 0.0)
+    new EnvPoint((float) 0.0, (float) 0.0),
+    new EnvPoint((float) 0.1, (float) 1.0),
+    new EnvPoint((float) 0.4, (float) 0.6),
+    new EnvPoint((float) 0.9, (float) 0.3),
+    new EnvPoint((float) 1.0, (float) 0.0)
   };
 
   private EnvPoint[] pointArray1 = {
-      new EnvPoint((float) 0.0, (float) 0.0),
-      new EnvPoint((float) 0.1, (float) 1.0),
-      new EnvPoint((float) 0.9, (float) 0.1),
-      new EnvPoint((float) 1.0, (float) 0.0)
+    new EnvPoint((float) 0.0, (float) 0.0),
+    new EnvPoint((float) 0.1, (float) 1.0),
+    new EnvPoint((float) 0.9, (float) 0.1),
+    new EnvPoint((float) 1.0, (float) 0.0)
   };
 
   private EnvPoint[] pointArray2 = {
-      new EnvPoint((float) 0.0, (float) 0.0),
-      new EnvPoint((float) 0.1, (float) 0.1),
-      new EnvPoint((float) 0.9, (float) 1.0),
-      new EnvPoint((float) 1.0, (float) 0.0)
+    new EnvPoint((float) 0.0, (float) 0.0),
+    new EnvPoint((float) 0.1, (float) 0.1),
+    new EnvPoint((float) 0.9, (float) 1.0),
+    new EnvPoint((float) 1.0, (float) 0.0)
   };
 
   //----------------------------------------------
@@ -123,7 +123,7 @@ public final class OddEvenInst extends Instrument {
     wt = new Oscillator[frequencies.length];
     for (int i = 0; i < numberOfOvertones; i++) {
       wt[i] = new Oscillator(this, Oscillator.SINE_WAVE,
-          this.sampleRate, 2);
+        this.sampleRate, 2);
       wt[i].setFrqRatio((float) i + 1);
       // fundamental
       if (i == 0) {

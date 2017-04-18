@@ -1,11 +1,12 @@
 package test.jm.music.data;
 
-import static jm.music.data.NoteUtils.*;
-import static org.testng.Assert.*;
-
-import jm.music.data.NoteUtils;
-import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static jm.music.data.NoteUtils.frequencyToPitch;
+import static jm.music.data.NoteUtils.getNote;
+import static jm.music.data.NoteUtils.pitchToFrequency;
+import static jm.music.data.NoteUtils.pitchValue;
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:evgen1000end@gmail.com">demkinev</a>

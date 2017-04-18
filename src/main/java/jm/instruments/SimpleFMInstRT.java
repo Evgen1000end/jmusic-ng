@@ -42,7 +42,7 @@ public final class SimpleFMInstRT extends jm.audio.Instrument {
    * Basic default constructor to set an initial
    * sampling rate.
    *
-   * @param modulation index
+   * @param modulation        index
    * @param carrier/modulator pitch ratio
    */
   public SimpleFMInstRT(int sampleRate, int modIndex, double ratio) {
@@ -53,9 +53,9 @@ public final class SimpleFMInstRT extends jm.audio.Instrument {
    * A constructor to set an initial
    * sampling rate and number of channels.
    *
-   * @param channels The number of channels
+   * @param channels  The number of channels
    * @param deviation The modulation index
-   * @param ratio The carrier/modulator pitch ratio
+   * @param ratio     The carrier/modulator pitch ratio
    */
   public SimpleFMInstRT(int sampleRate, int channels, int modIndex, double ratio) {
     this.sampleRate = sampleRate;
@@ -75,22 +75,22 @@ public final class SimpleFMInstRT extends jm.audio.Instrument {
   public void createChain() throws AOException {
     // modulator
     Oscillator modulator = new Oscillator(this, Oscillator.SINE_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
     modulator.setAmp((float) this.modIndex);
     modulator.setFrqRatio(this.frqRatio);
     Envelope modEnv = new Envelope(modulator,
-        new double[]{0.0, 0.0, 0.2, 1.0, 1.0, 1.0});
+      new double[]{0.0, 0.0, 0.2, 1.0, 1.0, 1.0});
     Volume modVol = new Volume(modEnv); // respond to note dynamic
     // constant
     Value offsetFrequency = new Value(this, this.sampleRate,
-        this.channels, Value.NOTE_PITCH);
+      this.channels, Value.NOTE_PITCH);
     AudioObject[] grp1 = {modVol, offsetFrequency};
     Add add = new Add(grp1);
     // carrier
     Oscillator carrier = new Oscillator(add,
-        Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
+      Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
     Envelope env = new Envelope(carrier,
-        new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
     Volume vol = new Volume(env);
     StereoPan span = new StereoPan(vol);
     //SampleOut sout = new SampleOut(span);

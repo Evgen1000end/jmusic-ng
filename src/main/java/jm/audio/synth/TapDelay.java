@@ -65,7 +65,7 @@ public final class TapDelay extends AudioObject {
 
   /**
    * @param delay delay in milliseconds
-   * @param gain as a percent
+   * @param gain  as a percent
    */
   public TapDelay(AudioObject ao, int delay, int taps, double decay) {
     super(ao, "[Tap Delay]");

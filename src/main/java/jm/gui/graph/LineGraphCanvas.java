@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -23,8 +23,7 @@
 
 package jm.gui.graph;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 
 /**
  * @author Adam Kirby
@@ -64,7 +63,7 @@ public class LineGraphCanvas extends GraphCanvas {
         size = statsList.get(i).size();
       }
       if (statsList.get(i).largestValue() != Double.POSITIVE_INFINITY
-          && statsList.get(i).largestValue() > largestValue) {
+        && statsList.get(i).largestValue() > largestValue) {
         largestValue = statsList.get(i).largestValue();
       }
     }
@@ -73,17 +72,17 @@ public class LineGraphCanvas extends GraphCanvas {
 
     for (int i = 0; i < statsList.size(); i++) {
       graphics.setColor(new Color((float) Math.random(),
-          (float) Math.random(),
-          (float) Math.random()));
+        (float) Math.random(),
+        (float) Math.random()));
       for (int j = 1; j < statsList.get(i).size(); j++) {
         if (statsList.get(i).largestValue()
-            != Double.POSITIVE_INFINITY) {
+          != Double.POSITIVE_INFINITY) {
           if (i == 2) {
             graphics.drawLine((int) ((j - 1) * .5), (int) (statsList.get(i).get(j - 1) * 10000),
-                (int) (j * .5), (int) (statsList.get(i).get(j) * 10000));
+              (int) (j * .5), (int) (statsList.get(i).get(j) * 10000));
           } else {
             graphics.drawLine((int) ((j - 1) * .5), (int) (statsList.get(i).get(j - 1) * 300),
-                (int) (j * .5), (int) (statsList.get(i).get(j) * 300));
+              (int) (j * .5), (int) (statsList.get(i).get(j) * 300));
           }
         }
       }

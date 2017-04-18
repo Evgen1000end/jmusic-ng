@@ -23,14 +23,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.util;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.FileDialog;
-import java.awt.Frame;
-import java.awt.Label;
-import java.awt.Panel;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -41,8 +34,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+
 import jm.JMC;
 import jm.audio.io.AudioFileIn;
 import jm.midi.SMF;
@@ -76,8 +70,8 @@ public class Read implements JMC {
    */
   public static void midi(Score score) {
     FileDialog fd = new FileDialog(new Frame(),
-        "Select a MIDI file to open.",
-        FileDialog.LOAD);
+      "Select a MIDI file to open.",
+      FileDialog.LOAD);
     fd.show();
     if (fd.getFile() != null) {
       Read.midi(score, fd.getDirectory() + fd.getFile());
@@ -92,7 +86,7 @@ public class Read implements JMC {
   public static void midi(Score s, String fileName) {
     if (s == null) {
       System.err
-          .println("jMusic Read.midi error: The score is not initialised! I'm doing it for you.");
+        .println("jMusic Read.midi error: The score is not initialised! I'm doing it for you.");
       s = new Score();
     }
     s.empty();
@@ -104,8 +98,8 @@ public class Read implements JMC {
       smf.read(is);
       jm.midi.MidiParser.SMFToScore(s, smf);
       System.out.println(
-          "MIDI file '" + fileName + "' read into score '" + s.getTitle() + "' Tempo = " + s
-              .getTempo());
+        "MIDI file '" + fileName + "' read into score '" + s.getTitle() + "' Tempo = " + s
+          .getTempo());
       System.out.println("-------------------------------------------------------------");
     } catch (IOException e) {
       System.err.println(e);
@@ -192,7 +186,7 @@ public class Read implements JMC {
   public static void jm(Score s, String fileName) {
     if (s == null) {
       System.err
-          .println("jMusic Read.jm error: The score is not initialised! I'm doing it for you.");
+        .println("jMusic Read.jm error: The score is not initialised! I'm doing it for you.");
       s = new Score();
     }
     s.empty();
@@ -221,7 +215,7 @@ public class Read implements JMC {
   public static void jm(Part p, String fileName) {
     if (p == null) {
       System.err
-          .println("jMusic Read.jm error: The part is not initialised! I'm doing it for you.");
+        .println("jMusic Read.jm error: The part is not initialised! I'm doing it for you.");
       p = new Part();
     }
     p.empty();
@@ -239,7 +233,7 @@ public class Read implements JMC {
   public static void jm(Phrase phr, String fileName) {
     if (phr == null) {
       System.err
-          .println("jMusic Read.jm error: The phrase is not initialised! I'm doing it for you.");
+        .println("jMusic Read.jm error: The phrase is not initialised! I'm doing it for you.");
       phr = new Phrase();
     }
     phr.empty();
@@ -256,7 +250,7 @@ public class Read implements JMC {
   public static void jm(CPhrase cphr, String fileName) {
     if (cphr == null) {
       System.err
-          .println("jMusic Read.jm error: The CPhrase is not initialised! I'm doing it for you.");
+        .println("jMusic Read.jm error: The CPhrase is not initialised! I'm doing it for you.");
       cphr = new CPhrase();
     }
     cphr.empty();
@@ -279,8 +273,8 @@ public class Read implements JMC {
    */
   public static void xml(Score score) {
     FileDialog fd = new FileDialog(new Frame(),
-        "Select a jMusic XML file to open.",
-        FileDialog.LOAD);
+      "Select a jMusic XML file to open.",
+      FileDialog.LOAD);
     fd.show();
     if (fd.getFile() != null) {
       Read.xml(score, fd.getDirectory() + fd.getFile());
@@ -295,7 +289,7 @@ public class Read implements JMC {
   public static void xml(Score s, String fileName) {
     if (s == null) {
       System.err
-          .println("jMusic Read.xml error: The score is not initialised! I'm doing it for you.");
+        .println("jMusic Read.xml error: The score is not initialised! I'm doing it for you.");
       s = new Score();
     }
     s.empty();
@@ -324,7 +318,7 @@ public class Read implements JMC {
   public static void xml(Part p, String fileName) {
     if (p == null) {
       System.err
-          .println("jMusic Read.xml error: The part is not initialised! I'm doing it for you.");
+        .println("jMusic Read.xml error: The part is not initialised! I'm doing it for you.");
       p = new Part();
     }
     p.empty();
@@ -342,7 +336,7 @@ public class Read implements JMC {
   public static void xml(Phrase phr, String fileName) {
     if (phr == null) {
       System.err
-          .println("jMusic Read.xml error: The phrase is not initialised! I'm doing it for you.");
+        .println("jMusic Read.xml error: The phrase is not initialised! I'm doing it for you.");
       phr = new Phrase();
     }
     phr.empty();
@@ -359,7 +353,7 @@ public class Read implements JMC {
   public static void xml(CPhrase cphr, String fileName) {
     if (cphr == null) {
       System.err
-          .println("jMusic Read.xml error: The CPhrase is not initialised! I'm doing it for you.");
+        .println("jMusic Read.xml error: The CPhrase is not initialised! I'm doing it for you.");
       cphr = new CPhrase();
     }
     cphr.empty();
@@ -382,9 +376,9 @@ public class Read implements JMC {
     float[] sampleData = afi.getSampleData();
     System.out.println("File '" + fileName + "' read in. Details:");
     System.out.println("Channels = " + afi.getChannels()
-        + " Samples per channel = " + afi.getDuration() / afi.getChannels()
-        + " Sample rate = " + afi.getSampleRate()
-        + " Bit depth = " + afi.getSampleBitDepth());
+      + " Samples per channel = " + afi.getDuration() / afi.getChannels()
+      + " Sample rate = " + afi.getSampleRate()
+      + " Bit depth = " + afi.getSampleBitDepth());
     System.out.println("-------------------------------------------------------------");
     return sampleData;
   }
@@ -395,9 +389,9 @@ public class Read implements JMC {
     sampleData = afi.getSampleData();
     System.out.println("Audio file '" + fileName + "' read in. Details:");
     System.out.println("Channels = " + afi.getChannels()
-        + " Samples per channel = " + afi.getDuration() / afi.getChannels()
-        + " Sample rate = " + afi.getSampleRate()
-        + " Bit depth = " + afi.getSampleBitDepth());
+      + " Samples per channel = " + afi.getDuration() / afi.getChannels()
+      + " Sample rate = " + afi.getSampleRate()
+      + " Bit depth = " + afi.getSampleBitDepth());
     System.out.println("-------------------------------------------------------------");
   }
 
@@ -425,13 +419,13 @@ public class Read implements JMC {
    * to read the file specified by <CODE>filename</CODE>.
    *
    * @param directory String describing the directory structure of the file to be read, which must
-   * include the terminating separator
-   * @param filename String describing the file name
+   *                  include the terminating separator
+   * @param filename  String describing the file name
    * @return Score read from file, or null if an error occured
    * @see #midiOrJmWithNoMessaging(File)
    */
   public static Score midiOrJmWithNoMessaging(final String directory,
-      final String filename) {
+                                              final String filename) {
     return new JmMidiProcessor(directory, filename).getScore();
   }
 
@@ -439,13 +433,13 @@ public class Read implements JMC {
    * Returns a Score read from a MIDI or JM file, displaying errors in a
    * {@link Dialog}.
    *
-   * @param file File to read
+   * @param file  File to read
    * @param owner Frame whose control is to be suspended while the error messages are displayed
    * @return Score read from file, or null if an error occured
    * @see #midiOrJmWithAWTMessaging(String, String, Frame)
    */
   public static Score midiOrJmWithAWTMessaging(final File file,
-      final Frame owner) {
+                                               final Frame owner) {
     JmMidiProcessor processor = new JmMidiProcessor(file);
     displayErrorDialog(owner, processor.getMessage());
     return processor.getScore();
@@ -461,15 +455,16 @@ public class Read implements JMC {
    * to read the file specified by <CODE>filename</CODE>.
    *
    * @param directory String describing the directory structure of the file to be read, which must
-   * include the terminating separator
-   * @param filename String describing the file name
-   * @param owner Frame whose control is to be suspended while the error messages are displayed
+   *                  include the terminating separator
+   * @param filename  String describing the file name
+   * @param owner     Frame whose control is to be suspended while the error messages are
+   *                  displayed
    * @return Score read from file, or null if an error occured
    * @see #midiOrJmWithAWTMessaging(File, Frame)
    */
   public static Score midiOrJmWithAWTMessaging(final String directory,
-      final String filename,
-      final Frame owner) {
+                                               final String filename,
+                                               final Frame owner) {
     JmMidiProcessor processor = new JmMidiProcessor(directory, filename);
     displayErrorDialog(owner, processor.getMessage());
     return processor.getScore();
@@ -483,19 +478,19 @@ public class Read implements JMC {
    * <P>This method is for Dialogs whose control is to be taken from a Frame.
    * If the owner is a Dialog use {@link #displayErrorDialog(Dialog)} instead.
    *
-   * @param owner Frame whose control is to be suspended while the error messages are displayed
+   * @param owner   Frame whose control is to be suspended while the error messages are displayed
    * @param message String to be displayed
    * @see displayErrorDialog(Frame)
    * @see #midiOrJmWithAWTMessaging(File, Dialog);
    * @see #midiOrJmWithAWTMessaging(String, String, Dialog);
    */
   private static void displayErrorDialog(final Frame owner,
-      final String message) {
+                                         final String message) {
     if (message == null) {
       return;
     }
     Dialog dialog = new Dialog(owner, "Not a valid MIDI or jMusic File",
-        true);
+      true);
     completeErrorDialog(dialog, message);
   }
 
@@ -504,11 +499,11 @@ public class Read implements JMC {
    * method is executed by both {@link displayErrorDialog(Frame)} and {@link
    * dispayedErrorDialog(Dialog)} and stores the code common to both.
    *
-   * @param dialog Dialog that is to display the error message.
+   * @param dialog  Dialog that is to display the error message.
    * @param message String to be displayed
    */
   private static void completeErrorDialog(final Dialog dialog,
-      final String message) {
+                                          final String message) {
     dialog.add(new Label(message), BorderLayout.CENTER);
 
     Button okButton = new Button("OK");
@@ -532,13 +527,14 @@ public class Read implements JMC {
    * Returns a Score read from a MIDI or JM file, displaying errors in a
    * {@link JDialog}.
    *
-   * @param file File to read
-   * @param owner Component whose control is to be suspended while the error messages are displayed
+   * @param file  File to read
+   * @param owner Component whose control is to be suspended while the error messages are
+   *              displayed
    * @return Score read from file, or null if an error occured
    * @see #midiOrJmWithSwingMessaging(String, String, Component)
    */
   public static Score midiOrJmWithSwingMessaging(final File file,
-      final Component owner) {
+                                                 final Component owner) {
     JmMidiProcessor processor = new JmMidiProcessor(file);
     displayErrorJDialog(owner, processor.getMessage());
     return processor.getScore();
@@ -556,15 +552,16 @@ public class Read implements JMC {
    * to read the file specified by <CODE>filename</CODE>.
    *
    * @param directory String describing the directory structure of the file to be read, which must
-   * include the terminating separator
-   * @param filename String describing the file name
-   * @param owner Component whose control is to be suspended while the error messages are displayed
+   *                  include the terminating separator
+   * @param filename  String describing the file name
+   * @param owner     Component whose control is to be suspended while the error messages are
+   *                  displayed
    * @return Score read from file, or null if an error occured
    * @see #midiOrJmWithSwingMessaging(File, Component)
    */
   public static Score midiOrJmWithSwingMessaging(final String directory,
-      final String filename,
-      final Component owner) {
+                                                 final String filename,
+                                                 final Component owner) {
     JmMidiProcessor processor = new JmMidiProcessor(directory, filename);
     displayErrorJDialog(owner, processor.getMessage());
     return processor.getScore();
@@ -575,19 +572,20 @@ public class Read implements JMC {
    * retrieved from the class variable {@link #message}.  This method is
    * designed for use by the {@link #midiOrWithSwingMessaging()} methods.
    *
-   * @param owner Component whose control is to be suspended while the error messages are displayed
+   * @param owner   Component whose control is to be suspended while the error messages are
+   *                displayed
    * @param message String to display
    * @see #midiOrJmWithSwingMessaging(File, Component);
    * @see #midiOrJmWithSwingMessaging(String, String, Component);
    */
   private static void displayErrorJDialog(final Component owner,
-      final String message) {
+                                          final String message) {
     if (message == null) {
       return;
     }
     JOptionPane.showMessageDialog(owner, message,
-        "Not a valid MIDI or jMusic File",
-        JOptionPane.ERROR_MESSAGE);
+      "Not a valid MIDI or jMusic File",
+      JOptionPane.ERROR_MESSAGE);
   }
 
   /**
@@ -615,15 +613,15 @@ public class Read implements JMC {
     public JmMidiProcessor(final File file) {
       if (file == null) {
         message = "The selected file is null.  No JM/MIDI information "
-            + "could be imported.";
+          + "could be imported.";
         score = null;
       } else if (file.isDirectory()) {
         message = "The selected file is a directory.  No JM/MIDI "
-            + "information could be imported.";
+          + "information could be imported.";
         score = null;
       } else {
         JmMidiProcessor processor = new JmMidiProcessor(
-            file.getParent() + file.separator, file.getName());
+          file.getParent() + file.separator, file.getName());
         message = processor.getMessage();
         score = processor.getScore();
       }
@@ -633,14 +631,14 @@ public class Read implements JMC {
      * Creates a new processor for reading jm and midi information from the
      * specified directory and file Strings.
      *
-     * @param directory String describing the path of the directory, this must be terminated with a
-     * file separator.
-     * @param filename String describing the name of the file to be read
+     * @param directory String describing the path of the directory, this must be terminated
+     *                  with a file separator.
+     * @param filename  String describing the name of the file to be read
      */
     public JmMidiProcessor(final String directory, final String filename) {
       if (filename == null) {
         message = "The filename String is null.  No JM/MIDI information"
-            + " could be imported.";
+          + " could be imported.";
         score = null;
         return;
       }
@@ -664,14 +662,14 @@ public class Read implements JMC {
           message = "Unknown IO Exception";
           score = null;
         } else if (message.equals("Track Started in wrong place!!!!"
-            + "  ABORTING")) {
+          + "  ABORTING")) {
           message = "The MIDI file corrupted.  Track data started in "
-              + "the wrong place.";
+            + "the wrong place.";
           score = null;
         } else if (message.equals("This is NOT a MIDI file !!!")) {
           try {
             FileInputStream fis = new FileInputStream(directory
-                + filename);
+              + filename);
             ObjectInputStream ois = new ObjectInputStream(fis);
             score = (Score) ois.readObject();
             ois.close();
@@ -681,13 +679,13 @@ public class Read implements JMC {
             score = null;
           } catch (ClassNotFoundException | StreamCorruptedException | ClassCastException e2) {
             message = "The file " + filename
-                + " is neither a jm nor a MIDI file";
+              + " is neither a jm nor a MIDI file";
             score = null;
           } catch (IOException e2) {
             message = e2.getMessage();
             if (message == null) {
               message = "Unknown Exception.  No musical "
-                  + "information could be imported.";
+                + "information could be imported.";
             }
             score = null;
           }
@@ -716,4 +714,4 @@ public class Read implements JMC {
     }
   }
 }
-                             
+

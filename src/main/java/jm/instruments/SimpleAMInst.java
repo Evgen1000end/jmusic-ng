@@ -48,13 +48,13 @@ public final class SimpleAMInst extends jm.audio.Instrument {
    */
   public void createChain() {
     Oscillator modulator = new Oscillator(this, Oscillator.SINE_WAVE,
-        this.sampleRate, 1);
+      this.sampleRate, 1);
     modulator.setFrqRatio((float) 7.23);
     Volume wtAmp = new Volume(modulator);
     Value offsetAmp = new Value(this, this.sampleRate, 1, (float) 0.5);
     Add add = new Add(new AudioObject[]{wtAmp, offsetAmp});
     Oscillator carrier = new Oscillator(add,
-        Oscillator.SINE_WAVE, Oscillator.AMPLITUDE);
+      Oscillator.SINE_WAVE, Oscillator.AMPLITUDE);
     SampleOut sout = new SampleOut(carrier);
   }
 }

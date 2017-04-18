@@ -9,57 +9,50 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-// GPL code for jMusic CPN.   
+// GPL code for jMusic CPN.
 // Written by Al Christians (achrist@easystreet.com).
 // Copyright  2002, Trillium Resources Corporation, Oregon's
 // leading provider of unvarnished software.
 
 package jm.gui.cpn;
 
-import java.awt.Button;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Label;
-import java.awt.List;
-import java.awt.Panel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.StringTokenizer;
-import java.util.Vector;
+
 import jm.music.data.Note;
 import jm.music.data.Phrase;
 
 // This class is a little editor to set the properties
-// of a Phrase in the jMusic CPN. 
+// of a Phrase in the jMusic CPN.
 
 public class ParmScreen extends Dialog
-    implements ActionListener, WindowListener {
+  implements ActionListener, WindowListener {
 
   private List instrumentList,
-      volumeList,
-      tempoList;
+    volumeList,
+    tempoList;
 
   private Button instrumentButton,
-      volumeButton,
-      tempoButton,
-      closeButton;
+    volumeButton,
+    tempoButton,
+    closeButton;
 
   private Label instrumentLabel,
-      volumeLabel,
-      tempoLabel;
+    volumeLabel,
+    tempoLabel;
 
   private Phrase phrase;
 
@@ -147,9 +140,9 @@ public class ParmScreen extends Dialog
 
   // Use this editor class to update a phrase
   public void getParms(
-      Phrase thePhrase,
-      int locX,
-      int locY) {
+    Phrase thePhrase,
+    int locX,
+    int locY) {
 
     phrase = thePhrase;
     setLocation(locX, locY);
@@ -169,12 +162,12 @@ public class ParmScreen extends Dialog
       multiplyTimesBy(oldTempo / newTempo);
     } else if (e.getSource() == volumeButton) {
       setVolume(
-          getVolume(volumeList.getSelectedItem())
+        getVolume(volumeList.getSelectedItem())
       );
     } else if (e.getSource() == instrumentButton) {
       phrase.setInstrument(
-          getInstrument(
-              instrumentList.getSelectedItem())
+        getInstrument(
+          instrumentList.getSelectedItem())
       );
     } else if (e.getSource() == closeButton) {
       dispose();

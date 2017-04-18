@@ -41,16 +41,16 @@ public final class TriangleRepeatInst extends Instrument {
    * the instrument
    *
    * @param frequencies the relative freqencies to use
-   * @param volumes the volumes to use for the frequencies
+   * @param volumes     the volumes to use for the frequencies
    */
   public TriangleRepeatInst(int sampleRate) {
     this.sampleRate = sampleRate;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.02, (float) 1.0),
-        new EnvPoint((float) 0.15, (float) 0.6),
-        new EnvPoint((float) 0.95, (float) 0.2),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.02, (float) 1.0),
+      new EnvPoint((float) 0.15, (float) 0.6),
+      new EnvPoint((float) 0.95, (float) 0.2),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
   }
@@ -65,7 +65,7 @@ public final class TriangleRepeatInst extends Instrument {
    */
   public void createChain() {
     Oscillator wt = new Oscillator(this, Oscillator.TRIANGLE_WAVE,
-        this.sampleRate, 1);
+      this.sampleRate, 1);
     Envelope env = new Envelope(wt, pointArray);
     Volume vol = new Volume(env);
     Delay delay = new Delay(vol, 4000);

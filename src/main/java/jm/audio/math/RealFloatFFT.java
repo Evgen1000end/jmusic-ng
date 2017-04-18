@@ -51,8 +51,8 @@ public abstract class RealFloatFFT {
     }
     if (i0 + stride * (n - 1) + 1 > data.length) {
       throw new IllegalArgumentException("The data array is too small for " + n + ":" +
-          "i0=" + i0 + " stride=" + stride +
-          " data.length=" + data.length);
+        "i0=" + i0 + " stride=" + stride +
+        " data.length=" + data.length);
     }
   }
 

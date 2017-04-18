@@ -139,6 +139,6 @@ public final class KeySig implements Event {
   //Print
   public void print() {
     System.out.println("KeySig(022):             [time = " + this.time + "][keySig = " + this.keySig
-        + "][keyQual = " + this.keyQual + "]");
+      + "][keyQual = " + this.keyQual + "]");
   }
 }

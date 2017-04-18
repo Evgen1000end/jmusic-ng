@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -23,15 +23,13 @@
 
 package jm.gui.cpn;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.RGBImageFilter;
 import java.util.Vector;
-import javax.swing.JPanel;
+
+import javax.swing.*;
+
 import jm.JMC;
 import jm.music.data.Phrase;
 import jm.music.tools.ChordAnalysis;
@@ -48,13 +46,13 @@ import jm.music.tools.PhraseAnalysis;
 public class JGrandStave extends JPanel implements JMC {
 
   public final static int[] keys =
-      {11, 6, 1, 8, 3, 10, 5, 0, 7, 2, 9, 4, 11, 6, 1};
+    {11, 6, 1, 8, 3, 10, 5, 0, 7, 2, 9, 4, 11, 6, 1};
   public static final int MAX_HEIGHT = 500;
   public static final int MAX_WIDTH = 2000;
   // for double buffering
   public Image image;
   public int staveSpaceHeight = 8, rightMargin = 20, beatWidth = 43, staveWidth = beatWidth * 15,
-      imageHeightOffset = 28, clefWidth = 38, timeSigWidth = 5, keySigWidth = 5;
+    imageHeightOffset = 28, clefWidth = 38, timeSigWidth = 5, keySigWidth = 5;
   public int bPos = 28;
   public Vector notePositions = new Vector();
   protected int[] scale = JMC.MAJOR_SCALE;
@@ -81,11 +79,11 @@ public class JGrandStave extends JPanel implements JMC {
   protected RedFilter natural = new RedFilter();
   protected RedFilter delete = new RedFilter();
   protected RedFilter tie = new RedFilter(
-      Toolkit.getDefaultToolkit().getImage(
-          Stave.class.getResource("graphics/tie.gif"))
+    Toolkit.getDefaultToolkit().getImage(
+      Stave.class.getResource("graphics/tie.gif"))
   );
   protected Image trebleClef, bassClef, one, two, three, four, five, six,
-      seven, eight, nine;
+    seven, eight, nine;
   protected Phrase phrase;
   protected RedFilter currImage;
   protected int currBeatWidth, totalBeatWidth;
@@ -129,7 +127,7 @@ public class JGrandStave extends JPanel implements JMC {
   private int[] firstChords = new int[0];
   private int[] secondChords = new int[0];
   private String[] chordStrings = {"I", "II", "III", "IV", "V", "VI", "VII",
-      "."};
+    "."};
 
   public JGrandStave() {
     this(new Phrase());
@@ -173,44 +171,44 @@ public class JGrandStave extends JPanel implements JMC {
       // get location of graphics
 
       trebleClef = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/trebleClef.gif"));
+        .getImage(Stave.class.getResource("graphics/trebleClef.gif"));
       bassClef = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/bassClef.gif"));
+        .getImage(Stave.class.getResource("graphics/bassClef.gif"));
       crotchetDown.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/crotchetDown.gif"));
+        .getImage(Stave.class.getResource("graphics/crotchetDown.gif"));
       crotchetUp.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/crotchetUp.gif"));
+        .getImage(Stave.class.getResource("graphics/crotchetUp.gif"));
       quaverDown.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/quaverDown.gif"));
+        .getImage(Stave.class.getResource("graphics/quaverDown.gif"));
       quaverUp.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/quaverUp.gif"));
+        .getImage(Stave.class.getResource("graphics/quaverUp.gif"));
       semiquaverDown.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/semiquaverDown.gif"));
+        .getImage(Stave.class.getResource("graphics/semiquaverDown.gif"));
       semiquaverUp.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/semiquaverUp.gif"));
+        .getImage(Stave.class.getResource("graphics/semiquaverUp.gif"));
       minimDown.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/minimDown.gif"));
+        .getImage(Stave.class.getResource("graphics/minimDown.gif"));
       minimUp.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/minimUp.gif"));
+        .getImage(Stave.class.getResource("graphics/minimUp.gif"));
       semibreve.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/semibreve.gif"));
+        .getImage(Stave.class.getResource("graphics/semibreve.gif"));
       dot.image = Toolkit.getDefaultToolkit().getImage(Stave.class.getResource("graphics/dot.gif"));
       semiquaverRest.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/semiquaverRest.gif"));
+        .getImage(Stave.class.getResource("graphics/semiquaverRest.gif"));
       quaverRest.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/quaverRest.gif"));
+        .getImage(Stave.class.getResource("graphics/quaverRest.gif"));
       crotchetRest.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/crotchetRest.gif"));
+        .getImage(Stave.class.getResource("graphics/crotchetRest.gif"));
       minimRest.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/minimRest.gif"));
+        .getImage(Stave.class.getResource("graphics/minimRest.gif"));
       semibreveRest.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/semibreveRest.gif"));
+        .getImage(Stave.class.getResource("graphics/semibreveRest.gif"));
       sharp.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/sharp.gif"));
+        .getImage(Stave.class.getResource("graphics/sharp.gif"));
       flat.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/flat.gif"));
+        .getImage(Stave.class.getResource("graphics/flat.gif"));
       natural.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/natural.gif"));
+        .getImage(Stave.class.getResource("graphics/natural.gif"));
       one = Toolkit.getDefaultToolkit().getImage(Stave.class.getResource("graphics/one.gif"));
       two = Toolkit.getDefaultToolkit().getImage(Stave.class.getResource("graphics/two.gif"));
       three = Toolkit.getDefaultToolkit().getImage(Stave.class.getResource("graphics/three.gif"));
@@ -221,7 +219,7 @@ public class JGrandStave extends JPanel implements JMC {
       eight = Toolkit.getDefaultToolkit().getImage(Stave.class.getResource("graphics/eight.gif"));
       nine = Toolkit.getDefaultToolkit().getImage(Stave.class.getResource("graphics/nine.gif"));
       delete.image = Toolkit.getDefaultToolkit()
-          .getImage(Stave.class.getResource("graphics/delete.gif"));
+        .getImage(Stave.class.getResource("graphics/delete.gif"));
 
       //MediaTracker tracker = new MediaTracker(this);
       //tracker.addImage(nine, 0);
@@ -245,59 +243,59 @@ public class JGrandStave extends JPanel implements JMC {
     };
 
     crotchetDown.redImage = createImage(new FilteredImageSource(
-        crotchetDown.image.getSource(),
-        filter));
+      crotchetDown.image.getSource(),
+      filter));
     crotchetUp.redImage = createImage(new FilteredImageSource(
-        crotchetUp.image.getSource(),
-        filter));
+      crotchetUp.image.getSource(),
+      filter));
     quaverDown.redImage = createImage(new FilteredImageSource(
-        quaverDown.image.getSource(),
-        filter));
+      quaverDown.image.getSource(),
+      filter));
     quaverUp.redImage = createImage(new FilteredImageSource(
-        quaverUp.image.getSource(),
-        filter));
+      quaverUp.image.getSource(),
+      filter));
     semiquaverDown.redImage = createImage(new FilteredImageSource(
-        semiquaverDown.image.getSource(),
-        filter));
+      semiquaverDown.image.getSource(),
+      filter));
     semiquaverUp.redImage = createImage(new FilteredImageSource(
-        semiquaverUp.image.getSource(),
-        filter));
+      semiquaverUp.image.getSource(),
+      filter));
     minimDown.redImage = createImage(new FilteredImageSource(
-        minimDown.image.getSource(),
-        filter));
+      minimDown.image.getSource(),
+      filter));
     minimUp.redImage = createImage(new FilteredImageSource(
-        minimUp.image.getSource(),
-        filter));
+      minimUp.image.getSource(),
+      filter));
     semibreve.redImage = createImage(new FilteredImageSource(
-        semibreve.image.getSource(),
-        filter));
+      semibreve.image.getSource(),
+      filter));
     dot.redImage = createImage(new FilteredImageSource(
-        dot.image.getSource(),
-        filter));
+      dot.image.getSource(),
+      filter));
     semiquaverRest.redImage = createImage(new FilteredImageSource(
-        semiquaverRest.image.getSource(),
-        filter));
+      semiquaverRest.image.getSource(),
+      filter));
     quaverRest.redImage = createImage(new FilteredImageSource(
-        quaverRest.image.getSource(),
-        filter));
+      quaverRest.image.getSource(),
+      filter));
     crotchetRest.redImage = createImage(new FilteredImageSource(
-        crotchetRest.image.getSource(),
-        filter));
+      crotchetRest.image.getSource(),
+      filter));
     minimRest.redImage = createImage(new FilteredImageSource(
-        minimRest.image.getSource(),
-        filter));
+      minimRest.image.getSource(),
+      filter));
     sharp.redImage = createImage(new FilteredImageSource(
-        sharp.image.getSource(),
-        filter));
+      sharp.image.getSource(),
+      filter));
     flat.redImage = createImage(new FilteredImageSource(
-        flat.image.getSource(),
-        filter));
+      flat.image.getSource(),
+      filter));
     natural.redImage = createImage(new FilteredImageSource(
-        natural.image.getSource(),
-        filter));
+      natural.image.getSource(),
+      filter));
     delete.redImage = createImage(new FilteredImageSource(
-        delete.image.getSource(),
-        filter));
+      delete.image.getSource(),
+      filter));
 
         /*
          * There appears to be a problem with my use of MediaTracker under
@@ -408,13 +406,13 @@ public class JGrandStave extends JPanel implements JMC {
       for (int ks = 0; ks < keySignature; ks++) {
         // claulate position
         int keyAccidentalPosition =
-            notePosOffset[sharps[ks] % 12] + bPos - 4 + ((5 - sharps[ks] / 12) * 24) + (
-                (6 - sharps[ks] / 12) * 4);
+          notePosOffset[sharps[ks] % 12] + bPos - 4 + ((5 - sharps[ks] / 12) * 24) + (
+            (6 - sharps[ks] / 12) * 4);
         // draw sharp on treble
         g.drawImage(sharp.image, rightMargin + clefWidth + keyOffset, keyAccidentalPosition, this);
         // draw sharp on bass
         g.drawImage(sharp.image, rightMargin + clefWidth + keyOffset,
-            keyAccidentalPosition + staveSpaceHeight * 7, this);
+          keyAccidentalPosition + staveSpaceHeight * 7, this);
         // indent position
         keyOffset += 10;
         //add note to accidental vector
@@ -432,13 +430,13 @@ public class JGrandStave extends JPanel implements JMC {
         for (int ks = 0; ks < Math.abs(keySignature); ks++) {
           // claulate position
           int keyAccidentalPosition =
-              notePosOffset[flats[ks] % 12] + bPos - 4 + ((5 - flats[ks] / 12) * 24) + (
-                  (6 - flats[ks] / 12) * 4);
+            notePosOffset[flats[ks] % 12] + bPos - 4 + ((5 - flats[ks] / 12) * 24) + (
+              (6 - flats[ks] / 12) * 4);
           // draw flat
           g.drawImage(flat.image, rightMargin + clefWidth + keyOffset, keyAccidentalPosition, this);
           // draw flat on bass stave
           g.drawImage(flat.image, rightMargin + clefWidth + keyOffset,
-              keyAccidentalPosition + staveSpaceHeight * 7, this);
+            keyAccidentalPosition + staveSpaceHeight * 7, this);
           // indent position
           keyOffset += 10;
           //add note to accidental vector
@@ -461,11 +459,11 @@ public class JGrandStave extends JPanel implements JMC {
       // top number
       g.drawImage(numbers[(int) metre - 1], rightMargin + clefWidth + keySigWidth, bPos + 13, this);
       g.drawImage(numbers[(int) metre - 1], rightMargin + clefWidth + keySigWidth,
-          bPos + 13 + staveSpaceHeight * 6, this);
+        bPos + 13 + staveSpaceHeight * 6, this);
       //bottom number
       g.drawImage(four, rightMargin + clefWidth + keySigWidth, bPos + 29, this);
       g.drawImage(four, rightMargin + clefWidth + keySigWidth, bPos + 29 + staveSpaceHeight * 6,
-          this);
+        this);
       timeSigWidth = 30;
     } else {
       timeSigWidth = 5;
@@ -474,11 +472,11 @@ public class JGrandStave extends JPanel implements JMC {
     totalBeatWidth = rightMargin + clefWidth + keySigWidth + timeSigWidth;
 
     firstChords =
-        ChordAnalysis.getFirstPassChords(phrase, 1.0, tonic,
-            scale);
+      ChordAnalysis.getFirstPassChords(phrase, 1.0, tonic,
+        scale);
     secondChords =
-        ChordAnalysis.getSecondPassChords(phrase, 1.0, tonic,
-            scale);
+      ChordAnalysis.getSecondPassChords(phrase, 1.0, tonic,
+        scale);
     lastChordDisplayed = -1;
 
     // draw notes and rests
@@ -490,17 +488,17 @@ public class JGrandStave extends JPanel implements JMC {
       int pitchTempPos;
       if (notePitchNum == REST || phrase.getNote(i).getRhythm() == 0.0) { // rest or delete
         pitchTempPos =
-            notePosOffset[71 % 12] + bPos - 4 + ((5 - 71 / 12) * 24) + ((6 - 71 / 12) * 4);
+          notePosOffset[71 % 12] + bPos - 4 + ((5 - 71 / 12) * 24) + ((6 - 71 / 12) * 4);
       } else {
         pitchTempPos =
-            notePosOffset[notePitchNum % 12] + bPos - 4 + ((5 - notePitchNum / 12) * 24) + (
-                (6 - notePitchNum / 12) * 4);
+          notePosOffset[notePitchNum % 12] + bPos - 4 + ((5 - notePitchNum / 12) * 24) + (
+            (6 - notePitchNum / 12) * 4);
       }
 
       isNormalColor = notePitchNum == REST
-          || PhraseAnalysis.isScale(phrase.getNote(i),
-          tonic,
-          scale);
+        || PhraseAnalysis.isScale(phrase.getNote(i),
+        tonic,
+        scale);
 
       firstAccidentalDisplayed = false;
 
@@ -516,7 +514,7 @@ public class JGrandStave extends JPanel implements JMC {
       while (rvToEndOfBar < rhythmValue) {
         isTied = true;
         drawNote(notePitchNum, rvToEndOfBar,
-            pitchTempPos, keyAccidentals);
+          pitchTempPos, keyAccidentals);
         rhythmValue -= rvToEndOfBar;
         rvToEndOfBar = metre - (beatCounter % metre);
       }
@@ -529,49 +527,49 @@ public class JGrandStave extends JPanel implements JMC {
     // draw treble stave
     for (int i = 0; i < 5; i++) {
       g.drawLine(rightMargin,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
 
     // draw bass stave
     for (int i = 6; i < 11; i++) {
       g.drawLine(rightMargin,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
 
     g.setColor(Color.darkGray);
     // draw upper treble stave
     for (int i = -7; i < -2; i++) {
       g.drawLine(rightMargin,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
 
     // draw lower bass stave
     for (int i = 13; i < 18; i++) {
       g.drawLine(rightMargin,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
     // draw neext note stave area
     // draw stave
     g.setColor(Color.lightGray);
     for (int i = 0; i < 5; i++) {
       g.drawLine(totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth + 50,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth + 50,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
     for (int i = 6; i < 11; i++) {
       g.drawLine(totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth + 50,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth + 50,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
     g.setColor(Color.black);
     // add Clefs
@@ -591,7 +589,7 @@ public class JGrandStave extends JPanel implements JMC {
   }
 
   private void drawNote(int notePitchNum, final double rhythmValue,
-      int pitchTempPos, final int keyAccidentals) {
+                        int pitchTempPos, final int keyAccidentals) {
     requiresMoreThanOneImage = false;
     excessRhythmValue = 0.0;
 
@@ -604,19 +602,19 @@ public class JGrandStave extends JPanel implements JMC {
 
         remaining--;
         g.drawString(chordStrings[firstChords[lastChordDisplayed]],
-            (int) (totalBeatWidth - ((totalBeatWidth - lastPosition)
-                * (remaining
-                / (double) total))),
-            20
+          (int) (totalBeatWidth - ((totalBeatWidth - lastPosition)
+            * (remaining
+            / (double) total))),
+          20
         );
         int index = secondChords[lastChordDisplayed];
         String string = chordStrings[index];
 //                g.drawString(chordStrings[secondChords[lastChordDisplayed]],
         g.drawString(string,
-            (int) (totalBeatWidth - ((totalBeatWidth - lastPosition)
-                * (remaining
-                / (double) total))),
-            40
+          (int) (totalBeatWidth - ((totalBeatWidth - lastPosition)
+            * (remaining
+            / (double) total))),
+          40
         );
       }
       lastPosition = totalBeatWidth;
@@ -626,28 +624,28 @@ public class JGrandStave extends JPanel implements JMC {
     chooseImage(notePitchNum, rhythmValue, 71, 60, 50);
 
     drawNote2(notePitchNum, rhythmValue - excessRhythmValue,
-        pitchTempPos, keyAccidentals);
+      pitchTempPos, keyAccidentals);
     if (requiresMoreThanOneImage) {
       drawNote(notePitchNum, excessRhythmValue,
-          pitchTempPos, keyAccidentals);
+        pitchTempPos, keyAccidentals);
       extraImagesUsed = true;
     }
   }
 
   private void drawNote2(int notePitchNum, final double rhythmValue,
-      int pitchTempPos, final int keyAccidentals) {
+                         int pitchTempPos, final int keyAccidentals) {
 
     // accidental?
     if (((notePitchNum % 12) == 1 || (notePitchNum % 12) == 3 || (notePitchNum % 12) == 6
-        || (notePitchNum % 12) == 8 || (notePitchNum % 12) == 10) && notePitchNum != REST
-        && rhythmValue != 0.0) {
+      || (notePitchNum % 12) == 8 || (notePitchNum % 12) == 10) && notePitchNum != REST
+      && rhythmValue != 0.0) {
       if (keySignature > -1) {
         if (!firstAccidentalDisplayed) {
           displayImage(g, sharp, totalBeatWidth - 9, pitchTempPos);
         }
 //                        g.drawImage(sharp, totalBeatWidth - 9, pitchTempPos, this);
         previouslyChromatic.addElement(
-            notePitchNum - 1); // enter the note made sharp i.e, F for an F#
+          notePitchNum - 1); // enter the note made sharp i.e, F for an F#
       } else { // flat
         pitchTempPos -= 4; // to show the note a semitone higher for flats
         if (!firstAccidentalDisplayed) {
@@ -692,8 +690,8 @@ public class JGrandStave extends JPanel implements JMC {
       boolean dotFlag = true;
       for (int l = 0; l < lineNotes.length; l++) {
         if (lineNotes[l] + 12 == notePitchNum || lineNotes[l] + 36 == notePitchNum
-            || lineNotes[l] + 60 == notePitchNum || lineNotes[l] + 84 == notePitchNum
-            || lineNotes[l] + 108 == notePitchNum || notePitchNum == REST) {
+          || lineNotes[l] + 60 == notePitchNum || lineNotes[l] + 84 == notePitchNum
+          || lineNotes[l] + 108 == notePitchNum || notePitchNum == REST) {
           displayImage(g, dot, totalBeatWidth + 1, pitchTempPos - 4);
 //                        g.drawImage(dot, totalBeatWidth + 1, pitchTempPos - 4, this);
           dotFlag = false;
@@ -778,23 +776,23 @@ public class JGrandStave extends JPanel implements JMC {
 
       if (isUp) {
         g.drawImage(tieImage,
-            savedBeatWidth - 3 + 9,
-            yPosition + 17 + tieImage.getHeight(this),
-            savedBeatWidth2 + 19 - 9,
-            yPosition + 17,
-            0, 0, tieImage.getWidth(this),
-            tieImage.getHeight(this),
+          savedBeatWidth - 3 + 9,
+          yPosition + 17 + tieImage.getHeight(this),
+          savedBeatWidth2 + 19 - 9,
+          yPosition + 17,
+          0, 0, tieImage.getWidth(this),
+          tieImage.getHeight(this),
 
-            this);
+          this);
       } else {
         g.drawImage(tieImage,
-            savedBeatWidth - 3 + 9,
-            yPosition - 20,
-            savedBeatWidth2 + 19 - 9,
-            yPosition - 20 + tieImage.getHeight(this),
-            0, 0, tieImage.getWidth(this),
-            tieImage.getHeight(this),
-            this);
+          savedBeatWidth - 3 + 9,
+          yPosition - 20,
+          savedBeatWidth2 + 19 - 9,
+          yPosition - 20 + tieImage.getHeight(this),
+          0, 0, tieImage.getWidth(this),
+          tieImage.getHeight(this),
+          this);
       }
     }
 
@@ -814,7 +812,7 @@ public class JGrandStave extends JPanel implements JMC {
     if (metre != 0.0) {
       if ((beatCounter % metre) == 0.0) {
         g.drawLine(totalBeatWidth, bPos + 12 - staveSpaceHeight * 7, totalBeatWidth,
-            bPos + 44 + staveSpaceHeight * 13);
+          bPos + 44 + staveSpaceHeight * 13);
         // add bar numbers?
         if (barNumbers) {
           g.drawString("" + (int) (beatCounter / metre + 1), totalBeatWidth - 4, bPos - 50);
@@ -827,7 +825,7 @@ public class JGrandStave extends JPanel implements JMC {
   }
 
   public void displayImage(final Graphics g, final RedFilter image, int xCoord,
-      int yCoord) {
+                           int yCoord) {
     if (isNormalColor) {
       g.drawImage(image.image, xCoord, yCoord, this);
     } else {
@@ -850,7 +848,7 @@ public class JGrandStave extends JPanel implements JMC {
                             return (rgb & 0xffff0000);
                         }
                     })), xCoord, yCoord, this);
-                                                
+
             g.drawIma
             int w = image.getWidth(this);
             int h = image.getHeight(this);
@@ -1009,8 +1007,8 @@ public class JGrandStave extends JPanel implements JMC {
    */
   public void setKeySignature(int key) {
     this.keySignature = ((key > 7) ? 7 : ((key < -7)
-        ? -7
-        : key));
+      ? -7
+      : key));
     if (keyChangeListener == null) {
       return;
     }
@@ -1120,7 +1118,7 @@ public class JGrandStave extends JPanel implements JMC {
 //    };
 
   protected void chooseImage(int pitch, double rhythmValue, int upPitch1, int downPitch,
-      int upPitch2) {
+                             int upPitch2) {
     //System.out.println("Pitch = " + pitch + " RV = " + rhythm);
     if (pitch == REST) { // pick a rest
       isNote = false;
@@ -1372,9 +1370,9 @@ public class JGrandStave extends JPanel implements JMC {
     RedFilter(Image image) {
       this.image = image;
       redImage = createImage(new FilteredImageSource(image.getSource(),
-          filter));
+        filter));
     }
   }
 
 }
-        
+

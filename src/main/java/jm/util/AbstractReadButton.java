@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -23,10 +23,7 @@
 
 package jm.util;
 
-import java.awt.Button;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Label;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
@@ -34,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
+
 import jm.midi.SMF;
 import jm.music.data.Score;
 
@@ -63,7 +61,7 @@ public abstract class AbstractReadButton extends Button {
    * displayed describing the error, and the method returns null.
    *
    * @param directoryName String describing the directory structure of the file to be read
-   * @param fileName String describing the full name of the file to be read
+   * @param fileName      String describing the full name of the file to be read
    * @return {@link Score} describing the music data in the file, or null if an error was
    * encountered.
    */
@@ -87,13 +85,13 @@ public abstract class AbstractReadButton extends Button {
       if (message == null) {
         message = "Unknown IO Exception";
       } else if (message.equals("Track Started in wrong place!!!!"
-          + "  ABORTING")) {
+        + "  ABORTING")) {
         message = "The MIDI file corrupted.  Track data started in the"
-            + " wrong place.";
+          + " wrong place.";
       } else if (message.equals("This is NOT a MIDI file !!!")) {
         try {
           FileInputStream fis = new FileInputStream(directoryName
-              + fileName);
+            + fileName);
           ObjectInputStream ois = new ObjectInputStream(fis);
           score = (Score) ois.readObject();
           ois.close();
@@ -102,7 +100,7 @@ public abstract class AbstractReadButton extends Button {
           message = "Read access not allowed to " + fileName;
         } catch (ClassNotFoundException | ClassCastException | StreamCorruptedException e2) {
           message = "The file " + fileName
-              + " is neither a jm or MIDI file";
+            + " is neither a jm or MIDI file";
         } catch (IOException e2) {
           message = e2.getMessage();
           if (message == null) {

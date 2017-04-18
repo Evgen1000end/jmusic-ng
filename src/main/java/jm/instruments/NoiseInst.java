@@ -80,7 +80,7 @@ public final class NoiseInst extends Instrument {
   public void createChain() {
     Noise noise = new Noise(this, noiseType, this.sampleRate, channels);
     Envelope env = new Envelope(noise,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.95, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.95, 1.0, 1.0, 0.0});
     Volume vol = new Volume(env);
     StereoPan span = new StereoPan(vol);
     SampleOut sout = new SampleOut(span);

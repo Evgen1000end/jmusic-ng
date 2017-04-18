@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -23,9 +23,8 @@
 
 package jm.util;
 
-import java.awt.Button;
-import java.awt.FileDialog;
-import java.awt.Frame;
+import java.awt.*;
+
 import jm.music.data.Score;
 
 /**
@@ -51,30 +50,30 @@ public class ReadFileButton extends Button {
    * Constructs a button for reading in a music file.
    *
    * @param owner {@link Frame} which is the owner of this button.  Access to this
-   * <CODE>Frame</CODE> will be suspended when the user is selecting a music file and when error
-   * messages are displayed.
+   *              <CODE>Frame</CODE> will be suspended when the user is selecting a music file and
+   *              when error messages are displayed.
    */
   public ReadFileButton(final Frame owner) {
     super("Read File");
     final FileDialog load = new FileDialog(owner,
-        "Select a Midi or jMusic file to import",
-        FileDialog.LOAD);
+      "Select a Midi or jMusic file to import",
+      FileDialog.LOAD);
     load.setFilenameFilter(new ReadFilenameFilter());
 
     addActionListener(evt -> {
-          load.show();
+        load.show();
 
-          Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
-              load.getFile(),
-              owner);
-          if (score == null) {
-            return;
-          }
-          if (readListenerList != null) {
-            score = readListenerList.scoreRead(score);
-            readListenerList.finishedReading();
-          }
+        Score score = Read.midiOrJmWithAWTMessaging(load.getDirectory(),
+          load.getFile(),
+          owner);
+        if (score == null) {
+          return;
         }
+        if (readListenerList != null) {
+          score = readListenerList.scoreRead(score);
+          readListenerList.finishedReading();
+        }
+      }
     );
   }
 

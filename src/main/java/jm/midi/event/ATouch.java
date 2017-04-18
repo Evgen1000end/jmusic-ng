@@ -156,7 +156,7 @@ public final class ATouch implements VoiceEvt, Cloneable {
   //Print
   public void print() {
     System.out.println(
-        "ATouch(001):    				   [time = " + time + "][midiChannel = " + midiChannel
-            + "][pitch = " + pitch + "][pressure = " + pressure + "]");
+      "ATouch(001):    				   [time = " + time + "][midiChannel = " + midiChannel
+        + "][pitch = " + pitch + "][pressure = " + pressure + "]");
   }
 }

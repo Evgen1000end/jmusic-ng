@@ -48,7 +48,7 @@ public final class FGTRInst extends jm.audio.Instrument {
     //Filter lpf = new Filter(sin, bandwidthBottom, Filter.LOW_PASS);
     //Filter hpf = new Filter(lpf, bandwidthTop, Filter.HIGH_PASS);
     AllFGTR fgtr = new AllFGTR(/*hpf*/sin, grainDuration, bandwidthTop, bandwidthBottom,
-        grainsPerSecond);
+      grainsPerSecond);
     SampleOut sout = new SampleOut(fgtr);
   }
 }

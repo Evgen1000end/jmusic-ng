@@ -86,7 +86,7 @@ public class Envelope extends AudioObject implements JMC {
    * An Envelope object can be used as a generator. This
    * is a method to call to do this.
    *
-   * @param sampleRate the sampleRate for this AudioObject.
+   * @param sampleRate  the sampleRate for this AudioObject.
    * @param graphPoints the points to construct the envelope from
    */
   public Envelope(Instrument inst, int sampleRate, int channels, EnvPoint[] graphPoints) {
@@ -101,7 +101,7 @@ public class Envelope extends AudioObject implements JMC {
    * is a method to call to do this.
    *
    * @param sampleRate the sampleRate for this AudioObject.
-   * @param @param breakPoints the data to construct the envelope from
+   * @param @param     breakPoints the data to construct the envelope from
    */
   public Envelope(Instrument inst, int sampleRate, int channels, double[] breakPoints) {
     super(inst, sampleRate, "[Envelope]");
@@ -114,7 +114,7 @@ public class Envelope extends AudioObject implements JMC {
    * An Envelope object can be used as a generator. This
    * is a method to call to do this.
    *
-   * @param sampleRate the sampleRate for this AudioObject.
+   * @param sampleRate     the sampleRate for this AudioObject.
    * @param notePointIndex The note's break point envelope values to use.
    */
   public Envelope(Instrument inst, int sampleRate, int channels, int notePointIndex) {
@@ -147,8 +147,8 @@ public class Envelope extends AudioObject implements JMC {
    * changes the amplitude of incoming samples based on
    * the envelope, it uses the note's amp env values.
    *
-   * @param ao the single AudioObject to use as input.
-   * @param notePointindex The index in the note's breakPoint array to use.
+   * @param ao             the single AudioObject to use as input.
+   * @param notePointIndex The index in the note's breakPoint array to use.
    */
   public Envelope(AudioObject ao, int notePointIndex) {
     super(ao, "[Envelope]");
@@ -164,7 +164,7 @@ public class Envelope extends AudioObject implements JMC {
    * the envelope.
    *
    * @param graphPoints the points to construct the envelope from
-   * @param ao the single AudioObject to use as input.
+   * @param ao          the single AudioObject to use as input.
    */
   public Envelope(AudioObject ao, EnvPoint[] graphPoints) {
     super(ao, "[Envelope]");
@@ -179,7 +179,7 @@ public class Envelope extends AudioObject implements JMC {
    * the envelope.
    *
    * @param breakPoints The data to construct the envelope from.
-   * @param ao the single AudioObject to use as input.
+   * @param ao          the single AudioObject to use as input.
    */
   public Envelope(AudioObject ao, double[] breakPoints) {
     super(ao, "[Envelope]");
@@ -209,7 +209,7 @@ public class Envelope extends AudioObject implements JMC {
     int counter = 0;
     for (int i = 0; i < (breakPoints.length / 2); i++) {
       graphPoints[i] = new EnvPoint((float) breakPoints[counter],
-          (float) breakPoints[counter + 1]);
+        (float) breakPoints[counter + 1]);
       counter += 2;
     }
   }
@@ -222,7 +222,7 @@ public class Envelope extends AudioObject implements JMC {
    * of 1.0 the graphs current positional value
    * will be passed on unchanged.
    *
-   * @param input input data
+   * @param buffer input data
    */
   public int work(float[] buffer) throws AOException {
     // pass on data unchanged after the end of the envelope
@@ -298,8 +298,8 @@ public class Envelope extends AudioObject implements JMC {
     if (this.graphPoints[0].x != -1.0) {
       for (int i = 0; i < this.graphPoints.length; i++) {
         this.graphPoints[i].X =
-            ((int) ((float) (numOfSamples) *
-                this.graphPoints[i].x));
+          ((int) ((float) (numOfSamples) *
+            this.graphPoints[i].x));
         this.graphPoints[i].X -= 1;
       }
     }
@@ -310,10 +310,10 @@ public class Envelope extends AudioObject implements JMC {
     int j = 0;
     for (int i = 0; i < (this.graphPoints.length) - 1; i++) {
       float gradient =
-          (this.graphPoints[i].y - this.graphPoints[i + 1].y) /
-              (this.graphPoints[i].X - this.graphPoints[i + 1].X);
+        (this.graphPoints[i].y - this.graphPoints[i + 1].y) /
+          (this.graphPoints[i].X - this.graphPoints[i + 1].X);
       float yintercept = this.graphPoints[i + 1].y -
-          (gradient * this.graphPoints[i + 1].X);
+        (gradient * this.graphPoints[i + 1].X);
       for (; ; ) {
         //This could be a problem as I don't think the last sample is
         //set properly.

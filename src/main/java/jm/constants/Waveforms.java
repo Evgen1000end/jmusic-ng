@@ -33,13 +33,13 @@ import jm.music.data.Note;
 public interface Waveforms {
 
   int
-      SINE_WAVE = 0,
-      COSINE_WAVE = 1,
-      TRIANGLE_WAVE = 2,
-      SQUARE_WAVE = 3,
-      SAWTOOTH_WAVE = 4,
-      SAWDOWN_WAVE = 5,
-      SABERSAW_WAVE = 6,
-      PULSE_WAVE = 7;
+    SINE_WAVE = 0,
+    COSINE_WAVE = 1,
+    TRIANGLE_WAVE = 2,
+    SQUARE_WAVE = 3,
+    SAWTOOTH_WAVE = 4,
+    SAWDOWN_WAVE = 5,
+    SABERSAW_WAVE = 6,
+    PULSE_WAVE = 7;
 
 }

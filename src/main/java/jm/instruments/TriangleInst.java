@@ -52,17 +52,17 @@ public final class TriangleInst extends Instrument {
    * the instrument
    *
    * @param sampleRate In hertz
-   * @param channels 1 = mono, 2 = Stereo
+   * @param channels   1 = mono, 2 = Stereo
    */
   public TriangleInst(int sampleRate, int channels) {
     this.sampleRate = sampleRate;
     this.channels = channels;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.02, (float) 1.0),
-        new EnvPoint((float) 0.15, (float) 0.6),
-        new EnvPoint((float) 0.9, (float) 0.3),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.02, (float) 1.0),
+      new EnvPoint((float) 0.15, (float) 0.6),
+      new EnvPoint((float) 0.9, (float) 0.3),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
   }
@@ -77,11 +77,11 @@ public final class TriangleInst extends Instrument {
    */
   public void createChain() {
     Oscillator wt = new Oscillator(this, Oscillator.TRIANGLE_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
     Envelope env = new Envelope(wt, pointArray);
     Volume vol = new Volume(env);
     Filter filt = new Filter(vol, (float) (this.sampleRate / 2.1),
-        Filter.LOW_PASS);
+      Filter.LOW_PASS);
     StereoPan span = new StereoPan(filt);
     if (output == RENDER) {
       sout = new SampleOut(span);

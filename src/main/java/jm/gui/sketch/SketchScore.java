@@ -22,21 +22,14 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.sketch;
 
-import java.awt.BorderLayout;
-import java.awt.FileDialog;
-import java.awt.Frame;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.MenuShortcut;
-import java.awt.Panel;
-import java.awt.ScrollPane;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Enumeration;
+
 import jm.midi.MidiSynth;
 import jm.music.data.Note;
 import jm.music.data.Part;
@@ -197,7 +190,7 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
     sketchScoreArea.setScore(score);
     pan.repaint();
     sketchScoreArea
-        .setSize((int) Math.round(score.getEndTime() * beatWidth), sketchScoreArea.getHeight());
+      .setSize((int) Math.round(score.getEndTime() * beatWidth), sketchScoreArea.getHeight());
     sketchScoreArea.setBeatWidth(beatWidth);
     sketchScoreArea.repaint();
     ruler.repaint();
@@ -215,7 +208,7 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
       while (enum2.hasMoreElements()) {
         Phrase phrase = (Phrase) enum2.nextElement();
         maxWidth = (int) (phrase.getStartTime() * beatWidth);
-        for (Note aNote: phrase.getNoteList()) {
+        for (Note aNote : phrase.getNoteList()) {
           maxWidth = maxWidth + (int) (aNote.getRhythm() * beatWidth);
         }
       }
@@ -303,8 +296,8 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
    */
   public void saveXMLFile() {
     FileDialog fd = new FileDialog(new Frame(),
-        "Save as a jMusic XML file...",
-        FileDialog.SAVE);
+      "Save as a jMusic XML file...",
+      FileDialog.SAVE);
     fd.setFile("FileName.xml");
     fd.show();
     if (fd.getFile() != null) {
@@ -317,8 +310,8 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
    */
   public void openMidi() {
     FileDialog fd = new FileDialog(new Frame(),
-        "Select a MIDI file to display.",
-        FileDialog.LOAD);
+      "Select a MIDI file to display.",
+      FileDialog.LOAD);
     fd.show();
     String fileName = fd.getFile();
     if (fileName != null) {
@@ -334,8 +327,8 @@ public class SketchScore extends Frame implements WindowListener, ActionListener
    */
   public void openXMLFile() {
     FileDialog fd = new FileDialog(new Frame(),
-        "Select a jMusic XML file to display.",
-        FileDialog.LOAD);
+      "Select a jMusic XML file to display.",
+      FileDialog.LOAD);
     fd.show();
     String fileName = fd.getFile();
     if (fileName != null) {

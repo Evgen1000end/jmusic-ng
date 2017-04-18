@@ -4,7 +4,7 @@
  * Copyright (C) 2003  Adam Kirby
  *
  * <This Java Class is part of the jMusic API version 1.5, March 2004.>
- *                             
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -24,6 +24,7 @@
 package jm.music.tools;
 
 import java.util.Random;
+
 import jm.music.data.Note;
 
 /**
@@ -51,17 +52,17 @@ public final class Prob {
    * less than the mean minus the standard deviation. Around 95% of
    * pitches will be within twice this range.
    *
-   * @param meanPitch the pitch that should be most commonly returned by this method.
+   * @param meanPitch    the pitch that should be most commonly returned by this method.
    * @param stdDeviation the standard deviation measured in semitones.
    */
   public static int gaussianPitch(final int meanPitch,
-      final int stdDeviation) {
+                                  final int stdDeviation) {
     long nextPitch;
     do {
       nextPitch = Math.round(
-          (RNG.nextGaussian() * stdDeviation) + meanPitch);
+        (RNG.nextGaussian() * stdDeviation) + meanPitch);
     } while (nextPitch < Note.MIN_PITCH
-        || nextPitch > Note.MAX_PITCH);
+      || nextPitch > Note.MAX_PITCH);
     return (int) nextPitch;
   }
 
@@ -73,14 +74,14 @@ public final class Prob {
    * Around 95% of frequencies will be within twice this range.
    *
    * @param meanFrequency values returned should average this frequency
-   * @param stdDeviation the standard deviation. See method comment
+   * @param stdDeviation  the standard deviation. See method comment
    */
   public static double gaussianFrequency(
-      final double meanFrequency, final double stdDeviation) {
+    final double meanFrequency, final double stdDeviation) {
     double nextFrequency;
     do {
       nextFrequency = (RNG.nextGaussian() * stdDeviation)
-          + meanFrequency;
+        + meanFrequency;
     } while (nextFrequency < Note.MIN_FREQUENCY);
     return nextFrequency;
   }
@@ -96,14 +97,14 @@ public final class Prob {
    * mean minus the standard deviation. Around 95% of rhythm values will
    * be within twice this range.
    *
-   * @param meanRV the average rhythm value returned
-   * @param stdDev an rhythm interval defining the standard deviation.
-   * @param granularity a rhythm value representing the minimum sort of value returned here.  If you
-   * only want quavers and multiples of quavers, use JMC.QUAVER.
+   * @param meanRV      the average rhythm value returned
+   * @param stdDev      an rhythm interval defining the standard deviation.
+   * @param granularity a rhythm value representing the minimum sort of value returned here.  If
+   *                    you only want quavers and multiples of quavers, use JMC.QUAVER.
    */
   public static double gaussianRhythmValue(final double meanRV,
-      final double stdDev,
-      final double granularity) {
+                                           final double stdDev,
+                                           final double granularity) {
     double nextRV;
     do {
       nextRV = (RNG.nextGaussian() * stdDev) + meanRV;
@@ -111,7 +112,7 @@ public final class Prob {
       nextRV = (double) Math.round(nextRV);
       nextRV *= granularity;
     } while (nextRV < Note.MIN_RHYTHM
-        || nextRV > Note.MAX_RHYTHM);
+      || nextRV > Note.MAX_RHYTHM);
     return nextRV;
   }
 
@@ -123,17 +124,17 @@ public final class Prob {
    * dynamics will be within twice this range. Dynamic values in jMusic
    * are the same as MIDI, values between 1 (softest) and 127 (loudest).
    *
-   * @param meanDynamic the dynamic that should be most commonly returned by this method.
+   * @param meanDynamic  the dynamic that should be most commonly returned by this method.
    * @param stdDeviation the standard deviation. See method comment.
    */
   public static int gaussianDynamic(final int meanDynamic,
-      final int stdDeviation) {
+                                    final int stdDeviation) {
     long nextDynamic;
     do {
       nextDynamic = Math.round(
-          (RNG.nextGaussian() * stdDeviation) + meanDynamic);
+        (RNG.nextGaussian() * stdDeviation) + meanDynamic);
     } while (nextDynamic < Note.MIN_DYNAMIC
-        || nextDynamic > Note.MAX_DYNAMIC);
+      || nextDynamic > Note.MAX_DYNAMIC);
     return (int) nextDynamic;
   }
 
@@ -148,11 +149,11 @@ public final class Prob {
    * minus the standard deviation. Around 95% of pans will be within
    * twice this range.
    *
-   * @param meanPan the pan that should be most commonly returned by this method.
+   * @param meanPan      the pan that should be most commonly returned by this method.
    * @param stdDeviation the standard deviation. See method comment.
    */
   public static double gaussianPan(final double meanPan,
-      final double stdDeviation) {
+                                   final double stdDeviation) {
     return gaussianPan(meanPan, stdDeviation, 1.0);
   }
 
@@ -167,17 +168,17 @@ public final class Prob {
    * minus the standard deviation. Around 95% of pans will be within
    * twice this range.
    *
-   * @param meanPan the pan that should be most commonly returned by this method.
+   * @param meanPan      the pan that should be most commonly returned by this method.
    * @param stdDeviation the standard deviation. See method comment.
    */
   public static double gaussianPan(final double meanPan,
-      final double stdDeviation,
-      double maxPan) {
+                                   final double stdDeviation,
+                                   double maxPan) {
     maxPan = (maxPan >= 0.0) ? maxPan : 0.0;
     long nextPan;
     do {
       nextPan = Math.round((RNG.nextGaussian() * stdDeviation)
-          + meanPan);
+        + meanPan);
     } while (nextPan < Note.MIN_PAN || nextPan > maxPan);
     return (int) nextPan;
   }

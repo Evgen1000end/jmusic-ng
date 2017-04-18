@@ -40,7 +40,7 @@ public final class LPFilterEnvInst extends Instrument {
   /**
    * Constructor that sets sample rate and filter cutoff centre frequency
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
   public LPFilterEnvInst(int sampleRate, int filterCutoff) {
@@ -50,9 +50,9 @@ public final class LPFilterEnvInst extends Instrument {
   /**
    * Constructor that sets all attributes
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param channels 1 for Mono or 2 for Stereo
+   * @param channels     1 for Mono or 2 for Stereo
    */
   public LPFilterEnvInst(int sampleRate, int filterCutoff, int channels) {
     this.sampleRate = sampleRate;
@@ -67,16 +67,16 @@ public final class LPFilterEnvInst extends Instrument {
   public void createChain() {
     // filter envelope
     Envelope filtEnv = new Envelope(this, this.sampleRate, this.channels,
-        new double[]{0.0, 0.0, 0.2, (this.sampleRate * 0.4), 0.4, 0.0, 0.6, (this.sampleRate * 0.3),
-            1.0,
-            (this.filterCutoff * 0.1)}
+      new double[]{0.0, 0.0, 0.2, (this.sampleRate * 0.4), 0.4, 0.0, 0.6, (this.sampleRate * 0.3),
+        1.0,
+        (this.filterCutoff * 0.1)}
     );
     // oscilator
     Oscillator osc = new Oscillator(this, Oscillator.TRIANGLE_WAVE, this.sampleRate, this.channels);
     // filter
     Filter filt = new Filter(new AudioObject[]{osc, filtEnv}, this.filterCutoff, Filter.LOW_PASS);
     Envelope env = new Envelope(filt,
-        new double[]{0.0, 0.0, 0.05, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 1.0, 0.0});
     Volume vol = new Volume(env);
     StereoPan pan = new StereoPan(vol);
     SampleOut sout = new SampleOut(pan);

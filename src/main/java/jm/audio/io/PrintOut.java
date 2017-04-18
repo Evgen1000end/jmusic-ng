@@ -24,6 +24,7 @@ package jm.audio.io;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
 import jm.JMC;
 import jm.audio.AOException;
 import jm.audio.AudioObject;
@@ -62,7 +63,7 @@ public final class PrintOut extends AudioObject implements JMC {
     // create dummy temp file to avoid crash
     try {
       RandomAccessFile f = new RandomAccessFile("jmusic.tmp",
-          "rw");
+        "rw");
       try {
         f.close();
       } catch (IOException e) {

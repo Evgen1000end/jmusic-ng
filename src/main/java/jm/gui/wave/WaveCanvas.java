@@ -22,12 +22,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.wave;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 
 /**
  * This class displays floating point data passed to it, typically
@@ -175,7 +170,7 @@ public class WaveCanvas extends Canvas {
       for (int i = 0; i < xMax && i < dataMax; i++) {
         currData = data[i];
         g.drawLine(i, (int) (h2 - currData * h2 * amplitude),
-            i, (int) (h2 - currData * h2 * amplitude));
+          i, (int) (h2 - currData * h2 * amplitude));
       }
     } else {
       int xPosition = 0;
@@ -187,7 +182,7 @@ public class WaveCanvas extends Canvas {
         // fast update? - rarerly used in practice.
         if (fastDraw) {
           g.drawLine(xPosition++, (int) (h2 - currData * h2 * amplitude),
-              xPosition, (int) (h2 - currData * h2 * amplitude));
+            xPosition, (int) (h2 - currData * h2 * amplitude));
         } else {
           // max and min
           max = 0.0f;
@@ -206,18 +201,18 @@ public class WaveCanvas extends Canvas {
             drawMin = Math.min(currData, data[i + resolution]);
             if (max > 0.0f) {
               g.drawLine(xPosition,
-                  (int) (h2 - drawMax * h2 * amplitude),
-                  xPosition, (int) (h2 - max * h2 * amplitude));
+                (int) (h2 - drawMax * h2 * amplitude),
+                xPosition, (int) (h2 - max * h2 * amplitude));
             }
             if (min < 0.0f) {
               g.drawLine(xPosition,
-                  (int) (h2 - drawMin * h2 * amplitude),
-                  xPosition, (int) (h2 - min * h2 * amplitude));
+                (int) (h2 - drawMin * h2 * amplitude),
+                xPosition, (int) (h2 - min * h2 * amplitude));
             }
           }
           // draw wave
           g.drawLine(xPosition++, (int) (h2 - currData * h2 * amplitude),
-              xPosition, (int) (h2 - data[i + resolution] * h2 * amplitude));
+            xPosition, (int) (h2 - data[i + resolution] * h2 * amplitude));
         }
       }
     }

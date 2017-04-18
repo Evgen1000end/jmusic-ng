@@ -42,14 +42,14 @@ public final class RingModulationInst extends jm.audio.Instrument {
    */
   public void createChain() {
     Oscillator wt1 = new Oscillator(this, Oscillator.SINE_WAVE,
-        this.sampleRate, Oscillator.MONO);
+      this.sampleRate, Oscillator.MONO);
     wt1.setFrqRatio((float) 2.2);
     Envelope env = new Envelope(wt1,
-        new double[]{0.0, 1.0, 1.0, 0.0});
+      new double[]{0.0, 1.0, 1.0, 0.0});
     Oscillator wt2 = new Oscillator(env,
-        Oscillator.SINE_WAVE, Oscillator.AMPLITUDE);
+      Oscillator.SINE_WAVE, Oscillator.AMPLITUDE);
     Envelope env2 = new Envelope(wt2,
-        new double[]{0.0, 0.0, 0.05, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 1.0, 0.0});
     SampleOut sout = new SampleOut(env2);
   }
 }

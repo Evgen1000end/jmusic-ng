@@ -71,7 +71,7 @@ public final class PrintSineInst extends jm.audio.Instrument {
   public void createChain() {
 
     Oscillator wt = new Oscillator(this, Oscillator.SINE_WAVE,
-        this.sampleRate, 1);
+      this.sampleRate, 1);
 
     PrintOut pout = new PrintOut(wt);
 

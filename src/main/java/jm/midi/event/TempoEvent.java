@@ -152,6 +152,6 @@ public final class TempoEvent implements Event {
    */
   public void print() {
     System.out.println(
-        "TempoEvent(020):             [time = " + this.time + "][tempo = " + this.tempo + "]");
+      "TempoEvent(020):             [time = " + this.time + "][tempo = " + this.tempo + "]");
   }
 }

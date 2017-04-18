@@ -22,26 +22,26 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.cpn;
 
-import java.awt.Cursor;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.Vector;
+
 import jm.JMC;
 import jm.music.data.Note;
 import jm.music.data.Phrase;
 
 public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListener,
-    ActionListener { //, KeyListener {
+  ActionListener { //, KeyListener {
 
   private JGrandStave theApp;
   private int selectedNote = -1;
   private boolean topTimeSelected = false, keySelected = false;
   private int clickedPosY, clickedPosX, storedPitch = 72;
   private double[] rhythmValues = {104.0, 103.0, 102.0, 101.5, 101.0, 100.75, 100.5, 100.25, 0.0,
-      0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0};
+    0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0};
 
   // constructor
   JStaveActionHandler(JGrandStave stave) {
@@ -104,8 +104,8 @@ public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListe
         Integer tempX = (Integer) theApp.notePositions.elementAt(i);
         Integer tempY = (Integer) theApp.notePositions.elementAt(i + 1);
         if (e.getX() > tempX.intValue() && e.getX() < tempX.intValue() + 15 && e.getY() +
-            theApp.staveDelta > tempY.intValue() + 22 && e.getY() +
-            theApp.staveDelta < tempY.intValue() + 35) {
+          theApp.staveDelta > tempY.intValue() + 22 && e.getY() +
+          theApp.staveDelta < tempY.intValue() + 35) {
           // set cursor
           theApp.setCursor(new Cursor(Cursor.MOVE_CURSOR));
           selectedNote = i / 2;
@@ -184,7 +184,7 @@ public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListe
       Note n = phr.getNote(selectedNote);
       // move note down
       if (e.getY() + theApp.staveDelta > clickedPosY + 2
-          && theApp.getPhrase().getNote(selectedNote).getPitch() != REST) {
+        && theApp.getPhrase().getNote(selectedNote).getPitch() != REST) {
         n.setPitch(n.getPitch() - 1);
         if (n.getPitch() < theApp.getMinPitch()) {
           n.setPitch(theApp.getMinPitch());
@@ -198,7 +198,7 @@ public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListe
       }
       // move note up
       if (e.getY() + theApp.staveDelta < clickedPosY - 2
-          && theApp.getPhrase().getNote(selectedNote).getPitch() != REST) {
+        && theApp.getPhrase().getNote(selectedNote).getPitch() != REST) {
         n.setPitch(n.getPitch() + 1);
         if (n.getPitch() > theApp.getMaxPitch()) {
           n.setPitch(theApp.getMaxPitch());
@@ -350,9 +350,9 @@ public class JStaveActionHandler implements JMC, MouseListener, MouseMotionListe
   // key listener stubs
     /*
   public void keyPressed(KeyEvent e) {}
-	
+
 	public void keyReleased(KeyEvent e) {}
-	
+
 	public void keyTyped(KeyEvent e) {
 		if(e.getKeyChar() == '\b') theApp.deleteLastNote();
 	}

@@ -44,7 +44,7 @@ public final class SawLPFInstRT extends Instrument {
   /**
    * Constructor that sets sample rate and the filter cutoff frequency.
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
   public SawLPFInstRT(int sampleRate, int filterCutoff) {
@@ -65,7 +65,7 @@ public final class SawLPFInstRT extends Instrument {
     Oscillator wt = new Oscillator(this, Oscillator.SAWTOOTH_WAVE, this.sampleRate, this.channels);
     Filter filt = new Filter(wt, this.filterCutoff, Filter.LOW_PASS);
     Envelope env = new Envelope(filt,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.3, 0.4, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.3, 0.4, 1.0, 0.0});
     Volume vol = new Volume(env);
 //		SampleOut sout = new SampleOut(vol);
   }

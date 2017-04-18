@@ -70,13 +70,13 @@ public final class AddSynthInst extends Instrument {
    * and overtoneVolumes for each frequency to be added
    * the instrument
    *
-   * @param overtoneRatios the relative freqencies to use
+   * @param overtoneRatios  the relative freqencies to use
    * @param overtoneVolumes the overtoneVolumes to use for the overtoneRatios
-   * @param EnvPointArray A two dimensional array of doubles as break point values between 0.0 and
-   * 1.0
+   * @param EnvPointArray   A two dimensional array of doubles as break point values between 0.0
+   *                        and 1.0
    */
   public AddSynthInst(int sampleRate, double[] overtoneRatios,
-      double[] overtoneVolumes, double[][] envPointArray) {
+                      double[] overtoneVolumes, double[][] envPointArray) {
     this.overtoneRatios = overtoneRatios;
     this.overtoneVolumes = overtoneVolumes;
     // add envelopes for each harmonic
@@ -103,7 +103,7 @@ public final class AddSynthInst extends Instrument {
     Oscillator[] osc = new Oscillator[overtoneRatios.length];
     for (int i = 0; i < overtoneRatios.length; i++) {
       osc[i] = new Oscillator(this, Oscillator.SINE_WAVE,
-          this.sampleRate, 2);
+        this.sampleRate, 2);
       osc[i].setFrqRatio((float) overtoneRatios[i]);
       env[i] = new Envelope(osc[i], allEnvPoints[i]);
       vol[i] = new Volume(env[i], (float) overtoneVolumes[i]);

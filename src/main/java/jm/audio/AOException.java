@@ -38,14 +38,14 @@ public final class AOException extends Exception {
 
   static {
     MESSAGES[0] = "Unbalanced number of returned samples from " +
-        "multiple inputs.";
+      "multiple inputs.";
     MESSAGES[1] = "Wrong number of inputs for this AudioObject.";
   }
 
   /**
    * Simple Constructor which excepts a custom message
    *
-   * @param name the name of the AudioObject throwing this exception
+   * @param name    the name of the AudioObject throwing this exception
    * @param message message to assign this Exception.
    */
   public AOException(final String name, final String message) {
@@ -56,7 +56,7 @@ public final class AOException extends Exception {
    * This Constructor writes a standard message from the MESSAGES
    * array using the int as an index.
    *
-   * @param name the name of the AudioObject throwing this exception
+   * @param name    the name of the AudioObject throwing this exception
    * @param message is the index to use to retrieve the stored message
    */
   public AOException(final String name, final int message) {

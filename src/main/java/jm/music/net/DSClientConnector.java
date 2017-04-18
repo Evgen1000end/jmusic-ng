@@ -28,6 +28,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+
 import jm.music.data.Phrase;
 
 /**
@@ -78,7 +79,7 @@ public class DSClientConnector extends Thread {
       ois = new ObjectInputStream(is);
     } catch (IOException ioe) {
       System.out.println(
-          "The client is having trouble connecting to the specified server.  Please check the server name and port number.");
+        "The client is having trouble connecting to the specified server.  Please check the server name and port number.");
       System.exit(1);
     }
     this.client = client;

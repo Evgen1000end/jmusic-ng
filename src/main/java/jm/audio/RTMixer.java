@@ -24,10 +24,12 @@ package jm.audio;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
+
 import jm.music.rt.RTLine;
 
 /**
@@ -127,14 +129,15 @@ public class RTMixer implements AudioChainListener {
    * The RTMixer constructor sets a number of attributes and opens a JMF java
    * sound sourceDataLine.
    *
-   * @param inst - The Instruments to be processed by this object.
-   * @param controlRate - Sets the regularity of audio parameter change. The control rate is used to
-   * set how often in instrument returns a full buffer of audio samples.  This is acheived by
-   * changing the size of the instrument buffers. <P> Control rate is critical to the audio
-   * performance and can be tuned to the suit different computers. Smaller values are prefereable
-   * because the resulting smaller buffer equates to a less latency, but values that are too small
-   * will cause the audio system to choke and splutter. Values typically fall in the rage 0.01 -
-   * 0.005.
+   * @param inst        - The Instruments to be processed by this object.
+   * @param controlRate - Sets the regularity of audio parameter change. The control rate is used
+   *                    to set how often in instrument returns a full buffer of audio samples.
+   *                    This is acheived by changing the size of the instrument buffers. <P>
+   *                    Control rate is critical to the audio performance and can be tuned to the
+   *                    suit different computers. Smaller values are prefereable because the
+   *                    resulting smaller buffer equates to a less latency, but values that are
+   *                    too small will cause the audio system to choke and splutter. Values
+   *                    typically fall in the rage 0.01 - 0.005.
    */
   public RTMixer(RTLine[] rtlines, double controlRate) {
     this.rtlines = rtlines;
@@ -157,7 +160,7 @@ public class RTMixer implements AudioChainListener {
       }
       if (rtlines[i].getChannels() != this.channels) {
         System.err.println(
-            "jMusic RTMixer error: All instruments must have the same number of channels.");
+          "jMusic RTMixer error: All instruments must have the same number of channels.");
         System.exit(0);
       }
     }
@@ -184,7 +187,7 @@ public class RTMixer implements AudioChainListener {
       }
       if (rtlines[i].getChannels() != this.channels) {
         System.err.println(
-            "jMusic RTMixer error: All instruments must have the same number of channels.");
+          "jMusic RTMixer error: All instruments must have the same number of channels.");
         System.exit(0);
       }
       temp[i] = lines[i - this.rtlines.length];
@@ -200,7 +203,7 @@ public class RTMixer implements AudioChainListener {
    * sample buffer.  This method is responsible for receiving the sample
    * buffer and convolving it with the data in sampleArray.
    *
-   * @param buffer a sample array filled by an instrument
+   * @param buffer   a sample array filled by an instrument
    * @param returned the number of samples in the buffer
    * @param finished indicates whether the instruments current note is finished or not.
    */
@@ -264,9 +267,9 @@ public class RTMixer implements AudioChainListener {
    * This method passes on external action requests (i.e. gui based action
    * events) to each RTLine's externalAction method).
    *
-   * @param obj an unspecified object type (externalAction will cast)
-   * @param actionNumber an indentifyer for the originator of the action request (i.e. if there are
-   * three buttons there would actionNumbers 1,2 and 3)
+   * @param obj          an unspecified object type (externalAction will cast)
+   * @param actionNumber an indentifyer for the originator of the action request (i.e. if there
+   *                     are three buttons there would actionNumbers 1,2 and 3)
    */
   public void actionLines(Object obj, int actionNumber) {
     for (int i = 0; i < rtlines.length; i++) {
@@ -314,14 +317,14 @@ public class RTMixer implements AudioChainListener {
     //	AudioFormat af = new AudioFormat((float)this.sampleRate,16,
     //	this.channels,true,true);
     AudioFormat af = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-        (float) this.sampleRate, 16, this.channels, this.channels * 2,
-        this.sampleRate, true);
+      (float) this.sampleRate, 16, this.channels, this.channels * 2,
+      this.sampleRate, true);
     DataLine.Info info = new DataLine.Info(SourceDataLine.class, af);
     //System.out.println("Setting for audio line: "+info);
     if (!AudioSystem.isLineSupported(info)) {
       System.out.println(info);
       System.err.println("jMusic RTMixer error: JMF Line not supported. " +
-          "Real time audio must be 16 bit stereo ... exiting .. sorry :(");
+        "Real time audio must be 16 bit stereo ... exiting .. sorry :(");
       System.exit(1);
     }
     try {

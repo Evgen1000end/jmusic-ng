@@ -177,7 +177,7 @@ public class WaveTable extends AudioObject {
    * <p/>
    * defined as frequency.
    *
-   * @param ao AudioObject as input
+   * @param ao        AudioObject as input
    * @param waveTable the lookup table data
    * @throws AOException thrown when two many inputs are attached
    */
@@ -204,8 +204,8 @@ public class WaveTable extends AudioObject {
    * <p/>
    * and is defined by the aoDestination variable (int).
    *
-   * @param ao the one input audio object
-   * @param wavetable the wave table data
+   * @param ao            the one input audio object
+   * @param wavetable     the wave table data
    * @param aoDestination Is this input amplitude(0) or frequency(1)
    */
 
@@ -229,17 +229,18 @@ public class WaveTable extends AudioObject {
    * <p/>
    * and is defined by the aoDestination variable (int).
    *
-   * @param inst the parent instrument (usually "this")
-   * @param wavetable the wave table data
+   * @param inst          the parent instrument (usually "this")
+   * @param wavetable     the wave table data
    * @param aoDestination Is this input amplitude(0) or frequency(1)
-   * @param val is used to set a fixed frequency or amplitude based on the
-   * <p/>
-   * result of aoDestination (aoDestination=1 for example will set a fixed frequency)
+   * @param val           is used to set a fixed frequency or amplitude based on the
+   *                      <p/>
+   *                      result of aoDestination (aoDestination=1 for example will set a fixed
+   *                      frequency)
    */
 
   public WaveTable(Instrument inst, int sampleRate, float[] waveTable,
 
-      int channels, int aoDestination, float val) {
+                   int channels, int aoDestination, float val) {
 
     super(inst, sampleRate, "[WaveTable]");
 
@@ -275,15 +276,15 @@ public class WaveTable extends AudioObject {
    * <p/>
    * wave table
    *
-   * @param inst the parent instrument (usually "this")
+   * @param inst       the parent instrument (usually "this")
    * @param sampleRate the sampling rate
-   * @param waveTable the wave table data
-   * @param channels the number of channels to use
+   * @param waveTable  the wave table data
+   * @param channels   the number of channels to use
    */
 
   public WaveTable(Instrument inst, int sampleRate, float[] waveTable,
 
-      int channels) {
+                   int channels) {
 
     super(inst, sampleRate, "[WaveTable]");
 

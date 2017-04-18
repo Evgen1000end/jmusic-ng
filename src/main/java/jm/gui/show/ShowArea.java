@@ -29,12 +29,9 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 package jm.gui.show;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.Enumeration;
+
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
@@ -54,8 +51,8 @@ public class ShowArea extends Canvas {
   private int e = ePos + noteHeight * 33;
   private int areaHeight = 77 * noteHeight;
   private int[] noteOffset = {0, 0, noteHeight, noteHeight, noteHeight * 2,
-      noteHeight * 3, noteHeight * 3, noteHeight * 4, noteHeight * 4,
-      noteHeight * 5, noteHeight * 5, noteHeight * 6};
+    noteHeight * 3, noteHeight * 3, noteHeight * 4, noteHeight * 4,
+    noteHeight * 5, noteHeight * 5, noteHeight * 6};
   private Font font = new Font("Helvetica", Font.PLAIN, 10);
   private ShowPanel sp;
   private double beatWidth;
@@ -79,8 +76,8 @@ public class ShowArea extends Canvas {
     e = ePos + noteHeight * 33;
     areaHeight = 77 * noteHeight;
     noteOffset = new int[]{0, 0, noteHeight, noteHeight, noteHeight * 2,
-        noteHeight * 3, noteHeight * 3, noteHeight * 4, noteHeight * 4,
-        noteHeight * 5, noteHeight * 5, noteHeight * 6};
+      noteHeight * 3, noteHeight * 3, noteHeight * 4, noteHeight * 4,
+      noteHeight * 5, noteHeight * 5, noteHeight * 6};
     this.setSize(new Dimension(this.getSize().width, areaHeight));
     sp.updatePanelHeight();
   }
@@ -202,12 +199,12 @@ public class ShowArea extends Canvas {
         rectRight = oldX;
         rectBot = 0;
 
-        for (Note aNote: phrase.getNoteList() ) {
+        for (Note aNote : phrase.getNoteList()) {
           int currNote = aNote.getPitch();
           if ((currNote <= 127) && (currNote >= 0)) {
             int octavePixelheight = noteHeight * 7;
             int y = ((10 - currNote / 12) * octavePixelheight +
-                (ePos)) - noteOffset[currNote % 12];
+              (ePos)) - noteOffset[currNote % 12];
             int x = (int) (Math.round(aNote.getDuration() * beatWidth)); //480 ppq note
             int xRV = (int) (Math.round(aNote.getRhythm() * beatWidth)); //480 ppq note
             // check if the width of the note is less than 1 so
@@ -223,32 +220,32 @@ public class ShowArea extends Canvas {
             }
             //set the colour change brightness for dynamic
             offScreenGraphics.setColor(Color.getHSBColor(theColours[i % maxColours][0],
-                theColours[i % maxColours][1],
-                (float) (0.7 - (aNote.getDynamic() * 0.004))));
+              theColours[i % maxColours][1],
+              (float) (0.7 - (aNote.getDynamic() * 0.004))));
             // draw note inside
             if (asPitch) {
               offScreenGraphics.fillRect(oldX, y - noteHeight + thinNote, x,
-                  noteHeight * 2 - 2 * thinNote);
+                noteHeight * 2 - 2 * thinNote);
             } else {
               int heightOffset = 7;
               for (int j = oldX; j < oldX + x - 4; j += 4) {
                 offScreenGraphics.drawLine(j, y - noteHeight + heightOffset,
-                    j + 2, y - noteHeight + heightOffset - 3);
+                  j + 2, y - noteHeight + heightOffset - 3);
                 offScreenGraphics.drawLine(j + 2, y - noteHeight + heightOffset - 3,
-                    j + 4, y - noteHeight + heightOffset);
+                  j + 4, y - noteHeight + heightOffset);
               }
             }
             offScreenGraphics.setColor(Color.getHSBColor(theColours[i % maxColours][0],
-                theColours[i % maxColours][1], (float) (0.4)));
+              theColours[i % maxColours][1], (float) (0.4)));
             offScreenGraphics.drawRect(oldX, y - noteHeight + thinNote, xRV,
-                noteHeight * 2 - 2 * thinNote);
+              noteHeight * 2 - 2 * thinNote);
             //add a sharp if required
             if ((currNote % 12) == 1 || (currNote % 12) == 3 ||
-                (currNote % 12) == 6 || (currNote % 12) == 8 ||
-                (currNote % 12) == 10) {
+              (currNote % 12) == 6 || (currNote % 12) == 8 ||
+              (currNote % 12) == 10) {
               offScreenGraphics.setColor(Color.getHSBColor(
-                  theColours[i % maxColours][0],
-                  theColours[i % maxColours][1], (float) (0.3)));
+                theColours[i % maxColours][0],
+                theColours[i % maxColours][1], (float) (0.3)));
               offScreenGraphics.drawString("#", oldX - 7, y + 5);
             }
           }
@@ -257,9 +254,9 @@ public class ShowArea extends Canvas {
           rectRight = oldX - rectLeft; //update value for phrase rectangle
         }
         offScreenGraphics.setColor(Color.getHSBColor(theColours[i % maxColours][0],
-            theColours[i % maxColours][1], (float) (0.9)));
+          theColours[i % maxColours][1], (float) (0.9)));
         offScreenGraphics.drawRect(rectLeft - 1, rectTop - noteHeight - 1, rectRight + 1,
-            rectBot - rectTop + noteHeight * 2 + 2);
+          rectBot - rectTop + noteHeight * 2 + 2);
       }
       i++;
     }

@@ -1,19 +1,19 @@
 /*
- 
+
  <This Java Class is part of the jMusic API version 1.5, March 2004.>
- 
+
  Copyright (C) 2000 Andrew Sorensen & Andrew Brown
- 
+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or any
  later version.
- 
+
  This program is distributed in the hope that it will be useful, but
  WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -25,9 +25,11 @@ package jm.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
 import jm.JMC;
 import jm.audio.Instrument;
 import jm.audio.RTMixer;
@@ -130,7 +132,7 @@ public class Play implements JMC {
   public static void waitCycle(Score score, int decayAllowance) {
     try {
       Thread.sleep((int) (1000.0 * 60.0 / score.getTempo() * score.getEndTime())
-          + decayAllowance);
+        + decayAllowance);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -189,9 +191,9 @@ public class Play implements JMC {
   /**
    * Playback the jMusic score JavaSound MIDI
    *
-   * @param n The note to be played
+   * @param n    The note to be played
    * @param exit Hold program open for the duration of playback, then close ready to exit? true or
-   * false.
+   *             false.
    */
   public static void midi(Note n, boolean exit) {
     //System.out.println("in midi(Note n, boolean exit)");
@@ -203,9 +205,9 @@ public class Play implements JMC {
   /**
    * Playback the jMusic score JavaSound MIDI
    *
-   * @param phr The Phrase to be played
+   * @param phr  The Phrase to be played
    * @param exit Hold program open for the duration of playback, then close ready to exit? true or
-   * false.
+   *             false.
    */
   public static void midi(Phrase phr, boolean exit) {
     double tempo = 60;
@@ -223,9 +225,9 @@ public class Play implements JMC {
   /**
    * Playback the jMusic score JavaSound MIDI
    *
-   * @param p The Part to be played
+   * @param p    The Part to be played
    * @param exit Hold program open for the duration of playback, then close ready to exit? true or
-   * false.
+   *             false.
    */
   public static void midi(Part p, boolean exit) {
     double tempo = 60;
@@ -246,8 +248,8 @@ public class Play implements JMC {
    * To avoid this exit call, pass false as the second argument.
    *
    * @param score The score to be played.
-   * @param exit Hold program open for the duration of playback, then close ready to exit? true or
-   * false.
+   * @param exit  Hold program open for the duration of playback, then close ready to exit? true
+   *              or false.
    */
   public static void midi(Score score, boolean exit) {
     //System.out.println("in midi(Score s, boolean exit)");
@@ -262,14 +264,14 @@ public class Play implements JMC {
    * otherwise if the program has persistence (for example a GUI is open)
    * wait can be set to false.
    *
-   * @param score The score to be played.
-   * @param exit Close playback when done? true or false.
-   * @param wait Hold program open for the duration of playback? True of false
+   * @param score  The score to be played.
+   * @param exit   Close playback when done? true or false.
+   * @param wait   Hold program open for the duration of playback? True of false
    * @param synths The number of the MidiSynths to use - default is 1.
    */
   public static void midi(Score score, boolean exit, boolean wait, int synths, int decayAllowance) {
     System.out.println("jMusic Play: Playing score " + score.getTitle()
-        + " using JavaSound General MIDI soundbank.");
+      + " using JavaSound General MIDI soundbank.");
     msFill(synths); // add instances of MidSynths if required
     MidiSynth currentMidiSynth = (MidiSynth) ms.elementAt(msCnt);
     if (currentMidiSynth.isPlaying()) {
@@ -311,7 +313,7 @@ public class Play implements JMC {
    * Only works when midiCycle() is operating and
    * updates take effect at the start of the next cycle.
    *
-   * @param s The score to be used as the update.
+   * @param s     The score to be used as the update.
    * @param index The id of the MidiSynth to update.
    */
   public static void updateScore(Score s, int index) {
@@ -427,7 +429,7 @@ public class Play implements JMC {
   /**
    * Repeated playback the jMusic note via the JavaSound MIDI synthesizer
    *
-   * @param n The note to be played. See midiCycle(Score s)
+   * @param n     The note to be played. See midiCycle(Score s)
    * @param index The midiCycle id to be used - default is 0.
    */
   public static void midiCycle(Note n, int index) {
@@ -448,7 +450,7 @@ public class Play implements JMC {
   /**
    * Repeated playback the jMusic phrase via the JavaSound MIDI synthesizer
    *
-   * @param phr The Phrase to be played. See midiCycle(Score s)
+   * @param phr   The Phrase to be played. See midiCycle(Score s)
    * @param index The midiCycle id to be used - default is 0.
    */
   public static void midiCycle(Phrase phr, int index) {
@@ -469,7 +471,7 @@ public class Play implements JMC {
   /**
    * Repeated playback the jMusic part via the JavaSound MIDI synthesizer
    *
-   * @param part The Part to be played. See midiCycle(Score s)
+   * @param part  The Part to be played. See midiCycle(Score s)
    * @param index The midiCycle id to be used - default is 0.
    */
   public static void midiCycle(Part part, int index) {
@@ -537,24 +539,24 @@ public class Play implements JMC {
    * Careful that the application does not end, preventing the file from playing.
    * To keep the application open during playback pass 'false' as the autoClose argument.
    *
-   * @param filename The name of the file to be played.
+   * @param filename  The name of the file to be played.
    * @param autoClose A flag for exiting java after the file has played.
    */
   public static void au(String fileName, boolean autoClose) {
     jm.gui.wave.WaveFileReader afr = new jm.gui.wave.WaveFileReader(fileName);
     jm.music.rt.RTLine[] lineArray = {new jm.util.AudioRTLine(fileName)};
     jm.audio.RTMixer mixer = new jm.audio.RTMixer(
-        lineArray);//, 4096, si.getSampleRate(), si.getChannels(), 0.01);
+      lineArray);//, 4096, si.getSampleRate(), si.getChannels(), 0.01);
     mixer.begin();
     System.out.println("---------- Playing '" + fileName + "'... Sample rate = "
-        + afr.getSampleRate() + " Channels = " + afr.getChannels() + " ----------");
+      + afr.getSampleRate() + " Channels = " + afr.getChannels() + " ----------");
     if (autoClose) {
       File audioFile = new File(fileName);
       try {
         int byteSize = afr.getBits() - 1;
         // bytes, sample rate, channels, milliseconds, cautious buffer
         Thread.sleep((int) ((double) audioFile.length() / byteSize /
-            afr.getSampleRate() / afr.getChannels() * 1000.0));
+          afr.getSampleRate() / afr.getChannels() * 1000.0));
       } catch (InterruptedException e) {
         System.err.println("jMusic play.au error: Thread sleeping interupted");
       }
@@ -597,7 +599,7 @@ public class Play implements JMC {
    * Playback a phrase as real time audio.
    *
    * @param phrase The phrase to be played.
-   * @param insts An array of instruments to play the phrase with
+   * @param insts  An array of instruments to play the phrase with
    */
   public static void audio(Phrase phrase, Instrument[] insts) {
     audio(new Score(new Part(phrase)), insts);
@@ -607,7 +609,7 @@ public class Play implements JMC {
    * Playback a phrase as real time audio.
    *
    * @param phrase The phrase to be played.
-   * @param inst An instrument to play the phrase with
+   * @param inst   An instrument to play the phrase with
    */
   public static void audio(Phrase phrase, Instrument inst) {
     Part part = new Part(phrase);
@@ -620,7 +622,7 @@ public class Play implements JMC {
   /**
    * Playback a part as real time audio.
    *
-   * @param part The part to be played.
+   * @param part  The part to be played.
    * @param insts An array of instruments to play the part with
    */
   public static void audio(Part part, Instrument[] insts) {

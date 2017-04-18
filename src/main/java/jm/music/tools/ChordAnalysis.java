@@ -1,4 +1,4 @@
-/*               
+/*
  * ChordAnalysis.java 0.2.0.6 28th February 2001
  *
  * Copyright (C) 2000 Adam Kirby
@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -45,8 +45,8 @@ public final class ChordAnalysis {
   /**
    */
   public static Possible[] getChords(final Phrase phrase,
-      final double beatLength,
-      final int tonic, final int[] scale) {
+                                     final double beatLength,
+                                     final int tonic, final int[] scale) {
     int[][] triads = new int[scale.length][3];
     for (int i = 0; i < scale.length; i++) {
       triads[i][0] = scale[i];
@@ -69,7 +69,7 @@ public final class ChordAnalysis {
 
     int size = phrase.size();
     final Possible[] chords =
-        new Possible[(int) Math.ceil(endTime / beatLength)];
+      new Possible[(int) Math.ceil(endTime / beatLength)];
 
     int i = 0;
     beatLoop:
@@ -111,9 +111,9 @@ public final class ChordAnalysis {
   }
 
   public static int[] getFirstPassChords(final Phrase phrase,
-      final double beatLength,
-      final int tonic,
-      final int[] scale) {
+                                         final double beatLength,
+                                         final int tonic,
+                                         final int[] scale) {
     Possible[] chords = getChords(phrase, beatLength, tonic, scale);
     int[] returnChords = new int[chords.length];
 
@@ -128,9 +128,9 @@ public final class ChordAnalysis {
   }
 
   public static int[] getSecondPassChords(final Phrase phrase,
-      final double beatLength,
-      final int tonic,
-      final int[] scale) {
+                                          final double beatLength,
+                                          final int tonic,
+                                          final int[] scale) {
     Possible[] chords = getChords(phrase, beatLength, tonic, scale);
     int[] returnChords = new int[chords.length];
     int index = chords.length - 1;
@@ -158,7 +158,7 @@ public final class ChordAnalysis {
       }
       int dominantIndex = (previousChord + 4) % scale.length;
       if (acceptableChange(chords[index].chords, dominantIndex,
-          chords[index].getBestChord())) {
+        chords[index].getBestChord())) {
         returnChords[index] = dominantIndex;
       } else {
         returnChords[index] = chords[index].getBestChord();
@@ -175,11 +175,11 @@ public final class ChordAnalysis {
   }
 
   private static boolean acceptableChange(final int[] chords,
-      final int dominantIndex,
-      final int previous) {
+                                          final int dominantIndex,
+                                          final int previous) {
     for (int chord : chords) {
       if (chord == dominantIndex
-          && !(RATINGS[chord] > 2 + RATINGS[previous])) {
+        && !(RATINGS[chord] > 2 + RATINGS[previous])) {
         return true;
       }
     }
@@ -187,9 +187,9 @@ public final class ChordAnalysis {
   }
 
   private static Possible firstPass(final Note downBeat,
-      final Note halfBeat,
-      final int tonic, final int[] scale,
-      final int[][] triads) {
+                                    final Note halfBeat,
+                                    final int tonic, final int[] scale,
+                                    final int[][] triads) {
     if (isBad(downBeat, tonic, scale)) {
       if (isBad(halfBeat, tonic, scale)) {
         return null;
@@ -201,13 +201,13 @@ public final class ChordAnalysis {
         return firstPassChords(downBeat, tonic, scale, triads);
       } else {
         if (PhraseAnalysis.pitchToDegree(downBeat.getPitch(),
-            tonic)
-            == PhraseAnalysis.pitchToDegree(halfBeat.getPitch(),
-            tonic)) {
+          tonic)
+          == PhraseAnalysis.pitchToDegree(halfBeat.getPitch(),
+          tonic)) {
           return firstPassChords(downBeat, tonic, scale, triads);
         } else {
           return firstPassChords(downBeat, halfBeat, tonic, scale,
-              triads);
+            triads);
         }
       }
     }
@@ -215,13 +215,13 @@ public final class ChordAnalysis {
 
   private static boolean isBad(final Note note, final int tonic, final int[] scale) {
     return note == null || note.getPitch() == Note.REST || !PhraseAnalysis
-        .isScale(note, tonic, scale);
+      .isScale(note, tonic, scale);
   }
 
   private static Possible firstPassChords(final Note note,
-      final int tonic,
-      final int[] scale,
-      final int[][] triads) {
+                                          final int tonic,
+                                          final int[] scale,
+                                          final int[][] triads) {
     Possible returnChords = new Possible(new int[3]);
     int index = 0;
     int degree = PhraseAnalysis.pitchToDegree(note.getPitch(), tonic);
@@ -234,16 +234,16 @@ public final class ChordAnalysis {
   }
 
   private static Possible firstPassChords(final Note note1,
-      final Note note2,
-      final int tonic,
-      final int[] scale,
-      final int[][] triads) {
+                                          final Note note2,
+                                          final int tonic,
+                                          final int[] scale,
+                                          final int[][] triads) {
     Possible firstChords =
-        firstPassChords(note1, tonic, scale, triads);
+      firstPassChords(note1, tonic, scale, triads);
     Possible secondChords =
-        firstPassChords(note2, tonic, scale, triads);
+      firstPassChords(note2, tonic, scale, triads);
     Possible commonChords =
-        findCommonChords(firstChords.chords, secondChords.chords);
+      findCommonChords(firstChords.chords, secondChords.chords);
     return (commonChords == null) ? firstChords : commonChords;
   }
 
@@ -257,7 +257,7 @@ public final class ChordAnalysis {
   }
 
   private static Possible findCommonChords(final int[] firstChords,
-      final int[] secondChords) {
+                                           final int[] secondChords) {
     Possible returnChords = new Possible(new int[2]);
     int index = 0;
     for (int firstChord : firstChords) {

@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -40,13 +40,13 @@ class ReadFilenameFilter implements FilenameFilter {
   /**
    * Tests whether the specified file has a jm or MIDI file extension
    *
-   * @param dir File describing the directory where the file is stored
+   * @param dir  File describing the directory where the file is stored
    * @param name String of the filename
    * @return true if specified file ends with ".mid", ".midi" or ".jm" and does not begin with "."
    */
   public boolean accept(final File dir, final String name) {
     return !name.startsWith(".") && (name.endsWith(".mid")
-        || name.endsWith(".midi")
-        || name.endsWith(".jm"));
+      || name.endsWith(".midi")
+      || name.endsWith(".jm"));
   }
 }

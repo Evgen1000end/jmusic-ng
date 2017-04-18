@@ -105,7 +105,7 @@ public final class Filter extends AudioObject {
   /**
    * Create a new low pass filter audio object.
    *
-   * @param ao The previous Audio Object in the chain.
+   * @param ao   The previous Audio Object in the chain.
    * @param freq The low pass cutoff frequency.
    */
   public Filter(final AudioObject ao, final double freq) {
@@ -115,7 +115,7 @@ public final class Filter extends AudioObject {
   /**
    * Create a new filter audio object of a specifiable type.
    *
-   * @param ao The previous Audio Object in the chain.
+   * @param ao   The previous Audio Object in the chain.
    * @param freq The low pass cutoff frequency.
    * @param type The filter can be LOW_PASS or HIGH_PASS.
    */
@@ -126,14 +126,14 @@ public final class Filter extends AudioObject {
   /**
    * Create a new filter audio object of a specifiable type and specification.
    *
-   * @param ao The previous Audio Object in the chain.
-   * @param freq The low pass cutoff frequency.
-   * @param type The filter can be LOW_PASS or HIGH_PASS.
+   * @param ao     The previous Audio Object in the chain.
+   * @param freq   The low pass cutoff frequency.
+   * @param type   The filter can be LOW_PASS or HIGH_PASS.
    * @param ripple The percentage of ripple to allow. 0.5 is usual.
-   * @param poles The greater the number of poles the steeper the cutoff sloap.
+   * @param poles  The greater the number of poles the steeper the cutoff sloap.
    */
   public Filter(final AudioObject ao, final double freq, final int type, final double ripple,
-      double poles) {
+                double poles) {
     super(ao, "[Filter]");
     this.type = type;
     this.cutoff_frequency = freq;
@@ -156,7 +156,7 @@ public final class Filter extends AudioObject {
    * Constructor to takes two audio objects, the second for cutoff modulation
    */
   public Filter(final AudioObject[] aoArray, final double freq, final int type,
-      double ripple, double poles) {
+                double ripple, double poles) {
     super(aoArray, "[Filter]");
     this.type = type;
     this.cutoff_frequency = freq;
@@ -200,16 +200,16 @@ public final class Filter extends AudioObject {
     this.cutoff_frequency = freq;
     if (freq <= 0f) {
       System.err.println("Filter error: You tried to use a " +
-          "cuttoff frequency of " + freq +
-          " - woops! Frequency must be greater than zero. ");
+        "cuttoff frequency of " + freq +
+        " - woops! Frequency must be greater than zero. ");
       System.err.println("Exiting from Filter");
       System.exit(1);
     }
     //System.out.println("Freq = " + freq);
     if (freq > 0.5 * this.sampleRate) {
       System.err.println("Cutoff frequencies above the Nyquist" +
-          " limit are BAD ;) SampleRate = " + sampleRate +
-          " Frequency = " + freq);
+        " limit are BAD ;) SampleRate = " + sampleRate +
+        " Frequency = " + freq);
       System.err.println("Exiting from Filter");
       System.exit(1);
     }
@@ -338,9 +338,9 @@ public final class Filter extends AudioObject {
     if (ripple != 0.0) {
       double ES = Math.sqrt(Math.pow((100.0 / (100.0 - ripple)), 2) - 1);
       double VX = (1 / poles) * Math.log((1.0 / ES) +
-          Math.sqrt((1 / (ES * ES)) + 1));
+        Math.sqrt((1 / (ES * ES)) + 1));
       double KX = (1 / poles) * Math.log((1.0 / ES) +
-          Math.sqrt((1 / (ES * ES)) - 1));
+        Math.sqrt((1 / (ES * ES)) - 1));
       KX = (Math.exp(KX) + Math.exp(-KX)) * 0.5;
       RP = RP * ((Math.exp(VX) - Math.exp(-VX)) * 0.5) / KX;
       IP = IP * ((Math.exp(VX) + Math.exp(-VX)) * 0.5) / KX;

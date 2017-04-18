@@ -137,6 +137,6 @@ public final class CPres implements VoiceEvt, Cloneable {
   //Print
   public void print() {
     System.out.println("Channel Pressure(002):	[time = " + time + "][midiChannel = " + midiChannel
-        + "][pressure = " + pressure + "]");
+      + "][pressure = " + pressure + "]");
   }
 }

@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -23,17 +23,10 @@
 
 package jm.music.tools.ga;
 
-import java.awt.Choice;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.Scrollbar;
+import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Vector;
+
 import jm.music.data.Note;
 import jm.music.data.Phrase;
 import jm.music.tools.PhraseAnalysis;
@@ -61,7 +54,7 @@ public class ComplexMutater extends Mutater {
     panel.setLayout(gbl);
     mutateLabel = new Label(Integer.toString(MUTATE_PERCENTAGE[0]));
     scrollbar = new Scrollbar(Scrollbar.HORIZONTAL,
-        MUTATE_PERCENTAGE[0], 1, 0, 100);
+      MUTATE_PERCENTAGE[0], 1, 0, 100);
     choice = new Choice();
     choice.add("Random pitch change");
     choice.add("Bar sequence mutations");
@@ -69,17 +62,17 @@ public class ComplexMutater extends Mutater {
     choice.add("Step interpolation");
     choice.add("Tonal Pauses");
     choice.addItemListener(evt -> {
-          mutateLabel.setText(Integer.toString(
-              MUTATE_PERCENTAGE[choice.getSelectedIndex()]));
-          scrollbar.setValue(MUTATE_PERCENTAGE[choice.getSelectedIndex()]);
-        }
+        mutateLabel.setText(Integer.toString(
+          MUTATE_PERCENTAGE[choice.getSelectedIndex()]));
+        scrollbar.setValue(MUTATE_PERCENTAGE[choice.getSelectedIndex()]);
+      }
     );
     scrollbar.addAdjustmentListener(evt -> {
-          MUTATE_PERCENTAGE[choice.getSelectedIndex()] =
-              scrollbar.getValue();
-          mutateLabel.setText(Integer.toString(scrollbar.getValue()));
-          mutateLabel.repaint();
-        }
+        MUTATE_PERCENTAGE[choice.getSelectedIndex()] =
+          scrollbar.getValue();
+        mutateLabel.setText(Integer.toString(scrollbar.getValue()));
+        mutateLabel.repaint();
+      }
     );
     gbc.gridy = GridBagConstraints.RELATIVE;
     gbc.gridwidth = 2;
@@ -111,14 +104,14 @@ public class ComplexMutater extends Mutater {
       // Give pitch a positive value with an equivalent degree of the
       // scale
       pitch += ((-pitch / SEMITONES_PER_OCTAVE) + 1)
-          * SEMITONES_PER_OCTAVE;
+        * SEMITONES_PER_OCTAVE;
     }
 
     return pitch % SEMITONES_PER_OCTAVE;
   }
 
   public Phrase[] mutate(Phrase[] population, double initialLength,
-      int initialSize, int beatsPerBar) {
+                         int initialSize, int beatsPerBar) {
     double[] mutationArray = new double[population.length];
     for (int i = 0; i < population.length; i++) {
       mutationArray[i] = population[i].getEndTime();
@@ -163,7 +156,7 @@ public class ComplexMutater extends Mutater {
         beatCount = 0;
         for (int j = 0; j < individual.size(); j++) {
           if (beatCount / (double) beatsPerBar
-              == Math.floor(beatCount / (double) beatsPerBar)) {
+            == Math.floor(beatCount / (double) beatsPerBar)) {
             notesOnBars[index] = j;
             barNumber[index++] = (int) (beatCount * beatsPerBar);
           }
@@ -175,7 +168,7 @@ public class ComplexMutater extends Mutater {
           for (int j = 1; j < index; j++) {
             if (barNumber[j] == barNumber[j - 1] + 1) {
               notesBeginningEncapsulatedBars[
-                  countOfEncapsulatedBars++] = notesOnBars[j - 1];
+                countOfEncapsulatedBars++] = notesOnBars[j - 1];
             }
           }
         }
@@ -219,7 +212,7 @@ public class ComplexMutater extends Mutater {
                 for (int j = 0; j < notesInBar; j++) {
                   individual.getNote(j + index).setPitch(tempPitches[notesInBar - j - 1]);
                   individual.getNote(j + index)
-                      .setRhythm(tempRhythmValues[notesInBar - j - 1]);
+                    .setRhythm(tempRhythmValues[notesInBar - j - 1]);
                 }
               }
           }
@@ -240,34 +233,34 @@ public class ComplexMutater extends Mutater {
       } else {
         n2change3 = (int) Math.floor(n2change2);
       }
-      List<Note> vector =  new ArrayList<>(individual.getNoteList());
+      List<Note> vector = new ArrayList<>(individual.getNoteList());
       for (int j = 0; j < n2change3; j++) {
         int r1 = (int) (Math.random() * (n1 - 1));
         Note note5 = vector.get(initialSize + r1);
         int pitch5 = note5.getPitch();
         double rhythmValue5 = note5.getRhythm();
         if (rhythmValue5 >= 1.0 && rhythmValue5 % 1.0 == 0 &&
-            rhythmValue5 * 2.0 == Math.ceil(rhythmValue5 * 2.0)) {
+          rhythmValue5 * 2.0 == Math.ceil(rhythmValue5 * 2.0)) {
           vector.remove(initialSize + r1);
-          vector.add(initialSize + r1,Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
+          vector.add(initialSize + r1, Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
 
           );
-          vector.add(initialSize + r1,Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
+          vector.add(initialSize + r1, Note.newBuilder().pitch(pitch5).rhythm(rhythmValue5).build()
 
           );
           n1++;
         } else {
           double rhythmValue6 = rhythmValue5 + ((Note)
-              vector.get(initialSize + r1 + 1))
-              .getRhythm();
+            vector.get(initialSize + r1 + 1))
+            .getRhythm();
           if (rhythmValue6 <= 2.0) {
             vector.remove(initialSize + r1);
             vector.remove(initialSize + r1);
             vector.add(
-                initialSize + r1,Note.newBuilder()
-                    .pitch(pitch5)
-                    .rhythm(rhythmValue6)
-                    .build()
+              initialSize + r1, Note.newBuilder()
+                .pitch(pitch5)
+                .rhythm(rhythmValue6)
+                .build()
             );
             n1--;
           }
@@ -295,7 +288,7 @@ public class ComplexMutater extends Mutater {
         if (currentPitch != Note.REST) {
           int interval = currentPitch - previousPitch;
           if ((Math.abs(interval) == 4 || Math.abs(interval) == 3)
-              && Math.random() < (MUTATE_PERCENTAGE[3] / 100.0)) {
+            && Math.random() < (MUTATE_PERCENTAGE[3] / 100.0)) {
             int scalePitch = 0;
             if (interval > 0) {
               scalePitch = currentPitch - 1;
@@ -310,33 +303,33 @@ public class ComplexMutater extends Mutater {
             }
             if (currentRV > previousRV) {
               if (currentRV >= 0.5
-                  && (int) Math.ceil(currentRV * 2)
-                  == (int) (currentRV * 2)) {
+                && (int) Math.ceil(currentRV * 2)
+                == (int) (currentRV * 2)) {
                 vector.remove(k);
 
                 vector.add(k, Note.newBuilder()
-                    .pitch(currentPitch)
-                    .rhythm(currentRV / 2.0)
-                    .build());
-                vector.add(k,Note.newBuilder()
-                    .pitch(scalePitch)
-                    .rhythm(currentRV / 2.0)
-                    .build());
+                  .pitch(currentPitch)
+                  .rhythm(currentRV / 2.0)
+                  .build());
+                vector.add(k, Note.newBuilder()
+                  .pitch(scalePitch)
+                  .rhythm(currentRV / 2.0)
+                  .build());
                 k++;
               }
             } else {
               if (previousRV >= 0.5
-                  && (int) Math.ceil(previousRV * 2)
-                  == (int) (previousRV * 2)) {
+                && (int) Math.ceil(previousRV * 2)
+                == (int) (previousRV * 2)) {
                 vector.remove(k - 1);
-                vector.add(k - 1,Note.newBuilder()
-                    .pitch(scalePitch)
-                    .rhythm(previousRV / 2.0)
-                    .build());
-                vector.add(k - 1,Note.newBuilder()
-                    .pitch(previousPitch)
-                    .rhythm(previousRV / 2.0)
-                    .build());
+                vector.add(k - 1, Note.newBuilder()
+                  .pitch(scalePitch)
+                  .rhythm(previousRV / 2.0)
+                  .build());
+                vector.add(k - 1, Note.newBuilder()
+                  .pitch(previousPitch)
+                  .rhythm(previousRV / 2.0)
+                  .build());
                 k++;
               }
             }
@@ -353,7 +346,7 @@ public class ComplexMutater extends Mutater {
       // by adding the value of two notes together)
 
       individual.addNoteList(applyTonalPausesMutation(individual, initialLength, initialSize, beatsPerBar),
-          false
+        false
       );
 
       // 6. Pitch Clean Up
@@ -365,7 +358,7 @@ public class ComplexMutater extends Mutater {
         if (pitch != Note.REST) {
           if (!isScale(pitch)) {
             if ((int) Math.ceil(cumulativeRV / 2.0)
-                == (int) (cumulativeRV / 2.0)) {
+              == (int) (cumulativeRV / 2.0)) {
               if (Math.random() < rv) {
                 if (Math.random() < 0.5) {
                   individual.getNote(j).setPitch(pitch + 1);
@@ -401,8 +394,8 @@ public class ComplexMutater extends Mutater {
   }
 
   private List<Note> applyTonalPausesMutation(final Phrase phrase,
-      double initialLength,
-      int initialSize, int beatsPerBar) {
+                                              double initialLength,
+                                              int initialSize, int beatsPerBar) {
 
     List<Note> vector = new ArrayList<>(phrase.getNoteList()); // phrase.getNoteList().clone();
     double rhythmValueCount = initialLength;
@@ -411,15 +404,15 @@ public class ComplexMutater extends Mutater {
       int pitch = phrase.getNote(j).getPitch();
       int degree = pitchToDegree(pitch, TONIC);
       double rhythmValue = phrase.getNote(j).getRhythm()
-          + phrase.getNote(j + 1).getRhythm();
+        + phrase.getNote(j + 1).getRhythm();
       if (rhythmValueCount / (double) beatsPerBar
-          == Math.ceil(rhythmValueCount / (double) beatsPerBar)
-          && (degree == 0 || degree == 7)
-          && Math.random() < (2.0 / rhythmValue)
-          * (MUTATE_PERCENTAGE[4] / 100.0)) {
+        == Math.ceil(rhythmValueCount / (double) beatsPerBar)
+        && (degree == 0 || degree == 7)
+        && Math.random() < (2.0 / rhythmValue)
+        * (MUTATE_PERCENTAGE[4] / 100.0)) {
         vector.remove(j - count);
         vector.remove(j - count);
-        vector.add(j - count,Note.newBuilder().pitch(pitch).rhythm(rhythmValue).build());
+        vector.add(j - count, Note.newBuilder().pitch(pitch).rhythm(rhythmValue).build());
         rhythmValueCount += phrase.getNote(j).getRhythm();
         j++;
         count++;

@@ -1,4 +1,4 @@
-/* 
+/*
 
 <This Java Class is part of the jMusic API version 1.5, March 2004.>
 
@@ -83,8 +83,8 @@ public final class Granulator extends AudioObject {
   }
 
   public Granulator(AudioObject ao, int sampleRate, int channels, float[] durationArr,
-      float[] gpsArr,
-      float[] freqArr, boolean rif, boolean rgdf, boolean rff, int rd) {
+                    float[] gpsArr,
+                    float[] freqArr, boolean rif, boolean rgdf, boolean rff, int rd) {
     super(ao, "[Granulator]");
     this.durationArray = durationArr;
     this.gpsArray = gpsArr;
@@ -125,7 +125,7 @@ public final class Granulator extends AudioObject {
     //	((float)(sampleRate*channels)/gpsArray[grainCnt]));
     //} else {
     nog = (int) ((float) newbuf.length /
-        ((float) (sampleRate * channels) / (float) grainsPerSecond));
+      ((float) (sampleRate * channels) / (float) grainsPerSecond));
     //}
     if (nog <= 0) {
       nog = 1;
@@ -342,7 +342,7 @@ public final class Granulator extends AudioObject {
     if (envelopeType <= 1) {
       for (int i = 0; i < cgd; i++) {
         this.grain[i] = this.grain[i] * (float) (0.5 - 0.5 *
-            Math.cos(2 * Math.PI * i / cgd));
+          Math.cos(2 * Math.PI * i / cgd));
       }
     }
     //else if (envelopeType == 2) //{
@@ -361,7 +361,7 @@ public final class Granulator extends AudioObject {
     } else {
       for (int i = 0; i < cgd; i++) {
         this.grain[i] = this.grain[i] * (float)
-            (Math.sin(Math.PI * i / cgd));
+          (Math.sin(Math.PI * i / cgd));
 
       }
     }

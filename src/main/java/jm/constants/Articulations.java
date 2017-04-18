@@ -33,10 +33,10 @@ import jm.music.data.Note;
 public interface Articulations {
 
   double
-      STACCATISSIMO = 0.25,
-      STACCATO = 0.4,
-      MEZZO_STACCATO = 0.75,
-      LEGATO = 0.95,
-      TENUTO = 1.0,
-      SOSTENUTO = 1.2;
+    STACCATISSIMO = 0.25,
+    STACCATO = 0.4,
+    MEZZO_STACCATO = 0.75,
+    LEGATO = 0.95,
+    TENUTO = 1.0,
+    SOSTENUTO = 1.2;
 }

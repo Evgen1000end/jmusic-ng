@@ -55,10 +55,10 @@ public final class ChiffInst extends Instrument {
     this.sampleRate = sampleRate;
     this.channels = channels;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.03, (float) 0.6),
-        new EnvPoint((float) 0.1, (float) 0.01),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.03, (float) 0.6),
+      new EnvPoint((float) 0.1, (float) 0.01),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
   }

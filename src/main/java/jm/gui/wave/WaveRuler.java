@@ -22,12 +22,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.wave;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Panel;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -77,8 +72,8 @@ public class WaveRuler extends Panel implements MouseListener, MouseMotionListen
     int milliInc = (int) Math.round(markerWidth / 1000.0);
     int res = scrollPanel.getWaveView().getResolution();
     startSecond = scrollPanel.getWaveView().getStartPos() /
-        scrollPanel.getWaveView().getSampleRate() /
-        scrollPanel.getWaveView().getChannels();
+      scrollPanel.getWaveView().getSampleRate() /
+      scrollPanel.getWaveView().getChannels();
     // 1000ths of seconds
     int counter = 0;
     g.setColor(Color.white);
@@ -92,7 +87,7 @@ public class WaveRuler extends Panel implements MouseListener, MouseMotionListen
                 g.drawLine(pos, getSize().height / 8 * 7, pos, getSize().height);
                 if (markerWidth > 40000) {
                   g.drawString("" + (startSecond + counter / 1000.0),
-                      pos + 2, getSize().height - 1);
+                    pos + 2, getSize().height - 1);
                 }
               }
               counter++;
@@ -114,7 +109,7 @@ public class WaveRuler extends Panel implements MouseListener, MouseMotionListen
               g.drawLine(pos, getSize().height / 4 * 3, pos, getSize().height);
               if (markerWidth > 4800) {
                 g.drawString("" + (startSecond + counter / 100.0),
-                    pos + 2, getSize().height - 1);
+                  pos + 2, getSize().height - 1);
               }
             }
             counter++;
@@ -134,7 +129,7 @@ public class WaveRuler extends Panel implements MouseListener, MouseMotionListen
             g.drawLine(pos, getSize().height / 2, pos, getSize().height);
             if (markerWidth > 300) {
               g.drawString("" + (startSecond + counter / 10.0), pos + 2,
-                  getSize().height - 1);
+                getSize().height - 1);
             }
           }
           counter++;
@@ -149,10 +144,10 @@ public class WaveRuler extends Panel implements MouseListener, MouseMotionListen
       g.drawLine(i, 1, i, getSize().height);
       if (markerWidth > 20 && markerWidth <= 300) {
         g.drawString("" + (startSecond + counter), i + 2,
-            getSize().height - 1); // single digit
+          getSize().height - 1); // single digit
       } else if (markerWidth > 300) {
         g.drawString("" + (startSecond + counter / 1.0), i + 2,
-            getSize().height - 1); // with decimal place
+          getSize().height - 1); // with decimal place
       }
       counter++;
     }

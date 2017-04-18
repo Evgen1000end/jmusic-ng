@@ -55,7 +55,7 @@ public final class Splitter extends AudioObject {
   //----------------------------------------------
 
   /**
-   * @param ao the single AudioObject taken as input.
+   * @param ao      the single AudioObject taken as input.
    * @param outputs the number of outputs to support.
    */
   public Splitter(AudioObject ao) {

@@ -29,6 +29,7 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.Vector;
+
 import jm.JMC;
 import jm.midi.event.CChange;
 import jm.midi.event.EndTrack;
@@ -104,9 +105,9 @@ public final class MidiParser implements JMC {
         //if you're a true NoteOn
         if (dynamic > 0) {
           noteOn(phrIndex, curNote, smf, i,
-              currentLength, startTime,
-              phrVct, midiChannel,
-              pitch, dynamic, evtList);
+            currentLength, startTime,
+            phrVct, midiChannel,
+            pitch, dynamic, evtList);
         }
       } else if (evt instanceof TimeSig) {
         TimeSig timeSig = (TimeSig) evt;
@@ -147,8 +148,8 @@ public final class MidiParser implements JMC {
   // Etc.
 
   private static void noteOn(int phrIndex, Note[] curNote, SMF smf, int i,
-      double[] currentLength, double startTime, Vector phrVct,
-      short midiChannel, short pitch, int dynamic, Vector evtList) {
+                             double[] currentLength, double startTime, Vector phrVct,
+                             short midiChannel, short pitch, int dynamic, Vector evtList) {
 
     phrIndex = -1;
     //work out what phrase is ready to accept a note
@@ -167,37 +168,37 @@ public final class MidiParser implements JMC {
     }
     //Do we need to add a rest ?
     if ((startTime > currentLength[phrIndex]) &&
-        (curNote[phrIndex] != null)) {
+      (curNote[phrIndex] != null)) {
       double newTime = startTime - currentLength[phrIndex];
       //perform a level of quantisation first
       if (newTime < 0.25) {
         double length =
-            curNote[phrIndex].getRhythm();
+          curNote[phrIndex].getRhythm();
         curNote[phrIndex].setRhythm(
-            length + newTime);
+          length + newTime);
       } else {
         Note restNote = Note.newBuilder()
-            .rest()
-            .rhythm(newTime)
-            .dynamic(0)
-            .build();
+          .rest()
+          .rhythm(newTime)
+          .dynamic(0)
+          .build();
         restNote.setPan(midiChannel);
         restNote.setDuration(newTime);
         restNote.setOffset(0.0);
         ((Phrase) phrVct.elementAt(phrIndex)).
-            addNote(restNote);
+          addNote(restNote);
       }
       currentLength[phrIndex] += newTime;
     }
     // get end time
     double time = MidiUtil.getEndEvt(pitch, evtList, i) /
-        (double) smf.getPPQN();
+      (double) smf.getPPQN();
     // create the new note
     Note tempNote = Note.newBuilder()
-        .pitch(pitch)
-        .rhythm(time)
-        .dynamic(dynamic)
-        .build();
+      .pitch(pitch)
+      .rhythm(time)
+      .dynamic(dynamic)
+      .build();
     tempNote.setDuration(time);
     curNote[phrIndex] = tempNote;
     ((Phrase) phrVct.elementAt(phrIndex)).addNote(curNote[phrIndex]);
@@ -208,7 +209,7 @@ public final class MidiParser implements JMC {
    * Converts jmusic score data into SMF  data
    *
    * @param score - Basic Jmusic storage
-   * @param smf - Standart Midi File object
+   * @param smf   - Standart Midi File object
    */
   public static void scoreToSMF(final Score score, final SMF smf) {
     if (VERBOSE) {
@@ -236,13 +237,13 @@ public final class MidiParser implements JMC {
       Track smfTrack = new Track();
       Part inst = (Part) aEnum.nextElement();
       System.out.print("Part " + partCount + " '" + inst.getTitle() +
-          "' to SMF Track on Channel. " + inst.getChannel() + ": ");
+        "' to SMF Track on Channel. " + inst.getChannel() + ": ");
       partCount++;
 
       // set up tempo difference between score and track - if any
       if (inst.getTempo() != Part.DEFAULT_TEMPO) {
         partTempoMultiplier =
-            scoreTempo / inst.getTempo();
+          scoreTempo / inst.getTempo();
       } else {
         partTempoMultiplier = 1.0;
       }
@@ -282,7 +283,7 @@ public final class MidiParser implements JMC {
       if (inst.getInstrument() != NO_INSTRUMENT) {
         //System.out.println("Instrument change no. " + inst.getInstrument());
         midiEvents.add(new EventPair(0,
-            new PChange((short) inst.getInstrument(), (short) inst.getChannel(), 0)));
+          new PChange((short) inst.getInstrument(), (short) inst.getChannel(), 0)));
       }
 
       if (inst.getNumerator() != NO_NUMERATOR) {
@@ -304,11 +305,11 @@ public final class MidiParser implements JMC {
         startTime = phrase.getStartTime() * partTempoMultiplier;
         if (phrase.getInstrument() != NO_INSTRUMENT) {
           midiEvents.add(new EventPair(0,
-              new PChange((short) phrase.getInstrument(), (short) inst.getChannel(), 0)));
+            new PChange((short) phrase.getInstrument(), (short) inst.getChannel(), 0)));
         }
         if (phrase.getTempo() != Phrase.DEFAULT_TEMPO) {
           phraseTempoMultiplier = scoreTempo / phrase
-              .getTempo(); //(scoreTempo * partTempoMultiplier) / phrase.getTempo();
+            .getTempo(); //(scoreTempo * partTempoMultiplier) / phrase.getTempo();
         } else {
           phraseTempoMultiplier = partTempoMultiplier;
         }
@@ -319,32 +320,32 @@ public final class MidiParser implements JMC {
         double pan = -1.0;
         resetTicker(); // zero the ppqn error calculator
 
-         for (Note note: phrase.getNoteList() ) {
+        for (Note note : phrase.getNoteList()) {
           offsetValue = note.getOffset();
           // add a pan control change if required
           if (note.getPan() != pan) {
             pan = note.getPan();
             midiEvents.add(new EventPair(startTime + offsetValue,
-                new CChange((short) 10, (short) (pan * 127), (short) inst.getChannel(), 0)));
+              new CChange((short) 10, (short) (pan * 127), (short) inst.getChannel(), 0)));
           }
           //check for frequency rather than MIDI notes
           int pitch = note.getPitch();
 
           if (pitch != REST) {
             midiEvents.add(new EventPair(startTime + offsetValue,
-                new NoteOn((short) pitch, (short) note.getDynamic(), (short) inst.getChannel(),
-                    0)));
+              new NoteOn((short) pitch, (short) note.getDynamic(), (short) inst.getChannel(),
+                0)));
 
             // Add a NoteOn for the END of the note with 0 dynamic, as recommended.
             //create a timing event at the end of the notes duration
             double endTime = startTime + (note.getDuration() * phraseTempoMultiplier);
             // Add the note-off time to the list
             midiEvents.add(new EventPair(endTime + offsetValue,
-                new NoteOn((short) pitch, (short) 0, (short) inst.getChannel(), 0)));
+              new NoteOn((short) pitch, (short) 0, (short) inst.getChannel(), 0)));
           }
           // move the note-on time forward by the rhythmic value
           startTime += tickRounder(
-              note.getRhythm() * phraseTempoMultiplier); //time between start times
+            note.getRhythm() * phraseTempoMultiplier); //time between start times
           System.out.print("."); // completed a note
         }
       }

@@ -26,6 +26,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Vector;
+
 import jm.JMC;
 import jm.midi.event.ATouch;
 import jm.midi.event.CChange;
@@ -79,7 +80,7 @@ public final class MidiUtil implements JMC {
    * @return the number of bytes written
    */
   public static int writeVarLength(int value, DataOutputStream dos)
-      throws IOException {
+    throws IOException {
 
     int bytes_out = 0;
     long buffer = value & 0x7F;
@@ -140,7 +141,7 @@ public final class MidiUtil implements JMC {
         case 005:
           NoteOn noteOn = (NoteOn) evt;
           if (noteOn.getPitch() == pitch &&
-              noteOn.getVelocity() == 0) {
+            noteOn.getVelocity() == 0) {
             //is this a second (or third) voice
             if (time > 0) {
               //once assigned turn it off

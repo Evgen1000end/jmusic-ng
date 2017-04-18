@@ -51,11 +51,11 @@ public final class SquareLPFInst extends Instrument {
     this.sampleRate = sampleRate;
     this.cutoff = cutoff;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.02, (float) 1.0),
-        new EnvPoint((float) 0.15, (float) 0.6),
-        new EnvPoint((float) 0.95, (float) 0.4),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.02, (float) 1.0),
+      new EnvPoint((float) 0.15, (float) 0.6),
+      new EnvPoint((float) 0.95, (float) 0.4),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
   }
@@ -70,7 +70,7 @@ public final class SquareLPFInst extends Instrument {
    */
   public void createChain() {
     Oscillator wt = new Oscillator(this, Oscillator.SQUARE_WAVE,
-        this.sampleRate, 2);
+      this.sampleRate, 2);
     Filter filt = new Filter(wt, cutoff, Filter.LOW_PASS);
     Envelope env = new Envelope(filt, pointArray);
     Volume vol = new Volume(env);

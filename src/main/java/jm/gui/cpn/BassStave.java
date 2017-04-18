@@ -22,9 +22,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.cpn;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
+
 import jm.JMC;
 import jm.music.data.Phrase;
 //import jm.gui.cpn.CPNFrame;
@@ -67,11 +66,11 @@ public class BassStave extends Stave implements JMC {
       for (int ks = 0; ks < keySignature; ks++) {
         // claulate position
         int keyAccidentalPosition =
-            notePosOffset[sharps[ks] % 12] + bPos - 4 + ((5 - sharps[ks] / 12) * 24) + (
-                (6 - sharps[ks] / 12) * 4);
+          notePosOffset[sharps[ks] % 12] + bPos - 4 + ((5 - sharps[ks] / 12) * 24) + (
+            (6 - sharps[ks] / 12) * 4);
         // draw sharp
         g.drawImage(sharp, rightMargin + clefWidth + keyOffset,
-            keyAccidentalPosition + staveSpaceHeight, this);
+          keyAccidentalPosition + staveSpaceHeight, this);
         // indent position
         keyOffset += 10;
         //add note to accidental vector
@@ -89,11 +88,11 @@ public class BassStave extends Stave implements JMC {
         for (int ks = 0; ks < Math.abs(keySignature); ks++) {
           // claulate position
           int keyAccidentalPosition =
-              notePosOffset[flats[ks] % 12] + bPos - 4 + ((5 - flats[ks] / 12) * 24) + (
-                  (6 - flats[ks] / 12) * 4);
+            notePosOffset[flats[ks] % 12] + bPos - 4 + ((5 - flats[ks] / 12) * 24) + (
+              (6 - flats[ks] / 12) * 4);
           // draw flat
           g.drawImage(flat, rightMargin + clefWidth + keyOffset,
-              keyAccidentalPosition + staveSpaceHeight, this);
+            keyAccidentalPosition + staveSpaceHeight, this);
           // indent position
           keyOffset += 10;
           //add note to accidental vector
@@ -135,21 +134,21 @@ public class BassStave extends Stave implements JMC {
       int pitchTempPos;
       if (notePitchNum == REST || phrase.getNote(i).getRhythm() == 0.0) { // rest or delete
         pitchTempPos =
-            notePosOffset[71 % 12] + bPos - 4 + ((5 - 71 / 12) * 24) + ((6 - 71 / 12) * 4);
+          notePosOffset[71 % 12] + bPos - 4 + ((5 - 71 / 12) * 24) + ((6 - 71 / 12) * 4);
       } else {
         pitchTempPos =
-            notePosOffset[notePitchNum % 12] + bPos - 4 + ((5 - notePitchNum / 12) * 24) + (
-                (6 - notePitchNum / 12) * 4 - staveSpaceHeight * 6);
+          notePosOffset[notePitchNum % 12] + bPos - 4 + ((5 - notePitchNum / 12) * 24) + (
+            (6 - notePitchNum / 12) * 4 - staveSpaceHeight * 6);
       }
 
       // accidental?
       if (((notePitchNum % 12) == 1 || (notePitchNum % 12) == 3 || (notePitchNum % 12) == 6
-          || (notePitchNum % 12) == 8 || (notePitchNum % 12) == 10) && notePitchNum != REST
-          && phrase.getNote(i).getRhythm() != 0.0) {
+        || (notePitchNum % 12) == 8 || (notePitchNum % 12) == 10) && notePitchNum != REST
+        && phrase.getNote(i).getRhythm() != 0.0) {
         if (keySignature > -1) {
           g.drawImage(sharp, totalBeatWidth - 9, pitchTempPos, this);
           previouslyChromatic.addElement(
-              notePitchNum - 1); // enter the note made sharp i.e, F for an F#
+            notePitchNum - 1); // enter the note made sharp i.e, F for an F#
         } else { // flat
           pitchTempPos -= 4; // to show the note a semitone higher for flats
           g.drawImage(flat, totalBeatWidth - 9, pitchTempPos, this);
@@ -162,7 +161,7 @@ public class BassStave extends Stave implements JMC {
         for (int j = 0; j < size; j++) {
           Integer temp = (Integer) previouslyChromatic.elementAt(j);
           if (temp.intValue() == notePitchNum && notePitchNum != REST
-              && phrase.getNote(i).getRhythm() != 0.0) {
+            && phrase.getNote(i).getRhythm() != 0.0) {
             // add natural
             g.drawImage(natural, totalBeatWidth - 7, pitchTempPos, this);
             // remove element if not in key signature
@@ -179,15 +178,15 @@ public class BassStave extends Stave implements JMC {
       // store position in a vector
       notePositions.addElement(totalBeatWidth);
       notePositions.addElement(
-          pitchTempPos + staveDelta); // stave delta required for bass clef offset from treble
+        pitchTempPos + staveDelta); // stave delta required for bass clef offset from treble
       //System.out.println("Position "+i+" "+totalBeatWidth + " "+ pitchTempPos);
 
       if (dottedNote) {
         boolean dotFlag = true;
         for (int l = 0; l < lineNotes.length; l++) {
           if (lineNotes[l] + 12 == notePitchNum || lineNotes[l] + 36 == notePitchNum
-              || lineNotes[l] + 60 == notePitchNum || lineNotes[l] + 84 == notePitchNum
-              || lineNotes[l] + 108 == notePitchNum || notePitchNum == REST) {
+            || lineNotes[l] + 60 == notePitchNum || lineNotes[l] + 84 == notePitchNum
+            || lineNotes[l] + 108 == notePitchNum || notePitchNum == REST) {
             g.drawImage(dot, totalBeatWidth + 1, pitchTempPos - 4, this);
             dotFlag = false;
             l = lineNotes.length;
@@ -244,7 +243,7 @@ public class BassStave extends Stave implements JMC {
           // add bar numbers?
           if (barNumbers) {
             g.drawString("" + (int) (beatCounter / metre + 1 + phrase.getStartTime()),
-                totalBeatWidth - 4, bPos);
+              totalBeatWidth - 4, bPos);
           }
           totalBeatWidth += 12;
         }
@@ -254,23 +253,23 @@ public class BassStave extends Stave implements JMC {
     // draw stave
     for (int i = 0; i < 5; i++) {
       g.drawLine(rightMargin,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
     // draw neext note stave area
     // draw stave
     g.setColor(Color.lightGray);
     for (int i = 0; i < 5; i++) {
       g.drawLine(totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth + 50,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth + 50,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
     g.setColor(Color.black);
     // add Clef
     g.drawImage(bassClef, rightMargin + 7, bPos, this);
-        
+
         /* Draw completed buffer to g */
 
     graphics.drawImage(image, 0, 0, null);
@@ -283,4 +282,4 @@ public class BassStave extends Stave implements JMC {
     //g.dispose();
   }
 }
-        
+

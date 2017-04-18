@@ -53,11 +53,11 @@ public final class ReverseResampledInst extends jm.audio.Instrument {
     this.wholeFile = wholeFile;
     //envelope
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.1, (float) 1.0),
-        new EnvPoint((float) 0.4, (float) 0.5),
-        new EnvPoint((float) 0.9, (float) 0.3),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.1, (float) 1.0),
+      new EnvPoint((float) 0.4, (float) 0.5),
+      new EnvPoint((float) 0.9, (float) 0.3),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
 

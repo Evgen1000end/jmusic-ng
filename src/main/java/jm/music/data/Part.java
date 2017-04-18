@@ -26,6 +26,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import jm.JMC;
 
 
@@ -166,7 +167,7 @@ public class Part implements Cloneable, Serializable, JMC {
    * Creates an empty Part
    *
    * @param String title the title of the Part
-   * @param int instrument
+   * @param int    instrument
    */
   public Part(String title, int instrument) {
     this(title, instrument, DEFAULT_CHANNEL);
@@ -186,8 +187,8 @@ public class Part implements Cloneable, Serializable, JMC {
    * Creates an empty Part
    *
    * @param String title the title of the Part
-   * @param int instrument
-   * @param int channel
+   * @param int    instrument
+   * @param int    channel
    */
   public Part(String title, int instrument, int channel) {
     this.title = title;
@@ -195,9 +196,9 @@ public class Part implements Cloneable, Serializable, JMC {
 
     if (this.channel > 16) {
       System.err.println(new Exception(
-          "jMusic Warning: A MIDI Channel "
-              + "cannot be greater than 16. "
-              + "There can be any number of Audio channels."
+        "jMusic Warning: A MIDI Channel "
+          + "cannot be greater than 16. "
+          + "There can be any number of Audio channels."
       ));
       (new Exception()).printStackTrace();
       //System.exit(1);
@@ -206,8 +207,8 @@ public class Part implements Cloneable, Serializable, JMC {
 
     if (instrument < NO_INSTRUMENT) {
       System.err.println(new Exception(
-          "jMusic EXCEPTION: instrument "
-              + "value must be greater than 0"
+        "jMusic EXCEPTION: instrument "
+          + "value must be greater than 0"
       ));
       (new Exception()).printStackTrace();
       System.exit(1); //crash ungracefully
@@ -236,7 +237,7 @@ public class Part implements Cloneable, Serializable, JMC {
    * Constructs a Part containing the specified <CODE>phrase</CODE>.
    *
    * @param String Title of the Part
-   * @param int The instrument number
+   * @param int    The instrument number
    * @param phrase Phrase to be contained in the Part
    */
   public Part(String title, int instrument, Phrase phrase) {
@@ -248,8 +249,8 @@ public class Part implements Cloneable, Serializable, JMC {
    * Constructs a Part containing the specified <CODE>phrase</CODE>.
    *
    * @param String Title of the Part
-   * @param int The instrument number
-   * @param int The channel number
+   * @param int    The instrument number
+   * @param int    The channel number
    * @param phrase Phrase to be contained in the Part
    */
   public Part(String title, int instrument, int channel, Phrase phrase) {
@@ -284,7 +285,7 @@ public class Part implements Cloneable, Serializable, JMC {
    * specified <CODE>title</CODE>.
    *
    * @param phrase Phrase to be contained in the Part
-   * @param title String describing the title of the Part
+   * @param title  String describing the title of the Part
    */
   public Part(Phrase phrase, String title) {
     this(title);
@@ -297,7 +298,7 @@ public class Part implements Cloneable, Serializable, JMC {
    * specified <CODE>title</CODE>.
    *
    * @param phrases array of Phrases to be contained in the Score
-   * @param title String describing the title of the Part
+   * @param title   String describing the title of the Part
    */
   public Part(Phrase[] phrases, String title) {
     this(title);
@@ -309,8 +310,8 @@ public class Part implements Cloneable, Serializable, JMC {
    * specified <CODE>title</CODE> and with the timbre of the specified
    * <CODE>instrument</CODE>.
    *
-   * @param phrase Phrase to be contained in the Part
-   * @param title String describing the title of the Part
+   * @param phrase     Phrase to be contained in the Part
+   * @param title      String describing the title of the Part
    * @param instrument integer describing the MIDI instrument number
    */
   public Part(Phrase phrase, String title, int instrument) {
@@ -324,8 +325,8 @@ public class Part implements Cloneable, Serializable, JMC {
    * specified <CODE>title</CODE> and with the timbre of the specified
    * <CODE>instrument</CODE>.
    *
-   * @param phrases array of Phrases to be contained in the Score
-   * @param title String describing the title of the Part
+   * @param phrases    array of Phrases to be contained in the Score
+   * @param title      String describing the title of the Part
    * @param instrument integer describing the MIDI instrument number
    */
   public Part(Phrase[] phrases, String title, int instrument) {
@@ -338,10 +339,10 @@ public class Part implements Cloneable, Serializable, JMC {
    * specified <CODE>title</CODE>, with the timbre of the specified
    * <CODE>instrument</CODE> and using the specified MIDI channel.
    *
-   * @param phrase Phrase to be contained in the Part
-   * @param title String describing the title of the Part
+   * @param phrase     Phrase to be contained in the Part
+   * @param title      String describing the title of the Part
    * @param instrument integer describing the MIDI instrument number
-   * @param channel integer describing the MIDI channel
+   * @param channel    integer describing the MIDI channel
    */
   public Part(Phrase phrase, String title, int instrument, int channel) {
     this(title, instrument, channel);
@@ -354,10 +355,10 @@ public class Part implements Cloneable, Serializable, JMC {
    * specified <CODE>title</CODE>, with the timbre of the specified
    * <CODE>instrument</CODE> and using the specified MIDI channel.
    *
-   * @param phrases array of Phrases to be contained in the Score
-   * @param title String describing the title of the Part
+   * @param phrases    array of Phrases to be contained in the Score
+   * @param title      String describing the title of the Part
    * @param instrument integer describing the MIDI instrument number
-   * @param channel integer describing the MIDI channel
+   * @param channel    integer describing the MIDI channel
    */
   public Part(Phrase[] phrases, String title, int instrument, int channel) {
     this(title, instrument, channel);
@@ -790,14 +791,15 @@ public class Part implements Cloneable, Serializable, JMC {
    *
    * @param boolean wether to trim the notes or not
    * @param boolean wether to truncated the notes duration when trimming them or not
-   * @param boolean wether to set the start time of the phrases in relation to the start of the <br>
-   * old part (true) or the new one (false) maybe should be called "relative to old"
-   * @param double start of copy section in beats
-   * @param double end of copy section in beats
+   * @param boolean wether to set the start time of the phrases in relation to the start of the
+   *                <br> old part (true) or the new one (false) maybe should be called "relative
+   *                to old"
+   * @param double  start of copy section in beats
+   * @param double  end of copy section in beats
    * @return Part a copy of section of the Part
    */
   public Part copy(double startLoc, double endLoc,
-      boolean trimmed, boolean truncated, boolean relativeStartLoc) {
+                   boolean trimmed, boolean truncated, boolean relativeStartLoc) {
 
     Part cp = new Part();
     copyAttributes(cp);
@@ -855,7 +857,7 @@ public class Part implements Cloneable, Serializable, JMC {
    */
   public String toString() {
     StringBuilder partData = new StringBuilder("----- jMusic PART: '" + title +
-        "' contains " + this.size() + " phrases.  -----" + '\n');
+      "' contains " + this.size() + " phrases.  -----" + '\n');
     partData.append("Channel = ").append(channel).append('\n');
     partData.append("Instrument = ").append(instrument).append('\n');
     if (this.tempo > 0) {
@@ -1053,7 +1055,7 @@ public class Part implements Cloneable, Serializable, JMC {
    * Add a note directly to a part, this method
    * automatically encapsulates the note within a phrase.
    *
-   * @param Note the note to be added.
+   * @param Note      the note to be added.
    * @param startTime the beat position where the note (phrase) will be placed
    */
   public void addNote(Note n, double startTime) {

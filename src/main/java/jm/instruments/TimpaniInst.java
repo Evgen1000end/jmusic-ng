@@ -85,7 +85,7 @@ public final class TimpaniInst extends Instrument {
     vol = new Volume[overtones];
     for (int i = 0; i < overtones; i++) {
       osc[i] = new Oscillator(this, Oscillator.SINE_WAVE,
-          this.sampleRate, 2);
+        this.sampleRate, 2);
       osc[i].setFrqRatio((float) freqVals[i]);
       env[i] = new Envelope(osc[i], points[i]);
       vol[i] = new Volume(env[i], (float) volVals[i]);

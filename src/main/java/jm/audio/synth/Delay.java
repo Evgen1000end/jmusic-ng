@@ -23,6 +23,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 package jm.audio.synth;
 
 import java.util.Vector;
+
 import jm.audio.AOException;
 import jm.audio.AudioObject;
 
@@ -64,7 +65,7 @@ public final class Delay extends AudioObject {
    * to it in the chain, and the delay length in samples.
    *
    * @param sampleDelay the lenght of the delay in samples
-   * @param ao the single AudioObject taken as input.
+   * @param ao          the single AudioObject taken as input.
    */
   public Delay(AudioObject ao, int sampleDelay) {
     super(ao, "[Delay]");

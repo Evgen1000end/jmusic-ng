@@ -23,7 +23,7 @@ package jm.music.tools;
 
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Vector;
+
 import jm.JMC;
 import jm.music.data.CPhrase;
 import jm.music.data.Note;
@@ -65,7 +65,7 @@ public class Mod implements JMC {
     }
 
     note1.setRhythm(note1.getRhythm()
-        + note2.getRhythm());
+      + note2.getRhythm());
     note1.setDuration(note1.getDuration() + note2.getDuration());
   }
 
@@ -79,7 +79,7 @@ public class Mod implements JMC {
    * exact details of what occurs when trying to set the pitch beyond the
    * allowed range.
    *
-   * @param note The Note to be transposed
+   * @param note          The Note to be transposed
    * @param transposition the amount to transpose in semitones
    */
   public static void transpose(final Note note, final int transposition) {
@@ -107,13 +107,15 @@ public class Mod implements JMC {
    * by 7 will beome C an octave above. This can be somewhat unintuitive
    * so be careful.
    *
-   * @param note Note to be transposed
+   * @param note          Note to be transposed
    * @param transposition the amount to transpose in semitones
-   * @param mode the scale to use for the transposition (the JMC has some scale constants)
-   * @param key the chromatic note to be used as the root of the mode. i.e., 0 = C, 1 = C# etc.
+   * @param mode          the scale to use for the transposition (the JMC has some scale
+   *                      constants)
+   * @param key           the chromatic note to be used as the root of the mode. i.e., 0 = C, 1 =
+   *                      C# etc.
    */
   public static void transpose(final Note note, final int transposition, final int[] mode,
-      final int key) {
+                               final int key) {
     if (note == null) {
       throw new IllegalArgumentException("Note should not be null");
     }
@@ -154,7 +156,7 @@ public class Mod implements JMC {
    *
    * @param note Note to be qantized
    * @param mode the scale to use for the process (the JMC has some scale constants)
-   * @param key the chromatic note to be used as the root of the mode. i.e., 0 = C, 1 = C# etc.
+   * @param key  the chromatic note to be used as the root of the mode. i.e., 0 = C, 1 = C# etc.
    */
   public static void quantizePitch(Note note, final int[] mode, int key) {
     while (!note.isScale(mode)) {
@@ -165,10 +167,10 @@ public class Mod implements JMC {
   //---------------------- PHRASE MODIFICATIONS ----------------------------//
 
   public static void crescendo(final Phrase phrase,
-      final double startTime,
-      final double endTime,
-      final int startDynamic,
-      final int endDynamic) {
+                               final double startTime,
+                               final double endTime,
+                               final int startDynamic,
+                               final int endDynamic) {
     double dynDiff = endDynamic - startDynamic;
     double timeDiff = endTime - startTime;
     if (timeDiff == 0.0) {
@@ -183,7 +185,7 @@ public class Mod implements JMC {
       Note n = v.get(i);
       if (time >= startTime) {
         n.setDynamic((int) ((time - startTime) / timeDiff
-            * dynDiff + startDynamic));
+          * dynDiff + startDynamic));
       }
       time += n.getRhythm();
       if (time > endTime) {
@@ -193,18 +195,18 @@ public class Mod implements JMC {
   }
 
   public static void diminuendo(final Phrase phrase,
-      final double startTime,
-      final double endTime,
-      final int startDynamic,
-      final int endDynamic) {
+                                final double startTime,
+                                final double endTime,
+                                final int startDynamic,
+                                final int endDynamic) {
     crescendo(phrase, startTime, endTime, startDynamic, endDynamic);
   }
 
   public static void decrescendo(final Phrase phrase,
-      final double startTime,
-      final double endTime,
-      final int startDynamic,
-      final int endDynamic) {
+                                 final double startTime,
+                                 final double endTime,
+                                 final int startDynamic,
+                                 final int endDynamic) {
     crescendo(phrase, startTime, endTime, startDynamic, endDynamic);
   }
 
@@ -218,7 +220,7 @@ public class Mod implements JMC {
    * exact details of what occurs when trying to set the pitch beyond the
    * allowed range.
    *
-   * @param phrase Phrase to be transposed
+   * @param phrase        Phrase to be transposed
    * @param transposition the amount to transpose in semitones
    */
   public static void transpose(Phrase phrase, final int transposition) {
@@ -227,7 +229,7 @@ public class Mod implements JMC {
     }
 
     List<Note> noteList = phrase.getNoteList();
-    for (Note note: noteList ) {
+    for (Note note : noteList) {
       if (note.getPitch() != Note.REST) {
         note.setPitch(note.getPitch() + transposition);
       }
@@ -250,13 +252,14 @@ public class Mod implements JMC {
    * by 7 will beome C an octave above. This can be somewhat unintuitive
    * so be careful.
    *
-   * @param phrase Phrase to be transposed
+   * @param phrase        Phrase to be transposed
    * @param transposition the amount to transpose in semitones
-   * @param mode the scale to use for the transposition
-   * @param key the chromatic note to be used as the rooth of the mode. i.e., 0 = C, 1 = C# etc.
+   * @param mode          the scale to use for the transposition
+   * @param key           the chromatic note to be used as the rooth of the mode. i.e., 0 = C, 1 =
+   *                      C# etc.
    */
   public static void transpose(final Phrase phrase, final int transposition, final int[] mode,
-      final int key) {
+                               final int key) {
     if (phrase == null) {
       throw new IllegalArgumentException("Phrase should not be null");
     }
@@ -265,7 +268,7 @@ public class Mod implements JMC {
     int rootNote = key % 12;
     List<Note> noteList = phrase.getNoteList();
 
-    for (Note note: noteList ) {
+    for (Note note : noteList) {
       Mod.transpose(note, transposition, mode, key);
     }
     phrase.setNoteList(noteList);
@@ -289,8 +292,8 @@ public class Mod implements JMC {
    * then this method does nothing.
    *
    * @param phrase Phrase to be repeated
-   * @param n integer representing the number of repeats, 1 will leave the phrase unchanged, 2 a
-   * single added repetitions, and so forth
+   * @param n      integer representing the number of repeats, 1 will leave the phrase unchanged,
+   *               2 a single added repetitions, and so forth
    */
   public static void repeat(final Phrase phrase, final int n) {
     if (phrase == null) {
@@ -312,13 +315,13 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null; or <CODE>startLoc</CODE> is greater
    * than or equal to <CODE>endLoc</CODE> then this method does nothing.
    *
-   * @param phrase Phrase with section to be repeated
+   * @param phrase   Phrase with section to be repeated
    * @param startLoc double describing the time of the beginning of the repeated section, in
-   * crotchets.
-   * @param endLoc double describing the time of the end of the repeated section, in crotchets.
+   *                 crotchets.
+   * @param endLoc   double describing the time of the end of the repeated section, in crotchets.
    */
   public static void repeat(Phrase phrase, final double startLoc,
-      final double endLoc) {
+                            final double endLoc) {
     repeat(phrase, 2, startLoc, endLoc);
   }
 
@@ -329,21 +332,21 @@ public class Mod implements JMC {
    * or equal to <CODE>endLoc</CODE>; or <CODE>n</CODE> is less than one then
    * this method does nothing.
    *
-   * @param phrase Phrase with section to be repeated
-   * @param times integer representing the number of repeats
+   * @param phrase   Phrase with section to be repeated
+   * @param times    integer representing the number of repeats
    * @param startLoc double describing the time of the beginning of the repeated section, in
-   * crotchets.
-   * @param endLoc double describing the time of the end of the repeated section, in crotchets.
+   *                 crotchets.
+   * @param endLoc   double describing the time of the end of the repeated section, in crotchets.
    */
   public static void repeat(Phrase phrase, int times, double startLoc,
-      double endLoc) {
+                            double endLoc) {
     // are the arguments valid?
     if (phrase == null) {
       System.err.println("phrase is null");
       return;
     } else if (startLoc >= endLoc) {
       System.err.println("startlocation is bigger or equal to end " +
-          "location");
+        "location");
       return;
     } else if (times < 2) {
       System.err.println("times is smaller than 2");
@@ -364,12 +367,12 @@ public class Mod implements JMC {
     // Add notes for the first time through
     int beforeCount;
     for (beforeCount = 0; beforeCount < phrase.size() && beatCounter +
-        phrase.getNote(beforeCount).getRhythm() <= endLoc; beforeCount++) {
+      phrase.getNote(beforeCount).getRhythm() <= endLoc; beforeCount++) {
       //yes add the whole note
       tempPhr.addNote(phrase.getNote(beforeCount));
       // overlapping first note?
       if (beatCounter < startLoc
-          && beatCounter + phrase.getNote(beforeCount).getRhythm() > startLoc) {
+        && beatCounter + phrase.getNote(beforeCount).getRhythm() > startLoc) {
         overlappingFirst = true;
         overlappingNoteAt = beforeCount;
       }
@@ -379,12 +382,12 @@ public class Mod implements JMC {
     // is the next note overlapping the end?
     if (beforeCount + 1 < phrase.size()) { // make sure we haven't gone through all notes
       if (beatCounter < endLoc
-          && beatCounter + phrase.getNote(beforeCount + 1).getRhythm() > endLoc) {
+        && beatCounter + phrase.getNote(beforeCount + 1).getRhythm() > endLoc) {
         overlappingLast = true;
         // add partial note
         Note partialNote = phrase.getNote(beforeCount).copy();
         partialNote.setDuration(
-            partialNote.getDuration() * endLoc - beatCounter / partialNote.getRhythm());
+          partialNote.getDuration() * endLoc - beatCounter / partialNote.getRhythm());
         partialNote.setRhythm(endLoc - beatCounter);
         tempPhr.addNote(partialNote);
       }
@@ -421,7 +424,7 @@ public class Mod implements JMC {
    * increases the dynamic by a certain amount - <br>
    * obviously a negative number will decrease it
    *
-   * @param phr the phase that is to be affected
+   * @param phr    the phase that is to be affected
    * @param amount the amount that it is to be affected by
    */
   public static void increaseDynamic(final Phrase phr, final int amount) {
@@ -429,7 +432,7 @@ public class Mod implements JMC {
       throw new IllegalArgumentException("'phr' should not be null");
     }
 
-    for (Note n: phr.getNoteList()) {
+    for (Note n : phr.getNoteList()) {
       n.setDynamic(n.getDynamic() + amount);
     }
   }
@@ -440,7 +443,7 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null; or if <CODE>fadeLength</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param phrase Phrase to be faded
+   * @param phrase     Phrase to be faded
    * @param fadeLength double describing the number of beats (crotchets) to fade over
    */
   public static void fadeIn(final Phrase phrase, final double fadeLength) {
@@ -449,7 +452,7 @@ public class Mod implements JMC {
     }
     double rhythmValueCounter = 0.0;
 
-    for (Note nextNote:  phrase.getNoteList()) {
+    for (Note nextNote : phrase.getNoteList()) {
       if (rhythmValueCounter > fadeLength) {
         break;
       }
@@ -475,18 +478,18 @@ public class Mod implements JMC {
    * fadeLength</CODE> is less than or equal to <CODE>phraseStart</CODE> then
    * this method does nothing.
    *
-   * @param phrase Phrase to be faded
-   * @param fadeLength double describing the duration of the fade, in crotchets
+   * @param phrase          Phrase to be faded
+   * @param fadeLength      double describing the duration of the fade, in crotchets
    * @param phraseStartTime double describing how far into the fade the phrase starts
    */
   public static void fadeIn(Phrase phrase, final double fadeLength,
-      final double phraseStartTime) {
+                            final double phraseStartTime) {
     if (phrase == null || fadeLength <= 0.0 || phraseStartTime < 0.0) {
       return;
     }
     double rhythmValueCounter = phraseStartTime;
 
-    for (Note nextNote: phrase.getNoteList() ) {
+    for (Note nextNote : phrase.getNoteList()) {
       if (rhythmValueCounter >= fadeLength) {
         break;
       }
@@ -507,7 +510,7 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null; or if <CODE>fadeLength</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param phrase Phrase to be faded
+   * @param phrase     Phrase to be faded
    * @param fadeLength double describing the duration of the fade out in crotchets
    */
   public static void fadeOut(Phrase phrase, final double fadeLength) {
@@ -543,13 +546,13 @@ public class Mod implements JMC {
    * fadeLength</CODE> is less than <CODE>phraseEndTime</CODE> then this
    * method does nothing.
    *
-   * @param phrase Phrase to be faded
-   * @param fadeLength double describing the duration of the fade out in crotchets
-   * @param phraseEndTime double describing the length of time, in crotchets, between the end of the
-   * phrase and the end of the fade.
+   * @param phrase        Phrase to be faded
+   * @param fadeLength    double describing the duration of the fade out in crotchets
+   * @param phraseEndTime double describing the length of time, in crotchets, between the end of
+   *                      the phrase and the end of the fade.
    */
   public static void fadeOut(Phrase phrase, final double fadeLength,
-      final double phraseEndTime) {
+                             final double phraseEndTime) {
     if (phrase == null || fadeLength <= 0.0 || phraseEndTime < 0.0) {
       return;
     }
@@ -596,7 +599,7 @@ public class Mod implements JMC {
    * nothing.
    *
    * @param phrase Phrase to be expanded/compressed
-   * @param ratio double describing the compression factor.
+   * @param ratio  double describing the compression factor.
    */
   public static void compress(Phrase phrase, final double ratio) {
     if (phrase == null) {
@@ -609,7 +612,7 @@ public class Mod implements JMC {
     int curr;
     int mean;
 
-    for (Note note: phrase.getNoteList()) {
+    for (Note note : phrase.getNoteList()) {
       if (note.getPitch() != REST) { // reject rests
         curr = note.getDynamic();
         if (curr > max) {
@@ -622,7 +625,7 @@ public class Mod implements JMC {
     }
     mean = (min + max) / 2;
 
-    for (Note note: phrase.getNoteList()) {
+    for (Note note : phrase.getNoteList()) {
       curr = (int) (mean + ((note.getDynamic() - mean) * ratio));
       note.setDynamic(curr);
     }
@@ -641,7 +644,7 @@ public class Mod implements JMC {
     if (phrase1 == null || phrase2 == null) {
       return;
     }
-    for (Note note: phrase2.getNoteList()) {
+    for (Note note : phrase2.getNoteList()) {
       phrase1.add(note.copy());
     }
   }
@@ -658,8 +661,8 @@ public class Mod implements JMC {
   }
 
   /**
-   * Quantises the rhythm values of notes in the <CODE>phrase</CODE>.  See {@link #quantise(Phrase,
-   * double)} for more details.
+   * Quantises the rhythm values of notes in the <CODE>phrase</CODE>.  See {@link
+   * #quantise(Phrase, double)} for more details.
    *
    * @param phrase Phrase to be quantized
    * @param qValue the rhythm value to quantize to, in crotchets
@@ -690,15 +693,16 @@ public class Mod implements JMC {
    *
    * @param phrase Phrase to be quantised.
    * @param qValue the beat subdivision value to quantise to, in crotchets
-   * @param mode the scale to use for the transposition (the JMC has some scale constants)
-   * @param key the chromatic note to be used as the root of the mode. i.e., 0 = C, 1 = C# etc.
+   * @param mode   the scale to use for the transposition (the JMC has some scale constants)
+   * @param key    the chromatic note to be used as the root of the mode. i.e., 0 = C, 1 = C#
+   *               etc.
    */
   public static void quantize(Phrase phrase, final double qValue, final int[] mode, int key) {
     if (phrase == null || qValue <= 0.0 || mode == null || key < 0) {
       return;
     }
 
-    for (Note note: phrase.getNoteList())  {
+    for (Note note : phrase.getNoteList()) {
       double rv = note.getRhythm();
       note.setRhythm((int) Math.round(rv / qValue) * qValue);
       quantizePitch(note, mode, key);
@@ -718,7 +722,7 @@ public class Mod implements JMC {
    * than or equal to the number of notes in the phrase then this method does
    * nothing.
    *
-   * @param phrase Phrase to be cycled
+   * @param phrase   Phrase to be cycled
    * @param numNotes the number of notes in the final phrase
    */
   public static void cycle(Phrase phrase, final int numNotes) {
@@ -736,7 +740,7 @@ public class Mod implements JMC {
       newPhr.addNote(phrase.getNote(i % size).copy());
     }
     phrase.getNoteList().clear();
-    for (Note note: newPhr.getNoteList()) {
+    for (Note note : newPhr.getNoteList()) {
       phrase.getNoteList().add(note);
     }
   }
@@ -759,7 +763,7 @@ public class Mod implements JMC {
    * than or equal to the number of notes in the phrase then this method does
    * nothing.
    *
-   * @param phrase Phrase to be cycled
+   * @param phrase   Phrase to be cycled
    * @param numBeats double describing the minimum length of the final phrase, in crotchets
    */
   public static void cycle(Phrase phrase, final double numBeats) {
@@ -778,7 +782,7 @@ public class Mod implements JMC {
     }
 
     phrase.getNoteList().clear();
-    for (Note note: newPhr.getNoteList()) {
+    for (Note note : newPhr.getNoteList()) {
       phrase.getNoteList().add(note);
     }
   }
@@ -818,7 +822,7 @@ public class Mod implements JMC {
     }
     phrase.getNoteList().clear();
 
-    for (Note note: newPhr.getNoteList()) {
+    for (Note note : newPhr.getNoteList()) {
       phrase.getNoteList().add(note);
     }
   }
@@ -840,7 +844,7 @@ public class Mod implements JMC {
    * <p/>
    * <P> If <CODE>phrase</CODE> is null this method does nothing.
    *
-   * @param phrase Phras to be extended with its mirror
+   * @param phrase         Phras to be extended with its mirror
    * @param repeatLastNote boolean specifying whether the last note is to be repeated
    */
   public static void palindrome(Phrase phrase, final boolean repeatLastNote) {
@@ -909,7 +913,7 @@ public class Mod implements JMC {
     // update the phrase
     phrase.getNoteList().clear();
 
-    for (Note note: backwards.getNoteList() ) {
+    for (Note note : backwards.getNoteList()) {
       phrase.getNoteList().add(note);
     }
   }
@@ -945,7 +949,7 @@ public class Mod implements JMC {
 
       // change the pitch to invert each around the first note
       phrase.getNote(i).setPitch(firstNote - (phrase.getNote(i).getPitch()
-          - firstNote));
+        - firstNote));
     }
   }
 
@@ -979,7 +983,7 @@ public class Mod implements JMC {
     for (; i < phrase.size(); i++) {
       // change the pitch to invert each around the first note
       phrase.getNote(i).setPitch(firstNote - (phrase.getNote(i).getPitch()
-          - firstNote));
+        - firstNote));
     }
   }
 
@@ -1104,7 +1108,7 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null or <CODE>newLength</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param phrase Phrase to be lengthened
+   * @param phrase    Phrase to be lengthened
    * @param newLength double describing the number of beats to change the phrase to.
    */
   public static void changeLength(Phrase phrase, double newLength) {
@@ -1121,7 +1125,7 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null or <CODE>scaleFactor</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param phrase Phrase to be lengthened
+   * @param phrase      Phrase to be lengthened
    * @param scaleFactor double describing the scale factor
    */
   public static void elongate(Phrase phrase, double scaleFactor) {
@@ -1129,7 +1133,7 @@ public class Mod implements JMC {
       return;
     }
 
-    for (Note note: phrase.getNoteList()) {
+    for (Note note : phrase.getNoteList()) {
       note.setRhythm(note.getRhythm() * scaleFactor);
       note.setDuration(note.getDuration() * scaleFactor);
     }
@@ -1149,7 +1153,7 @@ public class Mod implements JMC {
    * equal to zero then this method does nothing.
    *
    * @param phrase Phrase whose beats are to accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param meter  double describing the number of croctets per bar/measure
    */
   public static void accents(Phrase phrase, double meter) {
     double[] beats = {0.0};
@@ -1170,7 +1174,7 @@ public class Mod implements JMC {
    * equal to zero then this method does nothing.
    *
    * @param phrase Phrase whose beats are to accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param meter  double describing the number of croctets per bar/measure
    */
   public static void accent(Phrase phrase, double meter) {
     double[] beats = {0.0};
@@ -1197,12 +1201,12 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param phrase Phrase to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param phrase        Phrase to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
    */
   public static void accents(Phrase phrase, double meter,
-      double[] accentedBeats) {
+                             double[] accentedBeats) {
     accents(phrase, meter, accentedBeats, 20);
   }
 
@@ -1226,12 +1230,12 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param phrase Phrase to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param phrase        Phrase to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
    */
   public static void accent(Phrase phrase, double meter,
-      double[] accentedBeats) {
+                            double[] accentedBeats) {
     accents(phrase, meter, accentedBeats, 20);
   }
 
@@ -1259,15 +1263,15 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param phrase Phrase to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param phrase        Phrase to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
-   * @param accentAmount integer describing the value that the dynamic of accented beats are
-   * increased by.
+   * @param accentAmount  integer describing the value that the dynamic of accented beats are
+   *                      increased by.
    */
   public static void accents(Phrase phrase, final double meter,
-      final double[] accentedBeats,
-      final int accentAmount) {
+                             final double[] accentedBeats,
+                             final int accentAmount) {
     if (phrase == null || meter <= 0.0) {
       return;
     }
@@ -1278,8 +1282,8 @@ public class Mod implements JMC {
     }
 
     double beatCounter = (phrase.getStartTime() < 0.0)
-        ? 0.0
-        : phrase.getStartTime();
+      ? 0.0
+      : phrase.getStartTime();
     List<Note> v = phrase.getNoteList();
     for (int i = 0; i < v.size(); i++) {
       Note n = v.get(i);
@@ -1319,15 +1323,15 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param phrase Phrase to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param phrase        Phrase to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
-   * @param accentAmount integer describing the value that the dynamic of accented beats are
-   * increased by.
+   * @param accentAmount  integer describing the value that the dynamic of accented beats are
+   *                      increased by.
    */
   public static void accent(Phrase phrase, final double meter,
-      final double[] accentedBeats,
-      final int accentAmount) {
+                            final double[] accentedBeats,
+                            final int accentAmount) {
     if (phrase == null || meter <= 0.0) {
       return;
     }
@@ -1338,7 +1342,7 @@ public class Mod implements JMC {
     }
 
     double beatCounter = (phrase.getStartTime() < 0.0) ? 0.0 : phrase.getStartTime();
-   List<Note> v = phrase.getNoteList();
+    List<Note> v = phrase.getNoteList();
     for (int i = 0; i < v.size(); i++) {
       Note n = v.get(i);
       for (int j = 0; j < accentedBeats.length; j++) {
@@ -1368,7 +1372,7 @@ public class Mod implements JMC {
     }
     // get the curent max
     int max = 0;
-    for (Note n:phrase.getNoteList()) {
+    for (Note n : phrase.getNoteList()) {
       if (n.getDynamic() > max) {
         max = n.getDynamic();
       }
@@ -1379,7 +1383,7 @@ public class Mod implements JMC {
     }
     int diff = Note.MAX_DYNAMIC - max;
 
-    for (Note n:phrase.getNoteList() ) {
+    for (Note n : phrase.getNoteList()) {
       n.setDynamic(n.getDynamic() + diff);
     }
   }
@@ -1413,7 +1417,7 @@ public class Mod implements JMC {
     }
     int currentValue, newValue;
 
-    for (Note n: phrase.getNoteList()) {
+    for (Note n : phrase.getNoteList()) {
       currentValue = n.getDynamic();
       // create new dynamic
       do {
@@ -1431,7 +1435,7 @@ public class Mod implements JMC {
    */
   public static void mutate(Phrase phrase) {
     mutate(phrase, 1, 1, CHROMATIC_SCALE, phrase.getLowestPitch(),
-        phrase.getHighestPitch(), new double[]{0.25, 0.5, 1.0, 1.5, 2.0});
+      phrase.getHighestPitch(), new double[]{0.25, 0.5, 1.0, 1.5, 2.0});
   }
 
   /**
@@ -1442,17 +1446,17 @@ public class Mod implements JMC {
    * within the phrase to change are selected at random. The scale values
    * need to be within 0-11 and will typically use the JMC scale constants.
    *
-   * @param Phrase Phrase to be mutated
-   * @param int pitchCount The number of notes to have pitch altered
-   * @param double rhythmCount The number of notes to have thier rhythm altered
-   * @param int[] pitches The scale values from which to select for relacements
-   * @param int lowestPitch The smallest value a relacement pitch can be
-   * @param int highestPitch The largest value a replacement pitch can be
+   * @param Phrase   Phrase to be mutated
+   * @param int      pitchCount The number of notes to have pitch altered
+   * @param double   rhythmCount The number of notes to have thier rhythm altered
+   * @param int[]    pitches The scale values from which to select for relacements
+   * @param int      lowestPitch The smallest value a relacement pitch can be
+   * @param int      highestPitch The largest value a replacement pitch can be
    * @param double[] rhythms The rhyythm values from which to select replacements
    */
   public static void mutate(Phrase phrase, int pitchCount, int[] scale) {
     mutate(phrase, 1, 0, scale, phrase.getLowestPitch(),
-        phrase.getHighestPitch(), new double[]{});
+      phrase.getHighestPitch(), new double[]{});
   }
 
   /**
@@ -1463,16 +1467,16 @@ public class Mod implements JMC {
    * within the phrase to change are selected at random. The scale values
    * need to be within 0-11 and will typically use the JMC scale constants.
    *
-   * @param Phrase Phrase to be mutated
-   * @param int pitchCount The number of notes to have pitch altered
-   * @param double rhythmCount The number of notes to have thier rhythm altered
-   * @param int[] pitches The scale values from which to select for relacements
-   * @param int lowestPitch The smallest value a relacement pitch can be
-   * @param int highestPitch The largest value a replacement pitch can be
+   * @param Phrase   Phrase to be mutated
+   * @param int      pitchCount The number of notes to have pitch altered
+   * @param double   rhythmCount The number of notes to have thier rhythm altered
+   * @param int[]    pitches The scale values from which to select for relacements
+   * @param int      lowestPitch The smallest value a relacement pitch can be
+   * @param int      highestPitch The largest value a replacement pitch can be
    * @param double[] rhythms The rhyythm values from which to select replacements
    */
   public static void mutate(Phrase phrase, int pitchCount, int rhythmCount,
-      int[] pitches, int lowestPitch, int highestPitch, double[] rhythms) {
+                            int[] pitches, int lowestPitch, int highestPitch, double[] rhythms) {
     //pitch mutation
     for (int i = 0; i < pitchCount; i++) {
       int newPitch = (int) (Math.random() * (highestPitch - lowestPitch) + lowestPitch);
@@ -1575,7 +1579,7 @@ public class Mod implements JMC {
     if (phrase == null) {
       return;
     }
-    for (Note n: phrase.getNoteList() ) {
+    for (Note n : phrase.getNoteList()) {
       n.setPan(Math.random());
     }
   }
@@ -1594,7 +1598,7 @@ public class Mod implements JMC {
     }
     boolean left = true;
 
-    for (Note n: phrase.getNoteList()) {
+    for (Note n : phrase.getNoteList()) {
       if (left) {
         n.setPan(0.0);
       } else {
@@ -1609,7 +1613,7 @@ public class Mod implements JMC {
    * This process only effects the duration attribute of the notes in the phrase.
    * <P> If <CODE>phrase</CODE> is null then this method does nothing.
    *
-   * @param phrase The Phrase to be effected
+   * @param phrase    The Phrase to be effected
    * @param minLength The shortest possible duration
    * @param maxLength The longest possible duration
    */
@@ -1617,7 +1621,7 @@ public class Mod implements JMC {
     if (phrase == null || maxLength < minLength) {
       return;
     }
-    for (Note n: phrase.getNoteList()) {
+    for (Note n : phrase.getNoteList()) {
       double dur = Math.random() * (maxLength - minLength) + minLength;
       n.setDuration(dur);
     }
@@ -1629,7 +1633,7 @@ public class Mod implements JMC {
    * pan values of the notes in the phrase.
    * <P> If <CODE>phrase</CODE> is null then this method does nothing.
    *
-   * @param phrase The Phrase to be effected
+   * @param phrase         The Phrase to be effected
    * @param pitchVariation The degree of pitch change to apply.
    */
   public static void randomize(Phrase phrase, int pitchVariation) {
@@ -1642,8 +1646,8 @@ public class Mod implements JMC {
    * pan values of the notes in the phrase.
    * <P> If <CODE>phrase</CODE> is null then this method does nothing.
    *
-   * @param phrase The Phrase to be effected
-   * @param pitchVariation The degree of pitch change to apply.
+   * @param phrase          The Phrase to be effected
+   * @param pitchVariation  The degree of pitch change to apply.
    * @param rhythmVariation The degree of rhythm value change to apply.
    */
   public static void randomize(Phrase phrase, int pitchVariation, double rhythmVariation) {
@@ -1656,22 +1660,22 @@ public class Mod implements JMC {
    * pan values of the notes in the phrase.
    * <P> If <CODE>phrase</CODE> is null then this method does nothing.
    *
-   * @param phrase The Phrase to be effected
-   * @param pitchVariation The degree of pitch change to apply.
-   * @param rhythmVariation The degree of rhythm value change to apply.
+   * @param phrase           The Phrase to be effected
+   * @param pitchVariation   The degree of pitch change to apply.
+   * @param rhythmVariation  The degree of rhythm value change to apply.
    * @param dynamicVariation The degree of dynamic change to apply.
    */
   public static void randomize(Phrase phrase, int pitchVariation, double rhythmVariation,
-      int dynamicVariation) {
+                               int dynamicVariation) {
     if (phrase == null) {
       return;
     }
     boolean left = true;
 
-    for (Note n: phrase.getNoteList()) {
+    for (Note n : phrase.getNoteList()) {
       if (pitchVariation > 0) {
         n.setPitch(n.getPitch() +
-            (int) (Math.random() * (pitchVariation * 2) - pitchVariation));
+          (int) (Math.random() * (pitchVariation * 2) - pitchVariation));
       }
       // create new rhythm and duration values
       if (rhythmVariation > 0.0) {
@@ -1682,7 +1686,7 @@ public class Mod implements JMC {
       // create new dynamic value
       if (dynamicVariation > 0) {
         n.setDynamic(n.getDynamic() +
-            (int) (Math.random() * (dynamicVariation * 2) - dynamicVariation));
+          (int) (Math.random() * (dynamicVariation * 2) - dynamicVariation));
       }
     }
   }
@@ -1720,7 +1724,7 @@ public class Mod implements JMC {
    * series used by jMusic. Notes with durations longer than rhythm values
    * will produce unintended results.
    *
-   * @param phrase The phrase to be modified.
+   * @param phrase        The phrase to be modified.
    * @param numberOfNotes The number of notes in a row to consitute a sequence
    */
   public static void slurUp(Phrase phrase, int numberOfNotes) {
@@ -1733,7 +1737,7 @@ public class Mod implements JMC {
     for (int i = 0; i < max; ) {
       for (int j = 0; j < numberOfNotes - 1; j++) {
         if ((phrase.getNote(i + j).getPitch() >= 0) &&
-            (phrase.getNote(i + j).getPitch() < phrase.getNote(i + j + 1).getPitch())) {
+          (phrase.getNote(i + j).getPitch() < phrase.getNote(i + j + 1).getPitch())) {
           change = true;
         } else {
           change = false;
@@ -1761,7 +1765,7 @@ public class Mod implements JMC {
    * will produce unintended results.
    *
    * @param Phrase The phrase to be modified.
-   * @param int The number of notes in a row to consitute a sequence
+   * @param int    The number of notes in a row to consitute a sequence
    */
   public static void slurDown(Phrase phrase, int numberOfNotes) {
     if (phrase == null || phrase.size() < numberOfNotes || numberOfNotes < 2) {
@@ -1773,7 +1777,7 @@ public class Mod implements JMC {
     for (int i = 0; i < max; ) {
       for (int j = 0; j < numberOfNotes - 1; j++) {
         if ((phrase.getNote(i + j).getPitch() >= 0) &&
-            (phrase.getNote(i + j).getPitch() > phrase.getNote(i + j + 1).getPitch())) {
+          (phrase.getNote(i + j).getPitch() > phrase.getNote(i + j + 1).getPitch())) {
           change = true;
         } else {
           change = false;
@@ -1795,11 +1799,11 @@ public class Mod implements JMC {
   /**
    * Vary the duration of each note in the phrase by the multiplyer.
    *
-   * @param phrase The phrase to be modified.
+   * @param phrase     The phrase to be modified.
    * @param multiplyer The amount to multiply the duration by.
    */
   public static void increaseDuration(Phrase phrase, double multiplyer) {
-    for (Note n: phrase.getNoteList()) {
+    for (Note n : phrase.getNoteList()) {
       n.setDuration(n.getDuration() * multiplyer);
     }
   }
@@ -1811,7 +1815,7 @@ public class Mod implements JMC {
    * @param amount The amount to add  to the duration.
    */
   public static void addToDuration(Phrase phrase, double amount) {
-    for (Note n: phrase.getNoteList()) {
+    for (Note n : phrase.getNoteList()) {
       n.setDuration(n.getDuration() + amount);
     }
   }
@@ -1823,7 +1827,7 @@ public class Mod implements JMC {
    * @param amount The amount to add.
    */
   public static void addToRhythmValue(Phrase phrase, double amount) {
-    for (Note n: phrase.getNoteList()) {
+    for (Note n : phrase.getNoteList()) {
       n.setRhythm(n.getRhythm() + amount);
     }
   }
@@ -1836,7 +1840,7 @@ public class Mod implements JMC {
    */
   public static void addToLength(Phrase phrase, double amount) {
     double articulation;
-    for (Note n: phrase.getNoteList()) {
+    for (Note n : phrase.getNoteList()) {
       articulation = n.getRhythm() / n.getDuration();
       n.setRhythm(n.getRhythm() + amount);
       n.setDuration(n.getRhythm() * articulation);
@@ -1873,7 +1877,7 @@ public class Mod implements JMC {
    * will be set to a value as described in the {@link Note#setPitch} method.
    *
    * @param cphrase CPhrase to be transposed
-   * @param trans integer describing the amount to transpose in semitones
+   * @param trans   integer describing the amount to transpose in semitones
    */
   public static void transpose(CPhrase cphrase, final int trans) {
     if (cphrase == null) {
@@ -1901,13 +1905,14 @@ public class Mod implements JMC {
    * by 7 will beome C an octave above. This can be somewhat unintuitive
    * so be careful.
    *
-   * @param cphrase CPhrase to be transposed
+   * @param cphrase       CPhrase to be transposed
    * @param transposition the amount to transpose in semitones
-   * @param mode the scale to use for the transposition
-   * @param key the chromatic note to be used as the rooth of the mode. i.e., 0 = C, 1 = C# etc.
+   * @param mode          the scale to use for the transposition
+   * @param key           the chromatic note to be used as the rooth of the mode. i.e., 0 = C, 1 =
+   *                      C# etc.
    */
   public static void transpose(CPhrase cphrase, final int transposition, final int[] mode,
-      int key) {
+                               int key) {
     if (cphrase == null) {
       return;
     }
@@ -1937,7 +1942,7 @@ public class Mod implements JMC {
    * one this mthod does nothing.
    *
    * @param cphrase CPhrase to be repeated
-   * @param times number of repeats (default is 1)
+   * @param times   number of repeats (default is 1)
    */
   public static void repeat(CPhrase cphrase, final int times) {
     if (cphrase == null) {
@@ -1962,12 +1967,12 @@ public class Mod implements JMC {
    * <P> If <CODE>cphrase</CODE> is null; or <CODE>startLoc</CODE> is greater
    * than or equal to <CODE>endLoc</CODE> then this method does nothing.
    *
-   * @param cphrase CPhrase to be repeated
+   * @param cphrase  CPhrase to be repeated
    * @param startLoc location of the loop start in beats
-   * @param endLoc location of the loop end in beats
+   * @param endLoc   location of the loop end in beats
    */
   public static void repeat(CPhrase cphrase, final double startLoc,
-      final double endLoc) {
+                            final double endLoc) {
     repeat(cphrase, 2, startLoc, endLoc);
   }
 
@@ -1979,12 +1984,12 @@ public class Mod implements JMC {
    * then this method does nothing.
    *
    * @param cphrase CPhrase to be repeated
-   * @param times int number of repeats (default is 1)
-   * @param double location of the loop start in beats
-   * @param double location of the loop end in beats
+   * @param times   int number of repeats (default is 1)
+   * @param double  location of the loop start in beats
+   * @param double  location of the loop end in beats
    */
   public static void repeat(CPhrase cphrase, final int times,
-      final double startLoc, final double endLoc) {
+                            final double startLoc, final double endLoc) {
     if (cphrase == null || startLoc >= endLoc || times < 2) {
       return;
     }
@@ -1992,7 +1997,7 @@ public class Mod implements JMC {
     while (enum1.hasMoreElements()) {
       Phrase nextPhrase = (Phrase) enum1.nextElement();
       repeat(nextPhrase, times, startLoc - cphrase.getStartTime(),
-          endLoc - cphrase.getStartTime());
+        endLoc - cphrase.getStartTime());
     }
   }
 
@@ -2003,7 +2008,7 @@ public class Mod implements JMC {
    * <P> If <CODE>cphrase</CODE> is null; or if <CODE>fadeLength</CODE> is
    * less than or equal to zero then this method does nothing.
    *
-   * @param cphrase CPhrase to be faded
+   * @param cphrase    CPhrase to be faded
    * @param fadeLength double describing the time of the fade, in crotchets.
    */
   public static void fadeIn(CPhrase cphrase, final double fadeLength) {
@@ -2026,14 +2031,14 @@ public class Mod implements JMC {
    * <CODE>fadeLength</CODE> is less than or equal to <CODE>cphraseStartTime
    * </CODE> then this method does nothing.
    *
-   * @param cphrase CPhrase to be faded
-   * @param fadeLength double describing the time of the fade, in crotchets
+   * @param cphrase          CPhrase to be faded
+   * @param fadeLength       double describing the time of the fade, in crotchets
    * @param cpharseStartTime double describing how far into the fade the phrase starts.
    */
   public static void fadeIn(CPhrase cphrase, final double fadeLength,
-      final double cphraseStartTime) {
+                            final double cphraseStartTime) {
     if (cphrase == null || fadeLength < 0.0 || cphraseStartTime < 0.0
-        || fadeLength <= cphraseStartTime) {
+      || fadeLength <= cphraseStartTime) {
       return;
     }
 
@@ -2043,7 +2048,7 @@ public class Mod implements JMC {
       // make the correction for phrases that don't start at the same time
       // as the Part does (0.0)
       fadeIn(nextPhrase, fadeLength, (cphraseStartTime
-          + nextPhrase.getStartTime()));
+        + nextPhrase.getStartTime()));
     }
   }
 
@@ -2053,7 +2058,7 @@ public class Mod implements JMC {
    * <P> If <CODE>cphrase</CODE> is null; or if <CODE>fadeLength</CODE> is
    * less than or equal to zero then this method does nothing.
    *
-   * @param cphrase CPhrase to be faded
+   * @param cphrase    CPhrase to be faded
    * @param fadeLength double describing the time of the fade out in crotchets
    */
   public static void fadeOut(CPhrase cphrase, final double fadeLength) {
@@ -2068,7 +2073,7 @@ public class Mod implements JMC {
       // make the correction for phrases that don't end at the same time
       // as the CPhrase does
       fadeOut(nextPhrase, fadeLength, (cphrase.getEndTime()
-          - nextPhrase.getEndTime()));
+        - nextPhrase.getEndTime()));
     }
   }
 
@@ -2080,13 +2085,13 @@ public class Mod implements JMC {
    * <CODE>fadeLength</CODE> is less than <CODE>cphraseEndTime</CODE> then
    * this method does nothing.
    *
-   * @param cphrase CPhrase to be faded
-   * @param fadeLength double describing the time of the fade out in crotchets
-   * @param phraseEndTime double describing the length of time, in crothcets, between the end of the
-   * phrase and the end of the fade.
+   * @param cphrase       CPhrase to be faded
+   * @param fadeLength    double describing the time of the fade out in crotchets
+   * @param phraseEndTime double describing the length of time, in crothcets, between the end of
+   *                      the phrase and the end of the fade.
    */
   public static void fadeOut(CPhrase cphrase, final double fadeLength,
-      final double cphraseEndTime) {
+                             final double cphraseEndTime) {
 
     Enumeration enum1 = cphrase.getPhraseList().elements();
     while (enum1.hasMoreElements()) {
@@ -2095,8 +2100,8 @@ public class Mod implements JMC {
       // make the correction for phrases that don't end at the same time
       // as the Part does
       fadeOut(nextPhrase, fadeLength, (cphraseEndTime
-          + cphrase.getEndTime()
-          - nextPhrase.getEndTime()));
+        + cphrase.getEndTime()
+        - nextPhrase.getEndTime()));
     }
   }
 
@@ -2109,7 +2114,7 @@ public class Mod implements JMC {
    * <P> If <CODE>cphrase</CODE> is null then this method does nothing.
    *
    * @param cphrase CPhrase to be compressed
-   * @param retio double describing the compression factor.
+   * @param retio   double describing the compression factor.
    */
   public static void compress(CPhrase cphrase, final double ratio) {
     if (cphrase == null) {
@@ -2128,7 +2133,7 @@ public class Mod implements JMC {
         break;
       }
 
-      for (Note note: tempPhrase.getNoteList()) {
+      for (Note note : tempPhrase.getNoteList()) {
         if (note.getPitch() != REST) { // reject rests
           curr = note.getDynamic();
           accum += curr;
@@ -2147,7 +2152,7 @@ public class Mod implements JMC {
         break;
       }
 
-      for (Note note: tempPhrase.getNoteList()) {
+      for (Note note : tempPhrase.getNoteList()) {
         System.out.println("note was =" + note.getDynamic());
         curr = (int) (ave + ((note.getDynamic() - ave) * ratio));
         note.setDynamic(curr);
@@ -2208,7 +2213,7 @@ public class Mod implements JMC {
    * <P> See {@link #quantise(CPhrase, double)}.
    *
    * @param cphrase CPhrase to be quantized
-   * @param qValue the amount to quantize to
+   * @param qValue  the amount to quantize to
    */
   public static void quantize(CPhrase cphrase, final double qValue) {
     quantise(cphrase, qValue);
@@ -2220,7 +2225,7 @@ public class Mod implements JMC {
    * <P> See {@link #quantise(CPhrase, double)}.
    *
    * @param cphrase CPhrase to be quantized
-   * @param qValue the amount to quantize to
+   * @param qValue  the amount to quantize to
    */
   public static void quantise(CPhrase cphrase, final double qValue) {
     quantize(cphrase, qValue, CHROMATIC_SCALE, 0);
@@ -2235,7 +2240,7 @@ public class Mod implements JMC {
    * or equal to zero then this method does nothing.
    *
    * @param cphrase CPhrase to be quantised
-   * @param qValue the amount to quantise to
+   * @param qValue  the amount to quantise to
    */
   public static void quantize(CPhrase cphrase, final double qValue, final int[] mode, int key) {
     if (cphrase == null || qValue <= 0.0) {
@@ -2262,7 +2267,7 @@ public class Mod implements JMC {
   /**
    * A version of Cycle that works for parts
    *
-   * @param Part the part to cycle
+   * @param Part   the part to cycle
    * @param double position of where it should cycle to
    */
   public static void cycle(Part part, double to) {
@@ -2288,7 +2293,7 @@ public class Mod implements JMC {
       for (int i = 0; i < phrases.length; i++) {
         //setStartTime to make it in phase with that cycle
         phrases[i].setStartTime(phrases[i].getStartTime() +
-            startPoint * endTime);
+          startPoint * endTime);
         part.addPhrase(phrases[i]);
       }
       startPoint++;
@@ -2303,7 +2308,7 @@ public class Mod implements JMC {
       for (int i = 0; i < phrases.length; i++) {
         //setStartTime to make it in phase with that cycle
         phrases[i].setStartTime(phrases[i].getStartTime() +
-            startPoint * endTime);
+          startPoint * endTime);
         part.addPhrase(phrases[i]);
       }
     }
@@ -2318,7 +2323,7 @@ public class Mod implements JMC {
    * <P> If <CODE>cphrase</CODE> is null or <CODE>scaleFactor</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param cphrase CPhrase to be lengthened
+   * @param cphrase     CPhrase to be lengthened
    * @param scaleFactor double describing the scale factor
    */
   public static void elongate(CPhrase cphrase, final double scaleFactor) {
@@ -2347,7 +2352,7 @@ public class Mod implements JMC {
    * equal to zero then this method does nothing.
    *
    * @param cphrase CPhrase to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param meter   double describing the number of croctets per bar/measure
    */
   public static void accents(CPhrase cphrase, final double meter) {
     double[] beats = {0.0};
@@ -2374,12 +2379,12 @@ public class Mod implements JMC {
    * <P> If <CODE>cphrase</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param cphrase CPhrase to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param cphrase       CPhrase to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
    */
   public static void accents(CPhrase cphrase, final double meter,
-      final double[] accentedBeats) {
+                             final double[] accentedBeats) {
     accents(cphrase, meter, accentedBeats, 20);
   }
 
@@ -2407,15 +2412,15 @@ public class Mod implements JMC {
    * <P> If <CODE>cphrase</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param cphrase CPhrase to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param cphrase       CPhrase to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
-   * @param accentAmount integer describing the value that the dynamic of accented beats are
-   * increased by.
+   * @param accentAmount  integer describing the value that the dynamic of accented beats are
+   *                      increased by.
    */
   public static void accents(CPhrase cphrase, final double meter,
-      final double[] accentedBeats,
-      final int accentAmount) {
+                             final double[] accentedBeats,
+                             final int accentAmount) {
     if (cphrase == null || meter <= 0.0) {
       return;
     }
@@ -2450,7 +2455,7 @@ public class Mod implements JMC {
     Enumeration enum1 = cphrase.getPhraseList().elements();
     while (enum1.hasMoreElements()) {
       Phrase phrase = (Phrase) enum1.nextElement();
-      for (Note note: phrase.getNoteList()) {
+      for (Note note : phrase.getNoteList()) {
         if (note.getDynamic() > max) {
           max = note.getDynamic();
         }
@@ -2464,7 +2469,7 @@ public class Mod implements JMC {
     Enumeration enum3 = cphrase.getPhraseList().elements();
     while (enum3.hasMoreElements()) {
       Phrase phrase = (Phrase) enum3.nextElement();
-      for (Note note: phrase.getNoteList()) {
+      for (Note note : phrase.getNoteList()) {
         note.setDynamic(note.getDynamic() + diff);
       }
     }
@@ -2562,11 +2567,11 @@ public class Mod implements JMC {
   }
 
   /**
-   * Adjusts all Notes' duration values to vary randomly between specified values from note to note.
-   * This process only effects the duration attribute of the notes in the phrase.
-   * <P> If <CODE>cphrase</CODE> is null then this method does nothing.
+   * Adjusts all Notes' duration values to vary randomly between specified values from note to
+   * note. This process only effects the duration attribute of the notes in the phrase. <P> If
+   * <CODE>cphrase</CODE> is null then this method does nothing.
    *
-   * @param cphrase The CPhrase to be effected
+   * @param cphrase   The CPhrase to be effected
    * @param minlength The shortest possible duration
    * @param maxlength The longest possible duration
    */
@@ -2587,7 +2592,7 @@ public class Mod implements JMC {
    * pan values of the notes in the cphrase.
    * <P> If <CODE>cphrase</CODE> is null then this method does nothing.
    *
-   * @param cphrase The CPhrase to be effected
+   * @param cphrase        The CPhrase to be effected
    * @param pitchVariation The degree of pitch change to apply.
    */
   public static void randomize(CPhrase cphrase, int pitchVariation) {
@@ -2600,8 +2605,8 @@ public class Mod implements JMC {
    * pan values of the notes in the cphrase.
    * <P> If <CODE>cphrase</CODE> is null then this method does nothing.
    *
-   * @param cphrase The CPhrase to be effected
-   * @param pitchVariation The degree of pitch change to apply.
+   * @param cphrase         The CPhrase to be effected
+   * @param pitchVariation  The degree of pitch change to apply.
    * @param rhythmVariation The degree of rhythm value change to apply.
    */
   public static void randomize(CPhrase cphrase, int pitchVariation, double rhythmVariation) {
@@ -2614,13 +2619,13 @@ public class Mod implements JMC {
    * pan values of the notes in the cphrase.
    * <P> If <CODE>cphrase</CODE> is null then this method does nothing.
    *
-   * @param cphrase The CPhrase to be effected
-   * @param pitchVariation The degree of pitch change to apply.
-   * @param rhythmVariation The degree of rhythm value change to apply.
+   * @param cphrase          The CPhrase to be effected
+   * @param pitchVariation   The degree of pitch change to apply.
+   * @param rhythmVariation  The degree of rhythm value change to apply.
    * @param dynamicVariation The degree of dynamic change to apply.
    */
   public static void randomize(CPhrase cphrase, int pitchVariation, double rhythmVariation,
-      int dynamicVariation) {
+                               int dynamicVariation) {
     if (cphrase == null) {
       return;
     }
@@ -2640,7 +2645,7 @@ public class Mod implements JMC {
    * will produce unintended results.
    *
    * @param CPhrase The cphrase to be modified.
-   * @param int The number of notes in a row to consitute a sequence
+   * @param int     The number of notes in a row to consitute a sequence
    */
   public static void slurUp(CPhrase cphrase, int numberOfNotes) {
     if (cphrase == null) {
@@ -2661,7 +2666,7 @@ public class Mod implements JMC {
    * will produce unintended results.
    *
    * @param CPhrase The cphrase to be modified.
-   * @param int The number of notes in a row to consitute a sequence
+   * @param int     The number of notes in a row to consitute a sequence
    */
   public static void slurDown(CPhrase cphrase, int numberOfNotes) {
     if (cphrase == null) {
@@ -2678,7 +2683,7 @@ public class Mod implements JMC {
    * Vary the duration of each note in the phrase by the multiplyer.
    *
    * @param CPhrase The cphrase to be modified.
-   * @param double The amount to multiply the duration by.
+   * @param double  The amount to multiply the duration by.
    */
   public static void increaseDuration(CPhrase cphrase, double multiplyer) {
     Enumeration enum1 = cphrase.getPhraseList().elements();
@@ -2693,7 +2698,7 @@ public class Mod implements JMC {
    * Vary the duration of each note in the cphrase by the specified amount.
    *
    * @param cphrase -  The cphrase to be modified.
-   * @param amount - The number of beats to add  to the duration.
+   * @param amount  - The number of beats to add  to the duration.
    */
   public static void addToDuration(CPhrase cphrase, double amount) {
     Enumeration enum1 = cphrase.getPhraseList().elements();
@@ -2707,7 +2712,7 @@ public class Mod implements JMC {
    * Vary the rhythm value of each note in the cphrase by the specified amount.
    *
    * @param cphrase -  The phrase to be modified.
-   * @param amount -  The number of beats to add.
+   * @param amount  -  The number of beats to add.
    */
   public static void addToRhythmValue(CPhrase cphrase, double amount) {
     Enumeration enum1 = cphrase.getPhraseList().elements();
@@ -2722,7 +2727,7 @@ public class Mod implements JMC {
    * Vary both the rhythm value and duration of each note in the phrase by the specified amount.
    *
    * @param cphrase -  The cphrase to be modified.
-   * @param amount - The number of beats to add.
+   * @param amount  - The number of beats to add.
    */
   public static void addToLength(CPhrase cphrase, double amount) {
     Enumeration enum1 = cphrase.getPhraseList().elements();
@@ -2736,7 +2741,7 @@ public class Mod implements JMC {
    * Vary the interval between notes scaling by the specified amount to each interval.
    *
    * @param cphrase - The CPhrase to be modified.
-   * @param amount - The scaling multiplyer for the intervals, i.e., 2.0 doubles width.
+   * @param amount  - The scaling multiplyer for the intervals, i.e., 2.0 doubles width.
    */
   public static void expandIntervals(CPhrase cphrase, double amount) {
     Enumeration enum1 = cphrase.getPhraseList().elements();
@@ -2751,7 +2756,7 @@ public class Mod implements JMC {
    * value.
    *
    * @param cphrase - The CPhrase to be modified.
-   * @param amount - The dynamic change possible either side of the curent dynamic.
+   * @param amount  - The dynamic change possible either side of the curent dynamic.
    */
   public static void shake(CPhrase cphrase, int amount) {
     Enumeration enum1 = cphrase.getPhraseList().elements();
@@ -2780,7 +2785,7 @@ public class Mod implements JMC {
    * one this method does nothing.
    *
    * @param cphrase Part to be repeated
-   * @param times number of repeats (default is 1)
+   * @param times   number of repeats (default is 1)
    */
   public static void repeat(Part part, final int times) {
     if (part == null) {
@@ -2814,12 +2819,12 @@ public class Mod implements JMC {
    * <P> If <CODE>part</CODE> is null; or <CODE>startLoc</CODE> is greater
    * than or equal to <CODE>endLoc</CODE> then this method does nothing.
    *
-   * @param part Part to be repeated
+   * @param part     Part to be repeated
    * @param startLoc location of the loop start in beats
-   * @param endLoc location of the loop end in beats
+   * @param endLoc   location of the loop end in beats
    */
   public static void repeat(Part part, final double startLoc,
-      final double endLoc) {
+                            final double endLoc) {
     repeat(part, 2, startLoc, endLoc);
   }
 
@@ -2830,13 +2835,13 @@ public class Mod implements JMC {
    * than or equal to <CODE>endLoc</CODE>; or <CODE>n</CODE> is less than one
    * then this method does nothing.
    *
-   * @param part Part to be repeated
-   * @param times int number of repeats (default is 1)
+   * @param part   Part to be repeated
+   * @param times  int number of repeats (default is 1)
    * @param double location of the loop start in beats
    * @param double location of the loop end in beats
    */
   public static void repeat(Part part, final int times,
-      final double startLoc, final double endLoc) {
+                            final double startLoc, final double endLoc) {
     if (part == null || startLoc >= endLoc || times < 2) {
       return;
     }
@@ -2851,7 +2856,7 @@ public class Mod implements JMC {
    * Transpose the part up or down in semitone steps. This
    * transposition is chromatic, not diatonic.
    *
-   * @param part the Part to be transposed
+   * @param part          the Part to be transposed
    * @param transposition the number of semitone steps to shift the pitch
    */
   public static void transpose(Part part, final int transposition) {
@@ -2880,10 +2885,11 @@ public class Mod implements JMC {
    * by 7 will beome C an octave above. This can be somewhat unintuitive
    * so be careful.
    *
-   * @param part Part to be transposed
+   * @param part    Part to be transposed
    * @param degrees the number of scale degrees to transpose
-   * @param mode the scale to use for the transposition
-   * @param key the chromatic note to be used as the rooth of the mode. i.e., 0 = C, 1 = C# etc.
+   * @param mode    the scale to use for the transposition
+   * @param key     the chromatic note to be used as the rooth of the mode. i.e., 0 = C, 1 = C#
+   *                etc.
    */
   public static void transpose(Part part, final int degrees, final int[] mode, int key) {
     if (part == null) {
@@ -2907,7 +2913,7 @@ public class Mod implements JMC {
    * <p/>
    * <P> If <CODE>part</CODE> is null then this method does nothing.
    *
-   * @param part Part to be compressed
+   * @param part  Part to be compressed
    * @param ratio double describing the compression factor
    */
   public static void compress(Part part, final double ratio) {
@@ -2927,7 +2933,7 @@ public class Mod implements JMC {
       if (tempPhrase == null) {
         break;
       }
-      for (Note note: tempPhrase.getNoteList()) {
+      for (Note note : tempPhrase.getNoteList()) {
         if (note.getPitch() != REST) {
           curr = note.getDynamic();
           accum += curr;
@@ -2942,7 +2948,7 @@ public class Mod implements JMC {
       if (tempPhrase == null) {
         break;
       }
-      for (Note note: tempPhrase.getNoteList()) {
+      for (Note note : tempPhrase.getNoteList()) {
         System.out.println("note was =" + note.getDynamic());
         curr = (int) (ave + ((note.getDynamic() - ave) * ratio));
         note.setDynamic(curr);
@@ -2968,12 +2974,12 @@ public class Mod implements JMC {
    * <p/>
    * <P> If <CODE>part1</CODE> or <CODE>part2</CODE> is null
    *
-   * @param part1 the base Part
-   * @param part2 the Part to be appended
+   * @param part1   the base Part
+   * @param part2   the Part to be appended
    * @param fromLoc double describing the start time for the second part to be appended
    */
   public static void append(Part part1, final Part part2,
-      final double fromLoc) {
+                            final double fromLoc) {
     if (part1 == null || part2 == null) {
       return;
     }
@@ -2997,7 +3003,7 @@ public class Mod implements JMC {
    * obviously a negative number will decrease it.
    *
    * @param Part the part that is to be affected
-   * @param int the amount that it is to be affected by
+   * @param int  the amount that it is to be affected by
    */
   public static void increaseDynamic(Part p, int amount) {
     if (p == null) {
@@ -3018,7 +3024,7 @@ public class Mod implements JMC {
    * <P> If <CODE>part</CODE> is null; or if <CODE>fadeLength</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param part Part to be faded
+   * @param part       Part to be faded
    * @param fadelength double describing the number of crotchets to fade over
    */
   public static void fadeIn(Part part, final double fadeLength) {
@@ -3044,12 +3050,12 @@ public class Mod implements JMC {
    * fadeLength</CODE> is less than or equal to <CODE>phraseStart</CODE> then
    * this method does nothing.
    *
-   * @param part Part to be faded
-   * @param fadeLength double describing the duration of the fade, in crotchets
+   * @param part          Part to be faded
+   * @param fadeLength    double describing the duration of the fade, in crotchets
    * @param partStartTime double describing how far into the fade the part starts
    */
   public static void fadeIn(Part part, final double fadeLength,
-      final double partStartTime) {
+                            final double partStartTime) {
     if (part == null || fadeLength <= 0.0 || partStartTime < 0.0) {
       return;
     }
@@ -3068,7 +3074,7 @@ public class Mod implements JMC {
    * <P> If <CODE>part</CODE> is null; or if <CODE>fadeLength</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param part Part to be faded
+   * @param part       Part to be faded
    * @param fadeLength double describing the duration of the fade out in crotchets
    */
   public static void fadeOut(Part part, final double fadeLength) {
@@ -3093,13 +3099,13 @@ public class Mod implements JMC {
    * fadeLength</CODE> is less than <CODE>phraseEndTime</CODE> then this
    * method does nothing.
    *
-   * @param part Part to be faded
-   * @param fadeLength double describing the duration of the fade out in crotchets
+   * @param part        Part to be faded
+   * @param fadeLength  double describing the duration of the fade out in crotchets
    * @param partEndTime double describing the length of time, in crotchets, between the end of the
-   * part and the end of the fade.
+   *                    part and the end of the fade.
    */
   public static void fadeOut(Part part, final double fadeLength,
-      final double partEndTime) {
+                             final double partEndTime) {
     if (part == null || fadeLength <= 0.0 || partEndTime < 0.0) {
       return;
     }
@@ -3140,7 +3146,7 @@ public class Mod implements JMC {
    * <p/>
    * <P> See {@link #quantise(Part, double)}.
    *
-   * @param part Part to be quantized
+   * @param part   Part to be quantized
    * @param qValue the amount to quantize to
    */
   public static void quantize(Part part, final double qValue) {
@@ -3152,7 +3158,7 @@ public class Mod implements JMC {
    * <p/>
    * <P> See {@link #quantise(Part, double)}.
    *
-   * @param part Part to be quantized
+   * @param part   Part to be quantized
    * @param qValue the amount to quantize to
    */
   public static void quantise(Part part, final double qValue) {
@@ -3167,7 +3173,7 @@ public class Mod implements JMC {
    * <P> If <CODE>part</CODE> is null or <CODE>qValue</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param part Part to be quantised
+   * @param part   Part to be quantised
    * @param double - the amount to quantise too
    */
   public static void quantize(Part part, final double qValue, final int[] mode, int key) {
@@ -3206,7 +3212,7 @@ public class Mod implements JMC {
    * <P> If <CODE>part</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param part Part to be accented
+   * @param part  Part to be accented
    * @param meter double describing the number of croctets per bar/measure
    */
   public static void accents(Part part, final double meter) {
@@ -3234,12 +3240,12 @@ public class Mod implements JMC {
    * <P> If <CODE>part</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param part Part to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param part          Part to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
    */
   public static void accents(Part part, double meter,
-      double[] accentedBeats) {
+                             double[] accentedBeats) {
     accents(part, meter, accentedBeats, 20);
   }
 
@@ -3267,15 +3273,15 @@ public class Mod implements JMC {
    * <P> If <CODE>part</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param part Part to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param part          Part to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
-   * @param accentAmount integer describing the value that the dynamic of accented beats are
-   * increased by.
+   * @param accentAmount  integer describing the value that the dynamic of accented beats are
+   *                      increased by.
    */
   public static void accents(Part part, final double meter,
-      final double[] accentedBeats,
-      final int accentAmount) {
+                             final double[] accentedBeats,
+                             final int accentAmount) {
     if (part == null || meter <= 0.0) {
       return;
     }
@@ -3311,7 +3317,7 @@ public class Mod implements JMC {
     while (enum1.hasMoreElements()) {
       Phrase phrase = (Phrase) enum1.nextElement();
 
-      for (Note note: phrase.getNoteList()) {
+      for (Note note : phrase.getNoteList()) {
         if (note.getDynamic() > max) {
           max = note.getDynamic();
         }
@@ -3325,7 +3331,7 @@ public class Mod implements JMC {
     Enumeration enum3 = part.getPhraseList().elements();
     while (enum3.hasMoreElements()) {
       Phrase phrase = (Phrase) enum3.nextElement();
-      for (Note note: phrase.getNoteList()) {
+      for (Note note : phrase.getNoteList()) {
         note.setDynamic(note.getDynamic() + diff);
       }
     }
@@ -3337,7 +3343,7 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null or <CODE>scaleFactor</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param part Part to be lengthened
+   * @param part        Part to be lengthened
    * @param scaleFactor double describing the scale factor
    */
   public static void elongate(Part part, double scaleFactor) {
@@ -3443,11 +3449,11 @@ public class Mod implements JMC {
   }
 
   /**
-   * Adjusts all Notes' duration values to vary randomly between specified values from note to note.
-   * This process only effects the duration attribute of the notes in the phrase.
-   * <P> If <CODE>Part</CODE> is null then this method does nothing.
+   * Adjusts all Notes' duration values to vary randomly between specified values from note to
+   * note. This process only effects the duration attribute of the notes in the phrase. <P> If
+   * <CODE>Part</CODE> is null then this method does nothing.
    *
-   * @param part The Part to be effected
+   * @param part      The Part to be effected
    * @param minlength The shortest possible duration
    * @param maxlength The longest possible duration
    */
@@ -3468,7 +3474,7 @@ public class Mod implements JMC {
    * pan values of the notes in the part.
    * <P> If <CODE>Part</CODE> is null then this method does nothing.
    *
-   * @param part The Part to be effected
+   * @param part           The Part to be effected
    * @param pitchVariation The degree of pitch change to apply.
    */
   public static void randomize(Part part, int pitchVariation) {
@@ -3481,8 +3487,8 @@ public class Mod implements JMC {
    * pan values of the notes in the part.
    * <P> If <CODE>Part</CODE> is null then this method does nothing.
    *
-   * @param part The Part to be effected
-   * @param pitchVariation The degree of pitch change to apply.
+   * @param part            The Part to be effected
+   * @param pitchVariation  The degree of pitch change to apply.
    * @param rhythmVariation The degree of rhythm value change to apply.
    */
   public static void randomize(Part part, int pitchVariation, double rhythmVariation) {
@@ -3495,13 +3501,13 @@ public class Mod implements JMC {
    * pan values of the notes in the part.
    * <P> If <CODE>Part</CODE> is null then this method does nothing.
    *
-   * @param part The Part to be effected
-   * @param pitchVariation The degree of pitch change to apply.
-   * @param rhythmVariation The degree of rhythm value change to apply.
+   * @param part             The Part to be effected
+   * @param pitchVariation   The degree of pitch change to apply.
+   * @param rhythmVariation  The degree of rhythm value change to apply.
    * @param dynamicVariation The degree of dynamic change to apply.
    */
   public static void randomize(Part part, int pitchVariation, double rhythmVariation,
-      int dynamicVariation) {
+                               int dynamicVariation) {
     if (part == null) {
       return;
     }
@@ -3521,7 +3527,7 @@ public class Mod implements JMC {
    * will produce unintended results.
    *
    * @param Part The part to be modified.
-   * @param int The number of notes in a row to consitute a sequence
+   * @param int  The number of notes in a row to consitute a sequence
    */
   public static void slurUp(Part part, int numberOfNotes) {
     if (part == null) {
@@ -3542,7 +3548,7 @@ public class Mod implements JMC {
    * will produce unintended results.
    *
    * @param Part The part to be modified.
-   * @param int The number of notes in a row to consitute a sequence
+   * @param int  The number of notes in a row to consitute a sequence
    */
   public static void slurDown(Part part, int numberOfNotes) {
     if (part == null) {
@@ -3558,7 +3564,7 @@ public class Mod implements JMC {
   /**
    * Vary the duration of each note in the part by the multiplyer.
    *
-   * @param Part The part to be modified.
+   * @param Part   The part to be modified.
    * @param double The amount to multiply the duration by.
    */
   public static void increaseDuration(Part part, double multiplyer) {
@@ -3572,7 +3578,7 @@ public class Mod implements JMC {
   /**
    * Vary the duration of each note in the part by the specified amount.
    *
-   * @param part -  The Part to be modified.
+   * @param part   -  The Part to be modified.
    * @param amount - The number of beats to add  to the duration.
    */
   public static void addToDuration(Part part, double amount) {
@@ -3586,7 +3592,7 @@ public class Mod implements JMC {
   /**
    * Vary the rhythm value of each note in the part by the specified amount.
    *
-   * @param part -  The Part to be modified.
+   * @param part   -  The Part to be modified.
    * @param amount -  The number of beats to add.
    */
   public static void addToRhythmValue(Part part, double amount) {
@@ -3601,7 +3607,7 @@ public class Mod implements JMC {
   /**
    * Vary both the rhythm value and duration of each note in the part by the specified amount.
    *
-   * @param part -  The Part to be modified.
+   * @param part   -  The Part to be modified.
    * @param amount - The number of beats to add.
    */
   public static void addToLength(Part part, double amount) {
@@ -3615,7 +3621,7 @@ public class Mod implements JMC {
   /**
    * Vary the interval between notes scaling by the specified amount to each interval.
    *
-   * @param part - The Part to be modified.
+   * @param part   - The Part to be modified.
    * @param amount - The scaling multiplyer for the intervals, i.e., 2.0 doubles width.
    */
   public static void expandIntervals(Part part, double amount) {
@@ -3630,7 +3636,7 @@ public class Mod implements JMC {
    * Randomise the dynamic values of notes up to a specified amount either side of the current
    * value.
    *
-   * @param part - The Part to be modified.
+   * @param part   - The Part to be modified.
    * @param amount - The dynamic change possible either side of the curent dynamic.
    */
   public static void shake(Part part, int amount) {
@@ -3681,7 +3687,7 @@ public class Mod implements JMC {
       if (!n.isRest()) {
         if (nphr.getSize() > 0) { // if it is not the first note
           nphr.getNote(nphr.getSize() - 1)
-              .setRhythm(((int) ((sst - prevsst) * 100000 + 0.5)) / 100000.0);
+            .setRhythm(((int) ((sst - prevsst) * 100000 + 0.5)) / 100000.0);
         } else {// if it is the first note to go in, set the startime
           nphr.setStartTime(sst);
         }
@@ -3689,7 +3695,7 @@ public class Mod implements JMC {
       }
 // adjust the start time and remove the note
       tphr.setStartTime(((int) ((sst +
-          n.getRhythm()) * 100000 + 0.5)) / 100000.0);
+        n.getRhythm()) * 100000 + 0.5)) / 100000.0);
       tphr.removeNote(0);
 
       prevsst = sst;
@@ -3703,7 +3709,7 @@ public class Mod implements JMC {
   /**
    * Transpose a Score
    *
-   * @param score Score to be faded
+   * @param score         Score to be faded
    * @param transposition The number of semitones to transpose by
    */
   public static void transpose(Score scr, final int transposition) {
@@ -3732,10 +3738,11 @@ public class Mod implements JMC {
    * by 7 will beome C an octave above. This can be somewhat unintuitive
    * so be careful.
    *
-   * @param score Score to be transposed
+   * @param score   Score to be transposed
    * @param degrees the amount to transpose in scale steps
-   * @param mode the scale to use for the transposition
-   * @param key the chromatic note to be used as the rooth of the mode. i.e., 0 = C, 1 = C# etc.
+   * @param mode    the scale to use for the transposition
+   * @param key     the chromatic note to be used as the rooth of the mode. i.e., 0 = C, 1 = C#
+   *                etc.
    */
   public static void transpose(Score score, final int degrees, final int[] mode, int key) {
     if (score == null) {
@@ -3756,7 +3763,7 @@ public class Mod implements JMC {
    * <P> If <CODE>score</CODE> is null or <CODE>fadeLength</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param score Score to be faded
+   * @param score      Score to be faded
    * @param fadelength double describing the number of crotchets to fade over
    */
   public static void fadeIn(Score score, final double fadeLength) {
@@ -3776,7 +3783,7 @@ public class Mod implements JMC {
    * increases the dynamic by a certain amount - <br>
    * obviously a negative number will decrease it
    *
-   * @param score the score that is to be affected
+   * @param score  the score that is to be affected
    * @param amount the amount
    */
   public static void increaseDynamic(final Score score, final int amount) {
@@ -3800,7 +3807,7 @@ public class Mod implements JMC {
    * <P> If <CODE>score</CODE> is null or <CODE>fadeLength</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param score Score to be faded
+   * @param score      Score to be faded
    * @param fadeLength double describing the number of crotchets to fade over
    */
   public static void fadeOut(final Score score, final double fadeLength) {
@@ -3919,7 +3926,7 @@ public class Mod implements JMC {
         Phrase currPhrase = (Phrase) enum2.nextElement();
         currPhrase.setStartTime(currPhrase.getStartTime() + endTime);
         if (currPhrase.getInstrument() != 250 && currPhrase.getInstrument() != currPart
-            .getInstrument()) {
+          .getInstrument()) {
           currPhrase.setInstrument(currPart.getInstrument());
         }
         if (currPhrase.getInstrument() == currPart.getInstrument()) {
@@ -3986,7 +3993,7 @@ public class Mod implements JMC {
    * <p/>
    * <P> See {@link #quantise(Score, double)}.
    *
-   * @param score Score to quantize
+   * @param score  Score to quantize
    * @param qValue double describing the amount to quantize to
    */
   public static void quantize(Score score, final double qValue) {
@@ -3998,7 +4005,7 @@ public class Mod implements JMC {
    * <p/>
    * <P> See {@link #quantise(Score, double)}.
    *
-   * @param score Score to quantize
+   * @param score  Score to quantize
    * @param qValue double describing the amount to quantize to
    */
   public static void quantise(Score score, final double qValue) {
@@ -4013,10 +4020,10 @@ public class Mod implements JMC {
    * <P> If <CODE>score</CODE> is null or <CODE>qValue</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param score Score to quantise
+   * @param score  Score to quantise
    * @param qValue double describing the amount to quantise to
-   * @param mode The scale to quantize pitch values to, e.g., MAJOR_SCALE
-   * @param key The key of the mode. e.g., 0 = C, 1 = C# etc.
+   * @param mode   The scale to quantize pitch values to, e.g., MAJOR_SCALE
+   * @param key    The key of the mode. e.g., 0 = C, 1 = C# etc.
    */
   public static void quantize(Score score, final double qValue, final int[] mode, int key) {
     if (score == null || qValue <= 0.0 || mode == null || key < 0) {
@@ -4082,12 +4089,12 @@ public class Mod implements JMC {
    * <P> If <CODE>score</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param score Score to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param score         Score to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
    */
   public static void accents(Score score, final double meter,
-      final double[] accentedBeats) {
+                             final double[] accentedBeats) {
     accents(score, meter, accentedBeats, 20);
   }
 
@@ -4115,15 +4122,15 @@ public class Mod implements JMC {
    * <P> If <CODE>score</CODE> is null or <CODE>meter</CODE> is less than or
    * equal to zero then this method does nothing.
    *
-   * @param score Score to be accented
-   * @param meter double describing the number of croctets per bar/measure
+   * @param score         Score to be accented
+   * @param meter         double describing the number of croctets per bar/measure
    * @param accentedBeats double array describing the time of the accents in the bar.
-   * @param accentAmount integer describing the value that the dynamic of accented beats are
-   * increased by.
+   * @param accentAmount  integer describing the value that the dynamic of accented beats are
+   *                      increased by.
    */
   public static void accents(Score score, final double meter,
-      final double[] accentedBeats,
-      final int accentAmount) {
+                             final double[] accentedBeats,
+                             final int accentAmount) {
     if (score == null || meter <= 0.0) {
       return;
     }
@@ -4161,7 +4168,7 @@ public class Mod implements JMC {
       Enumeration enum1 = part.getPhraseList().elements();
       while (enum1.hasMoreElements()) {
         Phrase phrase = (Phrase) enum1.nextElement();
-        for (Note note: phrase.getNoteList()) {
+        for (Note note : phrase.getNoteList()) {
           if (note.getDynamic() > max) {
             max = note.getDynamic();
           }
@@ -4179,7 +4186,7 @@ public class Mod implements JMC {
       Enumeration enum3 = part.getPhraseList().elements();
       while (enum3.hasMoreElements()) {
         Phrase phrase = (Phrase) enum3.nextElement();
-        for (Note note: phrase.getNoteList()) {
+        for (Note note : phrase.getNoteList()) {
           note.setDynamic(note.getDynamic() + diff);
         }
       }
@@ -4232,7 +4239,7 @@ public class Mod implements JMC {
    * <P> If <CODE>phrase</CODE> is null or <CODE>scaleFactor</CODE> is less
    * than or equal to zero then this method does nothing.
    *
-   * @param score Score to be lengthened
+   * @param score       Score to be lengthened
    * @param scaleFactor double describing the scale factor
    */
   public static void elongate(Score score, double scaleFactor) {
@@ -4338,11 +4345,11 @@ public class Mod implements JMC {
   }
 
   /**
-   * Adjusts all Notes' duration values to vary randomly between specified values from note to note.
-   * This process only effects the duration attribute of the notes in the phrase.
-   * <P> If the <CODE>Score</CODE> is null then this method does nothing.
+   * Adjusts all Notes' duration values to vary randomly between specified values from note to
+   * note. This process only effects the duration attribute of the notes in the phrase. <P> If the
+   * <CODE>Score</CODE> is null then this method does nothing.
    *
-   * @param score The Score to be effected
+   * @param score     The Score to be effected
    * @param minlength The shortest possible duration
    * @param maxlength The longest possible duration
    */
@@ -4363,7 +4370,7 @@ public class Mod implements JMC {
    * pan values of the notes in the score.
    * <P> If <CODE>Score</CODE> is null then this method does nothing.
    *
-   * @param score The Score to be effected
+   * @param score          The Score to be effected
    * @param pitchVariation The degree of pitch change to apply.
    */
   public static void randomize(Score score, int pitchVariation) {
@@ -4376,8 +4383,8 @@ public class Mod implements JMC {
    * pan values of the notes in the score.
    * <P> If <CODE>score</CODE> is null then this method does nothing.
    *
-   * @param score The Score to be effected
-   * @param pitchVariation The degree of pitch change to apply.
+   * @param score           The Score to be effected
+   * @param pitchVariation  The degree of pitch change to apply.
    * @param rhythmVariation The degree of rhythm value change to apply.
    */
   public static void randomize(Score score, int pitchVariation, double rhythmVariation) {
@@ -4390,13 +4397,13 @@ public class Mod implements JMC {
    * pan values of the notes in the score.
    * <P> If <CODE>Score</CODE> is null then this method does nothing.
    *
-   * @param score The Score to be effected
-   * @param pitchVariation The degree of pitch change to apply.
-   * @param rhythmVariation The degree of rhythm value change to apply.
+   * @param score            The Score to be effected
+   * @param pitchVariation   The degree of pitch change to apply.
+   * @param rhythmVariation  The degree of rhythm value change to apply.
    * @param dynamicVariation The degree of dynamic change to apply.
    */
   public static void randomize(Score score, int pitchVariation, double rhythmVariation,
-      int dynamicVariation) {
+                               int dynamicVariation) {
     if (score == null) {
       return;
     }
@@ -4416,7 +4423,7 @@ public class Mod implements JMC {
    * will produce unintended results.
    *
    * @param Score The score to be modified.
-   * @param int The number of notes in a row to consitute a sequence
+   * @param int   The number of notes in a row to consitute a sequence
    */
   public static void slurUp(Score score, int numberOfNotes) {
     if (score == null) {
@@ -4437,7 +4444,7 @@ public class Mod implements JMC {
    * will produce unintended results.
    *
    * @param Score The score to be modified.
-   * @param int The number of notes in a row to consitute a sequence
+   * @param int   The number of notes in a row to consitute a sequence
    */
   public static void slurDown(Score score, int numberOfNotes) {
     if (score == null) {
@@ -4453,7 +4460,7 @@ public class Mod implements JMC {
   /**
    * Vary the duration of each note in the score by the multiplyer.
    *
-   * @param Score The score to be modified.
+   * @param Score  The score to be modified.
    * @param double The amount to multiply the duration by.
    */
   public static void increaseDuration(Score score, double multiplyer) {
@@ -4467,7 +4474,7 @@ public class Mod implements JMC {
   /**
    * Vary the duration of each note in the score by the specified amount.
    *
-   * @param score -  The Score to be modified.
+   * @param score  -  The Score to be modified.
    * @param amount - The number of beats to add  to the duration.
    */
   public static void addToDuration(Score score, double amount) {
@@ -4481,7 +4488,7 @@ public class Mod implements JMC {
   /**
    * Vary the rhythm value of each note in the Score by the specified amount.
    *
-   * @param score -  The Score to be modified.
+   * @param score  -  The Score to be modified.
    * @param amount -  The number of beats to add.
    */
   public static void addToRhythmValue(Score score, double amount) {
@@ -4495,7 +4502,7 @@ public class Mod implements JMC {
   /**
    * Vary both the rhythm value and duration of each note in the Score by the specified amount.
    *
-   * @param score -  The Score to be modified.
+   * @param score  -  The Score to be modified.
    * @param amount - The number of beats to add.
    */
   public static void addToLength(Score score, double amount) {
@@ -4509,7 +4516,7 @@ public class Mod implements JMC {
   /**
    * Vary the interval between notes scaling by the specified amount to each interval.
    *
-   * @param score - The Score to be modified.
+   * @param score  - The Score to be modified.
    * @param amount - The scaling multiplyer for the intervals, i.e., 2.0 doubles width.
    */
   public static void expandIntervals(Score score, double amount) {
@@ -4524,7 +4531,7 @@ public class Mod implements JMC {
    * Randomise the dynamic values of notes up to a specified amount either side of the current
    * value.
    *
-   * @param score - The score to be modified.
+   * @param score  - The score to be modified.
    * @param amount - The dynamic change possible either side of the curent dynamic.
    */
   public static void shake(Score score, int amount) {

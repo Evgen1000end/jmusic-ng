@@ -59,7 +59,7 @@ public final class AllPass extends AudioObject {
 
   /**
    * @param delay delay in milliseconds
-   * @param gain as a percent
+   * @param gain  as a percent
    */
   public AllPass(AudioObject ao, int delay, double decay) {
     super(ao, "[AllPass]");

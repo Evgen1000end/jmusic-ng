@@ -34,7 +34,7 @@ public class Anchoring {
   final double offset;
 
   Anchoring(final Phrase anchor, final Alignment alignment,
-      final double offset) {
+            final double offset) {
     this.anchor = anchor;
     this.alignment = alignment;
     this.offset = offset;

@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -24,7 +24,7 @@
 package jm.gui.cpn;
 
 import java.applet.Applet;
-import java.awt.Image;
+import java.awt.*;
 import java.net.URL;
 
 /**
@@ -107,7 +107,7 @@ public class AppletImages implements Images {
    * be stored as a series of .gif files (such as trebleClef.gif,
    * bassClef.gif, etc.) in the path specified by <code>baseURL</code>.
    *
-   * @param applet the Applet to be used to load the images
+   * @param applet  the Applet to be used to load the images
    * @param baseURL the path storing the .gif images to be loaded
    */
   public AppletImages(final Applet applet, final URL baseURL) {

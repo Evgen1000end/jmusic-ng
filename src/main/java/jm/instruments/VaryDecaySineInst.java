@@ -51,11 +51,11 @@ public final class VaryDecaySineInst extends jm.audio.Instrument {
     this.sampleRate = sampleRate;
     this.channels = channels;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.001, (float) 1.0),
-        new EnvPoint((float) 0.1, (float) 0.5),
-        new EnvPoint((float) (Math.random() * 0.4 + 0.3), (float) 0.05),
-        new EnvPoint((float) (Math.random() * 0.3 + 0.7), (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.001, (float) 1.0),
+      new EnvPoint((float) 0.1, (float) 0.5),
+      new EnvPoint((float) (Math.random() * 0.4 + 0.3), (float) 0.05),
+      new EnvPoint((float) (Math.random() * 0.3 + 0.7), (float) 0.0)
     };
     pointArray = tempArray;
   }
@@ -70,7 +70,7 @@ public final class VaryDecaySineInst extends jm.audio.Instrument {
    */
   public void createChain() {
     Oscillator wt = new Oscillator(this, Oscillator.SINE_WAVE,
-        this.sampleRate, channels);
+      this.sampleRate, channels);
     Envelope env = new Envelope(wt, pointArray);
     Volume vol = new Volume(env);
     StereoPan span = new StereoPan(vol);

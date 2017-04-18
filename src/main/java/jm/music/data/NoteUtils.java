@@ -32,7 +32,7 @@ public class NoteUtils {
   public static int frequencyToPitch(double frequency) {
     if ((frequency < 26.73) || (frequency > 14496.0)) {
       System.err.println("freqToMidiPitch error: "
-          + "Frequency " + frequency + " is not within the MIDI note range.");
+        + "Frequency " + frequency + " is not within the MIDI note range.");
       return -1;
     }
     double r = Math.pow(2, 1.0 / 12.0);

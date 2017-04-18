@@ -152,7 +152,7 @@ public final class PWheel implements VoiceEvt, Cloneable {
   //Print
   public void print() {
     System.out.println(
-        "Pitch Wheel(006):				  [time = " + time + "][midiChannel = " + midiChannel
-            + "][value = " + value + "]");
+      "Pitch Wheel(006):				  [time = " + time + "][midiChannel = " + midiChannel
+        + "][value = " + value + "]");
   }
 }

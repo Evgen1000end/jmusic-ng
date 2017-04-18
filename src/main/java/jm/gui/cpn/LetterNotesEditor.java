@@ -8,10 +8,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -24,19 +24,14 @@
 
 package jm.gui.cpn;
 
-import java.awt.Button;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Label;
-import java.awt.List;
-import java.awt.TextArea;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import javax.sound.midi.MidiUnavailableException;
+
 import jm.JMC;
 import jm.music.data.Note;
 import jm.music.data.Part;
@@ -46,7 +41,7 @@ import jm.util.Write;
 
 // Use this class to enter notes for CPN by letter
 // Sharps and flats are automatic according to the key
-// signature.  
+// signature.
 
 // Add a # to move the note up a half step
 // beyond its place according to the key signature.
@@ -54,7 +49,7 @@ import jm.util.Write;
 // Add a - to move the note down a half step
 // beyond its place according to the key signature.
 
-// Notes are A thru G for the notes, R for a rest  
+// Notes are A thru G for the notes, R for a rest
 
 // Rhythm value and octave are based on the preceding note.
 
@@ -75,7 +70,7 @@ import jm.util.Write;
 //     must be the same pitch.  Rhythm values are
 //     added.  The next note will almost certainly require
 //     an explicit rhythm value, because it will otherwise
-//     default to the sum of the two tied notes.  
+//     default to the sum of the two tied notes.
 
 // Octave number (after the note letter) can be 1 to 9.
 // Alternatively put > to move the note up 1 octave fron
@@ -88,11 +83,11 @@ import jm.util.Write;
 
 public class LetterNotesEditor extends Dialog
 
-    implements ActionListener, WindowListener {
+  implements ActionListener, WindowListener {
 
   private static List inputList = new List(8);
   private Button okButton, playButton,
-      cancelButton, copyButton;
+    cancelButton, copyButton;
   private Label inputLabel;
   private TextArea notesInput;
   private Phrase phrase;
@@ -103,9 +98,9 @@ public class LetterNotesEditor extends Dialog
 
   public LetterNotesEditor(Frame parentFrame) {
     super(
-        parentFrame,
-        "Set Music Parameters",
-        true);
+      parentFrame,
+      "Set Music Parameters",
+      true);
     initializeData();
     initializeButtons();
     initializeLabels();
@@ -118,8 +113,8 @@ public class LetterNotesEditor extends Dialog
 
   // Get the note letter for a pitch
   private static char getNoteLetter(
-      int pitch,
-      int keySignature) {
+    int pitch,
+    int keySignature) {
 
     int notePos = pitch % 12;
     switch (notePos) {
@@ -140,13 +135,13 @@ public class LetterNotesEditor extends Dialog
       default:
         if (keySignature >= 0) {
           return getNoteLetter(
-              pitch - 1,
-              keySignature
+            pitch - 1,
+            keySignature
           );
         } else {
           return getNoteLetter(
-              pitch + 1,
-              keySignature
+            pitch + 1,
+            keySignature
           );
         }
     }
@@ -154,10 +149,10 @@ public class LetterNotesEditor extends Dialog
 
   // See if the pitch is a big jump up
   static boolean pitchIsHigh(
-      int pitchValue,
-      int currentPitch,
-      char letterValue,
-      char currentLetter
+    int pitchValue,
+    int currentPitch,
+    char letterValue,
+    char currentLetter
   ) {
     String notesString = "ABCDEFGABCDEFG";
     if (pitchValue > currentPitch + 8) {
@@ -173,10 +168,10 @@ public class LetterNotesEditor extends Dialog
 
   // See if the pitch is a big jump down
   static boolean pitchIsLow(
-      int pitchValue,
-      int currentPitch,
-      char letterValue,
-      char currentLetter
+    int pitchValue,
+    int currentPitch,
+    char letterValue,
+    char currentLetter
   ) {
     String notesString = "ABCDEFGABCDEFG";
     if (pitchValue < currentPitch - 8) {
@@ -216,8 +211,8 @@ public class LetterNotesEditor extends Dialog
   // with some other editor if you want to.
   private void initializeData() {
     notesInput = new TextArea(
-        "", 10, 100,
-        TextArea.SCROLLBARS_BOTH);
+      "", 10, 100,
+      TextArea.SCROLLBARS_BOTH);
   }
 
   private void initializeButtons() {
@@ -229,7 +224,7 @@ public class LetterNotesEditor extends Dialog
 
   private void initializeLabels() {
     inputLabel = new Label(
-        "Enter Note Names, R for Rest"
+      "Enter Note Names, R for Rest"
     );
   }
 
@@ -284,7 +279,7 @@ public class LetterNotesEditor extends Dialog
       midiPlayer.close();
     } catch (MidiUnavailableException ex) {
       System.out.println(
-          "Midi Not Available"
+        "Midi Not Available"
       );
     }
     phrase.empty();
@@ -300,9 +295,9 @@ public class LetterNotesEditor extends Dialog
       if (currentNote.getPitch() >= 0) {
         currentPitch = currentNote.getPitch();
         currentNoteLetter
-            = getNoteLetter(
-            currentPitch,
-            stave.getKeySignature());
+          = getNoteLetter(
+          currentPitch,
+          stave.getKeySignature());
       }
     } else {
       currentNote = null;
@@ -421,18 +416,18 @@ public class LetterNotesEditor extends Dialog
     if (charValue != 'R') {
       if (pv > currentPitch) {
         while (pitchIsHigh(
-            pv,
-            currentPitch,
-            charValue,
-            currentNoteLetter)) {
+          pv,
+          currentPitch,
+          charValue,
+          currentNoteLetter)) {
           pv -= 12;
         }
       } else {
         while (pitchIsLow(
-            pv,
-            currentPitch,
-            charValue,
-            currentNoteLetter)) {
+          pv,
+          currentPitch,
+          charValue,
+          currentNoteLetter)) {
           pv += 12;
         }
       }
@@ -498,35 +493,35 @@ public class LetterNotesEditor extends Dialog
 
   private void makeHalfNote() {
     adjustNoteByFactor(
-        JMC.HALF_NOTE / currentNote.getRhythm());
+      JMC.HALF_NOTE / currentNote.getRhythm());
   }
 
   private void makeWholeNote() {
     adjustNoteByFactor(
-        JMC.WHOLE_NOTE / currentNote.getRhythm());
+      JMC.WHOLE_NOTE / currentNote.getRhythm());
   }
 
   private void makeQuarterNote() {
     adjustNoteByFactor(
-        JMC.QUARTER_NOTE / currentNote.getRhythm());
+      JMC.QUARTER_NOTE / currentNote.getRhythm());
   }
 
   private void makeEighthNote() {
     adjustNoteByFactor(
-        JMC.EIGHTH_NOTE / currentNote.getRhythm());
+      JMC.EIGHTH_NOTE / currentNote.getRhythm());
   }
 
   private void makeTriplet() {
     adjustNoteByFactor(
-        JMC.QUAVER_TRIPLET
-            / currentNote.getRhythm()
+      JMC.QUAVER_TRIPLET
+        / currentNote.getRhythm()
     );
   }
 
   private void makeSixteenthNote() {
     adjustNoteByFactor(
-        JMC.SIXTEENTH_NOTE
-            / currentNote.getRhythm()
+      JMC.SIXTEENTH_NOTE
+        / currentNote.getRhythm()
     );
   }
 
@@ -536,12 +531,12 @@ public class LetterNotesEditor extends Dialog
       Note lastNote;
       lastNote = phrase.getNote(phrase.size() - 1);
       lastNote.setDuration(
-          lastNote.getDuration()
-              + currentNote.getDuration()
+        lastNote.getDuration()
+          + currentNote.getDuration()
       );
       lastNote.setRhythm(
-          lastNote.getRhythm()
-              + currentNote.getRhythm()
+        lastNote.getRhythm()
+          + currentNote.getRhythm()
       );
       currentNote = lastNote;
     }
@@ -575,9 +570,9 @@ public class LetterNotesEditor extends Dialog
 
   private void adjustNoteByFactor(double x) {
     currentNote.setRhythm(
-        x * currentNote.getRhythm());
+      x * currentNote.getRhythm());
     currentNote.setDuration(
-        x * currentNote.getDuration());
+      x * currentNote.getDuration());
   }
 
   private void placeControls() {

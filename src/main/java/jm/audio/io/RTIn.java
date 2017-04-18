@@ -26,6 +26,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
+
 import jm.audio.AOException;
 import jm.audio.AudioObject;
 import jm.audio.Instrument;
@@ -91,14 +92,14 @@ public final class RTIn extends AudioObject {
     for (; ret < buffer.length; ret++) {
       short input = (short) ((data[bc++] << 8) + (data[bc++]));
       buffer[ret] = (float) input /
-          (float) Short.MAX_VALUE;
+        (float) Short.MAX_VALUE;
     }
     return ret;
   }
 
   public void init() {
     AudioFormat af = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED
-        , (float) this.sampleRate, 16, this.channels, this.channels * 2, this.sampleRate, true);
+      , (float) this.sampleRate, 16, this.channels, this.channels * 2, this.sampleRate, true);
     DataLine.Info info = new DataLine.Info(TargetDataLine.class, af);
     System.out.println("Setting for audio line: " + info);
     if (!AudioSystem.isLineSupported(info)) {

@@ -22,10 +22,9 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.cpn;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.util.Vector;
+
 import jm.JMC;
 import jm.music.data.Note;
 import jm.music.data.Phrase;
@@ -58,7 +57,7 @@ public class TrebleStave extends Stave implements JMC {
 
   //    private boolean isNote = false;
   private String[] chordStrings = {"I", "II", "III", "IV", "V", "VI", "VII",
-      "."};
+    "."};
 
   /**
    * Constructs a new treble stave to display a blank Phrase using the default
@@ -85,7 +84,7 @@ public class TrebleStave extends Stave implements JMC {
    * specified stave <code>images</code>.
    *
    * @param images Images representing notes, rest and other stave elements to use within the
-   * compenent
+   *               compenent
    */
   public TrebleStave(final Images images) {
     super(images);
@@ -101,7 +100,7 @@ public class TrebleStave extends Stave implements JMC {
    *
    * @param phrase Phrase to be displayed in stave
    * @param images Images representing notes, rest and other stave elements to use within the
-   * compenent
+   *               compenent
    */
   public TrebleStave(final Phrase phrase, final Images images) {
     super(phrase, images);
@@ -152,8 +151,8 @@ public class TrebleStave extends Stave implements JMC {
       for (int ks = 0; ks < keySignature; ks++) {
         // claulate position
         int keyAccidentalPosition =
-            notePosOffset[sharps[ks] % 12] + bPos - 4 + ((5 - sharps[ks] / 12) * 24) + (
-                (6 - sharps[ks] / 12) * 4);
+          notePosOffset[sharps[ks] % 12] + bPos - 4 + ((5 - sharps[ks] / 12) * 24) + (
+            (6 - sharps[ks] / 12) * 4);
         // draw sharp on treble
         g.drawImage(sharp, rightMargin + clefWidth + keyOffset, keyAccidentalPosition, this);
         // indent position
@@ -166,8 +165,8 @@ public class TrebleStave extends Stave implements JMC {
         for (int ks = 0; ks < Math.abs(keySignature); ks++) {
           // claulate position
           int keyAccidentalPosition =
-              notePosOffset[flats[ks] % 12] + bPos - 4 + ((5 - flats[ks] / 12) * 24) + (
-                  (6 - flats[ks] / 12) * 4);
+            notePosOffset[flats[ks] % 12] + bPos - 4 + ((5 - flats[ks] / 12) * 24) + (
+              (6 - flats[ks] / 12) * 4);
           // draw flat
           g.drawImage(flat, rightMargin + clefWidth + keyOffset, keyAccidentalPosition, this);
           // indent position
@@ -209,11 +208,11 @@ public class TrebleStave extends Stave implements JMC {
       int pitchTempPos;
       if (notePitchNum == REST || phrase.getNote(i).getRhythm() == 0.0) { // rest or delete
         pitchTempPos =
-            notePosOffset[71 % 12] + bPos - 4 + ((5 - 71 / 12) * 24) + ((6 - 71 / 12) * 4);
+          notePosOffset[71 % 12] + bPos - 4 + ((5 - 71 / 12) * 24) + ((6 - 71 / 12) * 4);
       } else {
         pitchTempPos =
-            notePosOffset[notePitchNum % 12] + bPos - 4 + ((5 - notePitchNum / 12) * 24) + (
-                (6 - notePitchNum / 12) * 4);
+          notePosOffset[notePitchNum % 12] + bPos - 4 + ((5 - notePitchNum / 12) * 24) + (
+            (6 - notePitchNum / 12) * 4);
       }
 
       firstAccidentalDisplayed = false;
@@ -230,7 +229,7 @@ public class TrebleStave extends Stave implements JMC {
       while (rvToEndOfBar < rhythmValue) {
         isTied = true;
         drawNote(notePitchNum, rvToEndOfBar,
-            pitchTempPos);
+          pitchTempPos);
         rhythmValue -= rvToEndOfBar;
         rvToEndOfBar = metre - (beatCounter % metre);
       }
@@ -243,9 +242,9 @@ public class TrebleStave extends Stave implements JMC {
     // draw treble stave
     for (int i = 0; i < 5; i++) {
       g.drawLine(rightMargin,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
 
     // draw neext note stave area
@@ -253,9 +252,9 @@ public class TrebleStave extends Stave implements JMC {
     g.setColor(Color.lightGray);
     for (int i = 0; i < 5; i++) {
       g.drawLine(totalBeatWidth,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
-          totalBeatWidth + 50,
-          (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight),
+        totalBeatWidth + 50,
+        (bPos + imageHeightOffset - (2 * staveSpaceHeight)) + (i * staveSpaceHeight));
     }
 //        for(int i = 6; i < 11;i++) {
 //            g.drawLine( totalBeatWidth,
@@ -281,7 +280,7 @@ public class TrebleStave extends Stave implements JMC {
   }
 
   private void drawNote(int notePitchNum, final double rhythmValue,
-      int pitchTempPos) {
+                        int pitchTempPos) {
     requiresMoreThanOneImage = false;
     excessRhythmValue = 0.0;
 
@@ -314,10 +313,10 @@ public class TrebleStave extends Stave implements JMC {
     chooseImage(notePitchNum, rhythmValue, 71, 0, 71);
 
     drawNote2(notePitchNum, rhythmValue - excessRhythmValue,
-        pitchTempPos);
+      pitchTempPos);
     if (requiresMoreThanOneImage) {
       drawNote(notePitchNum, excessRhythmValue,
-          pitchTempPos);
+        pitchTempPos);
       extraImagesUsed = true;
     }
   }
@@ -327,13 +326,13 @@ public class TrebleStave extends Stave implements JMC {
 //    private int[] secondChords = new int[0];
 
   private void drawNote2(int pitch, final double rhythmValue,
-      int yCoordinate) {
+                         int yCoordinate) {
 
     // draw accidental
 
     if (pitch != Note.REST && rhythmValue != 0.0) {
       Accidental accidental =
-          style.selectAccidental(pitch, rhythmValue);
+        style.selectAccidental(pitch, rhythmValue);
       if (accidental == Accidental.SHARP) {
         if (!firstAccidentalDisplayed) {
           displayImage(g, sharp, totalBeatWidth - 9, yCoordinate);
@@ -366,11 +365,11 @@ public class TrebleStave extends Stave implements JMC {
       boolean dotFlag = true;
       for (int l = 0; l < lineNotes.length; l++) {
         if (lineNotes[l] + 12 == pitch
-            || lineNotes[l] + 36 == pitch
-            || lineNotes[l] + 60 == pitch
-            || lineNotes[l] + 84 == pitch
-            || lineNotes[l] + 108 == pitch
-            || pitch == REST) {
+          || lineNotes[l] + 36 == pitch
+          || lineNotes[l] + 60 == pitch
+          || lineNotes[l] + 84 == pitch
+          || lineNotes[l] + 108 == pitch
+          || pitch == REST) {
           displayImage(g, dot, totalBeatWidth + 1, yCoordinate - 4);
           dotFlag = false;
           l = lineNotes.length;
@@ -423,23 +422,23 @@ public class TrebleStave extends Stave implements JMC {
 
       if (isUp) {
         g.drawImage(tieUnder,
-            savedBeatWidth - 3 + 9,
-            yPosition + 17,
-            savedBeatWidth2 + 19 - 9,
-            yPosition + 17 + tieUnder.getHeight(this),
-            0, 0, tieUnder.getWidth(this),
-            tieUnder.getHeight(this),
+          savedBeatWidth - 3 + 9,
+          yPosition + 17,
+          savedBeatWidth2 + 19 - 9,
+          yPosition + 17 + tieUnder.getHeight(this),
+          0, 0, tieUnder.getWidth(this),
+          tieUnder.getHeight(this),
 
-            this);
+          this);
       } else {
         g.drawImage(tieOver,
-            savedBeatWidth - 3 + 9,
-            yPosition - 20,
-            savedBeatWidth2 + 19 - 9,
-            yPosition - 20 + tieOver.getHeight(this),
-            0, 0, tieOver.getWidth(this),
-            tieOver.getHeight(this),
-            this);
+          savedBeatWidth - 3 + 9,
+          yPosition - 20,
+          savedBeatWidth2 + 19 - 9,
+          yPosition - 20 + tieOver.getHeight(this),
+          0, 0, tieOver.getWidth(this),
+          tieOver.getHeight(this),
+          this);
       }
     }
 
@@ -463,7 +462,7 @@ public class TrebleStave extends Stave implements JMC {
         // add bar numbers?
         if (barNumbers) {
           g.drawString("" + (int) (beatCounter / metre + 1 + phrase.getStartTime()),
-              totalBeatWidth - 4, bPos);
+            totalBeatWidth - 4, bPos);
         }
         totalBeatWidth += 12;
       }
@@ -473,7 +472,7 @@ public class TrebleStave extends Stave implements JMC {
   }
 
   private void displayImage(final Graphics g, final Image image, int xCoord,
-      int yCoord) {
+                            int yCoord) {
     g.drawImage(image, xCoord, yCoord, this);
   }
 
@@ -538,24 +537,24 @@ public class TrebleStave extends Stave implements JMC {
     abstract void initialise(final int keySignature);
 
     abstract Accidental selectAccidental(
-        final int pitch,
-        final double rhythmValue);
+      final int pitch,
+      final double rhythmValue);
 
     abstract void processBarLine();
 
     private static final class Trad extends Style {
 
       private static final int[] SHARP_ACCIDENTAL_PAIRS =
-          {0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6};
+        {0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6};
       private static final int[] FLAT_ACCIDENTAL_PAIRS =
-          {0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6};
+        {0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6};
       private boolean[] accidentalRequiredByKeySignature =
-          new boolean[12];
+        new boolean[12];
       private int[] degreeToAccidentalPair =
-          SHARP_ACCIDENTAL_PAIRS;
+        SHARP_ACCIDENTAL_PAIRS;
 
       private boolean[] accidentalInEffect =
-          new boolean[7];
+        new boolean[7];
 
       private int keySignature = 0;
 
@@ -578,7 +577,7 @@ public class TrebleStave extends Stave implements JMC {
           degreeToAccidentalPair = SHARP_ACCIDENTAL_PAIRS;
         }
         this.setBooleanArrayToFalse(
-            accidentalRequiredByKeySignature);
+          accidentalRequiredByKeySignature);
         accidentalRequiredByKeySignature[1] = true;
         accidentalRequiredByKeySignature[3] = true;
         accidentalRequiredByKeySignature[6] = true;
@@ -587,24 +586,24 @@ public class TrebleStave extends Stave implements JMC {
         for (int i = 0; i < Math.abs(keySignature); i++) {
           if (keySignature < 0) {
             accidentalRequiredByKeySignature[
-                flatPitches[i] % 12] = true;
+              flatPitches[i] % 12] = true;
             accidentalRequiredByKeySignature[
-                (flatPitches[i] - 1) % 12] = false;
+              (flatPitches[i] - 1) % 12] = false;
           } else {
             accidentalRequiredByKeySignature[
-                sharpPitches[i] % 12] = true;
+              sharpPitches[i] % 12] = true;
             accidentalRequiredByKeySignature[
-                (sharpPitches[i] + 1) % 12] = false;
+              (sharpPitches[i] + 1) % 12] = false;
           }
         }
         this.setBooleanArrayToFalse(accidentalInEffect);
       }
 
       Accidental selectAccidental(
-          final int pitch,
-          final double rhythmValue) {
+        final int pitch,
+        final double rhythmValue) {
         if (pitch == Note.REST
-            || rhythmValue == 0.0) {
+          || rhythmValue == 0.0) {
           return Accidental.NONE;
         }
 
@@ -612,13 +611,13 @@ public class TrebleStave extends Stave implements JMC {
 
         int accidentalPair = degreeToAccidentalPair[degree];
         if (accidentalRequiredByKeySignature[degree]
-            ^ accidentalInEffect[accidentalPair]) {
+          ^ accidentalInEffect[accidentalPair]) {
 
           accidentalInEffect[accidentalPair] =
-              !accidentalInEffect[accidentalPair];
+            !accidentalInEffect[accidentalPair];
 
           if (degree == 1 || degree == 3 || degree == 6
-              || degree == 8 || degree == 10) {
+            || degree == 8 || degree == 10) {
             if (keySignature > -1) {
               return Accidental.SHARP;
             } else {
@@ -664,7 +663,7 @@ public class TrebleStave extends Stave implements JMC {
 
       public JMusic() {
         super("JMusic style (with superfluous sharps and "
-            + "flats)");
+          + "flats)");
         this.initialise(0);
       }
 
@@ -676,11 +675,11 @@ public class TrebleStave extends Stave implements JMC {
           for (int i = 0; i < keySignature; i++) {
             int degree = sharpPitches[i] % 12;
             for (int j = Note.MIN_PITCH;
-                j <= Note.MAX_PITCH;
-                j++) {
+                 j <= Note.MAX_PITCH;
+                 j++) {
               if ((j % 12) == degree) {
                 chromaticallyAffectedPitches.addElement(
-                    j);
+                  j);
                 keyAccidentals++;
               }
             }
@@ -689,11 +688,11 @@ public class TrebleStave extends Stave implements JMC {
           for (int i = 0; i > keySignature; i--) {
             int degree = flatPitches[-i] % 12;
             for (int j = Note.MIN_PITCH;
-                j <= Note.MAX_PITCH;
-                j++) {
+                 j <= Note.MAX_PITCH;
+                 j++) {
               if ((j % 12) == degree) {
                 chromaticallyAffectedPitches.addElement(
-                    j);
+                  j);
                 keyAccidentals++;
               }
             }
@@ -702,22 +701,22 @@ public class TrebleStave extends Stave implements JMC {
       }
 
       Accidental selectAccidental(
-          final int pitch,
-          final double rhythmValue) {
+        final int pitch,
+        final double rhythmValue) {
         if (pitch == Note.REST
-            || rhythmValue == 0.0) {
+          || rhythmValue == 0.0) {
           return Accidental.NONE;
         }
         if ((pitch % 12) == 1 || (pitch % 12) == 3
-            || (pitch % 12) == 6 || (pitch % 12) == 8
-            || (pitch % 12) == 10) {
+          || (pitch % 12) == 6 || (pitch % 12) == 8
+          || (pitch % 12) == 10) {
           if (keySignature > -1) {
             chromaticallyAffectedPitches.addElement(
-                pitch - 1);
+              pitch - 1);
             return Accidental.SHARP;
           } else {
             chromaticallyAffectedPitches.addElement(
-                pitch + 1);
+              pitch + 1);
             return Accidental.FLAT;
           }
         } else {
@@ -725,12 +724,12 @@ public class TrebleStave extends Stave implements JMC {
           int temp;
           for (int j = 0; j < size; j++) {
             temp = ((Integer)
-                chromaticallyAffectedPitches.elementAt(
-                    j)).intValue();
+              chromaticallyAffectedPitches.elementAt(
+                j)).intValue();
             if (temp == pitch) {
               if (j > keyAccidentals - 1) {
                 chromaticallyAffectedPitches.
-                    removeElementAt(j);
+                  removeElementAt(j);
               }
               return Accidental.NATURAL;
             }

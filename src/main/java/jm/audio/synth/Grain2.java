@@ -1,4 +1,4 @@
-/* 
+/*
 
 <This Java Class is part of the jMusic API version 1.4, February 2003.>
 
@@ -48,7 +48,7 @@ public final class Grain2 extends AudioObject {
   // Constructors
   //----------------------------------------------
   public Grain2(AudioObject ao, int grainSampSize, int spaceSamp, boolean grainOn, int chan,
-      int offset) {
+                int offset) {
     super(ao, "[Grain]");
     this.grainSampSize = grainSampSize * chan;
     this.spaceSamp = spaceSamp * chan;
@@ -74,7 +74,7 @@ public final class Grain2 extends AudioObject {
     for (int counter = tempoffset; counter < returned; counter++) {
       if (grainOn) {
         buffer[counter] = buffer[counter] *
-            (float) (Math.sin(Math.PI * grainCount / grainSampSize));
+          (float) (Math.sin(Math.PI * grainCount / grainSampSize));
       }
       if (grainOn && grainCount < grainSampSize) {
         grainCount++;

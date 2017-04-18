@@ -1,5 +1,5 @@
 /*
-  
+
 <This Java Class is part of the jMusic API version 1.5, March 2004.>
 
 Copyright (C) 2000 Andrew Sorensen & Andrew Brown
@@ -34,6 +34,7 @@ package jm.music.data;
 import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import jm.JMC;
 
 public class CPhrase implements JMC, Cloneable, Serializable {
@@ -179,7 +180,7 @@ public class CPhrase implements JMC, Cloneable, Serializable {
       phraseList.addElement(phrase);
     } else {
       System.err.println("Phrase to added to CPhrase: Phrases added" +
-          " to a CPhrase must have a start time at ot after the CPhrase start time.");
+        " to a CPhrase must have a start time at ot after the CPhrase start time.");
     }
   }
 
@@ -195,7 +196,7 @@ public class CPhrase implements JMC, Cloneable, Serializable {
   /**
    * Add a new Chord
    *
-   * @param pitchArray short[]
+   * @param pitchArray  short[]
    * @param rhythmValue double
    */
   public void addChord(int[] pitchArray, double rhythmValue) {
@@ -205,9 +206,9 @@ public class CPhrase implements JMC, Cloneable, Serializable {
   /**
    * Add a new Chord
    *
-   * @param pitchArray short[]
+   * @param pitchArray  short[]
    * @param rhythmValue short
-   * @param dynamic short
+   * @param dynamic     short
    */
   public void addChord(final int[] pitchArray, final double rhythmValue, final int dynamic) {
     //this.currentTime = this.getEndTime();
@@ -225,10 +226,10 @@ public class CPhrase implements JMC, Cloneable, Serializable {
     // add notes
     for (; i < pitchArray.length; i++) {
       Note newNote = Note.newBuilder()
-          .pitch(pitchArray[i])
-          .rhythm(rhythmValue)
-          .dynamic(dynamic)
-          .build();
+        .pitch(pitchArray[i])
+        .rhythm(rhythmValue)
+        .dynamic(dynamic)
+        .build();
       ((Phrase) this.phraseList.elementAt(i)).addNote(newNote);
     }
     // pad remaining phrases with rests
@@ -344,15 +345,6 @@ public class CPhrase implements JMC, Cloneable, Serializable {
   }
 
   /**
-   * Gives the CPhrase a new title
-   *
-   * @param phrases title
-   */
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  /**
    * Gives the CPhrase a new instrument
    *
    * @param phrases instrument number
@@ -361,6 +353,15 @@ public class CPhrase implements JMC, Cloneable, Serializable {
     if (instrument < NO_INSTRUMENT) {
       this.instrument = instrument;
     }
+  }
+
+  /**
+   * Gives the CPhrase a new title
+   *
+   * @param phrases title
+   */
+  public void setTitle(String title) {
+    this.title = title;
   }
 
   /**
@@ -551,7 +552,7 @@ public class CPhrase implements JMC, Cloneable, Serializable {
    */
   public String toString() {
     StringBuilder cphraseData = new StringBuilder("---- jMusic CPHRASE: '" + title +
-        "' Start time: " + startTime + " ----" + '\n');
+      "' Start time: " + startTime + " ----" + '\n');
     Enumeration enum1 = phraseList.elements();
     while (enum1.hasMoreElements()) {
       Phrase phrase = (Phrase) enum1.nextElement();
@@ -624,7 +625,7 @@ public class CPhrase implements JMC, Cloneable, Serializable {
     while (enum1.hasMoreElements()) {
       double currOffset = offsetAmount * phraseCounter;
       Phrase phr = (Phrase) enum1.nextElement();
-      for (Note note: phr.getNoteList()) {
+      for (Note note : phr.getNoteList()) {
         note.setOffset(currOffset);
       }
       phraseCounter++;

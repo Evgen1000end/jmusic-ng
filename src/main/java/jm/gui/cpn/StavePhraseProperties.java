@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
@@ -56,9 +57,9 @@ public class StavePhraseProperties extends Properties {
   private static String FINAL_REST_DUR = "FINAL_REST_DUR";
 
   private static String OTHER_NOTES_TOTAL_RHYTHM
-      = "OTHER_NOTES_TOTAL_RHYTHM";
+    = "OTHER_NOTES_TOTAL_RHYTHM";
   private static String OTHER_NOTES_TOTAL_DUR
-      = "OTHER_NOTES_TOTAL_DUR";
+    = "OTHER_NOTES_TOTAL_DUR";
 
 
   private static String GRAND_STAVE = "GRAND_STAVE";
@@ -70,54 +71,54 @@ public class StavePhraseProperties extends Properties {
   private static String FILE_NAME_SUFFIX = "pj";
 
   public StavePhraseProperties(String midiFileName)
-      throws FileNotFoundException,
-      IOException {
+    throws FileNotFoundException,
+    IOException {
     FileInputStream theStream
-        = new FileInputStream(midiFileName + FILE_NAME_SUFFIX);
+      = new FileInputStream(midiFileName + FILE_NAME_SUFFIX);
     load(theStream);
   }
 
   public StavePhraseProperties(
-      Stave stave,
-      Phrase phrase) {
+    Stave stave,
+    Phrase phrase) {
     System.out.println("1");
     setSavedProperty(
-        KEY_SIGNATURE, stave.getKeySignature());
+      KEY_SIGNATURE, stave.getKeySignature());
     System.out.println("2");
     setSavedProperty(STAVE_TYPE, getStaveType(stave));
     System.out.println("3");
     setSavedProperty(
-        STAVE_TITLE, stave.getTitle());
+      STAVE_TITLE, stave.getTitle());
     System.out.println("4");
     setSavedProperty(
-        STAVE_METRE, stave.getMetre());
+      STAVE_METRE, stave.getMetre());
     System.out.println("5");
     setSavedProperty(
-        PHRASE_NUMERATOR, phrase.getNumerator());
+      PHRASE_NUMERATOR, phrase.getNumerator());
     System.out.println("6");
     setSavedProperty(
-        PHRASE_DENOMINATOR, phrase.getDenominator());
+      PHRASE_DENOMINATOR, phrase.getDenominator());
     System.out.println("7");
     setSavedProperty(
-        PHRASE_INSTRUMENT, phrase.getInstrument());
+      PHRASE_INSTRUMENT, phrase.getInstrument());
     System.out.println("8");
     setSavedProperty(
-        PHRASE_TEMPO, phrase.getTempo());
+      PHRASE_TEMPO, phrase.getTempo());
     System.out.println("9");
     setSavedProperty(
-        PHRASE_TITLE, phrase.getTitle());
+      PHRASE_TITLE, phrase.getTitle());
 
     int n;
     n = findLastNonRest(phrase);
     System.out.println("10");
     if (n >= 0) {
       setSavedProperty(
-          LAST_NOTE_RHYTHM,
-          phrase.getNote(n).getRhythm()
+        LAST_NOTE_RHYTHM,
+        phrase.getNote(n).getRhythm()
       );
       setSavedProperty(
-          LAST_NOTE_DUR,
-          phrase.getNote(n).getDuration()
+        LAST_NOTE_DUR,
+        phrase.getNote(n).getDuration()
       );
     } else {
       setSavedProperty(LAST_NOTE_RHYTHM, 0.0);
@@ -125,23 +126,23 @@ public class StavePhraseProperties extends Properties {
     }
 
     setSavedProperty(
-        FINAL_REST_RHYTHM,
-        getFinalRestRhythm(phrase)
+      FINAL_REST_RHYTHM,
+      getFinalRestRhythm(phrase)
     );
 
     setSavedProperty(
-        FINAL_REST_DUR,
-        getFinalRestDuration(phrase)
+      FINAL_REST_DUR,
+      getFinalRestDuration(phrase)
     );
 
     setSavedProperty(
-        OTHER_NOTES_TOTAL_RHYTHM,
-        getOtherNotesTotalRhythm(phrase)
+      OTHER_NOTES_TOTAL_RHYTHM,
+      getOtherNotesTotalRhythm(phrase)
     );
 
     setSavedProperty(
-        OTHER_NOTES_TOTAL_DUR,
-        getOtherNotesTotalDuration(phrase)
+      OTHER_NOTES_TOTAL_DUR,
+      getOtherNotesTotalDuration(phrase)
     );
   }
 
@@ -149,17 +150,17 @@ public class StavePhraseProperties extends Properties {
     int answer;
     answer = phrase.size() - 1;
     while ((answer >= 0) &&
-        (phrase.getNote(answer).getPitch()
-            == Note.REST)) {
+      (phrase.getNote(answer).getPitch()
+        == Note.REST)) {
       --answer;
     }
     return answer;
   }
 
   private static void adjustFinalRestRhythm(
-      Phrase phrase,
-      double rhythm,
-      double duration) {
+    Phrase phrase,
+    double rhythm,
+    double duration) {
 
     double restPresent;
     restPresent = getFinalRestRhythm(phrase);
@@ -168,63 +169,63 @@ public class StavePhraseProperties extends Properties {
       restToAdd = Note.newBuilder().build();
       restToAdd.setFrequency(Note.REST);
       restToAdd.setRhythm(
-          rhythm - restPresent);
+        rhythm - restPresent);
       restToAdd.setDuration(
-          (rhythm - restPresent) *
-              (duration / rhythm)
+        (rhythm - restPresent) *
+          (duration / rhythm)
       );
       phrase.addNote(restToAdd);
     }
   }
 
   private static void adjustOtherNotesTotalRhythm(
-      Phrase phrase,
-      double totalRhythmWanted) {
+    Phrase phrase,
+    double totalRhythmWanted) {
 
     double totalRhythmFound;
     totalRhythmFound
-        = getOtherNotesTotalRhythm(phrase);
+      = getOtherNotesTotalRhythm(phrase);
     if (totalRhythmFound > 0.0) {
       double adjustmentFactor;
       adjustmentFactor =
-          totalRhythmWanted
-              / totalRhythmFound;
+        totalRhythmWanted
+          / totalRhythmFound;
       int n;
       n = findLastNonRest(phrase);
       for (int i = 0; i < n; ++i) {
         phrase.getNote(i).setRhythm(
-            phrase.getNote(i).getRhythm()
-                * adjustmentFactor
+          phrase.getNote(i).getRhythm()
+            * adjustmentFactor
         );
       }
     }
   }
 
   private static void adjustOtherNotesTotalDuration(
-      Phrase phrase,
-      double totalDurationWanted) {
+    Phrase phrase,
+    double totalDurationWanted) {
 
     double totalDurationFound;
     totalDurationFound
-        = getOtherNotesTotalDuration(phrase);
+      = getOtherNotesTotalDuration(phrase);
     if (totalDurationFound > 0.0) {
       double adjustmentFactor;
       adjustmentFactor =
-          totalDurationWanted
-              / totalDurationFound;
+        totalDurationWanted
+          / totalDurationFound;
       int n;
       n = findLastNonRest(phrase);
       for (int i = 0; i < n; ++i) {
         if (phrase.getNote(i).getPitch()
-            != Note.REST) {
+          != Note.REST) {
           phrase.getNote(i).setDuration(
-              phrase.getNote(i).getDuration()
-                  * adjustmentFactor
+            phrase.getNote(i).getDuration()
+              * adjustmentFactor
           );
         } else {
           phrase.getNote(i).setDuration(
-              phrase.getNote(i)
-                  .getRhythm()
+            phrase.getNote(i)
+              .getRhythm()
           );
         }
       }
@@ -232,7 +233,7 @@ public class StavePhraseProperties extends Properties {
   }
 
   private static double getFinalRestRhythm(
-      Phrase phrase) {
+    Phrase phrase) {
     int i, n;
     double answer;
     answer = 0.0;
@@ -240,14 +241,14 @@ public class StavePhraseProperties extends Properties {
     i = findLastNonRest(phrase) + 1;
     while (i < n) {
       answer = answer + phrase.getNote(i)
-          .getRhythm();
+        .getRhythm();
       ++i;
     }
     return answer;
   }
 
   private static double getFinalRestDuration(
-      Phrase phrase) {
+    Phrase phrase) {
     int i, n;
     double answer;
     answer = 0.0;
@@ -255,14 +256,14 @@ public class StavePhraseProperties extends Properties {
     i = findLastNonRest(phrase) + 1;
     while (i < n) {
       answer = answer + phrase.getNote(i)
-          .getDuration();
+        .getDuration();
       ++i;
     }
     return answer;
   }
 
   private static double getOtherNotesTotalRhythm(
-      Phrase phrase) {
+    Phrase phrase) {
     int i, n;
     double answer;
     answer = 0.0;
@@ -270,14 +271,14 @@ public class StavePhraseProperties extends Properties {
     n = findLastNonRest(phrase);
     while (i < n) {
       answer = answer + phrase.getNote(i)
-          .getRhythm();
+        .getRhythm();
       ++i;
     }
     return answer;
   }
 
   private static double getOtherNotesTotalDuration(
-      Phrase phrase) {
+    Phrase phrase) {
     int i, n;
     double answer;
     answer = 0.0;
@@ -285,9 +286,9 @@ public class StavePhraseProperties extends Properties {
     n = findLastNonRest(phrase);
     while (i < n) {
       if (phrase.getNote(i).getPitch()
-          != Note.REST) {
+        != Note.REST) {
         answer = answer + phrase.getNote(i)
-            .getDuration();
+          .getDuration();
       }
       ++i;
     }
@@ -326,18 +327,18 @@ public class StavePhraseProperties extends Properties {
   }
 
   public void writeToFile(String midiFileName)
-      throws FileNotFoundException {
+    throws FileNotFoundException {
     try {
       FileOutputStream theStream
-          = new FileOutputStream(midiFileName + FILE_NAME_SUFFIX);
+        = new FileOutputStream(midiFileName + FILE_NAME_SUFFIX);
       store(theStream,
-          "Stave and Phrase Properties for " +
-              midiFileName
+        "Stave and Phrase Properties for " +
+          midiFileName
       );
     } catch (IOException e) {
       System.out.println(
-          "Error Writing MIDI Properties File " +
-              midiFileName + " " + e.getMessage()
+        "Error Writing MIDI Properties File " +
+          midiFileName + " " + e.getMessage()
       );
     }
   }
@@ -345,34 +346,34 @@ public class StavePhraseProperties extends Properties {
   public void updateStave(Stave stave) {
 
     stave.setKeySignature(
-        new Integer(getProperty(KEY_SIGNATURE))
+      new Integer(getProperty(KEY_SIGNATURE))
     );
 
     stave.setTitle(getProperty(STAVE_TITLE));
 
     stave.setMetre(
-        new Double(getProperty(STAVE_METRE))
+      new Double(getProperty(STAVE_METRE))
     );
   }
 
   public void updatePhrase(Phrase phrase) {
     phrase.setNumerator(
-        new Integer(getProperty(PHRASE_NUMERATOR))
+      new Integer(getProperty(PHRASE_NUMERATOR))
     );
 
     phrase.setDenominator(
-        new Integer(getProperty(PHRASE_DENOMINATOR))
+      new Integer(getProperty(PHRASE_DENOMINATOR))
     );
 
     phrase.setTitle(getProperty(PHRASE_TITLE));
 
     phrase.setTempo(
-        new Double(getProperty(PHRASE_TEMPO))
+      new Double(getProperty(PHRASE_TEMPO))
     );
 
     try {
       phrase.setInstrument(
-          new Integer(getProperty(PHRASE_INSTRUMENT))
+        new Integer(getProperty(PHRASE_INSTRUMENT))
       );
     } catch (Exception e) {
       phrase.setInstrument(0);
@@ -381,32 +382,32 @@ public class StavePhraseProperties extends Properties {
     int lastNotePos = findLastNonRest(phrase);
     if (lastNotePos >= 0) {
       phrase.getNote(lastNotePos)
-          .setRhythm(
-              new Double(getProperty(LAST_NOTE_RHYTHM))
-          );
+        .setRhythm(
+          new Double(getProperty(LAST_NOTE_RHYTHM))
+        );
       phrase.getNote(lastNotePos)
-          .setDuration(
-              new Double(getProperty(LAST_NOTE_DUR))
-          );
+        .setDuration(
+          new Double(getProperty(LAST_NOTE_DUR))
+        );
     }
 
     if (new Double(getProperty(FINAL_REST_RHYTHM))
-        > 0.00001) {
+      > 0.00001) {
       adjustFinalRestRhythm(
-          phrase,
-          new Double(getProperty(FINAL_REST_RHYTHM)),
-          new Double(getProperty(FINAL_REST_DUR))
+        phrase,
+        new Double(getProperty(FINAL_REST_RHYTHM)),
+        new Double(getProperty(FINAL_REST_DUR))
       );
     }
 
     adjustOtherNotesTotalRhythm(
-        phrase,
-        new Double(getProperty(OTHER_NOTES_TOTAL_RHYTHM))
+      phrase,
+      new Double(getProperty(OTHER_NOTES_TOTAL_RHYTHM))
     );
 
     adjustOtherNotesTotalDuration(
-        phrase,
-        Double.parseDouble(getProperty(OTHER_NOTES_TOTAL_DUR))
+      phrase,
+      Double.parseDouble(getProperty(OTHER_NOTES_TOTAL_DUR))
     );
 
     Score s = new Score();

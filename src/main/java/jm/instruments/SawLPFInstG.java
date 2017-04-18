@@ -48,7 +48,7 @@ public final class SawLPFInstG extends Instrument {
   /**
    * Constructor that sets sample rate and the number of channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
   public SawLPFInstG(int sampleRate, int filterCutoff) {
@@ -58,9 +58,9 @@ public final class SawLPFInstG extends Instrument {
   /**
    * Constructor that sets sample rate and the number of channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param channels 1 for Mono or 2 for Stereo
+   * @param channels     1 for Mono or 2 for Stereo
    */
   public SawLPFInstG(int sampleRate, int filterCutoff, int channels) {
     this.sampleRate = sampleRate;
@@ -82,14 +82,14 @@ public final class SawLPFInstG extends Instrument {
     Oscillator LFO = new Oscillator(freq, Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
     LFO.setAmp((float) 3.0);
     Envelope LFOenv = new Envelope(LFO,
-        new double[]{0.0, 0.0, 0.2, 0.4, 0.4, 1.0, 0.8, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.2, 0.4, 0.4, 1.0, 0.8, 1.0, 1.0, 0.0});
     // constant
     Value offsetFrequency = new Value(this, this.sampleRate, this.channels, Value.NOTE_PITCH);
     AudioObject[] grp1 = {LFOenv, offsetFrequency};
     Add add = new Add(grp1);
     // Filter cutoff envelope control
     Envelope filtEnv = new Envelope(this, this.sampleRate, this.channels,
-        new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
     Value scalefactor = new Value(this, this.sampleRate, this.channels, (float) 2000.0);
     Multiply mult = new Multiply(new AudioObject[]{filtEnv, scalefactor});
     // Waveform 1
@@ -98,7 +98,7 @@ public final class SawLPFInstG extends Instrument {
     Filter filt = new Filter(new AudioObject[]{wave, mult}, this.filterCutoff, Filter.LOW_PASS);
     // Envelope gnerator
     Envelope env = new Envelope(filt,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
     // respond to note dynamics
     Volume vol = new Volume(env);
     // save to a file

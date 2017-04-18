@@ -23,7 +23,7 @@ public final class SquareInst extends Instrument {
    * The points to use in the construction of Envelopes
    */
   private double[] envArray = {0.0, 0.0, 0.02, 1.0, 0.15, 0.6,
-      0.95, 0.4, 1.0, 0.0};
+    0.95, 0.4, 1.0, 0.0};
   private int sampleRate;
   private int channels;
   private SampleOut sout;
@@ -52,7 +52,7 @@ public final class SquareInst extends Instrument {
    * sampling rate and number of channels.
    *
    * @param sampleRate The audio quality.
-   * @param channels The number of channels.
+   * @param channels   The number of channels.
    */
 
   public SquareInst(int sampleRate, int channels) {
@@ -65,8 +65,8 @@ public final class SquareInst extends Instrument {
    * sampling rate, number of channels, and amplitude envelope.
    *
    * @param sampleRate The audio quality.
-   * @param channels The number of channels.
-   * @param double[] An array of envelope break points.
+   * @param channels   The number of channels.
+   * @param double[]   An array of envelope break points.
    */
 
   public SquareInst(int sampleRate, int channels, double[] envArray) {
@@ -85,7 +85,7 @@ public final class SquareInst extends Instrument {
    */
   public void createChain() {
     Oscillator wt = new Oscillator(this, Oscillator.SQUARE_WAVE,
-        this.sampleRate, channels);
+      this.sampleRate, channels);
     Envelope env = new Envelope(wt, envArray);
     Volume vol = new Volume(env);
     StereoPan span = new StereoPan(vol);

@@ -1,5 +1,5 @@
 /*
- 
+
 < This Java Class is part of the jMusic API>
 
 Copyright (C) 2000 Andrew Sorensen & Andrew Brown
@@ -23,6 +23,7 @@ package jm.midi;
 
 import java.util.Enumeration;
 import java.util.Stack;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MetaMessage;
@@ -34,6 +35,7 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Track;
+
 import jm.JMC;
 import jm.music.data.Note;
 import jm.music.data.Part;
@@ -113,15 +115,15 @@ public class MidiSynth implements JMC, MetaEventListener {
   /**
    * Create a Note On Event
    *
-   * @param int channel is the channel to change
-   * @param int pitch is the pitch of the note
-   * @param int velocity is the velocity of the note
+   * @param int  channel is the channel to change
+   * @param int  pitch is the pitch of the note
+   * @param int  velocity is the velocity of the note
    * @param long tick is the time this event occurs
    */
   protected static MidiEvent createNoteOnEvent(int channel,
-      int pitch, int velocity,
-      long tick)
-      throws InvalidMidiDataException {
+                                               int pitch, int velocity,
+                                               long tick)
+    throws InvalidMidiDataException {
 
     ShortMessage msg = new ShortMessage();
     msg.setMessage(0x90 + channel, pitch, velocity);
@@ -133,15 +135,15 @@ public class MidiSynth implements JMC, MetaEventListener {
   /**
    * Create a Note Off Event
    *
-   * @param int channel is the channel to change
-   * @param int pitch is the pitch of the note
-   * @param int velocity is the velocity of the note
+   * @param int  channel is the channel to change
+   * @param int  pitch is the pitch of the note
+   * @param int  velocity is the velocity of the note
    * @param long tick is the time this event occurs
    */
   protected static MidiEvent createNoteOffEvent(int channel,
-      int pitch, int velocity,
-      long tick)
-      throws InvalidMidiDataException {
+                                                int pitch, int velocity,
+                                                long tick)
+    throws InvalidMidiDataException {
 
     ShortMessage msg = new ShortMessage();
     msg.setMessage(0x80 + channel, pitch, velocity);
@@ -153,14 +155,14 @@ public class MidiSynth implements JMC, MetaEventListener {
   /**
    * Create a Program Change Event
    *
-   * @param int channel is the channel to change
-   * @param int value is the new value to use
+   * @param int  channel is the channel to change
+   * @param int  value is the new value to use
    * @param long tick is the time this event occurs
    */
   protected static MidiEvent createProgramChangeEvent(int channel,
-      int value,
-      long tick)
-      throws InvalidMidiDataException {
+                                                      int value,
+                                                      long tick)
+    throws InvalidMidiDataException {
 
     ShortMessage msg = new ShortMessage();
     msg.setMessage(0xC0 + channel, value, 0);
@@ -177,10 +179,10 @@ public class MidiSynth implements JMC, MetaEventListener {
    * @param int value is the value of the control change
    */
   protected static MidiEvent createCChangeEvent(int channel,
-      int controlNum,
-      int value,
-      long tick)
-      throws InvalidMidiDataException {
+                                                int controlNum,
+                                                int value,
+                                                long tick)
+    throws InvalidMidiDataException {
 
     ShortMessage msg = new ShortMessage();
     msg.setMessage(0xB0 + channel, controlNum, value);
@@ -347,12 +349,12 @@ public class MidiSynth implements JMC, MetaEventListener {
    * @return Sequence to be played
    */
   protected Sequence scoreToSeq(Score score)
-      throws InvalidMidiDataException {
+    throws InvalidMidiDataException {
     System.out.println("PPQN = " + m_ppqn);
     Sequence sequence = new Sequence(Sequence.PPQ, m_ppqn);
 
     m_masterTempo = m_currentTempo =
-        new Float(score.getTempo()).floatValue();
+      new Float(score.getTempo()).floatValue();
 
     System.out.println("Начальный темп: master " + m_masterTempo + " текущий " + m_currentTempo);
 
@@ -368,9 +370,9 @@ public class MidiSynth implements JMC, MetaEventListener {
       int currChannel = inst.getChannel();
       if (currChannel > 16) {
         throw new
-            InvalidMidiDataException(inst.getTitle() +
-            " - Invalid Channel Number: " +
-            currChannel);
+          InvalidMidiDataException(inst.getTitle() +
+          " - Invalid Channel Number: " +
+          currChannel);
       }
 
       m_tempoHistory.push(m_currentTempo);
@@ -432,7 +434,7 @@ public class MidiSynth implements JMC, MetaEventListener {
         double lastPanPosition = -1.0;
         int offSetTime = 0;
 
-        for (Note note: phrase.getNoteList() ) {
+        for (Note note : phrase.getNoteList()) {
           // deal with offset
           offSetTime = (int) (note.getOffset() * m_ppqn * elementTempoRatio);
 
@@ -491,15 +493,15 @@ public class MidiSynth implements JMC, MetaEventListener {
       byte[] data = new byte[0];
       msg.setMessage(STOP_TYPE, data, 0);
       MidiEvent evt = new MidiEvent(msg,
-          (long) longestTime); //+ 100 if you want leave some space for reverb tail
+        (long) longestTime); //+ 100 if you want leave some space for reverb tail
       longestTrack.add(evt);
     }
 
     //sequence.
 
     System.out.println(
-        "[SEQUENCE] Length: " + sequence.getMicrosecondLength() + " tick length " + sequence
-            .getTickLength());
+      "[SEQUENCE] Length: " + sequence.getMicrosecondLength() + " tick length " + sequence
+        .getTickLength());
 
     for (Track track : sequence.getTracks()) {
       System.out.println("  [TRACK] ticks: " + track.ticks());

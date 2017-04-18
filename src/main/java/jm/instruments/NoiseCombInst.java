@@ -32,7 +32,7 @@ public final class NoiseCombInst extends jm.audio.Instrument {
    */
   public void createChain() {
     Noise osc = new Noise(this, Noise.WHITE_NOISE, this.sampleRate,
-        this.channels);
+      this.channels);
     Envelope env = new Envelope(osc, new double[]{0.0, 0.0, 0.1, 1.0, 0.3, 0.0});
     Comb comb = new Comb(env, delay, decay);
     SampleOut sout = new SampleOut(comb);

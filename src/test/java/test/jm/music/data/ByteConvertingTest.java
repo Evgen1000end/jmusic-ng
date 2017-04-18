@@ -1,11 +1,11 @@
 package test.jm.music.data;
 
+import org.testng.annotations.Test;
+
 import static jm.util.ConvertUtils.byteArrayToString;
 import static jm.util.ConvertUtils.intToByteArray;
 import static jm.util.ConvertUtils.intToByteArrayFormat;
 import static org.testng.Assert.assertEquals;
-
-import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:evgen1000end@gmail.com">demkinev</a>
@@ -16,7 +16,7 @@ public class ByteConvertingTest {
   public void intToByteArrayTest() {
     assertEquals(intToByteArray(1), new byte[]{0, 0, 0, 1});
     assertEquals(intToByteArray(Integer.MAX_VALUE),
-        new byte[]{0x7F, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF});
+      new byte[]{0x7F, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF});
   }
 
   @Test

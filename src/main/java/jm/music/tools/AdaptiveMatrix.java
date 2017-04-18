@@ -100,8 +100,8 @@ public final class AdaptiveMatrix {
    * written to disk the AdaptiveMatrix(fileName) constructor
    * should be used.
    *
-   * @param numArray are the values to use in the matriX
-   * @param depth the number of prior states.
+   * @param numArray   are the values to use in the matriX
+   * @param depth      the number of prior states.
    * @param indexRange the range of numbers to use for indexing
    */
   public AdaptiveMatrix(int[] numArray, int depth, int indexRange) {
@@ -143,8 +143,9 @@ public final class AdaptiveMatrix {
   /**
    * Generate returns an array of generated index values
    *
-   * @param length the number of indexes to return. The seed data is included in the length value.
-   * @param seed the data to use as a starting point
+   * @param length the number of indexes to return. The seed data is included in the length
+   *               value.
+   * @param seed   the data to use as a starting point
    * @return an array of indexes equal to the length required.
    */
   public int[] generate(int length, int[] seed) {

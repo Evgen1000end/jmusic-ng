@@ -96,12 +96,12 @@ public abstract class RTLine implements AudioChainListener {
     for (int i = 0; i < inst.length; i++) {
       if (inst[i].getSampleRate() != sr) {
         System.err.println("jMusic RTLine error: All instruments" +
-            " must have the same sample rate.");
+          " must have the same sample rate.");
         System.exit(0);
       }
       if (inst[i].getChannels() != ch) {
         System.err.println("jMusic RTLine error: All instruments" +
-            " must have the same number of channels.");
+          " must have the same number of channels.");
         System.exit(0);
       }
     }
@@ -166,8 +166,8 @@ public abstract class RTLine implements AudioChainListener {
    * to trigger a real time audio event.  The event will commonly be
    * triggered by a GUI widget such as a button or slider.
    *
-   * @param obj and undetermined Object which will need to be cast locally to whatever type is
-   * expected.
+   * @param obj          and undetermined Object which will need to be cast locally to whatever
+   *                     type is expected.
    * @param actionNumber is an serial index value for the source of the event.
    */
   public void externalAction(Object obj, int actionNumber) {
@@ -180,10 +180,10 @@ public abstract class RTLine implements AudioChainListener {
    * called is what determines the control rate. The control rate is used
    * therefore to set the buffer sizes of the instrument sample buffers.
    *
-   * @param buffer a buffer of samples passed from an instrument
+   * @param buffer   a buffer of samples passed from an instrument
    * @param returned the number of samples in the buffer
    * @param finished this boolean indicates whether the instrument has finished processing its
-   * current note.
+   *                 current note.
    */
   public synchronized void controlChange(float[] buffer, int returned, boolean finished) {
     //do nothing here unless overriden
@@ -202,7 +202,7 @@ public abstract class RTLine implements AudioChainListener {
     temp = 60.0 / this.tempo;
     //System.out.println("RTLine instNote. scorePos = " + scorePos + " testPos = " + testPos);
     if (scorePos
-        > testPos) { //(scorePos > (testPos - 0.00001)) { // && scorePos < (testPos + 0.0001)){
+      > testPos) { //(scorePos > (testPos - 0.00001)) { // && scorePos < (testPos + 0.0001)){
       note = getNextNote().copy();
       note.setRhythm(note.getRhythm() * temp);
       note.setDuration(note.getDuration() * temp);
@@ -230,7 +230,7 @@ public abstract class RTLine implements AudioChainListener {
         inst[i].start();
       } catch (AOException aoe) {
         System.err
-            .println("jMusic RTLine start error: Perhpas a jMusic instrument was being reused.");
+          .println("jMusic RTLine start error: Perhpas a jMusic instrument was being reused.");
         aoe.printStackTrace();
       }
     }

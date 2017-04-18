@@ -18,8 +18,6 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 package jm.music.data;
 
 import java.io.Serializable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The Note class is representative of notes in standard western
@@ -116,7 +114,7 @@ public class Note implements Cloneable, Serializable {
    * default duration
    */
   public static final double DEFAULT_DURATION =
-      DEFAULT_RHYTHM * DEFAULT_DURATION_MULTIPLIER;
+    DEFAULT_RHYTHM * DEFAULT_DURATION_MULTIPLIER;
   /**
    * Default articulation.  This field is meant to replace
    * DEFAULT_DURATION_MULTIPLIER.
@@ -185,11 +183,7 @@ public class Note implements Cloneable, Serializable {
   public static final int PITCH_ENV = 1;
   public static final int FILTER_ENV = 2;
   public static final int PAN_ENV = 3;
-  /**
-   * string constants for keys on the keyboard
-   */
 
-  private Logger log = LoggerFactory.getLogger(Note.class);
   /**
    * the string that this note maps to being one of the 12 string constants
    */
@@ -293,7 +287,7 @@ public class Note implements Cloneable, Serializable {
     if (frequency == REST) {
       this.frequency = REST;
       this.pitch = REST;
-      note = "N/A";
+      note = "REST";
     } else {
       this.frequency = (frequency < MIN_FREQUENCY) ? MIN_FREQUENCY : frequency;
       pitch = NoteUtils.frequencyToPitch(this.frequency);
@@ -323,7 +317,7 @@ public class Note implements Cloneable, Serializable {
     if (pitch == REST) {
       this.pitch = REST;
       this.frequency = REST;
-      note = "N/A";
+      note = "REST";
     } else {
       this.pitch = (pitch < MIN_PITCH) ? MIN_PITCH : ((pitch > MAX_PITCH) ? MAX_PITCH : pitch);
       frequency = NoteUtils.pitchToFrequency(this.pitch);
@@ -347,10 +341,10 @@ public class Note implements Cloneable, Serializable {
    */
   public void setRhythm(double rhythm) {
     this.rhythm = (rhythm < MIN_RHYTHM)
-        ? MIN_RHYTHM
-        : ((rhythm > MAX_RHYTHM)
-            ? MAX_RHYTHM
-            : rhythm);
+      ? MIN_RHYTHM
+      : ((rhythm > MAX_RHYTHM)
+      ? MAX_RHYTHM
+      : rhythm);
   }
 
   /**
@@ -369,8 +363,8 @@ public class Note implements Cloneable, Serializable {
    */
   public void setDynamic(int dynamic) {
     this.dynamic = (dynamic < MIN_DYNAMIC)
-        ? MIN_DYNAMIC
-        : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
+      ? MIN_DYNAMIC
+      : ((dynamic > MAX_DYNAMIC) ? MAX_DYNAMIC : dynamic);
   }
 
   /**
@@ -389,8 +383,8 @@ public class Note implements Cloneable, Serializable {
    */
   public void setPan(double pan) {
     this.pan = (pan < MIN_PAN)
-        ? MIN_PAN
-        : ((pan > MAX_PAN) ? MAX_PAN : pan);
+      ? MIN_PAN
+      : ((pan > MAX_PAN) ? MAX_PAN : pan);
   }
 
   /**
@@ -409,8 +403,8 @@ public class Note implements Cloneable, Serializable {
    */
   public void setDuration(double duration) {
     this.duration = (duration < MIN_DURATION)
-        ? MIN_DURATION
-        : ((duration > MAX_DURATION) ? MAX_DURATION : duration);
+      ? MIN_DURATION
+      : ((duration > MAX_DURATION) ? MAX_DURATION : duration);
   }
 
   /**
@@ -424,8 +418,8 @@ public class Note implements Cloneable, Serializable {
   }
 
   /**
-   * Set notes offset.
-   * The range is 0 = no change, positive number delay the note, negative values rush (advance) it.
+   * Set notes offset. The range is 0 = no change, positive number delay the note, negative values
+   * rush (advance) it.
    *
    * @param offset note's offset.
    */
@@ -473,13 +467,13 @@ public class Note implements Cloneable, Serializable {
   public Note copy() {
     Note note;
     note = Note.newBuilder()
-        .pitch(this.getPitch())
-        .rhythm(this.rhythm)
-        .dynamic(this.dynamic)
-        .pan(this.pan)
-        .duration(this.duration)
-        .offset(this.offset)
-        .build();
+      .pitch(this.getPitch())
+      .rhythm(this.rhythm)
+      .dynamic(this.dynamic)
+      .pan(this.pan)
+      .duration(this.duration)
+      .offset(this.offset)
+      .build();
     note.setSampleStartTime(this.sampleStartTime);
     note.setPhrase(this.phrase);
     for (int i = 0; i < breakPoints.length; i++) {
@@ -495,13 +489,13 @@ public class Note implements Cloneable, Serializable {
    * Some indexes of the breakPoints array are reserved for
    * specific purposes. See the Note constants for a list of these.
    *
-   * @param index The specific breakPoint number to set.
+   * @param index  The specific breakPoint number to set.
    * @param points The values for this break point array.
    */
   public void setBreakPoints(final int index, final double[] points) {
     if (index < 0 || index > breakPoints.length) {
       throw new IllegalArgumentException("jMusic Note error: BreakPoint index " + index +
-          " is out of range when setting.");
+        " is out of range when setting.");
     }
     this.breakPoints[index] = points;
   }
@@ -516,11 +510,11 @@ public class Note implements Cloneable, Serializable {
   public double[] getBreakPoints(final int index) {
     if (index < 0 || index > breakPoints.length) {
       throw new IllegalArgumentException("jMusic Note error: BreakPoint index " + index +
-          "is out of range when getting.");
+        "is out of range when getting.");
     }
     if (breakPoints[index] == null) {
       throw new IllegalArgumentException(
-          "jMusic Note error: Breakpoint index " + index + " is empty.");
+        "jMusic Note error: Breakpoint index " + index + " is empty.");
     }
     return this.breakPoints[index];
   }
@@ -531,14 +525,13 @@ public class Note implements Cloneable, Serializable {
   @Override
   public String toString() {
     return "jMusic NOTE: " +
-        "[Frequency = " + frequency +
-        "[Pitch = " + pitch +
-        "][RhythmValue = " + rhythm +
-        "][Dynamic = " + dynamic +
-        "][Duration = " + duration +
-        "][Pan = " + pan + "]";
+      "[Frequency = " + frequency +
+      "[Pitch = " + pitch +
+      "][RhythmValue = " + rhythm +
+      "][Dynamic = " + dynamic +
+      "][Duration = " + duration +
+      "][Pan = " + pan + "]";
   }
-
 
 
   /**
@@ -563,8 +556,8 @@ public class Note implements Cloneable, Serializable {
    * Sets the rhythm, and optionally change the duration
    * at the same time.
    *
-   * @param factorDuration wether or not to change the duration to be a multiple of the rhythm value
-   * as well
+   * @param factorDuration wether or not to change the duration to be a multiple of the rhythm
+   *                       value as well
    */
   public void setRhythmValue(final double rv, final boolean factorDuration) {
     setRhythm(rv);
@@ -604,8 +597,8 @@ public class Note implements Cloneable, Serializable {
    */
   public boolean isFlat() {
     return note.equals("Eb")
-        || note.equals("Ab")
-        || note.equals("Bb");
+      || note.equals("Ab")
+      || note.equals("Bb");
   }
 
   /**
@@ -616,8 +609,7 @@ public class Note implements Cloneable, Serializable {
   }
 
   /**
-   *
-   * @param note
+   * @param note - note for comparsion
    * @return note has same duration and pitch
    */
   public boolean equals(Note note) {
@@ -632,16 +624,25 @@ public class Note implements Cloneable, Serializable {
    *
    * @param scale a constant from Scales.java goes here
    */
-  public Note nextNote(int[] scale) {
-    Note nextNote = null;
-    for (int i = 0; i < scale.length; i++) {
-      if (NoteUtils.pitchValue(note) % 12 == 0) {
-        nextNote = Note.newBuilder().pitch(this.getPitch() + scale[i]).build();
-      }
+//  public Note nextNote(int[] scale) {
+//    if  (getPitch() == REST) {
+//      throw new IllegalArgumentException("Can't get next note for REST note");
+//    }
+//    int nextpitch = this.getPitch() + scale[1];
+//    log.info("Next pitch {} {} {}", nextpitch, getPitch(), scale[1]);
+//    return Note.newBuilder().pitch(nextpitch).build();
+//  }
+
+  /**
+   * Create Next note in chromatic 12 grade scale
+   *
+   * @return nextNote in chromatic scale
+   */
+  public Note nextNote() {
+    if (getPitch() == REST) {
+      throw new IllegalArgumentException("Can't get next note for REST note");
     }
-    int nextpitch = this.getPitch() + scale[1];
-    log.info("Next pitch {} {} {}", nextpitch, getPitch(), scale[1]);
-    return Note.newBuilder().pitch(nextpitch).build();
+    return Note.newBuilder().pitch(getPitch() + 1).build();
   }
 
   public String getNote() {

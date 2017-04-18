@@ -50,7 +50,7 @@ public class Spring extends AudioObject {
    * linear spring-mass network.
    *
    * @param Instrument The instrument class of which this is a part - usually 'this'
-   * @param nodes The number of spring-mass pairs in the network.
+   * @param nodes      The number of spring-mass pairs in the network.
    */
   public Spring(Instrument inst, int nodes) {
     this(inst, nodes, 44100, 1);
@@ -60,10 +60,10 @@ public class Spring extends AudioObject {
    * The Spring constructor that acts as a generator of a
    * linear spring-mass network.
    *
-   * @param Instrument The instrument class of which this is a part - usually 'this'
-   * @param nodes The number of spring-mass pairs in the network.
+   * @param Instrument     The instrument class of which this is a part - usually 'this'
+   * @param nodes          The number of spring-mass pairs in the network.
    * @param springConstant The stiffness of the spring.
-   * @param massFriction The weight, inertia, of the virtual mass.
+   * @param massFriction   The weight, inertia, of the virtual mass.
    */
   public Spring(Instrument inst, int nodes, double springConstant, double massFriction) {
     this(inst, nodes, springConstant, massFriction, 0.0, 44100, 1);
@@ -73,16 +73,16 @@ public class Spring extends AudioObject {
    * The Spring constructor that acts as a generator of a
    * linear spring-mass network.
    *
-   * @param Instrument The instrument class of which this is a part - usually 'this'
-   * @param nodes The number of spring-mass pairs in the network.
+   * @param Instrument     The instrument class of which this is a part - usually 'this'
+   * @param nodes          The number of spring-mass pairs in the network.
    * @param springConstant The stiffness of the spring.
-   * @param massFriction The weight, inertia, of the virtual mass.
-   * @param jitter The amount of randomness (non linearity) in the network.
-   * @param sampleRate The number of spring recalulations per second of sound.
-   * @param channels The nuber of channels, 1 = mono, 2 = stereo, etc.
+   * @param massFriction   The weight, inertia, of the virtual mass.
+   * @param jitter         The amount of randomness (non linearity) in the network.
+   * @param sampleRate     The number of spring recalulations per second of sound.
+   * @param channels       The nuber of channels, 1 = mono, 2 = stereo, etc.
    */
   public Spring(Instrument inst, int nodes, double springConstant,
-      double massFriction, double jitter, int sampleRate, int channels) {
+                double massFriction, double jitter, int sampleRate, int channels) {
     super(inst, sampleRate, "[WaveTable]");
     this.numberOfNodes = nodes;
     this.springConstant = springConstant;

@@ -53,7 +53,7 @@ public final class SimpleSampleInst extends jm.audio.Instrument {
 
   public SimpleSampleInst(String fileName, double baseFreq, boolean wholeFile) {
     this(fileName, baseFreq, wholeFile,
-        new double[]{0.0, 0.0, 0.01, 1.0, 0.99, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.01, 1.0, 0.99, 1.0, 1.0, 0.0});
   }
 
   public SimpleSampleInst(String fileName, double baseFreq, boolean wholeFile, double[] points) {

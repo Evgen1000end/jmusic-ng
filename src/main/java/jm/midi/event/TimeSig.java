@@ -188,7 +188,7 @@ public final class TimeSig implements Event {
   //Print
   public void print() {
     System.out.println(
-        "TimeSig(021):             [time = " + this.time + "][numerator = " + this.numerator
-            + "][denominator = " + this.denominator + "]");
+      "TimeSig(021):             [time = " + this.time + "][numerator = " + this.numerator
+        + "][denominator = " + this.denominator + "]");
   }
 }

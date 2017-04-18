@@ -9,10 +9,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -25,18 +25,13 @@
 
 package jm.gui.cpn;
 
-import java.awt.Button;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Label;
-import java.awt.TextField;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.StringTokenizer;
+
 import jm.music.data.Note;
 import jm.music.data.Phrase;
 
@@ -46,28 +41,28 @@ import jm.music.data.Phrase;
 
 public class CpnZoomScreen extends Dialog
 
-    implements ActionListener, WindowListener {
+  implements ActionListener, WindowListener {
 
   private static TextField
-      startMeasureEdit = new TextField(8),  // 1st Measure is 1
-      measureCountEdit = new TextField(8);  // Measures to show
+    startMeasureEdit = new TextField(8),  // 1st Measure is 1
+    measureCountEdit = new TextField(8);  // Measures to show
   private static Label startMeasureLabel
-      = new Label("Start at Measure");
+    = new Label("Start at Measure");
   private static Label measureCountLabel
-      = new Label("Number of Measures");
+    = new Label("Number of Measures");
   private Phrase phrase, beforeZoom, afterZoom;
   private Button okButton
-      = new Button("Update View:"),
-      cancelButton
-          = new Button("Cancel");
+    = new Button("Update View:"),
+    cancelButton
+      = new Button("Cancel");
 
   public CpnZoomScreen(Frame parentFrame) {
     // TODO: Add your code here
 
     super(
-        parentFrame,
-        "Select the Measures to Show",
-        true);
+      parentFrame,
+      "Select the Measures to Show",
+      true);
     setSize(500, 400);
     placeControls();
     addWindowListener(this);
@@ -77,9 +72,9 @@ public class CpnZoomScreen extends Dialog
 
   // Recombine before, Phrase and after into longer Phrase
   static public void zoomOut(
-      Phrase before,
-      Phrase thePhrase,
-      Phrase after) {
+    Phrase before,
+    Phrase thePhrase,
+    Phrase after) {
     for (int i = 0; i < thePhrase.size(); ++i) {
       before.addNote(thePhrase.getNote(i));
     }
@@ -99,17 +94,17 @@ public class CpnZoomScreen extends Dialog
 
   // Check int input edit field for an error
   private static boolean intFieldError(
-      final TextField theField,
-      final double minValue,
-      final double maxValue) {
+    final TextField theField,
+    final double minValue,
+    final double maxValue) {
     StringTokenizer fieldTokenizer
-        = new StringTokenizer(theField.getText());
+      = new StringTokenizer(theField.getText());
     if (!fieldTokenizer.hasMoreElements()) {
       theField.setText("Error");
       return true;
     } else {
       String fieldString =
-          fieldTokenizer.nextToken();
+        fieldTokenizer.nextToken();
       try {
         int fieldValue = Integer.valueOf(fieldString);
         if (fieldValue < minValue) {
@@ -134,11 +129,11 @@ public class CpnZoomScreen extends Dialog
 
   // Extract int value from input edit field
   private static int getIntegerValue(
-      TextField theField) {
+    TextField theField) {
     StringTokenizer fieldTokenizer
-        = new StringTokenizer(theField.getText());
+      = new StringTokenizer(theField.getText());
     String fieldString =
-        fieldTokenizer.nextToken();
+      fieldTokenizer.nextToken();
     return Integer.parseInt(fieldString);
   }
 
@@ -182,9 +177,9 @@ public class CpnZoomScreen extends Dialog
   // already been detached from the Phrase.  They are
   // re-attached when we zoom out
   public void zoomIn(
-      Phrase before,
-      Phrase thePhrase,
-      Phrase after) {
+    Phrase before,
+    Phrase thePhrase,
+    Phrase after) {
     phrase = thePhrase;
     beforeZoom = before;
     afterZoom = after;
@@ -267,7 +262,7 @@ public class CpnZoomScreen extends Dialog
     double answer = 0.0;
     for (int i = 0; i < p.size(); ++i) {
       answer = answer
-          + p.getNote(i).getRhythm();
+        + p.getNote(i).getRhythm();
     }
     return answer / p.getNumerator();
   }
@@ -275,32 +270,32 @@ public class CpnZoomScreen extends Dialog
   // See if the start measure is a good measure number 1-n
   private boolean startFieldError() {
     return intFieldError(
-        startMeasureEdit,
-        1,
-        countMeasures(phrase) + 0.99
+      startMeasureEdit,
+      1,
+      countMeasures(phrase) + 0.99
     );
   }
 
   // See if the number of measures is ok or not
   private boolean countFieldError() {
     return intFieldError(
-        measureCountEdit,
-        1.0, 99999.99
+      measureCountEdit,
+      1.0, 99999.99
     );
   }
 
   // Move measures from the start of one Phrase to another
   private void moveMeasures(
-      Phrase fromPhrase,
-      Phrase toPhrase,
-      double nMeasures) {
+    Phrase fromPhrase,
+    Phrase toPhrase,
+    double nMeasures) {
     double beatCount = nMeasures *
-        fromPhrase
-            .getNumerator();
+      fromPhrase
+        .getNumerator();
     double beatValue;
     Note theNote;
     while ((beatCount > 0.005) &&
-        (fromPhrase.size() > 0)) {
+      (fromPhrase.size() > 0)) {
       theNote = fromPhrase.getNote(0);
       beatValue = theNote.getRhythm();
       toPhrase.addNote(theNote);
@@ -312,8 +307,8 @@ public class CpnZoomScreen extends Dialog
 
   // Move all notes from one Phrase to another
   private void moveAll(
-      Phrase fromPhrase,
-      Phrase toPhrase) {
+    Phrase fromPhrase,
+    Phrase toPhrase) {
     Note theNote;
     while ((fromPhrase.size() > 0)) {
       theNote = fromPhrase.getNote(0);
@@ -326,7 +321,7 @@ public class CpnZoomScreen extends Dialog
   // Zoom in on the selected measures
   private void zoom() {
     int n = getIntegerValue(startMeasureEdit)
-        - 1;
+      - 1;
     int m = getIntegerValue(measureCountEdit);
 
     beforeZoom.empty();
@@ -335,6 +330,6 @@ public class CpnZoomScreen extends Dialog
     moveMeasures(phrase, beforeZoom, n);
     moveAll(phrase, afterZoom);
     moveMeasures(afterZoom, phrase,
-        n + m - countMeasures(beforeZoom));
+      n + m - countMeasures(beforeZoom));
   }
 }

@@ -25,6 +25,7 @@ package jm.gui.wave;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -80,13 +81,13 @@ public class WaveFileReader implements jm.JMC {
    * Read in the data from the specified file as input to
    * an audio ren dering process.
    *
-   * @param inst - The instrument for which this audio object is a part.
-   * @param fileName - The name of the file to be used.
-   * @param cache - A flag to say weather or not to hold sample data in memory.
+   * @param inst      - The instrument for which this audio object is a part.
+   * @param fileName  - The name of the file to be used.
+   * @param cache     - A flag to say weather or not to hold sample data in memory.
    * @param wholeFile - A flag to indicate weather the file should be played all the way through,
-   * regardless of the note duration.
-   * @param loop - The number of time to reapeatedly playback the file (0 is no loop, -1 is
-   * infinite).
+   *                  regardless of the note duration.
+   * @param loop      - The number of time to reapeatedly playback the file (0 is no loop, -1 is
+   *                  infinite).
    */
   public WaveFileReader(String fileName) {
     try {
@@ -119,7 +120,8 @@ public class WaveFileReader implements jm.JMC {
    * Provide an array of samples from a specific sample start point.
    *
    * @param segmentSize - The size of the array of samples to return
-   * @param startPos - The number of samples from the beginning of the file to start reading from.
+   * @param startPos    - The number of samples from the beginning of the file to start reading
+   *                    from.
    * @return An array of samples as floats.
    */
   public float[] getSamples(int segmentSize, int startPos) {

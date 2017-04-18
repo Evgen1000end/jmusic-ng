@@ -46,7 +46,7 @@ public final class SawLPFInstB extends Instrument {
   /**
    * Constructor that sets sample rate and the number of channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
   public SawLPFInstB(int sampleRate, int filterCutoff) {
@@ -56,10 +56,10 @@ public final class SawLPFInstB extends Instrument {
   /**
    * Constructor that sets sample rate and the number of channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param dynScale The amount to multiply the dynamic value by in order for it change the filter
-   * cutoff
+   * @param dynScale     The amount to multiply the dynamic value by in order for it change the
+   *                     filter cutoff
    */
   public SawLPFInstB(int sampleRate, int filterCutoff, double dynScale) {
     this(sampleRate, filterCutoff, dynScale, 1);
@@ -68,9 +68,9 @@ public final class SawLPFInstB extends Instrument {
   /**
    * Constructor that sets sample rate and the number of channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param channels 1 for Mono or 2 for Stereo
+   * @param channels     1 for Mono or 2 for Stereo
    */
   public SawLPFInstB(int sampleRate, int filterCutoff, double dynScale, int channels) {
     this.sampleRate = sampleRate;
@@ -92,11 +92,11 @@ public final class SawLPFInstB extends Instrument {
     Value modAmount = new Value(this, this.sampleRate, 1, (float) this.dynScale);
     Multiply filterControl = new Multiply(new AudioObject[]{modSource, modAmount});
     Oscillator wave = new Oscillator(this, Oscillator.SAWTOOTH_WAVE, this.sampleRate,
-        this.channels);
+      this.channels);
     Filter filt = new Filter(new AudioObject[]{wave, filterControl}, this.filterCutoff,
-        Filter.LOW_PASS);
+      Filter.LOW_PASS);
     Envelope env = new Envelope(filt,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
     Volume vol = new Volume(env);
     SampleOut sout = new SampleOut(vol);
   }

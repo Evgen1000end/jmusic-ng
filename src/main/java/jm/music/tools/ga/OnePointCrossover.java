@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -40,50 +40,50 @@ public class OnePointCrossover extends Recombiner {
   }
 
   public Phrase[] recombine(Phrase[] population, double[] fitness,
-      double initialLength, int initialSize,
-      int beatsPerBar) {
+                            double initialLength, int initialSize,
+                            int beatsPerBar) {
     Phrase[] returnPop = population.length - ELITISM_CONSTANT >= 0
-        ? new Phrase[population.length - ELITISM_CONSTANT]
-        : new Phrase[0];
+      ? new Phrase[population.length - ELITISM_CONSTANT]
+      : new Phrase[0];
     if (returnPop.length > 1) {
       for (int i = 1; i < returnPop.length; i += 2) {
         int father = selectTournamentVictor(fitness, -1);
         int mother = selectTournamentVictor(fitness, father);
         int numOfFathersBars = (int) population[father].getEndTime()
-            / beatsPerBar;
+          / beatsPerBar;
         int numOfMothersBars = (int) population[mother].getEndTime()
-            / beatsPerBar;
+          / beatsPerBar;
         int numOfBars = numOfFathersBars > numOfMothersBars
-            ? numOfMothersBars
-            : numOfFathersBars;
+          ? numOfMothersBars
+          : numOfFathersBars;
         int crossoverBar = 0;
         while (crossoverBar < (int) (initialLength / beatsPerBar) + 1) {
           crossoverBar = (int) (Math.random() * (double) numOfBars);
         }
         returnPop[i - 1] = crossover(crossoverBar, population[father],
-            population[mother], true,
-            beatsPerBar);
+          population[mother], true,
+          beatsPerBar);
         returnPop[i] = crossover(crossoverBar, population[father],
-            population[mother], false,
-            beatsPerBar);
+          population[mother], false,
+          beatsPerBar);
       }
     }
     if ((int) (returnPop.length / 2.0)
-        != Math.round(returnPop.length / 2.0)) {
+      != Math.round(returnPop.length / 2.0)) {
       int father = selectTournamentVictor(fitness, -1);
       int mother = selectTournamentVictor(fitness, father);
       int numOfFathersBars = (int) population[father].getEndTime()
-          / beatsPerBar;
+        / beatsPerBar;
       int numOfMothersBars = (int) population[mother].getEndTime()
-          / beatsPerBar;
+        / beatsPerBar;
       int numOfBars = numOfFathersBars > numOfMothersBars
-          ? numOfMothersBars
-          : numOfFathersBars;
+        ? numOfMothersBars
+        : numOfFathersBars;
       int crossoverBar = (int) (Math.random() * (double) numOfBars);
       returnPop[returnPop.length - 1] = crossover(crossoverBar,
-          population[father],
-          population[mother],
-          true, beatsPerBar);
+        population[father],
+        population[mother],
+        true, beatsPerBar);
     }
     return returnPop;
   }
@@ -106,37 +106,37 @@ public class OnePointCrossover extends Recombiner {
   }
 
   private Phrase crossover(int crossoverBar, Phrase mother, Phrase father,
-      boolean isFatherFirst, int beatsPerBar) {
+                           boolean isFatherFirst, int beatsPerBar) {
     Phrase returnPhrase = new Phrase();
 
     Phrase currentPhrase = isFatherFirst ? father : mother;
     int currentNote = 0;
 
     while (returnPhrase.getEndTime()
-        + currentPhrase.getNote(currentNote).getRhythm()
-        < crossoverBar * beatsPerBar) {
+      + currentPhrase.getNote(currentNote).getRhythm()
+      < crossoverBar * beatsPerBar) {
       returnPhrase.addNote(currentPhrase.getNote(currentNote++).copy());
     }
     double rhythmValue = crossoverBar * beatsPerBar
-        - returnPhrase.getEndTime();
+      - returnPhrase.getEndTime();
 
     returnPhrase.addNote(Note.newBuilder()
-        .pitch(currentPhrase.getNote(currentNote).getPitch())
-        .rhythm(crossoverBar * beatsPerBar - returnPhrase.getEndTime())
-        .build());
+      .pitch(currentPhrase.getNote(currentNote).getPitch())
+      .rhythm(crossoverBar * beatsPerBar - returnPhrase.getEndTime())
+      .build());
     currentNote = -1;
     currentPhrase = isFatherFirst ? mother : father;
     double currentRhythmValue = 0;
     while (currentRhythmValue <= crossoverBar * beatsPerBar) {
       currentNote++;
       currentRhythmValue +=
-          currentPhrase.getNote(currentNote).getRhythm();
+        currentPhrase.getNote(currentNote).getRhythm();
     }
 
     returnPhrase.addNote(Note.newBuilder()
-        .pitch(currentPhrase.getNote(currentNote++).getPitch())
-        .rhythm(currentRhythmValue - crossoverBar * beatsPerBar)
-        .build());
+      .pitch(currentPhrase.getNote(currentNote++).getPitch())
+      .rhythm(currentRhythmValue - crossoverBar * beatsPerBar)
+      .build());
     while (currentNote < currentPhrase.size()) {
       returnPhrase.addNote(currentPhrase.getNote(currentNote++));
     }

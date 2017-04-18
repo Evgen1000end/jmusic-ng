@@ -161,7 +161,7 @@ public final class CChange implements VoiceEvt, Cloneable {
   //Print
   public void print() {
     System.out.println(
-        "Contol Change(003):			 [time = " + time + "][midiChannel = " + midiChannel
-            + "][contoller_num = " + controllerNum + "][value = " + value + "]");
+      "Contol Change(003):			 [time = " + time + "][midiChannel = " + midiChannel
+        + "][contoller_num = " + controllerNum + "][value = " + value + "]");
   }
 }

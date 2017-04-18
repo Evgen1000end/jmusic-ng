@@ -50,17 +50,17 @@ public final class AddInst extends jm.audio.Instrument {
    */
   public void createChain() {
     Oscillator mod = new Oscillator(this, Oscillator.SINE_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
     mod.setFrqRatio((float) 7.5);
     Envelope env = new Envelope(mod,
-        new double[]{0.0, 0.0, 0.4, 1.0, 1.0, 0.8});
+      new double[]{0.0, 0.0, 0.4, 1.0, 1.0, 0.8});
     //Value offsetAmp = new Value(this, this.sampleRate,
     //            this.channels, (float)0.7);
 
     Oscillator wt2 = new Oscillator(this, Oscillator.SINE_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
     Envelope env2 = new Envelope(wt2,
-        new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.5, 1.0, 1.0, 0.0});
     Add add = new Add(new AudioObject[]{env, env2});
     SampleOut sout = new SampleOut(add);
   }

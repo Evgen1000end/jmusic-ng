@@ -46,10 +46,10 @@ public final class Value extends AudioObject {
   //----------------------------------------------
   // constants
   public static final int FIXED = 0,
-      NOTE_PITCH = 1,
-      NOTE_DYNAMIC = 2,
-      NOTE_DURATION = 3,
-      NOTE_RHYTHM_VALUE = 4;
+    NOTE_PITCH = 1,
+    NOTE_DYNAMIC = 2,
+    NOTE_DURATION = 3,
+    NOTE_RHYTHM_VALUE = 4;
   /**
    * Which of the notes values do we wish to use as the NoteValue?<br>
    * 0 = don't use any note attributes<br>
@@ -79,11 +79,11 @@ public final class Value extends AudioObject {
    * return a fixed value.
    *
    * @param sampleRate SampleRate to use for this chain.
-   * @param channels Number of channels for this chain.
+   * @param channels   Number of channels for this chain.
    * @param fixedValue the value to use for this fixed value audio object.
    */
   public Value(Instrument inst, int sampleRate, int channels,
-      float fixedValue) {
+               float fixedValue) {
     super(inst, sampleRate, "[Value]");
     this.theValue = fixedValue;
     this.channels = channels;
@@ -96,12 +96,13 @@ public final class Value extends AudioObject {
    * value object will use.<br>  Please read the noteAttribute variable
    * description for an index of note attribute variables.
    *
-   * @param sampleRate SampleRate to use for this chain.
-   * @param channels Number of channels for this chain.
-   * @param noteAttribute An index number for note attribute to assign to this fixed value object.
+   * @param sampleRate    SampleRate to use for this chain.
+   * @param channels      Number of channels for this chain.
+   * @param noteAttribute An index number for note attribute to assign to this fixed value
+   *                      object.
    */
   public Value(Instrument inst, int sampleRate, int channels,
-      int noteAttribute) {
+               int noteAttribute) {
     super(inst, sampleRate, "[Value]");
     this.noteAttribute = noteAttribute;
     this.channels = channels;

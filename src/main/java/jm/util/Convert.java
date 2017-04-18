@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -24,6 +24,7 @@
 package jm.util;
 
 import java.lang.reflect.Field;
+
 import jm.constants.Frequencies;
 import jm.constants.Pitches;
 import jm.music.data.Note;
@@ -80,9 +81,9 @@ public class Convert {
 //        // Pitch must be positive for % function to work correctly
 //        if (pitch < 0) {
 //
-//            // Give pitch a positive value with an equivalent degree of the 
+//            // Give pitch a positive value with an equivalent degree of the
 //            // scale
-//            pitch += ((-pitch / SEMITONES_PER_OCTAVE) + 1) 
+//            pitch += ((-pitch / SEMITONES_PER_OCTAVE) + 1)
 //                     * SEMITONES_PER_OCTAVE;
 //        }
 //
@@ -109,9 +110,9 @@ public class Convert {
     try {
       while (true) {
         phrase.addNote(Note.newBuilder()
-            .pitch((int) processor.getNextRhythm())
-            .rhythm(processor.getNextRhythm())
-            .build());
+          .pitch((int) processor.getNextRhythm())
+          .rhythm(processor.getNextRhythm())
+          .build());
       }
     } catch (EOSException e) {
             /* This is okay.  Continue. */
@@ -141,7 +142,7 @@ public class Convert {
       stringBuffer.append(noteArray[i].getPitch());
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(
-          limitDecimalPlaces(noteArray[i].getRhythm(), 3));
+        limitDecimalPlaces(noteArray[i].getRhythm(), 3));
 //            stringBuffer.append(RIGHT_BRACKET);
       stringBuffer.append(DEFAULT_SEPARATOR);
     }
@@ -152,9 +153,9 @@ public class Convert {
       stringBuffer.append(noteArray[noteArray.length - 1].getPitch());
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(
-          limitDecimalPlaces(
-              noteArray[noteArray.length - 1].getRhythm(),
-              3)
+        limitDecimalPlaces(
+          noteArray[noteArray.length - 1].getRhythm(),
+          3)
       );
 //            stringBuffer.append(RIGHT_BRACKET);
     }
@@ -175,10 +176,10 @@ public class Convert {
     try {
       while (true) {
         phrase.addNote(Note.newBuilder()
-            .pitch((int) processor.getNextRhythm())
-            .rhythm(processor.getNextRhythm())
-            .dynamic((int) processor.getNextRhythm())
-            .build());
+          .pitch((int) processor.getNextRhythm())
+          .rhythm(processor.getNextRhythm())
+          .dynamic((int) processor.getNextRhythm())
+          .build());
       }
     } catch (EOSException e) {
             /* This is okay.  Continue. */
@@ -195,7 +196,7 @@ public class Convert {
    * @return String describing the Phrase
    */
   public static String phraseToPitchRhythmAndDynamicString(
-      final Phrase phrase) {
+    final Phrase phrase) {
     Note[] noteArray = phrase.getNoteArray();
 
         /*
@@ -210,7 +211,7 @@ public class Convert {
       stringBuffer.append(noteArray[i].getPitch());
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(
-          limitDecimalPlaces(noteArray[i].getRhythm(), 3));
+        limitDecimalPlaces(noteArray[i].getRhythm(), 3));
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(noteArray[i].getDynamic());
       stringBuffer.append(RIGHT_BRACKET);
@@ -223,9 +224,9 @@ public class Convert {
       stringBuffer.append(noteArray[noteArray.length - 1].getPitch());
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(
-          limitDecimalPlaces(
-              noteArray[noteArray.length - 1].getRhythm(),
-              3)
+        limitDecimalPlaces(
+          noteArray[noteArray.length - 1].getRhythm(),
+          3)
       );
       stringBuffer.append(DEFAULT_SEPARATOR);
       stringBuffer.append(noteArray[noteArray.length - 1].getDynamic());
@@ -257,7 +258,7 @@ public class Convert {
 //    }
 
   static String limitDecimalPlaces(final double d,
-      final int places) {
+                                   final int places) {
     String dString = Double.toString(d);
     int lastIndex = dString.lastIndexOf(".") + places + 1;
     if (lastIndex > dString.length()) {
@@ -285,22 +286,22 @@ public class Convert {
   }
 
   public static Score xmlStringToScore(final String string)
-      throws ConversionException {
+    throws ConversionException {
     return XMLParser.xmlStringToScore(string);
   }
 
   public static Part xmlStringToPart(final String string)
-      throws ConversionException {
+    throws ConversionException {
     return XMLParser.xmlStringToPart(string);
   }
 
   public static Phrase xmlStringToPhrase(final String string)
-      throws ConversionException {
+    throws ConversionException {
     return XMLParser.xmlStringToPhrase(string);
   }
 
   public static Note xmlStringToNote(final String string)
-      throws ConversionException {
+    throws ConversionException {
     return XMLParser.xmlStringToNote(string);
   }
 
@@ -334,7 +335,7 @@ public class Convert {
     // upper bound: frequency(G9) * (2^(1/12))
     float powerOfTwo = (float) Math.pow(2, (1f / 12f));
     if (frequency < (Frequencies.FRQ[Pitches.CN1] / powerOfTwo) ||
-        frequency > (Frequencies.FRQ[Pitches.G9] * powerOfTwo)) {
+      frequency > (Frequencies.FRQ[Pitches.G9] * powerOfTwo)) {
       return -1;
     }
     // round to the best matching pitch value (0..127)
@@ -394,7 +395,7 @@ public class Convert {
     }
 
     private int getNextPitch() throws ConversionException,
-        EOSException {
+      EOSException {
       StringBuilder buffer = new StringBuilder();
       try {
                 /* Ignore leading non-digit characters */
@@ -425,12 +426,12 @@ public class Convert {
       try {
                 /* Ignore leading non-digit characters */
         while (!Character.isDigit(string.charAt(i++))
-            && string.charAt(i) != '.') {
+          && string.charAt(i) != '.') {
         }
 
         buffer.append(string.charAt(i - 1));
         while (Character.isDigit(string.charAt(i))
-            || string.charAt(i) == '.') {
+          || string.charAt(i) == '.') {
           buffer.append(string.charAt(i));
           i++;
         }

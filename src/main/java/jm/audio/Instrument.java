@@ -24,6 +24,7 @@ package jm.audio;
 
 import java.util.Enumeration;
 import java.util.Vector;
+
 import jm.music.data.Note;
 import jm.music.rt.RTLine;
 
@@ -153,7 +154,7 @@ public abstract class Instrument extends Thread implements Runnable, jm.JMC {
    * number of samples required for the note and calls any AudioObjects
    * build methods prior to starting the chain.
    *
-   * @param note The note to render
+   * @param note      The note to render
    * @param startTime The startTime of the note
    * @return true if available for a new note and false if still rendering
    */
@@ -174,9 +175,9 @@ public abstract class Instrument extends Thread implements Runnable, jm.JMC {
       double frequency = note.getFrequency();
       if ((double) pao.getSampleRate() * 0.5 < frequency) {
         System.out.println("jMusic Instrument error: Sorry, can't render "
-            + "a note above the Nyquist frequency.");
+          + "a note above the Nyquist frequency.");
         System.out.println("Sample rate = " + pao.getSampleRate()
-            + " Pitch frequency = " + note.getFrequency());
+          + " Pitch frequency = " + note.getFrequency());
         System.exit(1);
       }
 
@@ -185,7 +186,7 @@ public abstract class Instrument extends Thread implements Runnable, jm.JMC {
       while (enum1.hasMoreElements()) {
         AudioObject ao = (AudioObject) enum1.nextElement();
         ao.newNote(note, (startTime - note.getOffset()),
-            this.numOfSamples);
+          this.numOfSamples);
       }
     }
   }
@@ -205,8 +206,8 @@ public abstract class Instrument extends Thread implements Runnable, jm.JMC {
       this.finalAO = ao;
     } else {
       throw new AOException("jMusic Instrument error: " + ao.name, finalAO.name +
-          " is already set as finalAO.\n" +
-          "  There can only be one finalAO.");
+        " is already set as finalAO.\n" +
+        "  There can only be one finalAO.");
     }
   }
 
@@ -464,7 +465,7 @@ public abstract class Instrument extends Thread implements Runnable, jm.JMC {
       if (iterations > bufsize || iterations <= 0) {
         //System.out.println("BufferSizeA = " + bufsize);
         buffer = new float[bufsize];
-                        
+
                         /*
                         for(i=0; i<buffer.length; i++){
                             buffer[i] = 0.0f;
@@ -473,7 +474,7 @@ public abstract class Instrument extends Thread implements Runnable, jm.JMC {
       } else {
         //System.out.println("BufferSizeB = " + iterations);
         buffer = new float[iterations];
-                        
+
                         /*
                         for(i=0; i<buffer.length; i++){
                             buffer[i] = 0.0f;

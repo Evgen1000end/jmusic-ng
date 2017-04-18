@@ -33,14 +33,14 @@ import jm.music.data.Note;
 public interface Volumes {
 
   int
-      SILENT = 0,
-      PPP = 10,
-      PP = 25, PIANISSIMO = 25,
-      P = 50,
-      MP = 60, MEZZO_PIANO = 60,
-      MF = 70, MEZZO_FORTE = 70,
-      F = 85, FORTE = 85,
-      FF = 100, FORTISSIMO = 100,
-      FFF = 120;
+    SILENT = 0,
+    PPP = 10,
+    PP = 25, PIANISSIMO = 25,
+    P = 50,
+    MP = 60, MEZZO_PIANO = 60,
+    MF = 70, MEZZO_FORTE = 70,
+    F = 85, FORTE = 85,
+    FF = 100, FORTISSIMO = 100,
+    FFF = 120;
 
 }

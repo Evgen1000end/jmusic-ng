@@ -29,6 +29,7 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
 import jm.JMC;
 import jm.audio.AOException;
 import jm.audio.AudioObject;
@@ -137,7 +138,7 @@ public final class SampleOut extends AudioObject implements JMC {
    * floating point data to disk. This file should be the
    * same for all instances of this object.
    *
-   * @param ao a single Audio Object for input.
+   * @param ao       a single Audio Object for input.
    * @param fileName to use for all data written to disk.
    */
   public SampleOut(AudioObject ao, String fileName) {
@@ -157,9 +158,9 @@ public final class SampleOut extends AudioObject implements JMC {
    * floating point data to disk. This file should be the
    * same for all instances of this object.
    *
-   * @param ao a single Audio Object for input.
+   * @param ao       a single Audio Object for input.
    * @param fileName to use for all data written to disk.
-   * @param sync do we want to sync all data to disk?
+   * @param sync     do we want to sync all data to disk?
    */
   public SampleOut(AudioObject ao, String fileName, boolean sync) {
     super(ao, "[SampleOut]");
@@ -178,13 +179,13 @@ public final class SampleOut extends AudioObject implements JMC {
    * floating point data to disk. This file should be the
    * same for all instances of this object.
    *
-   * @param ao a single Audio Object for input.
+   * @param ao       a single Audio Object for input.
    * @param fileName to use for all data written to disk.
    * @param position shows where in the RAF to write to (in bytes).
-   * @param sync do we want to sync all data to disk?
+   * @param sync     do we want to sync all data to disk?
    */
   public SampleOut(AudioObject ao, String fileName, int position,
-      boolean sync) {
+                   boolean sync) {
     super(ao, "[SampleOut]");
     this.sync = sync;
     this.position = position;
@@ -214,7 +215,7 @@ public final class SampleOut extends AudioObject implements JMC {
    * set the position to write to in the RAF for this
    * note based on the notes startTime.
    *
-   * @param note the note that this objects Audio Chain is currently rendering
+   * @param note      the note that this objects Audio Chain is currently rendering
    * @param startTime a notes startTime which is changed into a RAF position.
    */
   public void build() {
@@ -229,7 +230,7 @@ public final class SampleOut extends AudioObject implements JMC {
       }
     }
     this.position = (int) (currentNoteStartTime *
-        (double) this.sampleRate) * 4 * channels;
+      (double) this.sampleRate) * 4 * channels;
     if (this.position < 0) {
       this.position = 0;
     }

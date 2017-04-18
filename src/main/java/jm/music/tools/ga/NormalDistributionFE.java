@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -23,12 +23,10 @@
 
 package jm.music.tools.ga;
 
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.Scrollbar;
+import java.awt.*;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+
 import jm.music.data.Phrase;
 import jm.music.tools.NoteListException;
 import jm.music.tools.PhraseAnalysis;
@@ -69,83 +67,83 @@ public class NormalDistributionFE extends FitnessEvaluater {
   protected Label F22Label;
   protected Label F23Label;
   private double[] weighting = {1.0,  // Note Density
-      1.0,  // Pitch Variety
-      1.0,  // Rhythmic Variety
-      0.1,  // Climax Strength
-      1.0,  // Rest Density
-      1.0,  // Tonal Deviation
-      0.5,  // Key Centeredness
-      0.5,  // Pitch Range
-      0.5,  // Rhythm Range
-      1.0,  // Repeated Pitch Density
-      0.5,  // Repeated Rhythm Density
-      0.5,  // Melodic Direction Stability
-      1.0,  // Overall Pitch Direction
-      0.5,  // Pitch Movement by step
-      1.0,  // Dissonance
-      0.1,  // Leap Compensation
-      1.0,  // Syncopation
-      1.0,  // Repeated Pitch Patterns of 3
-      1.0,  // Repeated Pitch Patterns of 4
-      0.5,  // Repeated Rhythm Patterns of 3
-      0.1,  // Repeated Rhythm Patterns of 4
-      0.1,  // Climax Position
-      0.1}; // Climax Tonality
+    1.0,  // Pitch Variety
+    1.0,  // Rhythmic Variety
+    0.1,  // Climax Strength
+    1.0,  // Rest Density
+    1.0,  // Tonal Deviation
+    0.5,  // Key Centeredness
+    0.5,  // Pitch Range
+    0.5,  // Rhythm Range
+    1.0,  // Repeated Pitch Density
+    0.5,  // Repeated Rhythm Density
+    0.5,  // Melodic Direction Stability
+    1.0,  // Overall Pitch Direction
+    0.5,  // Pitch Movement by step
+    1.0,  // Dissonance
+    0.1,  // Leap Compensation
+    1.0,  // Syncopation
+    1.0,  // Repeated Pitch Patterns of 3
+    1.0,  // Repeated Pitch Patterns of 4
+    0.5,  // Repeated Rhythm Patterns of 3
+    0.1,  // Repeated Rhythm Patterns of 4
+    0.1,  // Climax Position
+    0.1}; // Climax Tonality
   private double[] mean = {0.307,  // Note Density
-      0.308,  // Pitch Variety
-      0.021,  // Rhythmic Variety
-      0.669,  // Climax Strength
-      0.021,   // Rest Density
-      0.079,  // Tonal Deviation
-      0.652,  // Key Centeredness
-      0.545,  // Pitch Range
-      0.383,  // Rhythm Range
-      0.130,  // Repeated Pitch Density
-      0.562,  // Repeated Rhythm Density
-      0.411,  // Melodic Direction Stability
-      0.495,  // Overall Pitch Direction
-      0.601,  // Pitch Movement
-      0.013,  // Dissonance
-      0.252,  // Leap Compensation
-      0.066,  // Syncopation
-      0.183,  // Repeated Pitch Patterns of 3
-      0.112,  // Repeated Pitch Patterns of 4
-      0.538,  // Repeated Rhythm Patterns of 3
-      0.439,  // Repeated Rhythm Patterns of 4
-      0.523,  // Climax Position
-      0.346};  // Climax Tonality
+    0.308,  // Pitch Variety
+    0.021,  // Rhythmic Variety
+    0.669,  // Climax Strength
+    0.021,   // Rest Density
+    0.079,  // Tonal Deviation
+    0.652,  // Key Centeredness
+    0.545,  // Pitch Range
+    0.383,  // Rhythm Range
+    0.130,  // Repeated Pitch Density
+    0.562,  // Repeated Rhythm Density
+    0.411,  // Melodic Direction Stability
+    0.495,  // Overall Pitch Direction
+    0.601,  // Pitch Movement
+    0.013,  // Dissonance
+    0.252,  // Leap Compensation
+    0.066,  // Syncopation
+    0.183,  // Repeated Pitch Patterns of 3
+    0.112,  // Repeated Pitch Patterns of 4
+    0.538,  // Repeated Rhythm Patterns of 3
+    0.439,  // Repeated Rhythm Patterns of 4
+    0.523,  // Climax Position
+    0.346};  // Climax Tonality
   private double[] standardDeviation = {0.115, // Note Density
-      0.129, // Pitch Variety
-      0.038, // Rhythmic Variety
-      0.318, // Climax Strength
-      0.044,  // Rest Density
-      0.137, // Tonal Deviation
-      0.148, // Key Centeredness
-      0.166, // Pitch Range
-      0.211, // Rhythm Range
-      0.130, // Repeated Pitch Density
-      0.210, // Repeated Rhythm Density
-      0.139, // Melodic Direction Stability
-      0.059, // Overall Pitch Direction
-      0.218, // Pitch Movement
-      0.047, // Dissonance
-      0.399, // Leap Compensation
-      0.105, // Syncopation
-      0.146, // Repeated Pitch Patterns of 3
-      0.125, // Repeated Pitch Patterns of 4
-      0.227, // Repeated Rhythm Patterns of 3
-      0.246, // Repeated Rhythm Patterns of 4
-      0.261, // Climax Position
-      0.275}; // Climax Tonality
+    0.129, // Pitch Variety
+    0.038, // Rhythmic Variety
+    0.318, // Climax Strength
+    0.044,  // Rest Density
+    0.137, // Tonal Deviation
+    0.148, // Key Centeredness
+    0.166, // Pitch Range
+    0.211, // Rhythm Range
+    0.130, // Repeated Pitch Density
+    0.210, // Repeated Rhythm Density
+    0.139, // Melodic Direction Stability
+    0.059, // Overall Pitch Direction
+    0.218, // Pitch Movement
+    0.047, // Dissonance
+    0.399, // Leap Compensation
+    0.105, // Syncopation
+    0.146, // Repeated Pitch Patterns of 3
+    0.125, // Repeated Pitch Patterns of 4
+    0.227, // Repeated Rhythm Patterns of 3
+    0.246, // Repeated Rhythm Patterns of 4
+    0.261, // Climax Position
+    0.275}; // Climax Tonality
 
   public NormalDistributionFE() {
     panel = new Panel();
     panel.setLayout(new GridLayout(23, 3));
     F1Label = new Label(Integer.toString(
-        (int) (weighting[0] * 100)));
+      (int) (weighting[0] * 100)));
     panel.add(new Label("Note Density", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[0] * 100), 1, 0, 100) {
+                (int) (weighting[0] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -161,10 +159,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F1Label);
 
     F2Label = new Label(Integer.toString(
-        (int) (weighting[1] * 100)));
+      (int) (weighting[1] * 100)));
     panel.add(new Label("Pitch Variety", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[1] * 100), 1, 0, 100) {
+                (int) (weighting[1] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -180,10 +178,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F2Label);
 
     F3Label = new Label(Integer.toString(
-        (int) (weighting[1] * 100)));
+      (int) (weighting[1] * 100)));
     panel.add(new Label("Rhythmic Variety", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[2] * 100), 1, 0, 100) {
+                (int) (weighting[2] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -199,10 +197,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F3Label);
 
     F4Label = new Label(Integer.toString(
-        (int) (weighting[3] * 100)));
+      (int) (weighting[3] * 100)));
     panel.add(new Label("Climax Strength", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[3] * 100), 1, 0, 100) {
+                (int) (weighting[3] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -218,10 +216,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F4Label);
 
     F5Label = new Label(Integer.toString(
-        (int) (weighting[4] * 100)));
+      (int) (weighting[4] * 100)));
     panel.add(new Label("Rest Density", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[4] * 100), 1, 0, 100) {
+                (int) (weighting[4] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -237,10 +235,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F5Label);
 
     F6Label = new Label(Integer.toString(
-        (int) (weighting[5] * 100)));
+      (int) (weighting[5] * 100)));
     panel.add(new Label("Tonal Deviation", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[5] * 100), 1, 0, 100) {
+                (int) (weighting[5] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -256,10 +254,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F6Label);
 
     F7Label = new Label(Integer.toString(
-        (int) (weighting[6] * 100)));
+      (int) (weighting[6] * 100)));
     panel.add(new Label("Key Centeredness", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[6] * 100), 1, 0, 100) {
+                (int) (weighting[6] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -275,10 +273,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F7Label);
 
     F8Label = new Label(Integer.toString(
-        (int) (weighting[7] * 100)));
+      (int) (weighting[7] * 100)));
     panel.add(new Label("Pitch Range", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[7] * 100), 1, 0, 100) {
+                (int) (weighting[7] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -294,10 +292,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F8Label);
 
     F9Label = new Label(Integer.toString(
-        (int) (weighting[8] * 100)));
+      (int) (weighting[8] * 100)));
     panel.add(new Label("Rhythm Range", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[8] * 100), 1, 0, 100) {
+                (int) (weighting[8] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -313,10 +311,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F9Label);
 
     F10Label = new Label(Integer.toString(
-        (int) (weighting[9] * 100)));
+      (int) (weighting[9] * 100)));
     panel.add(new Label("Repeated Pitch Density", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[9] * 100), 1, 0, 100) {
+                (int) (weighting[9] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -332,10 +330,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F10Label);
 
     F11Label = new Label(Integer.toString(
-        (int) (weighting[10] * 100)));
+      (int) (weighting[10] * 100)));
     panel.add(new Label("Repeated Rhythm Density", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[10] * 100), 1, 0, 100) {
+                (int) (weighting[10] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -351,10 +349,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F11Label);
 
     F12Label = new Label(Integer.toString(
-        (int) (weighting[11] * 100)));
+      (int) (weighting[11] * 100)));
     panel.add(new Label("Melodic Direction Stability", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[11] * 100), 1, 0, 100) {
+                (int) (weighting[11] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -370,10 +368,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F12Label);
 
     F13Label = new Label(Integer.toString(
-        (int) (weighting[12] * 100)));
+      (int) (weighting[12] * 100)));
     panel.add(new Label("Overall Pitch Direction", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[12] * 100), 1, 0, 100) {
+                (int) (weighting[12] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -389,10 +387,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F13Label);
 
     F14Label = new Label(Integer.toString(
-        (int) (weighting[13] * 100)));
+      (int) (weighting[13] * 100)));
     panel.add(new Label("Pitch Movement", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[13] * 100), 1, 0, 100) {
+                (int) (weighting[13] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -408,10 +406,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F14Label);
 
     F15Label = new Label(Integer.toString(
-        (int) (weighting[14] * 100)));
+      (int) (weighting[14] * 100)));
     panel.add(new Label("Dissonance", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[14] * 100), 1, 0, 100) {
+                (int) (weighting[14] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -427,10 +425,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F15Label);
 
     F16Label = new Label(Integer.toString(
-        (int) (weighting[15] * 100)));
+      (int) (weighting[15] * 100)));
     panel.add(new Label("Leap Compensation", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[15] * 100), 1, 0, 100) {
+                (int) (weighting[15] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -446,10 +444,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F16Label);
 
     F17Label = new Label(Integer.toString(
-        (int) (weighting[16] * 100)));
+      (int) (weighting[16] * 100)));
     panel.add(new Label("Syncopation", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[16] * 100), 1, 0, 100) {
+                (int) (weighting[16] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -465,10 +463,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F17Label);
 
     F18Label = new Label(Integer.toString(
-        (int) (weighting[17] * 100)));
+      (int) (weighting[17] * 100)));
     panel.add(new Label("Repeated Pitch Patterns of 3", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[17] * 100), 1, 0, 100) {
+                (int) (weighting[17] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -484,10 +482,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F18Label);
 
     F19Label = new Label(Integer.toString(
-        (int) (weighting[18] * 100)));
+      (int) (weighting[18] * 100)));
     panel.add(new Label("Repeated Pitch Patterns of 4", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[18] * 100), 1, 0, 100) {
+                (int) (weighting[18] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -503,10 +501,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F19Label);
 
     F20Label = new Label(Integer.toString(
-        (int) (weighting[19] * 100)));
+      (int) (weighting[19] * 100)));
     panel.add(new Label("Repeated Rhythm Patterns of 3", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[19] * 100), 1, 0, 100) {
+                (int) (weighting[19] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -522,10 +520,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F20Label);
 
     F21Label = new Label(Integer.toString(
-        (int) (weighting[20] * 100)));
+      (int) (weighting[20] * 100)));
     panel.add(new Label("Repeated Rhythm Patterns of 4", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[20] * 100), 1, 0, 100) {
+                (int) (weighting[20] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -541,10 +539,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F21Label);
 
     F22Label = new Label(Integer.toString(
-        (int) (weighting[21] * 100)));
+      (int) (weighting[21] * 100)));
     panel.add(new Label("Climax Position", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[21] * 100), 1, 0, 100) {
+                (int) (weighting[21] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -560,10 +558,10 @@ public class NormalDistributionFE extends FitnessEvaluater {
     panel.add(F22Label);
 
     F23Label = new Label(Integer.toString(
-        (int) (weighting[22] * 100)));
+      (int) (weighting[22] * 100)));
     panel.add(new Label("Climax Tonality", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL,
-                  (int) (weighting[22] * 100), 1, 0, 100) {
+                (int) (weighting[22] * 100), 1, 0, 100) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -587,8 +585,8 @@ public class NormalDistributionFE extends FitnessEvaluater {
       count = 0.0;
       for (int j = 0; j < mean.length; j++) {
         count += calculateFitness(getValue2(j, population[i]),
-            mean[j], standardDeviation[j],
-            weighting[j]);
+          mean[j], standardDeviation[j],
+          weighting[j]);
       }
       fitness[i] = 1 / (count / (weighting.length - 1) + 1);
     }
@@ -596,8 +594,8 @@ public class NormalDistributionFE extends FitnessEvaluater {
   }
 
   private double calculateFitness(double value, double mean,
-      double standardDeviation,
-      double weighting) {
+                                  double standardDeviation,
+                                  double weighting) {
     return Math.abs((value - mean) / standardDeviation) * weighting;
   }
 
@@ -617,7 +615,7 @@ public class NormalDistributionFE extends FitnessEvaluater {
           return PhraseAnalysis.restDensity(phrase, duration);
         case 5:
           return PhraseAnalysis.tonalDeviation(phrase, duration, tonic,
-              scale);
+            scale);
         case 6:
           return PhraseAnalysis.keyCenteredness(phrase, duration, tonic);
         case 7:

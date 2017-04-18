@@ -84,15 +84,15 @@ public final class BreathyFluteInst extends jm.audio.Instrument {
 
     EnvPoint[] tempArray = {
 
-        new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.0, (float) 0.0),
 
-        new EnvPoint((float) 0.2, (float) 1.0),
+      new EnvPoint((float) 0.2, (float) 1.0),
 
-        new EnvPoint((float) 0.5, (float) 0.7),
+      new EnvPoint((float) 0.5, (float) 0.7),
 
-        new EnvPoint((float) 0.8, (float) 0.5),
+      new EnvPoint((float) 0.8, (float) 0.5),
 
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 1.0, (float) 0.0)
 
     };
 
@@ -102,13 +102,13 @@ public final class BreathyFluteInst extends jm.audio.Instrument {
 
     EnvPoint[] tempArray2 = {
 
-        new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.0, (float) 0.0),
 
-        new EnvPoint((float) 0.05, (float) 0.7),
+      new EnvPoint((float) 0.05, (float) 0.7),
 
-        new EnvPoint((float) 0.2, (float) 0.1),
+      new EnvPoint((float) 0.2, (float) 0.1),
 
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 1.0, (float) 0.0)
 
     };
 

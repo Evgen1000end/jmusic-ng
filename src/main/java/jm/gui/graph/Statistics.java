@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -46,7 +46,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
   public Statistics(int initialCapacity) {
     if (initialCapacity < 0) {
       throw new IllegalArgumentException("Illegal Capacity: " +
-          initialCapacity);
+        initialCapacity);
     }
     this.elementData = new double[initialCapacity];
   }
@@ -222,11 +222,11 @@ public class Statistics implements Cloneable, java.io.Serializable {
   public void add(int index, double element) {
     if (index > size || index < 0) {
       throw new IndexOutOfBoundsException(
-          "Index: " + index + ", Size: " + size);
+        "Index: " + index + ", Size: " + size);
     }
     ensureCapacity(size + 1);
     System.arraycopy(elementData, index, elementData, index + 1,
-        size - index);
+      size - index);
     elementData[index] = element;
     size++;
     if (element > largestValue) {
@@ -242,7 +242,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
     int numMoved = size - index - 1;
     if (numMoved > 0) {
       System.arraycopy(elementData, index + 1, elementData, index,
-          numMoved);
+        numMoved);
     }
     elementData[--size] = 0; // Let gc do its work
     return oldValue;
@@ -264,7 +264,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
   protected void removeRange(int fromIndex, int toIndex) {
     int numMoved = size - toIndex;
     System.arraycopy(elementData, toIndex, elementData, fromIndex,
-        numMoved);
+      numMoved);
 
     // Let gc do its work
     int newSize = size - (toIndex - fromIndex);
@@ -278,14 +278,14 @@ public class Statistics implements Cloneable, java.io.Serializable {
   private void rangeCheck(int index) {
     if (index >= size || index < 0) {
       throw new IndexOutOfBoundsException(
-          "Index: " + index + ", Size: " + size);
+        "Index: " + index + ", Size: " + size);
     }
   }
 
   /**
    */
   private synchronized void writeObject(java.io.ObjectOutputStream s)
-      throws java.io.IOException {
+    throws java.io.IOException {
     // Write out element count, and any hidden stuff
     s.defaultWriteObject();
 
@@ -301,7 +301,7 @@ public class Statistics implements Cloneable, java.io.Serializable {
   /**
    */
   private synchronized void readObject(java.io.ObjectInputStream s)
-      throws java.io.IOException, ClassNotFoundException {
+    throws java.io.IOException, ClassNotFoundException {
     // Read in size, and any hidden stuff
     s.defaultReadObject();
 

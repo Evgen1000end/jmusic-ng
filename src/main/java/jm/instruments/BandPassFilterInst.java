@@ -39,7 +39,7 @@ public final class BandPassFilterInst extends Instrument {
   /**
    * Constructor that sets sample rate and the number of channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
   public BandPassFilterInst(int sampleRate, int filterCutoff) {
@@ -49,9 +49,9 @@ public final class BandPassFilterInst extends Instrument {
   /**
    * Constructor that sets sample rate and the number of channels
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param channels 1 for Mono or 2 for Stereo
+   * @param channels     1 for Mono or 2 for Stereo
    */
   public BandPassFilterInst(int sampleRate, int filterCutoff, int channels) {
     this.sampleRate = sampleRate;
@@ -73,7 +73,7 @@ public final class BandPassFilterInst extends Instrument {
     Filter hpf = new Filter(lpf, this.filterCutoff, Filter.HIGH_PASS);
     Volume vol = new Volume(hpf);
     Envelope env = new Envelope(vol,
-        new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.05, 1.0, 0.2, 0.4, 0.8, 0.3, 1.0, 0.0});
     StereoPan span = new StereoPan(env);
     SampleOut sout = new SampleOut(span);
   }

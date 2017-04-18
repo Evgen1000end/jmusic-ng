@@ -26,12 +26,14 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.Transmitter;
+
 import jm.midi.event.Event;
 import jm.midi.event.VoiceEvt;
 

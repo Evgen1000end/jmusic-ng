@@ -49,9 +49,9 @@ public final class SimpleSineInst extends jm.audio.Instrument {
    */
   public void createChain() {
     Oscillator osc = new Oscillator(this, Oscillator.SINE_WAVE,
-        this.sampleRate, this.channels);
+      this.sampleRate, this.channels);
     Envelope env = new Envelope(osc,
-        new double[]{0.0, 0.0, 0.1, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.1, 1.0, 1.0, 0.0});
     SampleOut sout = new SampleOut(env);
   }
 }

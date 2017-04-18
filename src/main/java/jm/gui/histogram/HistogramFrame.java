@@ -24,24 +24,19 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 /* --------------------
 * A jMusic tool which displays a score as a
 * piano roll dispslay on Common Practice Notation staves.
-* @author Andrew Brown 
+* @author Andrew Brown
 * @version 1.0, February 2003
 * ---------------------
 */
 package jm.gui.histogram;
 
-import java.awt.Color;
-import java.awt.FileDialog;
-import java.awt.Frame;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.MenuShortcut;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import jm.JMC;
 import jm.music.data.Score;
 
@@ -84,7 +79,7 @@ public class HistogramFrame extends Frame implements WindowListener, ActionListe
    * in the top left corner of the screen.
    *
    * @param Score The score from which data is to be displayed.
-   * @param int The type of data to display, 0 = pitch, 1 = rhythm, etc.
+   * @param int   The type of data to display, 0 = pitch, 1 = rhythm, etc.
    */
   public HistogramFrame(Score score, int dataType) {
     this(score, dataType, 0, 0);
@@ -95,9 +90,9 @@ public class HistogramFrame extends Frame implements WindowListener, ActionListe
    * in the top left corner of the screen.
    *
    * @param Score The score from which data is to be displayed.
-   * @param int The type of data to display, 0 = pitch, 1 = rhythm, etc.
-   * @param int The X location for this frame.
-   * @param int The Y location for this frame.
+   * @param int   The type of data to display, 0 = pitch, 1 = rhythm, etc.
+   * @param int   The X location for this frame.
+   * @param int   The Y location for this frame.
    */
 
   public HistogramFrame(Score score, int dataType, int xPos, int yPos) {
@@ -265,7 +260,7 @@ public class HistogramFrame extends Frame implements WindowListener, ActionListe
    */
   public void openXMLFile() {
     FileDialog fd = new FileDialog(new Frame(), "Select a jMusic XML file to display.",
-        FileDialog.LOAD);
+      FileDialog.LOAD);
     fd.show();
     String fileName = fd.getFile();
     if (fileName != null) {

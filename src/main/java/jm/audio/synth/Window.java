@@ -49,7 +49,7 @@ public final class Window extends AudioObject {
 
   /**
    * @param outputs the number of outputs to support.
-   * @param ao the single AudioObject taken as input.
+   * @param ao      the single AudioObject taken as input.
    */
   public Window(AudioObject ao, int type, boolean direction) {
     super(ao, "[Window]");

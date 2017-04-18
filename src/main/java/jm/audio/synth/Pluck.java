@@ -1,23 +1,23 @@
 /*
- 
+
  <This Java Class is part of the jMusic API version 1.5, March 2004.>
- 
+
  Copyright (C) 2000 Andrew Sorensen & Andrew Brown
- 
+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or any
  later version.
- 
+
  This program is distributed in the hope that it will be useful, but
  WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- 
+
  */
 package jm.audio.synth;
 
@@ -61,10 +61,10 @@ public final class Pluck extends AudioObject {
   /**
    * This constructor sets up pluck as a generator of samples.
    *
-   * @param inst The containing instrument, usually passed 'this'
+   * @param inst       The containing instrument, usually passed 'this'
    * @param sampleRate The integer number of samples per second (higher rates produce brighter
-   * timbre).
-   * @param channels The interger number of channels, 1 = mono, 2 = stereo, etc.
+   *                   timbre).
+   * @param channels   The interger number of channels, 1 = mono, 2 = stereo, etc.
    */
 
   public Pluck(Instrument inst, int sampleRate, int channels) {
@@ -74,11 +74,12 @@ public final class Pluck extends AudioObject {
   /**
    * This constructor sets up pluck as a generator of samples.
    *
-   * @param inst The containing instrument, usually passed 'this'
+   * @param inst       The containing instrument, usually passed 'this'
    * @param sampleRate The integer number of samples per second (higher rates produce brighter
-   * timbre).
-   * @param channels The interger number of channels, 1 = mono, 2 = stereo, etc.
-   * @param feedback The sustain level (0.5 is maximum, changes as small as 0.001 are significant)
+   *                   timbre).
+   * @param channels   The interger number of channels, 1 = mono, 2 = stereo, etc.
+   * @param feedback   The sustain level (0.5 is maximum, changes as small as 0.001 are
+   *                   significant)
    */
   public Pluck(Instrument inst, int sampleRate, int channels, double feedback) {
     super(inst, sampleRate, "[Pluck]");
@@ -102,8 +103,9 @@ public final class Pluck extends AudioObject {
    * and in this becomes a processor object which
    * filters it's input through  the Karpulus-Strong algorithm.
    *
-   * @param ao the single AudioObject to use as input.
-   * @param feedback The sustain level (0.5 is maximum, changes as small as 0.001 are significant)
+   * @param ao       the single AudioObject to use as input.
+   * @param feedback The sustain level (0.5 is maximum, changes as small as 0.001 are
+   *                 significant)
    */
   public Pluck(AudioObject ao, double feedback) { // not yet working
     super(ao, "[Pluck]");
@@ -116,7 +118,7 @@ public final class Pluck extends AudioObject {
    * Specify the new value of the time it takes for the sound to decay.
    *
    * @param feedback New interation feedback value, equals the sustain level (0.5 is maximum,
-   * changes as small as 0.001 are significant)
+   *                 changes as small as 0.001 are significant)
    */
   public void setFeedback(double feedback) {
     this.feedback = (float) feedback;
@@ -162,7 +164,7 @@ public final class Pluck extends AudioObject {
             buffer[i] += delayLine[delayIndex] * decay;
           } catch (IndexOutOfBoundsException e) {
             System.err.println(
-                "jMusic Pluck audio object error: i = " + i + " delayIndex = " + delayIndex);
+              "jMusic Pluck audio object error: i = " + i + " delayIndex = " + delayIndex);
           }
           float a = buffer[i] * -decay;
           float b = delayLine[delayIndex];

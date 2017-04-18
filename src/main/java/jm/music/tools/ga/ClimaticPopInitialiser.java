@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -23,12 +23,10 @@
 
 package jm.music.tools.ga;
 
-import java.awt.FlowLayout;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.Scrollbar;
+import java.awt.*;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+
 import jm.music.data.Note;
 import jm.music.data.Phrase;
 import jm.music.tools.PhraseAnalysis;
@@ -65,7 +63,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
     populationLabel = new Label(Integer.toString(populationSize));
     panel.add(new Label("Population Size", Label.RIGHT));
     panel.add(new Scrollbar(Scrollbar.HORIZONTAL, populationSize, 1,
-                  MIN_POPULATION_SIZE, MAX_POPULATION_SIZE) {
+                MIN_POPULATION_SIZE, MAX_POPULATION_SIZE) {
                 {
                   addAdjustmentListener(new AdjustmentListener() {
                                           public void adjustmentValueChanged(AdjustmentEvent evt) {
@@ -135,14 +133,14 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       }
 
       extend(population[i], target, targetBeat, beatRhythmArray,
-          intervalArray, climax, beatsPerBar, lowerlimit);
+        intervalArray, climax, beatsPerBar, lowerlimit);
       addAppropriateTarget(population[i], target);
       if (population[i].getEndTime() != 8 * beatsPerBar) {
         target = Note.newBuilder().pitch(TONIC).rhythm((double) beatsPerBar).build();
         targetBeat = 7 * beatsPerBar;
         extend(population[i], target, targetBeat,
-            beatRhythmArray, intervalArray, climax,
-            beatsPerBar, lowerlimit);
+          beatRhythmArray, intervalArray, climax,
+          beatsPerBar, lowerlimit);
 
                 /* Check last note */
         int noteIndex = population[i].size() - 1;
@@ -185,7 +183,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       int pitch = Note.REST;
       while (pitch == Note.REST) {
         pitch = returnPhrase.getNote(counter--)
-            .getPitch();
+          .getPitch();
       }
       pitch += intervals[(int) (Math.random() * intervals.length)];
       if (!isScale(pitch)) {
@@ -196,16 +194,16 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
         }
       }
       returnPhrase.addNote(Note.newBuilder()
-          .pitch(pitch)
-          .rhythm(rhythmValueToCompleteBeat)
-          .build());
+        .pitch(pitch)
+        .rhythm(rhythmValueToCompleteBeat)
+        .build());
     }
     return returnPhrase;
   }
 
   private double[][] generateBeatRhythmArray(Phrase phrase, int beatsPerBar) {
     double[][] tempBeatRVArray =
-        new double[(int) phrase.getEndTime() * beatsPerBar][];
+      new double[(int) phrase.getEndTime() * beatsPerBar][];
     int beatCount = 0;
     int absoluteNotesProcessed = 0;
     double absoluteCumulativeRV = 0;
@@ -246,7 +244,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       absoluteCumulativeRV = cumulativeRV;
 
       while (cumulativeRV < originalCumulativeRV + (double) beatsPerBar
-          && notesProcessed < phrase.size()) {
+        && notesProcessed < phrase.size()) {
         note = phrase.getNote(notesProcessed++);
         rhythmValue = note.getRhythm();
         tempRVArray[count++] = rhythmValue;
@@ -318,8 +316,8 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       cumulativeRV += phrase.getNote(i).getRhythm();
     }
     return !(location < 8 * beatsPerBar * (CLIMAX_AVERAGE - CLIMAX_ST_DEV)
-        || location > 8 * beatsPerBar * (CLIMAX_AVERAGE + CLIMAX_ST_DEV))
-        && lastHighestPitch > phrase.getNote(0).getPitch() + 12 && repetitions <= 1;
+      || location > 8 * beatsPerBar * (CLIMAX_AVERAGE + CLIMAX_ST_DEV))
+      && lastHighestPitch > phrase.getNote(0).getPitch() + 12 && repetitions <= 1;
   }
 
   private int findClimax(Phrase phrase) {
@@ -340,14 +338,14 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
     int currentPitch = lowestPitch + 13;
     while (pitch == 0) {
       if (currentPitch % 12 == TONIC % 12
-          || currentPitch % 12 == (TONIC + 7) % 12) {
+        || currentPitch % 12 == (TONIC + 7) % 12) {
         pitch = currentPitch;
       }
       currentPitch++;
     }
     while (pitch > 88) {
       if (currentPitch % 12 == TONIC % 12
-          || currentPitch % 12 == (TONIC + 7) % 12) {
+        || currentPitch % 12 == (TONIC + 7) % 12) {
         pitch = currentPitch;
       }
       currentPitch--;
@@ -356,8 +354,8 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
   }
 
   private void extend(Phrase phrase, Note target, int targetBeat,
-      double[][] beatArray, int[] intervalArray, int climax,
-      int beatsPerBar, final int lowerlimit) {
+                      double[][] beatArray, int[] intervalArray, int climax,
+                      int beatsPerBar, final int lowerlimit) {
     int length = (int) phrase.getEndTime();
     while (length < targetBeat) {
       if (length == 2 * beatsPerBar) {
@@ -368,15 +366,15 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
         }
                 /* if previousPitch is not harmonious (a tonic or dominant) */
         if (!(previousPitch % 12 == TONIC % 12
-            || previousPitch % 12 == (TONIC + 7) % 12)) {
+          || previousPitch % 12 == (TONIC + 7) % 12)) {
           int nextHarmoniousNote = previousPitch + 1;
           while (!(nextHarmoniousNote % 12 == TONIC % 12
-              || nextHarmoniousNote % 12 == (TONIC + 7) % 12)) {
+            || nextHarmoniousNote % 12 == (TONIC + 7) % 12)) {
             nextHarmoniousNote++;
           }
           int prevHarmoniousNote = previousPitch - 1;
           while (!(prevHarmoniousNote % 12 == TONIC % 12
-              || prevHarmoniousNote % 12 == (TONIC + 7) % 12)) {
+            || prevHarmoniousNote % 12 == (TONIC + 7) % 12)) {
             prevHarmoniousNote--;
           }
           if (nextHarmoniousNote > climax) {
@@ -384,10 +382,10 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
           } else if (prevHarmoniousNote < lowerlimit) {
             previousPitch = nextHarmoniousNote;
           } else if (nextHarmoniousNote - previousPitch
-              > previousPitch - prevHarmoniousNote) {
+            > previousPitch - prevHarmoniousNote) {
             previousPitch = prevHarmoniousNote;
           } else if (previousPitch - prevHarmoniousNote
-              > nextHarmoniousNote - previousPitch) {
+            > nextHarmoniousNote - previousPitch) {
             previousPitch = nextHarmoniousNote;
           } else {
             previousPitch = nextHarmoniousNote;
@@ -402,16 +400,16 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
 
         // Don't add group of beats that will not cross the next bar line
         while (counter < 30 && length + beatsInArray > (length
-            / beatsPerBar
-            + 1)
-            * beatsPerBar) {
+          / beatsPerBar
+          + 1)
+          * beatsPerBar) {
           beatIndex = (int) (Math.random() * beatArray.length);
           double tempRVCount = 0;
           for (int i = 0; i < beatArray[beatIndex].length; i++) {
 
             tempRVCount += (beatArray[beatIndex][i] < 0)
-                ? 0 - beatArray[beatIndex][i]
-                : beatArray[beatIndex][i];
+              ? 0 - beatArray[beatIndex][i]
+              : beatArray[beatIndex][i];
           }
 
           beatsInArray = (int) tempRVCount;
@@ -423,12 +421,12 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
           // Add beats to melody
           for (int i = 0; i < beatArray[beatIndex].length; i++) {
             addNote(phrase, target, targetBeat, beatArray[beatIndex][i],
-                intervalArray, climax, lowerlimit);
+              intervalArray, climax, lowerlimit);
           }
         } else {
           addNote(phrase, target, targetBeat,
-              ((length / beatsPerBar + 1) * beatsPerBar) - length,
-              intervalArray, climax, lowerlimit);
+            ((length / beatsPerBar + 1) * beatsPerBar) - length,
+            intervalArray, climax, lowerlimit);
         }
       }
       length = (int) phrase.getEndTime();
@@ -457,8 +455,8 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
   }
 
   private void addNote(Phrase phrase, Note target, int targetBeat,
-      double rhythmValue, int[] intervalArray, int climax,
-      final int lowerlimit) {
+                       double rhythmValue, int[] intervalArray, int climax,
+                       final int lowerlimit) {
     if (rhythmValue < 0.0) {
       phrase.addNote(Note.newBuilder().rest().rhythm(0.0 - rhythmValue).build());
     } else {
@@ -470,9 +468,9 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
       }
 
       double originalRatio = (target.getPitch() - previousPitch)
-          / (targetBeat - phrase.getEndTime());
+        / (targetBeat - phrase.getEndTime());
       int selectedInterval = intervalArray[
-          (int) (Math.random() * intervalArray.length)];
+        (int) (Math.random() * intervalArray.length)];
       int currentInterval = target.getPitch() - previousPitch;
       double intervalRatio = selectedInterval / (double) currentInterval;
       if (intervalRatio < 0) {
@@ -481,7 +479,7 @@ public class ClimaticPopInitialiser extends PopulationInitialiser {
         }
       }
       double currentRatio = currentInterval
-          / (targetBeat - phrase.getEndTime());
+        / (targetBeat - phrase.getEndTime());
       double ratioOfRatios = currentRatio / originalRatio;
       if (ratioOfRatios >= 2.0 || ratioOfRatios <= 0.5) {
         selectedInterval /= 2;

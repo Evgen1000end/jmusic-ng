@@ -80,7 +80,7 @@ public final class Waveshaper extends AudioObject {
    * as input and distorts it via a specifed
    * shaping (transfer) function to a particular depth.
    *
-   * @param ao an Audio Object.
+   * @param ao    an Audio Object.
    * @param shape The type of waveshape function to use
    * @param depth The number of polynomial stages to use (1-10)
    */
@@ -97,11 +97,11 @@ public final class Waveshaper extends AudioObject {
    * as input and distorts it via a specifed
    * shaping (transfer) function to a particular depth.
    *
-   * @param ao an Audio Object.
-   * @param shape The type of waveshape function to use
-   * @param depth The number of polynomial stages to use (1-10)
+   * @param ao      an Audio Object.
+   * @param shape   The type of waveshape function to use
+   * @param depth   The number of polynomial stages to use (1-10)
    * @param weights An array of volume scaling values for the polynomials (make sure the length of
-   * the array equals the depth minum 1. As the fundamental is assumed to be 1.0)
+   *                the array equals the depth minum 1. As the fundamental is assumed to be 1.0)
    */
   public Waveshaper(AudioObject ao, int shape, int depth, double[] weights) {
     super(ao, "[Waveshaper]");
@@ -148,47 +148,47 @@ public final class Waveshaper extends AudioObject {
         }
         if (stages > 2) { //T3
           result += weights[1] * ((float) 4 * (float) (Math.pow((double) currentValue, 3.0)) -
-              (float) 3 * currentValue);
+            (float) 3 * currentValue);
         }
         if (stages > 3) { //T4
           result += weights[2] * (8 * (float) (Math.pow((double) currentValue, 4.0)) -
-              (float) 8 * (float) (Math.pow((double) currentValue, 2.0)) + 1);
+            (float) 8 * (float) (Math.pow((double) currentValue, 2.0)) + 1);
         }
         if (stages > 4) {  // T5
           result += weights[3] * (16 * (float) (Math.pow((double) currentValue, 5.0)) -
-              (float) 20.0 * (float) (Math.pow((double) currentValue, 3.0)) +
-              (float) 5.0 * currentValue);
+            (float) 20.0 * (float) (Math.pow((double) currentValue, 3.0)) +
+            (float) 5.0 * currentValue);
         }
         if (stages > 5) {  // T6
           result += weights[4] * (32 * (float) (Math.pow((double) currentValue, 6.0)) -
-              (float) 48.0 * (float) (Math.pow((double) currentValue, 4.0)) +
-              (float) 18.0 * (float) (Math.pow((double) currentValue, 2.0)) - 1);
+            (float) 48.0 * (float) (Math.pow((double) currentValue, 4.0)) +
+            (float) 18.0 * (float) (Math.pow((double) currentValue, 2.0)) - 1);
         }
         if (stages > 6) {  // T7
           result += weights[5] * (64 * (float) (Math.pow((double) currentValue, 7.0)) -
-              (float) 112.0 * (float) (Math.pow((double) currentValue, 5.0)) +
-              (float) 56.0 * (float) (Math.pow((double) currentValue, 3.0)) -
-              (float) 7.0 * currentValue);
+            (float) 112.0 * (float) (Math.pow((double) currentValue, 5.0)) +
+            (float) 56.0 * (float) (Math.pow((double) currentValue, 3.0)) -
+            (float) 7.0 * currentValue);
         }
         if (stages > 7) {  // T8
           result += weights[6] * (128 * (float) (Math.pow((double) currentValue, 8.0)) -
-              (float) 256.0 * (float) (Math.pow((double) currentValue, 6.0)) +
-              (float) 160.0 * (float) (Math.pow((double) currentValue, 4.0)) -
-              (float) 32.0 * (float) (Math.pow((double) currentValue, 2.0)) + 1);
+            (float) 256.0 * (float) (Math.pow((double) currentValue, 6.0)) +
+            (float) 160.0 * (float) (Math.pow((double) currentValue, 4.0)) -
+            (float) 32.0 * (float) (Math.pow((double) currentValue, 2.0)) + 1);
         }
         if (stages > 8) {  // T9
           result += weights[7] * (256 * (float) (Math.pow((double) currentValue, 9.0)) -
-              (float) 576.0 * (float) (Math.pow((double) currentValue, 7.0)) +
-              (float) 432.0 * (float) (Math.pow((double) currentValue, 5.0)) -
-              (float) 120.0 * (float) (Math.pow((double) currentValue, 3.0)) +
-              (float) 9.0 * currentValue);
+            (float) 576.0 * (float) (Math.pow((double) currentValue, 7.0)) +
+            (float) 432.0 * (float) (Math.pow((double) currentValue, 5.0)) -
+            (float) 120.0 * (float) (Math.pow((double) currentValue, 3.0)) +
+            (float) 9.0 * currentValue);
         }
         if (stages > 9) {  // T10
           result += weights[8] * (512 * (float) (Math.pow((double) currentValue, 10.0)) -
-              (float) 1280.0 * (float) (Math.pow((double) currentValue, 8.0)) +
-              (float) 1120.0 * (float) (Math.pow((double) currentValue, 6.0)) -
-              (float) 400.0 * (float) (Math.pow((double) currentValue, 4.0)) +
-              (float) 50.0 * (float) (Math.pow((double) currentValue, 2.0)) - 1);
+            (float) 1280.0 * (float) (Math.pow((double) currentValue, 8.0)) +
+            (float) 1120.0 * (float) (Math.pow((double) currentValue, 6.0)) -
+            (float) 400.0 * (float) (Math.pow((double) currentValue, 4.0)) +
+            (float) 50.0 * (float) (Math.pow((double) currentValue, 2.0)) - 1);
         }
         if (buffer[i] < 0.0) {
           result *= (float) -1.0;

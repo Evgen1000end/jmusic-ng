@@ -20,15 +20,12 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 */
 
-// Some GPL changes for jMusic CPN Written by Al Christians 
+// Some GPL changes for jMusic CPN Written by Al Christians
 // (achrist@easystreet.com).
 
 package jm.gui.cpn;
 
-import java.awt.Cursor;
-import java.awt.Frame;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -37,27 +34,28 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
 import jm.JMC;
 import jm.music.data.Note;
 import jm.music.data.Phrase;
 
 public class StaveActionHandler implements JMC, MouseListener, MouseMotionListener, ActionListener,
-    KeyListener {
+  KeyListener {
 
   private Stave theApp;
   private int selectedNote = -1;
   private boolean topTimeSelected = false, keySelected = false;
   private int clickedPosY, clickedPosX, storedPitch = 72;
   private double[] rhythmValues = {104.0, 103.0, 102.0, 101.5, 101.0, 100.75,
-      100.5, 100.25, 0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0};
+    100.5, 100.25, 0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0};
   private boolean button1Down = false;
 
   private PopupMenu noteContextMenu;
 
   private MenuItem editNote,
-      repeatNote,
-      makeRest,
-      deleteNote;
+    repeatNote,
+    makeRest,
+    deleteNote;
 
 
   // constructor
@@ -93,7 +91,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
       lastX = (Integer) theApp.notePositions.elementAt(theApp.notePositions.size() - 2);
     }
     return (e.getX() <= lastX.intValue() + 15) &&
-        (e.getX() < theApp.getTotalBeatWidth() + 50);
+      (e.getX() < theApp.getTotalBeatWidth() + 50);
   }
 
   private void searchForSelectedNote(MouseEvent e) {
@@ -103,10 +101,10 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
       tempX = (Integer) theApp.notePositions.elementAt(i);
       tempY = (Integer) theApp.notePositions.elementAt(i + 1);
       if ((e.getX() > tempX.intValue()) &&
-          (e.getX() < tempX.intValue() + 15) &&
-          (e.getY() + theApp.staveDelta >
-              tempY.intValue() + 22) &&
-          (e.getY() + theApp.staveDelta < tempY.intValue() + 35)) {
+        (e.getX() < tempX.intValue() + 15) &&
+        (e.getY() + theApp.staveDelta >
+          tempY.intValue() + 22) &&
+        (e.getY() + theApp.staveDelta < tempY.intValue() + 35)) {
         selectedNote = i / 2;
         clickedPosY = e.getY() + theApp.staveDelta;
         clickedPosX = e.getX();
@@ -119,10 +117,10 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
   // Mouse Listener stubs
   public void mouseClicked(MouseEvent e) {
     if ((((e.getModifiers() & InputEvent.BUTTON2_MASK) != 0)) &&
-        inNoteArea(e)) {
+      inNoteArea(e)) {
       searchForSelectedNote(e);
       if ((selectedNote >= 0) &&
-          (selectedNote < theApp.getPhrase().size())) {
+        (selectedNote < theApp.getPhrase().size())) {
         noteContextMenu.show(theApp, e.getX(), e.getY());
       }
     }
@@ -140,8 +138,8 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
 
   public void mousePressed(MouseEvent e) {
     if (e.isPopupTrigger() ||
-        ((e.getModifiers() & InputEvent.BUTTON2_MASK) != 0) ||
-        (!theApp.editable)) {
+      ((e.getModifiers() & InputEvent.BUTTON2_MASK) != 0) ||
+      (!theApp.editable)) {
       return;
     }
     button1Down = true;
@@ -237,7 +235,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
       Note n = phr.getNote(selectedNote);
       // move note down
       if (e.getY() + theApp.staveDelta > clickedPosY + 2
-          && theApp.getPhrase().getNote(selectedNote).getPitch() != REST) {
+        && theApp.getPhrase().getNote(selectedNote).getPitch() != REST) {
         n.setPitch(n.getPitch() - 1);
         if (n.getPitch() < theApp.getMinPitch()) {
           n.setPitch(theApp.getMinPitch());
@@ -251,7 +249,7 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
       }
       // move note up
       if (e.getY() + theApp.staveDelta < clickedPosY - 2
-          && theApp.getPhrase().getNote(selectedNote).getPitch() != REST) {
+        && theApp.getPhrase().getNote(selectedNote).getPitch() != REST) {
         n.setPitch(n.getPitch() + 1);
         if (n.getPitch() > theApp.getMaxPitch()) {
           n.setPitch(theApp.getMaxPitch());
@@ -340,13 +338,13 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
           theApp.setMetre(1.0);
         }
         theApp.getPhrase()
-            .setNumerator(
-                (new
-                    Double(
-                    Math.round(theApp.getMetre())
-                )
-                ).intValue()
-            );
+          .setNumerator(
+            (new
+              Double(
+              Math.round(theApp.getMetre())
+            )
+            ).intValue()
+          );
         clickedPosY -= 4;
         theApp.repaint();
         theApp.updateChange();
@@ -361,13 +359,13 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
           theApp.setMetre(9.0);
         }
         theApp.getPhrase()
-            .setNumerator(
-                (new
-                    Double(
-                    Math.round(theApp.getMetre())
-                )
-                ).intValue()
-            );
+          .setNumerator(
+            (new
+              Double(
+              Math.round(theApp.getMetre())
+            )
+            ).intValue()
+          );
         clickedPosY += 4;
         theApp.repaint();
         theApp.updateChange();
@@ -423,11 +421,11 @@ public class StaveActionHandler implements JMC, MouseListener, MouseMotionListen
     Note note = phrase.getNote(selectedNote);
     if (e.getSource() == editNote) {
       Frame editorFrame
-          = new Frame("Edit this Note");
+        = new Frame("Edit this Note");
       editorFrame.setSize(400, 400);
       editorFrame.setResizable(true);
       NoteEditor noteEditor
-          = new NoteEditor(editorFrame);
+        = new NoteEditor(editorFrame);
       noteEditor.editNote(note, 20, 20);
     } else if (e.getSource() == repeatNote) {
       Note newNote = note.copy();

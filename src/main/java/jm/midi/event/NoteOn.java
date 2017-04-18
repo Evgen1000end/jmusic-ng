@@ -167,7 +167,7 @@ public final class NoteOn implements VoiceEvt, Cloneable {
   //----------------------------------------------
   public void print() {
     System.out.println(
-        "Note On(005): [time = " + time + "][midiChannel = " + midiChannel + "][pitch = " + pitch
-            + "][velocity = " + velocity + "]");
+      "Note On(005): [time = " + time + "][midiChannel = " + midiChannel + "][pitch = " + pitch
+        + "][velocity = " + velocity + "]");
   }
 }

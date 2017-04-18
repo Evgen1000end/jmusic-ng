@@ -26,6 +26,7 @@ package jm.music.data;
 import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import jm.JMC;
 
 /**
@@ -166,7 +167,7 @@ public class Score implements JMC, Cloneable, Serializable {
    *
    * @param title Give the score a name
    * @param tempo Define speed of playback in bpm
-   * @param part The Part to be contained in the Score
+   * @param part  The Part to be contained in the Score
    */
   public Score(String title, double tempo, Part part) {
     this(title, tempo);
@@ -188,7 +189,7 @@ public class Score implements JMC, Cloneable, Serializable {
    * Constructs a Score containing the specified <CODE>part</CODE> with
    * the specified <CODE>title</CODE>.
    *
-   * @param part Part to be contained in the Score
+   * @param part  Part to be contained in the Score
    * @param title String describing the title of the Score
    */
   public Score(Part part, String title) {
@@ -212,7 +213,7 @@ public class Score implements JMC, Cloneable, Serializable {
    * Constructs a Score containing the specified <CODE>part</CODE> with
    * the specified <CODE>title</CODE> and the specified <CODE>tempo</CODE>.
    *
-   * @param part Part to be contained in the Score
+   * @param part  Part to be contained in the Score
    * @param title String describing the title of the Score
    * @param tempo A double describing the tempo of the Score
    */
@@ -257,13 +258,13 @@ public class Score implements JMC, Cloneable, Serializable {
    * Inserts <CODE>part</CODE> at the specified position, shifting all parts
    * with indices greater than or equal to <CODE>index</CODE> up one position.
    *
-   * @param part Part to be added
+   * @param part  Part to be added
    * @param index where it is to be inserted
    * @throws ArrayIndexOutOfBoundsException when <CODE>index</CODE> is beyond the range of current
-   * parts.
+   *                                        parts.
    */
   public void insertPart(Part part, int index)
-      throws ArrayIndexOutOfBoundsException {
+    throws ArrayIndexOutOfBoundsException {
     this.partList.insertElementAt(part, index);
     part.setMyScore(this);
   }
@@ -468,9 +469,9 @@ public class Score implements JMC, Cloneable, Serializable {
    * Returns the Score's time signature elements.
    *
    * @return Point The Time Signature elements packaged together with the numerator as'x' and
-   * denominator as 'y'. You may prefer to use the getNumerator and getDenomintor methods directly,
-   * rather than use this convenience method which requires importing the java.awt package to
-   * extract the elements : )
+   * denominator as 'y'. You may prefer to use the getNumerator and getDenomintor methods
+   * directly, rather than use this convenience method which requires importing the java.awt
+   * package to extract the elements : )
    */
   public java.awt.Point getTimeSignature() {
     return new java.awt.Point(this.numerator, this.denominator);
@@ -565,7 +566,7 @@ public class Score implements JMC, Cloneable, Serializable {
    */
   public String toString() {
     String scoreData = "***** jMusic SCORE: '" + title +
-        "' contains " + this.size() + " parts. ****" + '\n';
+      "' contains " + this.size() + " parts. ****" + '\n';
     scoreData += "Score Tempo = " + this.tempo + " bpm" + '\n';
     Enumeration enum1 = partList.elements();
     StringBuilder scoreDataBuilder = new StringBuilder(scoreData);
@@ -588,7 +589,7 @@ public class Score implements JMC, Cloneable, Serializable {
    * Empty removes all elements in the vector.
    *
    * @param nullObjects If ture this sets all jMusic data objects to null priot to removing. This
-   * facilitates garbage collection.
+   *                    facilitates garbage collection.
    */
   public void empty(final boolean nullObjects) {
     if (nullObjects) {

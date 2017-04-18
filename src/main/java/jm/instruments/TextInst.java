@@ -1,7 +1,7 @@
 package jm.instruments;
 
-import java.awt.FileDialog;
-import java.awt.Frame;
+import java.awt.*;
+
 import jm.audio.io.SampleOut;
 import jm.audio.io.TextIn;
 import jm.audio.synth.EnvPoint;
@@ -77,13 +77,13 @@ public final class TextInst extends jm.audio.Instrument {
   // read a file
   private String openFile() {
     FileDialog loadFile = new FileDialog(new Frame(),
-        "Select any file to be treated as audio data.",
-        FileDialog.LOAD);
+      "Select any file to be treated as audio data.",
+      FileDialog.LOAD);
     loadFile.show();
     String fileName = loadFile.getDirectory() + loadFile.getFile();
     if (fileName == null) {
       System.out
-          .println("jMusic jm.instruments.TextInst error: No file was selected, exiting program.");
+        .println("jMusic jm.instruments.TextInst error: No file was selected, exiting program.");
       System.exit(0);
     }
     return fileName;

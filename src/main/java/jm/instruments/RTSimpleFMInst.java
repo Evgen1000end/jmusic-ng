@@ -88,11 +88,11 @@ public final class RTSimpleFMInst extends jm.audio.Instrument {
   public RTSimpleFMInst(int sampleRate, int channels, int dIndex, double ratio) {
     this.sampleRate = sampleRate;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.1, (float) 1.0),
-        new EnvPoint((float) 0.15, (float) 0.4),
-        new EnvPoint((float) 0.9, (float) 0.3),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.1, (float) 1.0),
+      new EnvPoint((float) 0.15, (float) 0.4),
+      new EnvPoint((float) 0.9, (float) 0.3),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
     this.channels = channels;

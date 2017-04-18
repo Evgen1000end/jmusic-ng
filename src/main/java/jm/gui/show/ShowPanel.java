@@ -23,17 +23,14 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 /*-------------------------------------------
 * A jMusic tool which displays a score as a
 * piano roll display on Common Practice Notation staves.
-* @author Andrew Brown 
+* @author Andrew Brown
  * @version 1.0,Sun Feb 25 18:43
 * ---------------------
 */
 package jm.gui.show;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Panel;
-import java.awt.ScrollPane;
+import java.awt.*;
+
 import jm.music.data.Score;
 
 /**

@@ -68,16 +68,16 @@ public final class VibratoInstRT extends jm.audio.Instrument {
     // modulator
     Value modFrequency = new Value(this, this.sampleRate, 1, (float) 5.0);
     Oscillator modulator = new Oscillator(modFrequency,
-        Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
+      Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
     modulator.setAmp((float) 8.0);
     // constant
     Value constFreq = new Value(this, this.sampleRate, this.channels, (float) 260.0);
     Add add = new Add(new AudioObject[]{constFreq, modulator});
     // carrier
     Oscillator carrier = new Oscillator(add,
-        Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
+      Oscillator.SINE_WAVE, Oscillator.FREQUENCY);
     Envelope env2 = new Envelope(carrier,
-        new double[]{0.0, 0.0, 0.1, 1.0, 1.0, 0.0});
+      new double[]{0.0, 0.0, 0.1, 1.0, 1.0, 0.0});
     Volume amp = new Volume(env2, (float) 1.0);
     //SampleOut sout = new SampleOut(amp);
   }

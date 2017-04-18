@@ -22,9 +22,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.sketch;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -32,6 +30,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import jm.JMC;
 import jm.music.data.Note;
 import jm.music.data.Part;
@@ -40,7 +39,7 @@ import jm.music.data.Score;
 import jm.music.tools.Mod;
 
 public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseListener,
-    MouseMotionListener {
+  MouseMotionListener {
 
   //attributes
   private Score score;
@@ -79,8 +78,8 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
     //set up a set of colours to use
     for (int i = 0; i < 10; i++) {
       Color colour = new Color((int) (Math.random() * 256),
-          (int) (Math.random() * 256),
-          (int) (Math.random() * 256));
+        (int) (Math.random() * 256),
+        (int) (Math.random() * 256));
       theColors[i] = colour;
     }
   }
@@ -155,7 +154,7 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
 
         double oldStartTime = phrase.getStartTime();
 
-        for (Note aNote: phrase.getNoteList()) {
+        for (Note aNote : phrase.getNoteList()) {
           int currNote = aNote.getPitch();
           if (currNote != REST) {
             int x = 127 - currNote;
@@ -272,31 +271,31 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
         // fine grade
         for (int i = 0; i < Math.abs(y1 - y2); i++) {
           storer[counter][0] = (double) (((Integer) drawPoints.elementAt(counter * 4)).
-              intValue()) / beatWidth +
-              ((double) Math.abs(x2 - x1) / beatWidth / (double) (Math.abs(y1 - y2)) + 1.0) /
-                  (Math.abs(y1 - y2) + 1); //onset time
+            intValue()) / beatWidth +
+            ((double) Math.abs(x2 - x1) / beatWidth / (double) (Math.abs(y1 - y2)) + 1.0) /
+              (Math.abs(y1 - y2) + 1); //onset time
           if (((Integer) drawPoints.elementAt(counter * 4)).intValue() >
-              ((Integer) drawPoints.elementAt(counter * 4 + 2)).intValue()) {
+            ((Integer) drawPoints.elementAt(counter * 4 + 2)).intValue()) {
             //revised onset time for drawing backwards
             storer[counter][0] = (double) (((Integer) drawPoints.elementAt(counter * 4 + 2)).
-                intValue()) / beatWidth / (double) (Math.abs(y1 - y2)) + 1.0;
+              intValue()) / beatWidth / (double) (Math.abs(y1 - y2)) + 1.0;
           }
           //pitch
           storer[counter][1] = (double) (127 - y1 + i);
           //duration
           storer[counter][2] = (double) Math.abs(x2 - x1) / beatWidth /
-              (double) (Math.abs(y1 - y2)) + 1.0;
+            (double) (Math.abs(y1 - y2)) + 1.0;
         }
       } else {
 
         // course grade
         storer[counter][0] = (double) (((Integer) drawPoints.elementAt(counter * 4)).
-            intValue()) / beatWidth; //onset time
+          intValue()) / beatWidth; //onset time
         if (((Integer) drawPoints.elementAt(counter * 4)).intValue() >
-            ((Integer) drawPoints.elementAt(counter * 4 + 2)).intValue()) {
+          ((Integer) drawPoints.elementAt(counter * 4 + 2)).intValue()) {
           //revised onset time for drawing backwards
           storer[counter][0] = (double) (((Integer) drawPoints.elementAt(counter * 4 + 2)).
-              intValue()) / beatWidth;
+            intValue()) / beatWidth;
         }
         storer[counter][1] = (double) (127 - y1); //pitch
         storer[counter][2] = (double) Math.abs(x2 - x1) / beatWidth; //duration
@@ -319,13 +318,13 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
         storer[i][1] = 127;
       }
       Note n = Note.newBuilder()
-          .pitch((int) storer[i][1])
-          .rhythm(storer[i + 1][0] - storer[i][0])
-          .build();
+        .pitch((int) storer[i][1])
+        .rhythm(storer[i + 1][0] - storer[i][0])
+        .build();
       // avoid unnecessary repeat notes
       if (i > 0) {
         if (phr.size() > 0 && n.getPitch() ==
-            ( (phr.getNoteList().get(phr.getNoteList().size() - 1))).getPitch()) {
+          ((phr.getNoteList().get(phr.getNoteList().size() - 1))).getPitch()) {
           Mod.append(((phr.getNoteList().get(phr.getNoteList().size() - 1))), n);
         } else {
           phr.addNote(n);
@@ -342,9 +341,9 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
       storer[storer.length - 1][1] = 127;
     }
     Note n = Note.newBuilder()
-        .pitch((int) storer[storer.length - 1][1])
-        .rhythm(storer[storer.length - 1][2])
-        .build();
+      .pitch((int) storer[storer.length - 1][1])
+      .rhythm(storer[storer.length - 1][2])
+      .build();
     n.setDuration(storer[storer.length - 1][2]);
     phr.addNote(n);
 
@@ -376,4 +375,4 @@ public class SketchScoreArea extends Canvas implements JMC, KeyListener, MouseLi
     quickSort(storer, left, last - 1);
     quickSort(storer, last + 1, right);
   }
-} 
+}

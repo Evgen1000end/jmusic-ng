@@ -1,4 +1,4 @@
-/* 
+/*
 
 <This Java Class is part of the jMusic API version 1.5, March 2004.>
 
@@ -96,7 +96,7 @@ public final class AllFGTR extends AudioObject {
         //System.out.println("Point 1.2");
         //System.out.println("grainDuration: " + grainDuration);
         float temp = buffer[bCounter] * (float) (Math
-            .sin(Math.PI * ((float) dCounter / (float) grainDuration)));
+          .sin(Math.PI * ((float) dCounter / (float) grainDuration)));
         //System.out.println("temp: " + temp);
         //System.out.println("buffer[bCounter]: " + buffer[bCounter]);
         //System.out.println("bCounter: " + bCounter);
@@ -180,9 +180,9 @@ public final class AllFGTR extends AudioObject {
       for (dCounter = 0; dCounter < grainDuration; dCounter++) {
         // This following short equation creates a sine wave and envelopes it at the correct duration
         buffer[bCounter] = buffer[bCounter] + (float) ((Math
-            .sin(2 * Math.PI * dCounter * ((frequency * buffer.length) / (sampleRate * channels))))
-            *
-            (Math.sin(Math.PI * (dCounter / grainDuration)) * highestAmp));
+          .sin(2 * Math.PI * dCounter * ((frequency * buffer.length) / (sampleRate * channels))))
+          *
+          (Math.sin(Math.PI * (dCounter / grainDuration)) * highestAmp));
         // Or there is this method which generates a noise band between the specified top and bottom frequency range
         // and then envelopes it just like the previous equation.
 

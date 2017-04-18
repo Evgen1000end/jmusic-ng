@@ -33,9 +33,9 @@ import jm.music.data.Note;
 public interface Panning {
 
   double
-      PAN_CENTER = 0.5,
-      PAN_CENTRE = 0.5,
-      PAN_LEFT = 0.0,
-      PAN_RIGHT = 1.0;
+    PAN_CENTER = 0.5,
+    PAN_CENTRE = 0.5,
+    PAN_LEFT = 0.0,
+    PAN_RIGHT = 1.0;
 
 }

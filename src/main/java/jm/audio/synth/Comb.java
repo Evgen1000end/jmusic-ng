@@ -59,7 +59,7 @@ public final class Comb extends AudioObject {
 
   /**
    * @param delay delay in milliseconds
-   * @param gain as a percent
+   * @param gain  as a percent
    */
   public Comb(AudioObject ao, int delay, double decay) {
     super(ao, "[Comb]");

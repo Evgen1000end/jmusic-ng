@@ -130,7 +130,7 @@ public class RealFloatFFT_Radix2 extends RealFloatFFT {
       /* t1 = -(z0 - w * z1) */
             data[i0 + stride * (b * p + p_1 - a)] = z0_real - w_real * z1_real + w_imag * z1_imag;
             data[i0 + stride * (b * p + p_1 + a)] = -(z0_imag - w_real * z1_imag
-                - w_imag * z1_real);
+              - w_imag * z1_real);
           }
         }
       }
@@ -188,7 +188,7 @@ public class RealFloatFFT_Radix2 extends RealFloatFFT {
         float s2 = 2.0f * t * t;
 
         for (a = 1; a < (p_1) / 2; a++) {
-	  /* trignometric recurrence for w-> exp(i theta) w */
+    /* trignometric recurrence for w-> exp(i theta) w */
           float tmp_real = w_real - s * w_imag - s2 * w_real;
           float tmp_imag = w_imag + s * w_real - s2 * w_imag;
           w_real = tmp_real;
@@ -199,7 +199,7 @@ public class RealFloatFFT_Radix2 extends RealFloatFFT {
             float z0_imag = data[i0 + stride * (b * p + p - a)];
             float z1_real = data[i0 + stride * (b * p + p_1 - a)];
             float z1_imag = -data[i0 + stride * (b * p + p_1 + a)];
-		
+
 	    /* t0 = z0 + z1 */
             data[i0 + stride * (b * p + a)] = z0_real + z1_real;
             data[i0 + stride * (b * p + p_1 - a)] = z0_imag + z1_imag;

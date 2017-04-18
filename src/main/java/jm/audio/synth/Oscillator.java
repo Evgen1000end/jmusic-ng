@@ -143,9 +143,9 @@ public class Oscillator extends AudioObject {
    * input can be either amplitude(0) or frequency(1)
    * and is defined by the choice variable (int).
    *
-   * @param ao the one input audio object
+   * @param ao       the one input audio object
    * @param waveType the type of timbre to generate
-   * @param choice Is this input amplitude(0) or frequency(1)
+   * @param choice   Is this input amplitude(0) or frequency(1)
    */
   public Oscillator(AudioObject ao, int waveType, int choice) {
     super(ao, "[Oscillator]");
@@ -159,11 +159,11 @@ public class Oscillator extends AudioObject {
    * input can be either amplitude(0) or frequency(1)
    * and is defined by the choice variable (int).
    *
-   * @param ao the one input audio object
+   * @param ao       the one input audio object
    * @param waveType the type of timbre to generate
-   * @param choice Is this input amplitude(0) or frequency(1)
-   * @param val is used to set a fixed frequency or amplitude based on the result of choice
-   * (choice=0 for example will set a fixed frequency)
+   * @param choice   Is this input amplitude(0) or frequency(1)
+   * @param val      is used to set a fixed frequency or amplitude based on the result of choice
+   *                 (choice=0 for example will set a fixed frequency)
    */
   public Oscillator(AudioObject ao, int waveType, int choice, double val) {
     super(ao, "[Oscillator]");
@@ -191,7 +191,7 @@ public class Oscillator extends AudioObject {
    * specifying the type of waveform to use
    *
    * @param Instrument the instance this is associated with 'this'
-   * @param waveType an integer or constant sepcifying the noise type
+   * @param waveType   an integer or constant sepcifying the noise type
    */
   public Oscillator(Instrument inst, int waveType) {
     this(inst, waveType, 44100);
@@ -202,7 +202,7 @@ public class Oscillator extends AudioObject {
    * specifying the type of waveform and sample rate to use
    *
    * @param Instrument the instance this is associated with 'this'
-   * @param waveType an integer or constant sepcifying the noise type
+   * @param waveType   an integer or constant sepcifying the noise type
    * @param sampleRate an int that sets the sample rate in samples per second
    */
   public Oscillator(Instrument inst, int waveType, int sampleRate) {
@@ -214,9 +214,9 @@ public class Oscillator extends AudioObject {
    * specifying the type of waveform and sample rate to use
    *
    * @param Instrument the instance this is associated with 'this'
-   * @param waveType an integer or constant sepcifying the noise type
+   * @param waveType   an integer or constant sepcifying the noise type
    * @param sampleRate an int that sets the sample rate in samples per second
-   * @param cahannels 1 for mono 2 for stereo etc.
+   * @param cahannels  1 for mono 2 for stereo etc.
    */
   public Oscillator(Instrument inst, int waveType, int sampleRate, int channels) {
     super(inst, sampleRate, "[Oscillator]");
@@ -228,16 +228,16 @@ public class Oscillator extends AudioObject {
    * This constructor sets this Oscillator up as a generator
    * specifying the type of wavetable and ferquency
    *
-   * @param Instrument the instance this is associated with 'this'
-   * @param waveType an integer or constant sepcifying the noise type
-   * @param sampleRate an int that sets the sample rate in samples per second
-   * @param cahannels 1 for mono 2 for stereo etc.
+   * @param Instrument     the instance this is associated with 'this'
+   * @param waveType       an integer or constant sepcifying the noise type
+   * @param sampleRate     an int that sets the sample rate in samples per second
+   * @param cahannels      1 for mono 2 for stereo etc.
    * @param fixedModChoice Is this input amplitude(0) or frequency(1)
-   * @param freqVal is used to set a fixed frequency or amplitude based on the result of choice
-   * (choice=0 for example will set a fixed frequency)
+   * @param freqVal        is used to set a fixed frequency or amplitude based on the result of
+   *                       choice (choice=0 for example will set a fixed frequency)
    */
   public Oscillator(Instrument inst, int waveType, int sampleRate, int channels, int fixedModChoice,
-      double freqVal) {
+                    double freqVal) {
     super(inst, sampleRate, "[Oscillator]");
     this.waveType = waveType;
     this.channels = channels;

@@ -34,6 +34,7 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import jm.JMC;
 import jm.midi.event.EndTrack;
 import jm.midi.event.Event;
@@ -133,13 +134,13 @@ public final class SMF implements JMC {
    * @params Score score - the score to place jMusic data translation into
    */
   public void read(InputStream is)
-      throws IOException {
+    throws IOException {
     //Given the small size of MIDI files read all
     //data into a ByteArrayStream for further processing
     byte[] fileData = new byte[is.available()];
     is.read(fileData);
     ByteArrayInputStream bais =
-        new ByteArrayInputStream(fileData);
+      new ByteArrayInputStream(fileData);
     DataInputStream dis = new DataInputStream(bais);
     //clear any SMF data
     if (!this.trackList.isEmpty()) {
@@ -196,7 +197,7 @@ public final class SMF implements JMC {
    * @throws IOException did the write go ok
    */
   public void write(OutputStream os)
-      throws IOException {
+    throws IOException {
     //IO Stream stuff
     DataOutputStream dos = new DataOutputStream(os);
     //find number of tracks
@@ -278,7 +279,7 @@ public final class SMF implements JMC {
    * @param DataInputStream dis - the input stream to read from
    */
   private void readTrackChunk(DataInputStream dis)
-      throws IOException {
+    throws IOException {
     //local variables for Track class
     Track track = new Track();
     //Insert new Track into a list of tracks
@@ -290,7 +291,7 @@ public final class SMF implements JMC {
     //Read track header
     if (dis.readInt() != 0x4D54726B) {//If MTrk read is wrong
       throw new IOException
-          ("Track started in wrong place!!!!  ABORTING");
+        ("Track started in wrong place!!!!  ABORTING");
     } else {//If MTrk read ok get bytesRemaining
       dis.readInt();
     }
@@ -356,7 +357,7 @@ public final class SMF implements JMC {
    * @param track - track to write
    */
   private void writeTrackChunk(final DataOutputStream odos, final Track track)
-      throws IOException {
+    throws IOException {
     if (VERBOSE) {
       System.out.println("Writing MIDI Track");
     }

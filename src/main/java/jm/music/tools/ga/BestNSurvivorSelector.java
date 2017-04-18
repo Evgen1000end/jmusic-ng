@@ -12,10 +12,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -35,13 +35,13 @@ public class BestNSurvivorSelector extends SurvivorSelector {
   }
 
   public Phrase[] selectSurvivors(Phrase[] population,
-      double[] fitness, Phrase parents[], double[] parentsFitness) {
+                                  double[] fitness, Phrase parents[], double[] parentsFitness) {
     Phrase[] returnPopulation = new Phrase[population.length];
     double[] combinedFitness = new double[fitness.length + parentsFitness.length];
     System.arraycopy(fitness, 0, combinedFitness, 0, fitness.length);
     System
-        .arraycopy(parentsFitness, fitness.length - fitness.length, combinedFitness, fitness.length,
-            combinedFitness.length - fitness.length);
+      .arraycopy(parentsFitness, fitness.length - fitness.length, combinedFitness, fitness.length,
+        combinedFitness.length - fitness.length);
     int[] indices = new int[returnPopulation.length];
     int currentBestIndex;
     boolean flag;

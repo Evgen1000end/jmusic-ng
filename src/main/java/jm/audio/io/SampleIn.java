@@ -26,10 +26,12 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
 import jm.audio.AOException;
 import jm.audio.AudioObject;
 import jm.audio.Instrument;
@@ -103,9 +105,9 @@ public class SampleIn extends AudioObject implements jm.JMC {
    * Read in the data from the specified file as input to
    * an audio ren dering process.
    *
-   * @param inst - The instrument for which this audio object is a part.
+   * @param inst     - The instrument for which this audio object is a part.
    * @param fileName - The name of the file to be used.
-   * @param cache - A flag to say weather or not to hold sample data in memory.
+   * @param cache    - A flag to say weather or not to hold sample data in memory.
    */
   public SampleIn(Instrument inst, String fileName, boolean cache) {
     this(inst, fileName, cache, false);
@@ -115,11 +117,11 @@ public class SampleIn extends AudioObject implements jm.JMC {
    * Read in the data from the specified file as input to
    * an audio ren dering process.
    *
-   * @param inst - The instrument for which this audio object is a part.
-   * @param fileName - The name of the file to be used.
-   * @param cache - A flag to say weather or not to hold sample data in memory.
+   * @param inst      - The instrument for which this audio object is a part.
+   * @param fileName  - The name of the file to be used.
+   * @param cache     - A flag to say weather or not to hold sample data in memory.
    * @param wholeFile - A flag to indicate weather the file should be played all the way through,
-   * regardless of the note duration.
+   *                  regardless of the note duration.
    */
   public SampleIn(Instrument inst, String fileName, boolean cache, boolean wholeFile) {
     this(inst, fileName, cache, wholeFile, 0);
@@ -129,16 +131,16 @@ public class SampleIn extends AudioObject implements jm.JMC {
    * Read in the data from the specified file as input to
    * an audio ren dering process.
    *
-   * @param inst - The instrument for which this audio object is a part.
-   * @param fileName - The name of the file to be used.
-   * @param cache - A flag to say weather or not to hold sample data in memory.
+   * @param inst      - The instrument for which this audio object is a part.
+   * @param fileName  - The name of the file to be used.
+   * @param cache     - A flag to say weather or not to hold sample data in memory.
    * @param wholeFile - A flag to indicate weather the file should be played all the way through,
-   * regardless of the note duration.
-   * @param loop - The number of time to reapeatedly playback the file (0 is no loop, -1 is
-   * infinite).
+   *                  regardless of the note duration.
+   * @param loop      - The number of time to reapeatedly playback the file (0 is no loop, -1 is
+   *                  infinite).
    */
   public SampleIn(Instrument inst, String fileName, boolean cache,
-      boolean wholeFile, int loop) {
+                  boolean wholeFile, int loop) {
     this(inst, fileName, cache, wholeFile, 0, 0, 0);
   }
 
@@ -146,18 +148,18 @@ public class SampleIn extends AudioObject implements jm.JMC {
    * Read in the data from the specified file as input to
    * an audio ren dering process.
    *
-   * @param inst - The instrument for which this audio object is a part.
-   * @param fileName - The name of the file to be used.
-   * @param cache - A flag to say weather or not to hold sample data in memory.
+   * @param inst      - The instrument for which this audio object is a part.
+   * @param fileName  - The name of the file to be used.
+   * @param cache     - A flag to say weather or not to hold sample data in memory.
    * @param wholeFile - A flag to indicate weather the file should be played all the way through,
-   * regardless of the note duration.
-   * @param loop - The number of time to reapeatedly playback the file (0 is no loop, -1 is
-   * infinite).
+   *                  regardless of the note duration.
+   * @param loop      - The number of time to reapeatedly playback the file (0 is no loop, -1 is
+   *                  infinite).
    * @param loopStart - The sample from which to start looping.
-   * @param loopEnd - The sample at which to end the loop.
+   * @param loopEnd   - The sample at which to end the loop.
    */
   public SampleIn(Instrument inst, String fileName, boolean cache,
-      boolean wholeFile, int loop, int loopStart, int loopEnd) {
+                  boolean wholeFile, int loop, int loopStart, int loopEnd) {
     super(inst, 0, "[SampleIn]");
     try {
       this.file = new File(fileName);
@@ -210,7 +212,7 @@ public class SampleIn extends AudioObject implements jm.JMC {
     //if(wholeFile)this.finished = false;
     if (!wholeFile) {
       this.duration = (long) (currentNote.getDuration() *
-          (double) this.sampleRate * (double) this.channels);
+        (double) this.sampleRate * (double) this.channels);
     }
     this.loopCount = this.loop;
     reset(0);
@@ -244,7 +246,7 @@ public class SampleIn extends AudioObject implements jm.JMC {
    * audio chain and therefore receives no input.
    *
    * @param input bogus input here, necessarily included to fit in with the general audio object
-   * design.
+   *              design.
    */
   public int work(float[] buffer) throws AOException {
     //System.out.println("SampleIn is working ...");

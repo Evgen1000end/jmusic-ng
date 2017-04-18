@@ -20,22 +20,18 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 */
 
-// Constants representing rhythm values adjusted by 
-// Al Christians to try to make CPN look better after 
-// tempo had been changed, etc.  Changes questionable.  
+// Constants representing rhythm values adjusted by
+// Al Christians to try to make CPN look better after
+// tempo had been changed, etc.  Changes questionable.
 // IDK.
 
 package jm.gui.cpn;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Panel;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
+
 import jm.JMC;
 import jm.music.data.Note;
 import jm.music.data.Phrase;
@@ -55,7 +51,7 @@ public abstract class Stave extends Panel implements JMC, KeyListener {
   // for double buffering
   public Image image;
   public int staveSpaceHeight = 8, rightMargin = 20, beatWidth = 43, staveWidth = beatWidth * 15,
-      imageHeightOffset = 28, clefWidth = 38, timeSigWidth = 5, keySigWidth = 5;
+    imageHeightOffset = 28, clefWidth = 38, timeSigWidth = 5, keySigWidth = 5;
   public int bPos = 28;
   public Vector notePositions = new Vector();
   protected boolean requiresMoreThanOneImage = false;
@@ -65,10 +61,10 @@ public abstract class Stave extends Panel implements JMC, KeyListener {
   protected Graphics g;
   // attributes
   protected Image trebleClef, bassClef, crotchetUp, crotchetDown, quaverDown, quaverUp,
-      semiquaverDown, semiquaverUp, minimDown, minimUp, semibreve, dot,
-      semiquaverRest, quaverRest, crotchetRest, minimRest, semibreveRest,
-      sharp, flat, natural, one, two, three, four, five, six,
-      seven, eight, nine, delete, tieOver, tieUnder;
+    semiquaverDown, semiquaverUp, minimDown, minimUp, semibreve, dot,
+    semiquaverRest, quaverRest, crotchetRest, minimRest, semibreveRest,
+    sharp, flat, natural, one, two, three, four, five, six,
+    seven, eight, nine, delete, tieOver, tieUnder;
   protected Phrase phrase;
   protected Image currImage;
   protected int currBeatWidth, totalBeatWidth;
@@ -113,7 +109,7 @@ public abstract class Stave extends Panel implements JMC, KeyListener {
    * stave <code>images</code>.
    *
    * @param images Images representing notes, rest and other stave elements to use within the
-   * compenent
+   *               compenent
    */
   public Stave(Images images) {
     this(new Phrase(), images);
@@ -125,7 +121,7 @@ public abstract class Stave extends Panel implements JMC, KeyListener {
    *
    * @param phrase Phrase to be displayed in stave
    * @param images Images representing notes, rest and other stave elements to use within the
-   * compenent
+   *               compenent
    */
   public Stave(Phrase phr, Images images) {
     super();
@@ -442,10 +438,10 @@ public abstract class Stave extends Panel implements JMC, KeyListener {
   }
 
   protected void chooseImage(int pitch,
-      double rhythmValue,
-      int upPitch1,
-      int downPitch,
-      int upPitch2) {
+                             double rhythmValue,
+                             int upPitch1,
+                             int downPitch,
+                             int upPitch2) {
     if (pitch == Note.REST) {
       isNote = false;
       if (rhythmValue <= 0.0) {
@@ -509,7 +505,7 @@ public abstract class Stave extends Panel implements JMC, KeyListener {
     } else { // a note rather than a rest
       isNote = true;
       if ((pitch < upPitch1 && pitch >= downPitch)
-          || pitch < upPitch2) { // stems down
+        || pitch < upPitch2) { // stems down
         isUp = true;
         if (rhythmValue <= 0.001) {
           currImage = delete;

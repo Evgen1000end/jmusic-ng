@@ -74,7 +74,7 @@ public final class StereoPan extends AudioObject {
    * position in the Note object.
    *
    * @param pan where to place the stereo image
-   * @param ao a single AudioObject input.
+   * @param ao  a single AudioObject input.
    */
   public StereoPan(AudioObject ao, double pan) {
     super(ao, "[StereoPan]");

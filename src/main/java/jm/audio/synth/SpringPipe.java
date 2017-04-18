@@ -26,7 +26,7 @@ public class SpringPipe {
     int springLength = (int) (totalLength - (nodeNumb * width)) / (nodeNumb + 1);
     for (int i = 0; i < nodeNumb; i++) {
       tempS[i] = new SpringObject(
-          springConstant); // * (1.0 + (Math.random() * jitter - jitter/2)));
+        springConstant); // * (1.0 + (Math.random() * jitter - jitter/2)));
       tempS[i].setRestingLength(springLength);
       tempM[i] = new MassObject(friction, 1.0 + (Math.random() * jitter - jitter / 2)); //size
       tempM[i].setYPosition((double) springLength * (i + 1.0) + width * i);
@@ -35,7 +35,7 @@ public class SpringPipe {
     tempS[nodeNumb].setRestingLength(springLength);
     // set first mass initial displacement
     tempM[0].setYPosition(tempM[0].getYPosition()
-        - tempM[0].getYPosition() * pluckAmt); //0.0); // start with excitation - one node displaced
+      - tempM[0].getYPosition() * pluckAmt); //0.0); // start with excitation - one node displaced
     // transfer to class variables
     springObjectArray = tempS;
     massObjectArray = tempM;
@@ -48,17 +48,17 @@ public class SpringPipe {
     forceArray[0] = springObjectArray[0].getCurrentForce(0, massObjectArray[0].getYPosition());
     for (int i = 1; i < massObjectArray.length; i++) {
       forceArray[i] = springObjectArray[i]
-          .getCurrentForce(massObjectArray[i - 1].getYPosition() + width,
-              massObjectArray[i].getYPosition());
+        .getCurrentForce(massObjectArray[i - 1].getYPosition() + width,
+          massObjectArray[i].getYPosition());
     }
     // final spring
     forceArray[forceArray.length - 1] = springObjectArray[forceArray.length - 1].
-        getCurrentForce(massObjectArray[massObjectArray.length - 1].getYPosition() +
-            width, totalLength);
+      getCurrentForce(massObjectArray[massObjectArray.length - 1].getYPosition() +
+        width, totalLength);
     // get next position for the mass
     for (int i = 0; i < massObjectArray.length; i++) {
       massObjectArray[i].setYPosition(massObjectArray[i].getYPosition() +
-          massObjectArray[i].getDisplacement(forceArray[i] - forceArray[i + 1]));
+        massObjectArray[i].getDisplacement(forceArray[i] - forceArray[i + 1]));
     }
   }
 

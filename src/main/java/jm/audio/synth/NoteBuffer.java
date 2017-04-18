@@ -68,7 +68,7 @@ public final class NoteBuffer extends AudioObject {
     }
     int i = 0;
     int numof = ((noteBufferPosition + buffer.length) < numOfSamples)
-        ? (numOfSamples - noteBufferPosition) : buffer.length;
+      ? (numOfSamples - noteBufferPosition) : buffer.length;
     for (; i < numof; i++) {
       buffer[i] = noteBuffer[noteBufferPosition++];
     }

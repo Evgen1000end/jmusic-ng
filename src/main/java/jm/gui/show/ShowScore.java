@@ -24,24 +24,19 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 /* --------------------
 * A jMusic tool which displays a score as a
 * piano roll dispslay on Common Practice Notation staves.
-* @author Andrew Brown 
+* @author Andrew Brown
  * @version 1.0,Sun Feb 25 18:43
 * ---------------------
 */
 package jm.gui.show;
 
-import java.awt.FileDialog;
-import java.awt.Frame;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.MenuShortcut;
-import java.awt.Panel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import jm.music.data.Score;
 import jm.util.Play;
 import jm.util.Write;
@@ -63,7 +58,7 @@ public class ShowScore extends Frame implements WindowListener, ActionListener {
   private Panel pan;
   private Score score = new Score();
   private MenuItem saveMIDI, quit, size7, size2, size3, size4, size5, size6,
-      size8, thin, medium, thick, play, saveXML, openXML, openMIDI;
+    size8, thin, medium, thick, play, saveXML, openXML, openMIDI;
   private ShowPanel sp;
 
   //--------------
@@ -266,8 +261,8 @@ public class ShowScore extends Frame implements WindowListener, ActionListener {
    */
   public void saveXMLFile() {
     FileDialog fd = new FileDialog(new Frame(),
-        "Save as a jMusic XML file...",
-        FileDialog.SAVE);
+      "Save as a jMusic XML file...",
+      FileDialog.SAVE);
     fd.show();
     if (fd.getFile() != null) {
       jm.util.Write.xml(score, fd.getDirectory() + fd.getFile(), true);
@@ -279,8 +274,8 @@ public class ShowScore extends Frame implements WindowListener, ActionListener {
    */
   public void openMidi() {
     FileDialog fd = new FileDialog(new Frame(),
-        "Select a MIDI file to display...",
-        FileDialog.LOAD);
+      "Select a MIDI file to display...",
+      FileDialog.LOAD);
     fd.show();
     String fileName = fd.getFile();
     if (fileName != null) {
@@ -296,8 +291,8 @@ public class ShowScore extends Frame implements WindowListener, ActionListener {
    */
   public void openXMLFile() {
     FileDialog fd = new FileDialog(new Frame(),
-        "Select a jMusic XML file to display.",
-        FileDialog.LOAD);
+      "Select a jMusic XML file to display.",
+      FileDialog.LOAD);
     fd.show();
     String fileName = fd.getFile();
     if (fileName != null) {

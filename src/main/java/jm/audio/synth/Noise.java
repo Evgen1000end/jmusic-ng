@@ -41,13 +41,13 @@ public class Noise extends AudioObject {
    * Different noise type constants
    */
   public static final int WHITE_NOISE = 0,
-      STEP_NOISE = 1,
-      SMOOTH_NOISE = 2,
-      BROWN_NOISE = 3,
-      FRACTAL_NOISE = 4,
-      GAUSSIAN_NOISE = 5,
-      WALK_NOISE = 6,
-      GENDYN_NOISE = 7;
+    STEP_NOISE = 1,
+    SMOOTH_NOISE = 2,
+    BROWN_NOISE = 3,
+    FRACTAL_NOISE = 4,
+    GAUSSIAN_NOISE = 5,
+    WALK_NOISE = 6,
+    GENDYN_NOISE = 7;
   // for fractal math
   private static float sum;
   private static float[] rg = new float[16];
@@ -201,7 +201,7 @@ public class Noise extends AudioObject {
    *
    * @param Instrument the class instance 'this'
    * @param sampleRate the sampling rate
-   * @param noiseType the flavour of noise to use
+   * @param noiseType  the flavour of noise to use
    */
   public Noise(Instrument inst, int noiseType, int sampleRate) {
     this(inst, noiseType, sampleRate, 1);
@@ -213,8 +213,8 @@ public class Noise extends AudioObject {
    *
    * @param Instrument the class instance 'this'
    * @param sampleRate the sampling rate
-   * @param noiseType the flavour of noise to use
-   * @param channels the number of channels to use
+   * @param noiseType  the flavour of noise to use
+   * @param channels   the number of channels to use
    */
   public Noise(Instrument inst, int noiseType, int sampleRate, int channels) {
     super(inst, sampleRate, "[WaveTable]");
@@ -302,7 +302,7 @@ public class Noise extends AudioObject {
           for (int j = 0; j < channels; j++) {
             if (ret % density == 0) {
               temp =
-                  (float) (Math.random() * 2.0 - 1.0) * amp;
+                (float) (Math.random() * 2.0 - 1.0) * amp;
             }
             buffer[ret++] = temp;
           }
@@ -322,7 +322,7 @@ public class Noise extends AudioObject {
               temp2 = (float) (Math.random() * 2.0 - 1.0) * amp;
             } else {
               buffer[ret++] = temp +
-                  ((temp2 - temp) / density * (ret % density));
+                ((temp2 - temp) / density * (ret % density));
             }
           }
         }
@@ -365,7 +365,7 @@ public class Noise extends AudioObject {
         for (; ret < buffer.length; ) {
           for (int j = 0; j < channels; j++) {
             gaussValue = (float) (RNG.nextGaussian() *
-                standardDeviation + mean);
+              standardDeviation + mean);
             if (gaussValue < -1.0f) {
               gaussValue = -1.0f;
             } else if (gaussValue > 1.0f) {
@@ -396,7 +396,7 @@ public class Noise extends AudioObject {
               if (walkVaryDensity) {
                 // a random walk of the denisty (root frequency)
                 walkNoiseDensity += (int) (Math.random() *
-                    walkNoiseDensityStepSize * 2.0 - walkNoiseDensityStepSize);
+                  walkNoiseDensityStepSize * 2.0 - walkNoiseDensityStepSize);
                 if (walkNoiseDensity < walkNoiseDensityMin) {
                   walkNoiseDensity = walkNoiseDensityMin;
                 } else if (walkNoiseDensity > walkNoiseDensityMax) {
@@ -413,7 +413,7 @@ public class Noise extends AudioObject {
         for (; ret < buffer.length; ) {
           // System.out.println("array size " + gendynIntArray.length);
           gnSampleVal =
-              (gendynIntArray[gendynIntArrayCounter] / (float) gendynAmpGranularity - 0.5f) * 2.0f;
+            (gendynIntArray[gendynIntArrayCounter] / (float) gendynAmpGranularity - 0.5f) * 2.0f;
 
           // clipping limter
           if (gnSampleVal > 1.0) {
@@ -434,7 +434,7 @@ public class Noise extends AudioObject {
         break;
       default:
         System.err.println(this.name + "jMusic error: Noise type "
-            + noiseType + " not supported yet.");
+          + noiseType + " not supported yet.");
         System.exit(1);
     }
 
@@ -444,14 +444,14 @@ public class Noise extends AudioObject {
   private void makeGendynArray() {
     // calculate new step sizes - second level change Xenakis had
     gendynTimeStepSize = randWalk(gendynTimeStepSize,
-        gendynPrimaryTimeStepSize,
-        gendynPrimaryTimeMirror, true);
+      gendynPrimaryTimeStepSize,
+      gendynPrimaryTimeMirror, true);
     if (Math.abs(gendynTimeStepSize) > maxGendynTimeStepSize) {
       gendynTimeStepSize = maxGendynTimeStepSize;
     }
     gendynAmpStepSize = randWalk(gendynAmpStepSize,
-        gendynPrimaryAmpStepSize,
-        gendynPrimaryAmpMirror, false);
+      gendynPrimaryAmpStepSize,
+      gendynPrimaryAmpMirror, false);
     if (Math.abs(gendynAmpStepSize) > maxGendynAmpStepSize) {
       gendynAmpStepSize = maxGendynAmpStepSize;
     }
@@ -460,16 +460,16 @@ public class Noise extends AudioObject {
     //System.out.print("t1-");
     for (index = 0; index < gendynPointSize; index++) {
       gendynTimeArray[index] = Math.abs(randWalk(gendynTimeArray[index],
-          gendynTimeStepSize,
-          gendynTimeMirror, true));
+        gendynTimeStepSize,
+        gendynTimeMirror, true));
       // prevent zero time
       if (gendynTimeArray[index] < 1.0) {
         gendynTimeArray[index] = 1.0;
       }
 
       gendynAmpArray[index] = randWalk(gendynAmpArray[index],
-          gendynAmpStepSize,
-          gendynAmpMirror / 2 + 51, false);
+        gendynAmpStepSize,
+        gendynAmpMirror / 2 + 51, false);
     }
     //System.out.println(gendynTimeArray[0] + " " + gendynAmpArray[0] + " " +
     //                   gendynTimeArray[1] + " " + gendynAmpArray[1] + " " +
@@ -492,15 +492,15 @@ public class Noise extends AudioObject {
         case 2:
           // cos
           double diff =
-              (1.0 - (Math.cos(jindex / gendynTimeArray[0] * 3.14) / 2.0 + 0.5)) *
-                  (gendynAmpArray[0] - gendynAmp0);
+            (1.0 - (Math.cos(jindex / gendynTimeArray[0] * 3.14) / 2.0 + 0.5)) *
+              (gendynAmpArray[0] - gendynAmp0);
           gendynIntArray[mgaCounter++] = (int) ((gendynAmp0 + diff) /
-              100.0 * gendynAmpGranularity);
+            100.0 * gendynAmpGranularity);
           break;
         case 1:
           // linear
           gendynIntArray[mgaCounter++] = (int) ((gendynAmp0 + mgaInc * jindex) /
-              100.0 * gendynAmpGranularity);
+            100.0 * gendynAmpGranularity);
           break;
         case 3:
           // square
@@ -510,26 +510,26 @@ public class Noise extends AudioObject {
     // remainder
     for (index = 1; index < gendynPointSize - 1; index++) {
       mgaInc =
-          (gendynAmpArray[index] - gendynAmpArray[index - 1]) / gendynTimeArray[index];
+        (gendynAmpArray[index] - gendynAmpArray[index - 1]) / gendynTimeArray[index];
       for (jindex = 0; jindex < (int) gendynTimeArray[index]; jindex++) {
         switch (gendynInterpolation) {
           case 2:
             double diff =
-                (1.0 - (Math.cos(jindex / gendynTimeArray[index] * 3.14) / 2.0 + 0.5)) *
-                    (gendynAmpArray[index] - gendynAmpArray[index - 1]);
+              (1.0 - (Math.cos(jindex / gendynTimeArray[index] * 3.14) / 2.0 + 0.5)) *
+                (gendynAmpArray[index] - gendynAmpArray[index - 1]);
             gendynIntArray[mgaCounter++] = (int) ((gendynAmpArray[index - 1] + diff) /
-                100.0 * gendynAmpGranularity);
+              100.0 * gendynAmpGranularity);
             break;
           case 1:
             // linear
             //System.out.println("gendynPointSize = " + gendynPointSize + " gendynIntArray = " + gendynIntArray.length + " mgaCounter = " + mgaCounter);
             gendynIntArray[mgaCounter++] = (int) ((gendynAmpArray[index - 1] + mgaInc * jindex) /
-                100.0 * gendynAmpGranularity);
+              100.0 * gendynAmpGranularity);
             break;
           case 3:
             // square
             gendynIntArray[mgaCounter++] = (int) (gendynAmpArray[index - 1] /
-                100.0 * gendynAmpGranularity);
+              100.0 * gendynAmpGranularity);
         }
       }
     }
@@ -548,7 +548,7 @@ public class Noise extends AudioObject {
   }
 
   private double randWalk(final double prevVal, final double stepSize, final int mirror,
-      final boolean timeWalk) {
+                          final boolean timeWalk) {
     rwNewVal = 0;
     if (gendynGaussian) {
       rwNewVal = prevVal + (RandomGenerator.nextGaussian() * stepSize);

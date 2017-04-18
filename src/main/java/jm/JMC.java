@@ -43,8 +43,8 @@ import jm.music.data.Note;
  * @see Note
  */
 public interface JMC extends RhythmValues, Pitches, Frequencies, Tunings,
-    Dynamics, Panning, ProgramChanges, DrumMap, Scales,
-    Waveforms, Noises, Alignments {
+  Dynamics, Panning, ProgramChanges, DrumMap, Scales,
+  Waveforms, Noises, Alignments {
 
   /**
    * A constant used to toggle debugging information.

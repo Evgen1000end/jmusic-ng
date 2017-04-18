@@ -39,7 +39,7 @@ public class SawLPFInst extends Instrument {
   /**
    * Constructor that sets sample rate and the filter cutoff frequency.
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
   public SawLPFInst(int sampleRate, int filterCutoff) {
@@ -51,9 +51,9 @@ public class SawLPFInst extends Instrument {
   /**
    * Constructor that sets sample rate and the filter cutoff frequency.
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param channels The numbers of channels, 1 = mono, 2 = stereo
+   * @param channels     The numbers of channels, 1 = mono, 2 = stereo
    */
   public SawLPFInst(int sampleRate, int filterCutoff, int channels) {
     this.sampleRate = sampleRate;

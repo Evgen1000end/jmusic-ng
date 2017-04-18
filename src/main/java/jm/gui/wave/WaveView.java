@@ -22,22 +22,13 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package jm.gui.wave;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FileDialog;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.MenuShortcut;
-import java.awt.Panel;
-import java.awt.ScrollPane;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
+
 import jm.audio.RTMixer;
 
 /*
@@ -70,9 +61,9 @@ public class WaveView implements ActionListener, ComponentListener {
   private int startPos = 0;
   // menu items
   private MenuItem size1, size2, size4, size8, size16, size32,
-      size64, size128, size256, size512, size1024, size2048,
-      size4096, openFile, quit, changeColor,
-      vSmall, small, medium, large, huge, times1, times2, times3, times4;
+    size64, size128, size256, size512, size1024, size2048,
+    size4096, openFile, quit, changeColor,
+    vSmall, small, medium, large, huge, times1, times2, times3, times4;
 
   private Frame f = new Frame();
   private WaveCanvas[] canvases = new WaveCanvas[8];
@@ -122,12 +113,12 @@ public class WaveView implements ActionListener, ComponentListener {
    */
   public void openFile() {
     FileDialog loadFile = new FileDialog(f,
-        "Select a 16 bit audio file in .au format (no compression).",
-        FileDialog.LOAD);
+      "Select a 16 bit audio file in .au format (no compression).",
+      FileDialog.LOAD);
     loadFile.setDirectory(lastDirectory);
     loadFile.setFile(lastFileName);
     loadFile
-        .show(); // loadFile.setVisible(true); // show depreicated from 1.5 but not used to allow 1.3 compatability
+      .show(); // loadFile.setVisible(true); // show depreicated from 1.5 but not used to allow 1.3 compatability
     String fileName = loadFile.getFile();
     if (fileName != null) {
       lastFileName = fileName;
@@ -160,7 +151,7 @@ public class WaveView implements ActionListener, ComponentListener {
     channels = afr.getChannels();
     if (channels > 8) {
       System.out.println("jMusic wave viewer error: " +
-          "Files with more than 8 channels are not supported :(");
+        "Files with more than 8 channels are not supported :(");
       System.exit(1);
     }
     //segmentSize = samples; // the whole file
@@ -627,10 +618,10 @@ public class WaveView implements ActionListener, ComponentListener {
   public void playFile() {
     if (channels > 2) {
       System.out.println("jMusic Wave View notification:" +
-          " Sorry, only mono and stereo files can be played at present.");
+        " Sorry, only mono and stereo files can be played at present.");
     } else {
       System.out.println("---- Playing audio file '" + getFileName() + "'... Sample rate = "
-          + afr.getSampleRate() + " Channels = " + afr.getChannels() + " ----");
+        + afr.getSampleRate() + " Channels = " + afr.getChannels() + " ----");
       jm.music.rt.RTLine[] lineArray = {new jm.util.AudioRTLine(getFileName())};
       mixer = new RTMixer(lineArray);
       mixer.begin();

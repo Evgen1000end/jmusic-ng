@@ -39,16 +39,16 @@ public final class PulsewaveInst extends Instrument {
    * the instrument
    *
    * @param frequencies the relative freqencies to use
-   * @param volumes the volumes to use for the frequencies
+   * @param volumes     the volumes to use for the frequencies
    */
   public PulsewaveInst(int sampleRate) {
     this.sampleRate = sampleRate;
     EnvPoint[] tempArray = {
-        new EnvPoint((float) 0.0, (float) 0.0),
-        new EnvPoint((float) 0.02, (float) 1.0),
-        new EnvPoint((float) 0.15, (float) 0.6),
-        new EnvPoint((float) 0.9, (float) 0.3),
-        new EnvPoint((float) 1.0, (float) 0.0)
+      new EnvPoint((float) 0.0, (float) 0.0),
+      new EnvPoint((float) 0.02, (float) 1.0),
+      new EnvPoint((float) 0.15, (float) 0.6),
+      new EnvPoint((float) 0.9, (float) 0.3),
+      new EnvPoint((float) 1.0, (float) 0.0)
     };
     pointArray = tempArray;
   }
@@ -63,7 +63,7 @@ public final class PulsewaveInst extends Instrument {
    */
   public void createChain() {
     Oscillator wt = new Oscillator(this, Oscillator.PULSE_WAVE,
-        this.sampleRate, 2);
+      this.sampleRate, 2);
     wt.setPulseWidth(0.15);
     Envelope env = new Envelope(wt, pointArray);
     Volume vol = new Volume(env);

@@ -40,7 +40,7 @@ public final class Sawtooth_LPF_Env_Inst extends Instrument {
   /**
    * Constructor that sets sample rate and the filter cutoff frequency.
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
    */
   public Sawtooth_LPF_Env_Inst(int sampleRate, int filterCutoff) {
@@ -53,9 +53,9 @@ public final class Sawtooth_LPF_Env_Inst extends Instrument {
   /**
    * Constructor that sets sample rate and the filter cutoff frequency.
    *
-   * @param sampleRate The number of samples per second (quality)
+   * @param sampleRate   The number of samples per second (quality)
    * @param filterCutoff The frequency above which overtones are cut
-   * @param chan The number of channels.
+   * @param chan         The number of channels.
    */
   public Sawtooth_LPF_Env_Inst(int sampleRate, int filterCutoff, int chan) {
     this.sampleRate = sampleRate;
@@ -67,10 +67,10 @@ public final class Sawtooth_LPF_Env_Inst extends Instrument {
   /**
    * Constructor that sets sample rate and the filter cutoff frequency.
    *
-   * @param sampleRate The number of samples per second (quality).
+   * @param sampleRate   The number of samples per second (quality).
    * @param filterCutoff The frequency above which overtones are cut.
-   * @param chan The number of channels.
-   * @param env An array of envelope break point values.
+   * @param chan         The number of channels.
+   * @param env          An array of envelope break point values.
    */
   public Sawtooth_LPF_Env_Inst(int sampleRate, int filterCutoff, int chan, double[] env) {
     this.sampleRate = sampleRate;

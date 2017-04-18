@@ -69,7 +69,7 @@ public final class NoteBufferReversed extends AudioObject {
     }
     int i = 0;
     int numof = (noteBufferPosition < buffer.length)
-        ? noteBufferPosition : buffer.length;
+      ? noteBufferPosition : buffer.length;
     for (; i < numof; i++) {
       buffer[i] = noteBuffer[--noteBufferPosition];
     }

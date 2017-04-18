@@ -197,7 +197,7 @@ public class MidiSynth implements JMC, MetaEventListener {
   /**
    * Plays the jMusic score data via the JavaSound MIDI synthesizer
    *
-   * @param Score score - data to change to SMF
+   * @param score - data to change to SMF
    */
   public void play(Score score) throws InvalidMidiDataException {
     if (null == m_sequencer) {

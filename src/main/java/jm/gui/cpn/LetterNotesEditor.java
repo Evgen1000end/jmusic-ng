@@ -439,7 +439,7 @@ public class LetterNotesEditor extends Dialog
       --pv;
     }
     newNote.setPitch(pv);
-    phrase.add(newNote);
+    phrase.addNote(newNote);
     currentNote = newNote;
     currentNoteLetter = charValue;
     if (currentNoteLetter != 'R') {

@@ -76,7 +76,6 @@ public class Track {
     Enumeration enum1 = eventList.elements();
     while (enum1.hasMoreElements()) {
       Event event = (Event) enum1.nextElement();
-      //event.print();
     }
   }
 }

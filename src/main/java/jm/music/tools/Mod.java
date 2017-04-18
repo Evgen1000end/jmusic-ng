@@ -645,7 +645,7 @@ public class Mod implements JMC {
       return;
     }
     for (Note note : phrase2.getNoteList()) {
-      phrase1.add(note.copy());
+      phrase1.addNote(note.copy());
     }
   }
 

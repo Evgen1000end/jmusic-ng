@@ -315,16 +315,6 @@ public class Phrase implements JMC, Cloneable, Serializable {
   }
 
   /**
-   * Add a note to this Phrase
-   *
-   * @param note - add a note to this phrase
-   */
-  public void add(Note note) {
-    addNote(note);
-  }
-
-
-  /**
    * Appends the specified notes to the end of this Phrase.
    *
    * @param notes of Notes to append.
@@ -583,8 +573,6 @@ public class Phrase implements JMC, Cloneable, Serializable {
       this.addNote(n);
     }
     this.addNote(pitches[pitches.length - 1], rv);
-
-    //System.out.println("In phrase" + this.toString());
   }
 
   public int[] getPitchArray() {

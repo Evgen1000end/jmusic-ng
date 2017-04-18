@@ -30,6 +30,11 @@ import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.Vector;
 
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MetaMessage;
+import javax.sound.midi.MidiEvent;
+import javax.sound.midi.Sequence;
+
 import jm.JMC;
 import jm.midi.event.CChange;
 import jm.midi.event.EndTrack;
@@ -205,16 +210,196 @@ public final class MidiParser implements JMC {
     currentLength[phrIndex] += curNote[phrIndex].getRhythm();
   }
 
+
+  public static Sequence scoreToSequence(Score score) throws InvalidMidiDataException {
+    return null;
+//    System.out.println("PPQN = " + m_ppqn);
+//    Sequence sequence = new Sequence(Sequence.PPQ, m_ppqn);
+//
+//    m_masterTempo = m_currentTempo =
+//      new Float(score.getTempo()).floatValue();
+//
+//    System.out.println("Начальный темп: master " + m_masterTempo + " текущий " + m_currentTempo);
+//
+//    javax.sound.midi.Track longestTrack = null;
+//    double longestTime = 0.0;
+//    double longestRatio = 1.0;
+//
+//    Enumeration parts = score.getPartList().elements();
+//    System.out.println("Начинаю обработку частей: ");
+//    while (parts.hasMoreElements()) {
+//      Part inst = (Part) parts.nextElement();
+//
+//      int currChannel = inst.getChannel();
+//      if (currChannel > 16) {
+//        throw new
+//          InvalidMidiDataException(inst.getTitle() +
+//          " - Invalid Channel Number: " +
+//          currChannel);
+//      }
+//
+//      m_tempoHistory.push(m_currentTempo);
+//
+//      float tempo = new Float(inst.getTempo()).floatValue();
+//
+//      System.out.println("Part " + inst.getChannel() + " tempo " + tempo);
+//
+//      if (tempo != Part.DEFAULT_TEMPO) {
+//        m_currentTempo = tempo;
+//      } else if (tempo < Part.DEFAULT_TEMPO) {
+//        System.out.println("jMusic MidiSynth error: Part TempoEvent (BPM) too low = " + tempo);
+//      }
+//
+//      trackTempoRatio = m_masterTempo / m_currentTempo;
+//
+//      System.out.println("TrackTempoRatio " + trackTempoRatio);
+//
+//      int instrument = inst.getInstrument();
+//      if (instrument == NO_INSTRUMENT) {
+//        instrument = 0;
+//      }
+//
+//      Enumeration phrases = inst.getPhraseList().elements();
+//      double max = 0;
+//      double currentTime = 0.0;
+//
+//      javax.sound.midi.Track currTrack = sequence.createTrack();
+//      System.out.println("Начинаю обработку фраз ... ");
+//      while (phrases.hasMoreElements()) {
+//        /////////////////////////////////////////////////
+//        // Each phrase represents a new Track element
+//        // Err no
+//        // There is a 65? track limit
+//        // ////////////////////////////
+//        Phrase phrase = (Phrase) phrases.nextElement();
+//
+//        //Track currTrack = sequence.createTrack();
+//
+//        currentTime = phrase.getStartTime();
+//        long phraseTick = (long) (currentTime * m_ppqn * trackTempoRatio);
+//        MidiEvent evt;
+//
+//        if (phrase.getInstrument() != NO_INSTRUMENT) {
+//          instrument = phrase.getInstrument();
+//        }
+//        evt = createProgramChangeEvent(currChannel, instrument, phraseTick);
+//        currTrack.add(evt);
+//
+//        m_tempoHistory.push(m_currentTempo);
+//
+//        tempo = new Float(phrase.getTempo()).floatValue();
+//        if (tempo != Phrase.DEFAULT_TEMPO) {
+//          m_currentTempo = tempo;
+//        }
+//
+//        elementTempoRatio = m_masterTempo / m_currentTempo;
+//
+//        double lastPanPosition = -1.0;
+//        int offSetTime = 0;
+//
+//        for (Note note : phrase.getNoteList()) {
+//          // deal with offset
+//          offSetTime = (int) (note.getOffset() * m_ppqn * elementTempoRatio);
+//
+//          //handle frequency pitch types
+//          int pitch = note.getPitch();
+//
+//          int dynamic = note.getDynamic();
+//
+//          if (pitch == Note.REST) {
+//            phraseTick += note.getRhythm() * m_ppqn * elementTempoRatio;
+//            continue;
+//          }
+//
+//          long onTick = phraseTick;
+//          // pan
+//          if (note.getPan() != lastPanPosition) {
+//            evt = createCChangeEvent(currChannel, 10, (int) (note.getPan() * 127), onTick);
+//            currTrack.add(evt);
+//            lastPanPosition = note.getPan();
+//          }
+//
+//          evt = createNoteOnEvent(currChannel, pitch, dynamic, onTick + offSetTime);
+//          currTrack.add(evt);
+//
+//          long offTick = (long) (phraseTick + note.getDuration() * m_ppqn * elementTempoRatio);
+//
+//          evt = createNoteOffEvent(currChannel, pitch, dynamic, offTick + offSetTime);
+//          currTrack.add(evt);
+//
+//          phraseTick += note.getRhythm() * m_ppqn * elementTempoRatio;
+//
+//          // TODO:  Should this be ticks since we have tempo stuff
+//          // to worry about
+//          //System.out.println("offtick = " + offTick + " ppq = " +
+//          //	       m_ppqn + " score length = " + score.getEndTime() +
+//          //	       " length * ppq = " + (m_ppqn * score.getEndTime()));
+//          if ((double) offTick > longestTime) {
+//            longestTime = (double) offTick;
+//            longestTrack = currTrack;
+//            //longestRatio = trackTempoRatio;
+//          }
+//        }
+//
+//        Float d = (Float) m_tempoHistory.pop();
+//        m_currentTempo = d.floatValue();
+//      }
+//
+//      Float d = (Float) m_tempoHistory.pop();
+//      m_currentTempo = d.floatValue();
+//
+//    }
+//
+//    // add a meta event to indicate the end of the sequence.
+//    if (longestTime > 0.0 && longestTrack != null) {
+//      MetaMessage msg = new MetaMessage();
+//      byte[] data = new byte[0];
+//      msg.setMessage(STOP_TYPE, data, 0);
+//      MidiEvent evt = new MidiEvent(msg,
+//        (long) longestTime); //+ 100 if you want leave some space for reverb tail
+//      longestTrack.add(evt);
+//    }
+//
+//    //sequence.
+//
+//    System.out.println(
+//      "[SEQUENCE] Length: " + sequence.getMicrosecondLength() + " tick length " + sequence
+//        .getTickLength());
+//
+//    for (javax.sound.midi.Track track : sequence.getTracks()) {
+//      System.out.println("  [TRACK] ticks: " + track.ticks());
+//
+//      for (int i = 0; i < track.size(); i++) {
+//        MidiEvent event = track.get(i);
+//        System.out.println("    [EVENT] ticks: " + event.getTick());
+//        System.out.println("    [EVENT-MESSAGE] length: " + event.getMessage().getLength());
+//        System.out.println("     |||Butes: " + bytesToHex(event.getMessage().getMessage()));
+//      }
+//    }
+//
+//    return sequence;
+  }
+
+  public static String bytesToHex(byte[] bytes) {
+
+    char[] hexArray = "0123456789ABCDEF".toCharArray();
+    char[] hexChars = new char[bytes.length * 2];
+    for (int j = 0; j < bytes.length; j++) {
+      int v = bytes[j] & 0xFF;
+      hexChars[j * 2] = hexArray[v >>> 4];
+      hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+    }
+    return new String(hexChars);
+  }
+
+
   /**
    * Converts jmusic score data into SMF  data
    *
    * @param score - Basic Jmusic storage
    * @param smf   - Standart Midi File object
    */
-  public static void scoreToSMF(final Score score, final SMF smf) {
-    if (VERBOSE) {
-      System.out.println("Converting to SMF data structure.");
-    }
+  public static void scoreToSMF(Score score, SMF smf) {
 
     double scoreTempo = score.getTempo();
     double partTempoMultiplier = 1.0;

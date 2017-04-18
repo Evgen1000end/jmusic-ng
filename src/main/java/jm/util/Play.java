@@ -270,8 +270,6 @@ public class Play implements JMC {
    * @param synths The number of the MidiSynths to use - default is 1.
    */
   public static void midi(Score score, boolean exit, boolean wait, int synths, int decayAllowance) {
-    System.out.println("jMusic Play: Playing score " + score.getTitle()
-      + " using JavaSound General MIDI soundbank.");
     msFill(synths); // add instances of MidSynths if required
     MidiSynth currentMidiSynth = (MidiSynth) ms.elementAt(msCnt);
     if (currentMidiSynth.isPlaying()) {

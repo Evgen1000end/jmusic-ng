@@ -57,7 +57,7 @@ public final class MidiUtil implements JMC {
   /**
    * Read variable length data
    *
-   * @param DataInputStream dis
+   * @param dis
    * @return int - the result we want
    */
   public static int readVarLength(DataInputStream dis) throws IOException {
@@ -76,7 +76,7 @@ public final class MidiUtil implements JMC {
   /**
    * Write variable length value
    *
-   * @param int value - value to make into variable length
+   * @param  value - value to make into variable length
    * @return the number of bytes written
    */
   public static int writeVarLength(int value, DataOutputStream dos)
@@ -103,7 +103,7 @@ public final class MidiUtil implements JMC {
   /**
    * Return number of bytes used making variable length value
    *
-   * @param int value - value being written
+   * @param  value - value being written
    * @return int - the number of bytes written
    */
   public static int varLengthBytes(int value) {
@@ -175,25 +175,18 @@ public final class MidiUtil implements JMC {
   public static Event createVoiceEvent(int id) throws IOException {
     switch (id) {
       case 0x8:
-        //System.out.println("NoteOFF");
         return new NoteOff();
       case 0x9:
-        //System.out.println("NoteON");
         return new NoteOn();
       case 0xA:
-        //System.out.println("ATouch");
         return new ATouch();
       case 0xB:
-        //System.out.println("CChange");
         return new CChange();
       case 0xC:
-        //System.out.println("PChange");
         return new PChange();
       case 0xD:
-        //System.out.println("CPRES");
         return new CPres();
       case 0xE:
-        //System.out.println("PWHEEL");
         return new PWheel();
       default:
         return null;
